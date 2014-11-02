@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import model.agglomeration.Noeud;
 import model.agglomeration.Plan;
 import model.agglomeration.Troncon;
+import model.planning.Manager;
 
 public class Main {
 
@@ -12,8 +13,8 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		System.out.println("Test de création de MAP");
 		
+		// creating map
 		String[] rues = {"Avenue des titans", "Rue de Léonard", "wess c ma ru, ru de yaannnn", "Anton Long Avenue", "GIGA AVENUE", "SSSSSSSS-GBD street"};
 		
 		Noeud entrepot = new Noeud(20,30,-1, new ArrayList<Troncon>());
@@ -32,12 +33,13 @@ public class Main {
 			plan.addNoeud(noeud);
 		}
 		
-		// generate troncons
+		// generate random troncons
 		int nbTroncons = 10;
 		for (int i = 0; i < nbTroncons; ++i) {
 			int nodeInIndex = (int)Math.floor(Math.random()*nbNodes);
 			int nodeOutIndex = (int)Math.floor(Math.random()*nbNodes);
 			
+			// no boucle
 			if (nodeInIndex == nodeOutIndex) {
 				continue;
 			}
