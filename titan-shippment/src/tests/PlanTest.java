@@ -14,7 +14,42 @@ import org.junit.Test;
 public class PlanTest {
 
 	Plan dummy;
-	
+
+
+
+
+
+
+
+/**
+   Generates the following graph with weights in parens.
+Ex.
+		       ____ _  	    ____  _    _       	  _
+		      /	___(_) __ _|  _	\| |  /	\   _ __ | |_ ___  _ __
+		     | |  _| |/	_` | |_) | | / _ \ | '_	\| __/ _ \| '_ \
+		     | |_| | | (_| |  __/| |/ ___ \| | | | || (_) | | |	|
+		      \____|_|\__, |_| 	 |_/_/ 	 \_\_| |_|\__\___/|_| |_|
+		       	      |___/
+
+
+
+			     ->1\
+			   /-	 \-
+		    (1)	./-	   \- (1)		 ->3\
+		      /--	     \--	       --|   --\ (3)
+		   /--		        \-	    --/		-\
+		 /-		          \-     --/		  ----|
+	        O-\    		            \---/		      V
+	          -\   			    -/ \-		    ->5
+	            -\  	         --/     \-		    |   
+		      --\ 	      --/	   \--		 --/
+		   (1)   -\        --/	(2)	      \-      --/ (3)
+			   -\    --/		        \-  -/
+			     ->2/			 ->4
+
+
+*/ 
+
 	public static Plan DummyPlanCreate(int nbNodes, int maxX, int maxY){
 		// creating map
 		String[] rues = {"Avenue des titans", "Rue de Léonard", "wess c ma ru, ru de yaannnn", "Anton Long Avenue", "GIGA AVENUE", "SSSSSSSS-GBD street"};
