@@ -33046,7 +33046,7 @@
 											"parentStyle": false,
 											"containerChangeable": false,
 											"containerExtending": true,
-											"left": 1556,
+											"left": 1558,
 											"top": 289,
 											"width": 102,
 											"height": 13,
@@ -33079,7 +33079,7 @@
 											"parentStyle": false,
 											"containerChangeable": false,
 											"containerExtending": true,
-											"left": 1607,
+											"left": 1609,
 											"top": 274,
 											"width": 0,
 											"height": 13,
@@ -33111,7 +33111,7 @@
 											"parentStyle": false,
 											"containerChangeable": false,
 											"containerExtending": true,
-											"left": 1607,
+											"left": 1609,
 											"top": 309,
 											"width": 0,
 											"height": 13,
@@ -33143,7 +33143,7 @@
 											"parentStyle": false,
 											"containerChangeable": false,
 											"containerExtending": true,
-											"left": 1969,
+											"left": 1973,
 											"top": 305,
 											"width": 14,
 											"height": 29,
@@ -33166,7 +33166,7 @@
 										"$ref": "AAAAAAFJdMdbzDbtvR0="
 									},
 									"lineStyle": 0,
-									"points": "1246:305;1969:305",
+									"points": "1246:305;1973:305",
 									"nameLabel": {
 										"$ref": "AAAAAAFJdTb/XJmU484="
 									},
@@ -33210,7 +33210,7 @@
 											"parentStyle": false,
 											"containerChangeable": false,
 											"containerExtending": true,
-											"left": 1583,
+											"left": 1585,
 											"top": 332,
 											"width": 54,
 											"height": 13,
@@ -33243,7 +33243,7 @@
 											"parentStyle": false,
 											"containerChangeable": false,
 											"containerExtending": true,
-											"left": 1610,
+											"left": 1612,
 											"top": 347,
 											"width": 0,
 											"height": 13,
@@ -33275,7 +33275,7 @@
 											"parentStyle": false,
 											"containerChangeable": false,
 											"containerExtending": true,
-											"left": 1611,
+											"left": 1613,
 											"top": 312,
 											"width": 0,
 											"height": 13,
@@ -33330,7 +33330,7 @@
 										"$ref": "AAAAAAFJdTRpZJkoLi0="
 									},
 									"lineStyle": 0,
-									"points": "1969:328;1253:328",
+									"points": "1973:328;1253:328",
 									"nameLabel": {
 										"$ref": "AAAAAAFJdTd4Ipmq2Ys="
 									},
@@ -34235,8 +34235,8 @@
 													"parentStyle": true,
 													"containerChangeable": false,
 													"containerExtending": true,
-													"left": 0,
-													"top": -12,
+													"left": 12,
+													"top": 24,
 													"width": 0,
 													"height": 13,
 													"autoResize": false,
@@ -34259,8 +34259,8 @@
 													"parentStyle": true,
 													"containerChangeable": false,
 													"containerExtending": true,
-													"left": 1885,
-													"top": 47,
+													"left": 1889,
+													"top": 59,
 													"width": 182,
 													"height": 13,
 													"autoResize": false,
@@ -34284,8 +34284,8 @@
 													"parentStyle": true,
 													"containerChangeable": false,
 													"containerExtending": true,
-													"left": 0,
-													"top": -12,
+													"left": 12,
+													"top": 24,
 													"width": 214,
 													"height": 13,
 													"autoResize": false,
@@ -34309,8 +34309,8 @@
 													"parentStyle": true,
 													"containerChangeable": false,
 													"containerExtending": true,
-													"left": 0,
-													"top": -12,
+													"left": 12,
+													"top": 24,
 													"width": 0,
 													"height": 13,
 													"autoResize": false,
@@ -34328,8 +34328,8 @@
 											"parentStyle": true,
 											"containerChangeable": false,
 											"containerExtending": true,
-											"left": 1880,
-											"top": 40,
+											"left": 1884,
+											"top": 52,
 											"width": 192,
 											"height": 40,
 											"autoResize": false,
@@ -34364,8 +34364,8 @@
 											"parentStyle": false,
 											"containerChangeable": false,
 											"containerExtending": true,
-											"left": 1976,
-											"top": 80,
+											"left": 1980,
+											"top": 92,
 											"width": 1,
 											"height": 761,
 											"autoResize": false
@@ -34380,8 +34380,8 @@
 									"parentStyle": false,
 									"containerChangeable": false,
 									"containerExtending": true,
-									"left": 1880,
-									"top": 40,
+									"left": 1884,
+									"top": 52,
 									"width": 192,
 									"height": 801,
 									"autoResize": false,
@@ -36563,6 +36563,122 @@
 					"messages": [
 						{
 							"_type": "UMLMessage",
+							"_id": "AAAAAAFJdNGGAmWJc/0=",
+							"_parent": {
+								"$ref": "AAAAAAFJNy2Emx4VkZU="
+							},
+							"name": "RemoveLivraison",
+							"source": {
+								"$ref": "AAAAAAFJdM9NJmScPho="
+							},
+							"target": {
+								"$ref": "AAAAAAFJdM+6xmS/mGM="
+							},
+							"visibility": "public",
+							"messageSort": "synchCall",
+							"arguments": "id"
+						},
+						{
+							"_type": "UMLMessage",
+							"_id": "AAAAAAFJdNKk9HkAqvU=",
+							"_parent": {
+								"$ref": "AAAAAAFJNy2Emx4VkZU="
+							},
+							"name": "CommandRemoveOne",
+							"source": {
+								"$ref": "AAAAAAFJdM+6xmS/mGM="
+							},
+							"target": {
+								"$ref": "AAAAAAFJdM/wgWTjwnY="
+							},
+							"visibility": "public",
+							"messageSort": "synchCall",
+							"arguments": "id"
+						},
+						{
+							"_type": "UMLMessage",
+							"_id": "AAAAAAFJdNQJYXl8xqY=",
+							"_parent": {
+								"$ref": "AAAAAAFJNy2Emx4VkZU="
+							},
+							"name": "Execute",
+							"source": {
+								"$ref": "AAAAAAFJdM+6xmS/mGM="
+							},
+							"target": {
+								"$ref": "AAAAAAFJdM/wgWTjwnY="
+							},
+							"visibility": "public",
+							"messageSort": "synchCall"
+						},
+						{
+							"_type": "UMLMessage",
+							"_id": "AAAAAAFJdNLNCXkWg+U=",
+							"_parent": {
+								"$ref": "AAAAAAFJNy2Emx4VkZU="
+							},
+							"name": "RemoveLivraison",
+							"source": {
+								"$ref": "AAAAAAFJdM/wgWTjwnY="
+							},
+							"target": {
+								"$ref": "AAAAAAFJdNBab2UKuZY="
+							},
+							"visibility": "public",
+							"messageSort": "synchCall",
+							"arguments": "id"
+						},
+						{
+							"_type": "UMLMessage",
+							"_id": "AAAAAAFJdP2BcL8WUy8=",
+							"_parent": {
+								"$ref": "AAAAAAFJNy2Emx4VkZU="
+							},
+							"name": "recalcultateAfterRemove",
+							"source": {
+								"$ref": "AAAAAAFJdNBab2UKuZY="
+							},
+							"target": {
+								"$ref": "AAAAAAFJdP0ZHr7xFOs="
+							},
+							"visibility": "public",
+							"messageSort": "synchCall",
+							"arguments": "livraisonSuppr"
+						},
+						{
+							"_type": "UMLMessage",
+							"_id": "AAAAAAFJdNOdB3lmfRg=",
+							"_parent": {
+								"$ref": "AAAAAAFJNy2Emx4VkZU="
+							},
+							"name": "Success",
+							"source": {
+								"$ref": "AAAAAAFJdNBab2UKuZY="
+							},
+							"target": {
+								"$ref": "AAAAAAFJdM/wgWTjwnY="
+							},
+							"visibility": "public",
+							"messageSort": "synchCall"
+						},
+						{
+							"_type": "UMLMessage",
+							"_id": "AAAAAAFJdNSyNXmZdP8=",
+							"_parent": {
+								"$ref": "AAAAAAFJNy2Emx4VkZU="
+							},
+							"name": "addToStack",
+							"source": {
+								"$ref": "AAAAAAFJdM/wgWTjwnY="
+							},
+							"target": {
+								"$ref": "AAAAAAFJdM+6xmS/mGM="
+							},
+							"visibility": "public",
+							"messageSort": "synchCall"
+						},
+						{
+							"_type": "UMLMessage",
 							"_id": "AAAAAAFJUTwlMJx0Si4=",
 							"_parent": {
 								"$ref": "AAAAAAFJNy2Emx4VkZU="
@@ -36726,122 +36842,6 @@
 							"visibility": "public",
 							"messageSort": "synchCall",
 							"arguments": "newLivraison, idLivraisonBefore"
-						},
-						{
-							"_type": "UMLMessage",
-							"_id": "AAAAAAFJdNGGAmWJc/0=",
-							"_parent": {
-								"$ref": "AAAAAAFJNy2Emx4VkZU="
-							},
-							"name": "RemoveLivraison",
-							"source": {
-								"$ref": "AAAAAAFJdM9NJmScPho="
-							},
-							"target": {
-								"$ref": "AAAAAAFJdM+6xmS/mGM="
-							},
-							"visibility": "public",
-							"messageSort": "synchCall",
-							"arguments": "id"
-						},
-						{
-							"_type": "UMLMessage",
-							"_id": "AAAAAAFJdNKk9HkAqvU=",
-							"_parent": {
-								"$ref": "AAAAAAFJNy2Emx4VkZU="
-							},
-							"name": "CommandRemoveOne",
-							"source": {
-								"$ref": "AAAAAAFJdM+6xmS/mGM="
-							},
-							"target": {
-								"$ref": "AAAAAAFJdM/wgWTjwnY="
-							},
-							"visibility": "public",
-							"messageSort": "synchCall",
-							"arguments": "id"
-						},
-						{
-							"_type": "UMLMessage",
-							"_id": "AAAAAAFJdNQJYXl8xqY=",
-							"_parent": {
-								"$ref": "AAAAAAFJNy2Emx4VkZU="
-							},
-							"name": "Execute",
-							"source": {
-								"$ref": "AAAAAAFJdM+6xmS/mGM="
-							},
-							"target": {
-								"$ref": "AAAAAAFJdM/wgWTjwnY="
-							},
-							"visibility": "public",
-							"messageSort": "synchCall"
-						},
-						{
-							"_type": "UMLMessage",
-							"_id": "AAAAAAFJdNLNCXkWg+U=",
-							"_parent": {
-								"$ref": "AAAAAAFJNy2Emx4VkZU="
-							},
-							"name": "RemoveLivraison",
-							"source": {
-								"$ref": "AAAAAAFJdM/wgWTjwnY="
-							},
-							"target": {
-								"$ref": "AAAAAAFJdNBab2UKuZY="
-							},
-							"visibility": "public",
-							"messageSort": "synchCall",
-							"arguments": "id"
-						},
-						{
-							"_type": "UMLMessage",
-							"_id": "AAAAAAFJdP2BcL8WUy8=",
-							"_parent": {
-								"$ref": "AAAAAAFJNy2Emx4VkZU="
-							},
-							"name": "recalcultateAfterRemove",
-							"source": {
-								"$ref": "AAAAAAFJdNBab2UKuZY="
-							},
-							"target": {
-								"$ref": "AAAAAAFJdP0ZHr7xFOs="
-							},
-							"visibility": "public",
-							"messageSort": "synchCall",
-							"arguments": "livraisonSuppr"
-						},
-						{
-							"_type": "UMLMessage",
-							"_id": "AAAAAAFJdNOdB3lmfRg=",
-							"_parent": {
-								"$ref": "AAAAAAFJNy2Emx4VkZU="
-							},
-							"name": "Success",
-							"source": {
-								"$ref": "AAAAAAFJdNBab2UKuZY="
-							},
-							"target": {
-								"$ref": "AAAAAAFJdM/wgWTjwnY="
-							},
-							"visibility": "public",
-							"messageSort": "synchCall"
-						},
-						{
-							"_type": "UMLMessage",
-							"_id": "AAAAAAFJdNSyNXmZdP8=",
-							"_parent": {
-								"$ref": "AAAAAAFJNy2Emx4VkZU="
-							},
-							"name": "addToStack",
-							"source": {
-								"$ref": "AAAAAAFJdM/wgWTjwnY="
-							},
-							"target": {
-								"$ref": "AAAAAAFJdM+6xmS/mGM="
-							},
-							"visibility": "public",
-							"messageSort": "synchCall"
 						}
 					],
 					"participants": [
