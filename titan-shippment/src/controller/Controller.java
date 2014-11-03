@@ -2,12 +2,14 @@ package controller;
 
 import model.planning.Manager;
 import model.planning.PlageHoraire;
-//import model.
+import model.planning.InterfacePlanning;
+import model.agglomeration.InterfaceAgglo;
 
 public class Controller {
 
 	Manager manager;
-	
+	InterfaceAgglo interfaceAgglo;
+	InterfacePlanning interfacePlanning;
 	UndoRedo undoRedo;
 	
 	public Controller()
@@ -16,12 +18,13 @@ public class Controller {
 	}
 
 	
-	public boolean LoadPlanXML(String absFilePath) {
-		
+	public boolean LoadPlanXML(String absFilePath) 
+	{
 		return true;
 	}
 	
-	public boolean LoadLivraisonsXML(String absFilePath) {
+	public boolean LoadLivraisonsXML(String absFilePath) 
+	{
 		return true;
 	}
 	
@@ -29,32 +32,35 @@ public class Controller {
 		return true;
 	}
 	
-	public boolean InsertIntoUndoRedoAdd (int X, int Y, PlageHoraire plageHoraire, int idClient, int idLivraisonBefore) {
+	public boolean InsertIntoUndoRedoAdd (int X, int Y, PlageHoraire plageHoraire, int idClient, int idLivraisonBefore) 
+	{
 		return true;
 	}
 	
-	public boolean AddLivraison (int X, int Y, PlageHoraire plageHoraire, int idClient) {
+	public boolean AddLivraison (int X, int Y, String heureDebut, String heureFin, int idClient) 
+	{
 		return true;
 	}
 	
-	public boolean RemoveLivraison (int idLivraison) {
+	public boolean RemoveLivraison (int x, int y) 
+	{
 		return true;
 	}
 	
-	public boolean ValidateLivraison (int idLivraison) {
+	/*public boolean ValidateLivraison (int idLivraison) {
 		return true;
 	}
 	
 	public boolean UnvalidateLivraison (int idLivraison) {
 		return true;
 	}
-	
+	*/
 	public boolean Undo() {
-		return true;
+		return undoRedo.Undo();
 	}
 	
 	public boolean Redo() {
-		return true;
+		return undoRedo.Redo();
 	}
 	
 	public void titan () {
