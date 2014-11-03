@@ -2,6 +2,7 @@ package main;
 
 import java.util.ArrayList;
 
+import view.Fenetre;
 import model.agglomeration.Noeud;
 import model.agglomeration.Plan;
 import model.agglomeration.Troncon;
@@ -21,8 +22,8 @@ public class Main {
 		
 		// generate random nodes
 		int nbNodes = 20;
-		int maxX = 100;
-		int maxY = 100;
+		int maxX = 500;
+		int maxY = 400;
 		
 		for (int i = 0; i < nbNodes; ++i) {
 			int x = (int)Math.floor(Math.random()*maxX);
@@ -63,6 +64,9 @@ public class Main {
 		
 		// display MAP
 		System.out.println(plan.toString());
+		
+		Fenetre fenetre = new Fenetre(plan);
+		fenetre.setVisible(true);
 		
 	}
 }
