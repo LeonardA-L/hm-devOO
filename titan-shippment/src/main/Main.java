@@ -18,8 +18,8 @@ public class Main {
 	
 	public void go() {
 		int nbNodes = 20;
-		int maxX = 100;
-		int maxY = 100;
+		int maxX = 500;
+		int maxY = 400;
 		Plan plan = PlanTest.DummyPlanCreate(nbNodes, maxX, maxY);
 		
 		ShippmentGraph shGraph = plan.computeShippmentGraph();
