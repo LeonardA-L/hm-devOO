@@ -32,9 +32,16 @@ public class Controller {
 		return true;
 	}
 	
-	public boolean InsertIntoUndoRedoAdd (int X, int Y, PlageHoraire plageHoraire, int idClient, int idLivraisonBefore) 
+	// Add 1 livraison (by clicking on the map on the location of a new livraison)
+	public boolean InsertIntoUndoRedoAdd (int x, int y, String heureDebut, String heureFin, int idClient, int prevX, int prevY) 
 	{
-		return true;
+		return undoRedo.InsertAddCmd(x, y, idClient, heureDebut, heureFin, prevX, prevY);
+	}
+	
+	// Remove on livraison by clicking on it on the map
+	public boolean InsertIntoUndoRedoRemove()
+	{
+		return false;
 	}
 	
 	public boolean AddLivraison (int X, int Y, String heureDebut, String heureFin, int idClient) 
@@ -62,11 +69,6 @@ public class Controller {
 	public boolean Redo() {
 		return undoRedo.Redo();
 	}
-	
-	public void titan () {
-		System.out.println("JAVA-TITAN");
-	}
-	
-	
+
 	
 }

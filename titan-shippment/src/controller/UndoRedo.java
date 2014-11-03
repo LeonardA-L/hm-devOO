@@ -41,9 +41,9 @@ public class UndoRedo {
 			return false;
 	}
 	
-	public boolean InsertAddCmd(int x, int y, int CLient, String heureDebut, String heureFin, int idNodeBefore)
+	public boolean InsertAddCmd(int x, int y, int client, String heureDebut, String heureFin, int prevX, int prevY)
 	{
-		ICommand add = new CommandAddOne();
+		ICommand add = new CommandAddOne(x, y, heureDebut, heureFin, client, prevX, prevY);
 		// execute, add to stack if it worked
 		return true;
 	}

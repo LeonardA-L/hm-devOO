@@ -21,6 +21,36 @@ public class Manager {
 		this.tournee = tournee;
 	}
 
+	/* Method used by CommandAddOne
+	 * @param x 	X coordinate where the user clicked on map to create the new livraison
+	 * @param y 	Y coordinate where the user clicked on map to create the new livraison
+	 * @param heureDebut 	Start of PlageHoraire as written by user
+	 * @param heureFin		End of PlageHoraire as written by user
+	 * @param client		id of client
+	 * @param xBefore 		X coordinate of the livraison after which the new livraison is added
+	 * @param yBefore		Y coordinate of the livraison after which the new livraison is added
+	 * @return True or false depending on the success of the command
+	 * @see CommandAddOne
+	 */
+	public boolean AddOneLivraison(int x, int y, String heureDebut, String heureFin, int client, int xBefore, int yBefore)
+	{
+		// See sequence diagram.
+		return false;
+	}
+	
+	/* Method used by CommandAddOne
+	 * @param x 	X coordinate where the user clicked on map to remove the new livraison
+	 * @param y 	Y coordinate where the user clicked on map to remove the new livraison
+	 * @return  True or false depending on the success of the command
+	 * @see 	CommandRemoveOne
+	 */
+	public boolean RemoveLivraison(int x, int y)
+	{
+		// See sequence diagram. 
+		return false;
+	}
+	
+
 	public ArrayList<Livraison> getLivraisons() {
 		return livraisons;
 	}

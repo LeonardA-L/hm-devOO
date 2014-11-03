@@ -16,14 +16,7 @@ public class CommandRemoveOne implements ICommand{
 	}
 
 	public boolean CommandAddOne (int adr, PlageHoraire pH, int idClient) {
+		
 		return true;
 	}
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
 }
