@@ -2,6 +2,8 @@ package model.agglomeration;
 
 import java.util.ArrayList;
 
+import utils.ShippmentGraph;
+
 public class Plan {
 	
 	private Noeud entrepot;
@@ -66,6 +68,13 @@ public class Plan {
 		return retour;
 	}
 	
-	
+	public ShippmentGraph computeShippmentGraph(){
+		ShippmentGraph shGraph = new ShippmentGraph(getNoeuds().size());
+		for(Noeud n : getNoeuds()){
+			shGraph.addNode(n);
+		}
+		shGraph.fillBlankCosts();
+		return shGraph;
+	}
 
 }
