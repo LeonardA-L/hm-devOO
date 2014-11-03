@@ -1,12 +1,8 @@
 package main;
-
-import java.util.ArrayList;
-
 import tests.PlanTest;
 import utils.ShippmentGraph;
-import model.agglomeration.Noeud;
+import view.Fenetre;
 import model.agglomeration.Plan;
-import model.agglomeration.Troncon;
 
 public class Main {
 
@@ -30,6 +26,9 @@ public class Main {
 		
 		// display MAP
 		System.out.println(plan.toString());
+		
+		Fenetre fenetre = new Fenetre(plan);
+		fenetre.setVisible(true);
 		
 	}
 }
