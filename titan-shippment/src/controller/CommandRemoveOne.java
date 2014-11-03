@@ -2,7 +2,7 @@ package controller;
 
 import model.planning.PlageHoraire;
 
-public class CommandRemoveOne {
+public class CommandRemoveOne implements ICommand{
 	private int oldAdresse;
 	private int oldClient;
 	private PlageHoraire oldPlageHoraire;

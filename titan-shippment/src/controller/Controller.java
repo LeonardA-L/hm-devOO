@@ -1,10 +1,23 @@
 package controller;
 
-import model.planning.*;
+import model.planning.Manager;
+import model.planning.PlageHoraire;
+//import model.
 
 public class Controller {
 
+	Manager manager;
+	
+	UndoRedo undoRedo;
+	
+	public Controller()
+	{
+		
+	}
+
+	
 	public boolean LoadPlanXML(String absFilePath) {
+		
 		return true;
 	}
 	
@@ -47,12 +60,7 @@ public class Controller {
 	public void titan () {
 		System.out.println("JAVA-TITAN");
 	}
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
+	
+	
+	
 }

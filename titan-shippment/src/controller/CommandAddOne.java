@@ -2,7 +2,7 @@ package controller;
 
 import model.planning.PlageHoraire;
 
-public class CommandAddOne {
+public class CommandAddOne implements ICommand {
 	private int newAdresse;
 	private int newClient;
 	private PlageHoraire newPlageHoraire;
