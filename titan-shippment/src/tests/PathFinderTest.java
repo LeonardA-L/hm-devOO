@@ -20,7 +20,7 @@ public class PathFinderTest {
 	}
 	
 	@Test
-	public void findShortestPathOfGigaPlAn() {
+	public void findShortestPathOfGigaPlAnton() {
 		int[] expected = {0,1,4,5};
 		int[] actualPath = f.findShortestPath(0, 5);
 		

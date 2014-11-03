@@ -92,5 +92,9 @@ public class ShippmentGraph implements Graph {
 			}
 		}
 	}
-
+	/*
+	public Iterator<Integer> getVertexIterator() {
+		
+	}
+*/
 }
