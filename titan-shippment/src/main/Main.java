@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import model.agglomeration.Noeud;
 import model.agglomeration.Plan;
 import model.agglomeration.Troncon;
-import model.planning.Manager;
 
 public class Main {
 
