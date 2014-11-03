@@ -2,19 +2,19 @@ package model.planning;
 
 import java.util.ArrayList;
 
-public class InterfacingPlanningWithController {
+public class Manager {
 
 	private ArrayList<Livraison> livraisons;
 	private ArrayList<Livraison> livraisonsEffectuees;
 	private Tournee tournee;
 	
-	public InterfacingPlanningWithController() {
+	public Manager() {
 		this.livraisons = new ArrayList<Livraison>();
 		this.livraisonsEffectuees = new ArrayList<Livraison>();
 		this.tournee = new Tournee();
 	}
 
-	public InterfacingPlanningWithController(ArrayList<Livraison> livraisons,
+	public Manager(ArrayList<Livraison> livraisons,
 			ArrayList<Livraison> livraisonsEffectuees, Tournee tournee) {
 		this.livraisons = livraisons;
 		this.livraisonsEffectuees = livraisonsEffectuees;
