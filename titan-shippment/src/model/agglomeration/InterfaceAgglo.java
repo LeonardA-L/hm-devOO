@@ -1,6 +1,6 @@
 package model.agglomeration;
 
-public class InterfacingAggloWithUtils {
+public class InterfaceAgglo {
 	public boolean GetAgglosFromBuilder(String absFilePath) {
 		return true;
 	}
