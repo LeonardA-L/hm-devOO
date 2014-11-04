@@ -6,6 +6,7 @@ import java.util.HashSet;
 
 import org.junit.Before;
 import org.junit.Test;
+import utils.BreadthFirstFinder;
 
 import utils.DijkstraFinder;
 import utils.PathFinder;
@@ -16,7 +17,7 @@ public class PathFinderTest {
 	
 	@Before
 	public void createPF() {
-		f = new DijkstraFinder(PlanTest.DummyPlanCreate().computeShippmentGraph());
+		f = new BreadthFirstFinder(PlanTest.DummyPlanCreate().computeShippmentGraph());
 	}
 	
 	@Test
