@@ -19,7 +19,7 @@ import model.agglomeration.Plan;
 
 public class Fenetre extends JFrame {
 	
-	private ViewPlan view_plan;
+	private VuePlan view_plan;
 	private JPanel container;
 	private JPanel top;
 	private JPanel bottom;
@@ -57,7 +57,7 @@ public class Fenetre extends JFrame {
 		this.top.setPreferredSize(sizeTop);
 		this.top.setLayout(new GridLayout(1,2));
 		
-		this.view_plan = new ViewPlan(plan);
+		this.view_plan = new VuePlan(plan);
 		this.top.add(this.view_plan, 0);
 		
 		// list livraisons & btn
@@ -116,11 +116,11 @@ public class Fenetre extends JFrame {
 		this.top_right.add(btn_panel, 1);
 	}
 
-	public ViewPlan getViewPlan() {
+	public VuePlan getVuePlan() {
 		return view_plan;
 	}
 
-	public void setViewPlan(ViewPlan plan) {
+	public void setVuePlan(VuePlan plan) {
 		this.view_plan = plan;
 	}
 
