@@ -40,13 +40,30 @@ public class Plan {
 		this.noeuds.add(noeud);
 		return this.noeuds.size() - 1; 
 	}
-	
+
+	/**
+	 * Add noeud in the Plan (to be used from the xmlbuilder)
+	 * @param coordX	coord X of new node
+	 * @param coordY	coord Y of new node
+	 * @param id		id of new node
+	 * @return			index of created node in "noeuds"
+	 */
 	public int addNoeud(int coordX, int coordY, int id) {
 		Noeud n = new Noeud(coordX, coordY, id, new ArrayList<Troncon>());
 		return addNoeud(n);
 	}
 	
-	public boolean addTronconToNoeud(int idNoeud, String nomRue, int vitesse, int longueur, int idnoeudDestination) {
+	/**
+	 * Add a troncon to a node previously created with addNode()
+	 * (to be used from xmlbuilder
+	 * @param idNoeud				Node Id on which the troncon is added
+	 * @param nomRue				Street name 
+	 * @param vitesse				Speed on the troncon
+	 * @param longueur				Length of troncon
+	 * @param idnoeudDestination	Node toward which goes the troncon
+	 * @return		True or false dependig on the success of method.
+	 */
+	public boolean addTronconToNoeud(int idNoeud, String nomRue, float vitesse, float longueur, int idnoeudDestination) {
 		Noeud in = getNoeudById(idNoeud);
 		Noeud out = getNoeudById(idnoeudDestination);
 		if (in == null || out == null) {
@@ -56,7 +73,6 @@ public class Plan {
 		return true;
 	}
 	
-	
 	/**
 	 * Remove a node from the Plan
 	 * @param indexNoeud 	index of node you want to delete (in noeuds)
@@ -64,7 +80,6 @@ public class Plan {
 	public void removeNoeud(int indexNoeud) {
 		this.noeuds.remove(indexNoeud);
 	}
-	
 	
 	/**
 	 * Find a node in "noeuds" knowing its id
@@ -93,7 +108,7 @@ public class Plan {
 	}
 
 	
-	
+	// GETTERS - SETTERS 
 	public Noeud getEntrepot() {
 		return entrepot;
 	}
@@ -114,10 +129,7 @@ public class Plan {
 	@Override
 	public String toString() {
 		String retour = "Plan [entrepotID=" + entrepot.getId() + "]\n";
-		
 		retour += entrepot.toString();
-		
-		int size = this.noeuds.size();
 		Iterator<Noeud> it = noeuds.iterator();
 		while(it.hasNext()) {
 			retour += it.next().toString();
@@ -127,7 +139,7 @@ public class Plan {
 	
 	
 	/**
-	 * later
+	 * To be commented later
 	 * @return
 	 */
 	public ShippmentGraph computeShippmentGraph(){
