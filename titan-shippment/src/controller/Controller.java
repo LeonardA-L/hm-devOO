@@ -48,6 +48,10 @@ public class Controller implements ActionListener {
 		}
 	}
 	
+	public  InterfaceAgglo getReferenceToInterfaceAgglo() {
+		return interfaceAgglo;
+	}
+	
 	public void trigger(String action, String name) {
 		if (action.equals("click_button")) {
 			
