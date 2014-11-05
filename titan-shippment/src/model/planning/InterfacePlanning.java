@@ -5,8 +5,7 @@ import model.planning.Manager;
 
 
 public class InterfacePlanning {
-	
-	
+
 	
 	/*	Call a method in XMLBuilder, giving it the name of the file
 	 * 	containing the plan. Then get back the array of elements to 
