@@ -1,8 +1,12 @@
 package tests;
 
+import java.nio.file.NoSuchFileException;
+
 import model.agglomeration.InterfaceAgglo;
 import model.agglomeration.Plan;
+
 import org.junit.Test;
+
 import utils.XMLBuilder;
 
 public class TestXMLBuilder {
@@ -11,10 +15,32 @@ public class TestXMLBuilder {
 	public void testBuildPlan(){
 		try {
 			Plan test = XMLBuilder.getPlan("./XML/plan20x20.xml", new InterfaceAgglo(){});
-			int a;
+			System.out.println(test.toString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.toString());
+		}
+	}
+	
+	@Test
+	public void testFileNotFound(){
+		try {
+			Plan test = XMLBuilder.getPlan("./XML/plan20x20_DUMMY.xml", new InterfaceAgglo(){});
+			System.out.println(test.toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.toString());
+		}
+	}
+	
+	@Test
+	public void testSyntaxError(){
+		try {
+			Plan test = XMLBuilder.getPlan("./XML/plan20x20_wrong.xml", new InterfaceAgglo(){});
+			System.out.println(test.toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.toString());
 		}
 	}
 	

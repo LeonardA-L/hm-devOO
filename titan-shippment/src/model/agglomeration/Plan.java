@@ -128,8 +128,16 @@ public class Plan {
 	
 	@Override
 	public String toString() {
-		String retour = "Plan [entrepotID=" + entrepot.getId() + "]\n";
-		retour += entrepot.toString();
+		String retour = "";
+		try{
+			int idEntrepot = entrepot.getId();
+			retour = "Plan [entrepotID=" + entrepot.getId() + "]\n";
+			retour += entrepot.toString();
+		} catch (NullPointerException e){
+			if(!noeuds.isEmpty())
+				retour = "Plan [entrepot non defini]\n";
+		}
+
 		Iterator<Noeud> it = noeuds.iterator();
 		while(it.hasNext()) {
 			retour += it.next().toString();

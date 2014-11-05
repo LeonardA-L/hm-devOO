@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -65,23 +66,24 @@ public class XMLBuilder {
 			    	return 2;
 	}
 
-	//lecture ligne par ligne de tout le fichier.
-	//à chaque ligne : dépecer le markup, récupérer les données
-	//quel format pour les données en sortie ?
-	//! cas d'erreur nested dans le code, à sortir dans une méthode
 	
 	//Erreurs prises en charge : longueur négative, vitesse négative, tronçon : arrivée = destination
 	//rapports d'erreur envoyés sur System.err
+	//Renvoie un plan vide en cas d'erreur
 	public static Plan getPlan(String filename, InterfaceAgglo intf)
 	{
-		if(!checkWellformedness(filename)){
-			//TODO
-			//Les rapports d'erreur du vérificateur de syntaxe sont envoyés sur System.err par le SimpleErrorHandler
-		}
 		Plan plan = intf.getPlan();
+
+
 		Path path = (new File(filename)).toPath();
 		try (InputStream in = Files.newInputStream(path);
 			    BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
+			
+			if(!checkWellformedness(filename)){
+				return plan;
+				//TODO
+			}
+			
 			if(getType(reader) != 0){
 				throw new IOException("The input file does not match the expected structure.");
 			}
@@ -108,12 +110,11 @@ public class XMLBuilder {
 			    InputStream in1 = Files.newInputStream(path);
 			    BufferedReader reader1 = new BufferedReader(new InputStreamReader(in1));
 			    line = null;
+			    int idNoeud = 0;
 			    while ((line = reader1.readLine()) != null) {
-			    	int idNoeud = 0; 
 			    	if(line.contains("<Noeud")){
 			    		int index = line.indexOf("id=")+4;
 			    		idNoeud= Integer.parseInt(line.substring(index, line.indexOf("\"", index)));
-			    		reader1.readLine();
 			    	}
 			    	
 			    	while(line.contains("<LeTronconSortant"))
@@ -148,11 +149,8 @@ public class XMLBuilder {
 			    if(in1 != null)
 			    	in1.close();
 			
-			
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (NoSuchFileException e) {
+			System.out.println("Fichier introuvable :" + e.getFile().toString());
 		} catch (NumberFormatException e) {
 			//TODO
 			e.printStackTrace();
