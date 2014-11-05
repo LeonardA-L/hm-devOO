@@ -29,12 +29,12 @@ public class Main {
 		ShippmentGraph shGraph = plan.computeShippmentGraph();
 		
 		shGraph.makeGraphComplete();
-		System.out.println(shGraph.getPaths().get("0-5"));
+		/*System.out.println(shGraph.getPaths().get("0-5"));
 		System.out.println(shGraph.getPaths().get("3-1"));
 		System.out.println(shGraph.getPaths().get("0-4"));
 		System.out.println(shGraph.getPaths().get("0-0"));
 		// display MAP
-		System.out.println(plan.toString());
+		System.out.println(plan.toString());*/
 		
 		Controller controller = Controller.getInstance();
 		controller.setInterfaceAgglo(new InterfaceAgglo());

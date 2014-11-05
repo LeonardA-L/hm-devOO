@@ -20,7 +20,7 @@ import model.agglomeration.Plan;
 public class VuePlan extends Vue {
 	
 	private Plan plan;
-	
+
 	private double ratioVueModele;
 	private VueNoeud vueEntrepot;
 	private ArrayList<VueNoeud> vueNoeuds;
@@ -71,9 +71,9 @@ public class VuePlan extends Vue {
 		});
 	}
 	
-	public Noeud getWhoIsClicked(int x, int y) {
-		if (vueEntrepot.estCliquee(x, y)) {
-			return vueEntrepot.getNoeud();
+	public VueNoeud getWhoIsClicked(int x, int y) {
+		if (vueEntrepot != null && vueEntrepot.estCliquee(x, y)) {
+			return vueEntrepot;
 		}
 		
 		Iterator<VueNoeud> it = vueNoeuds.iterator();
@@ -81,7 +81,7 @@ public class VuePlan extends Vue {
 		while(it.hasNext()) {
 			VueNoeud vue_noeud = it.next();
 			if (vue_noeud.estCliquee(x, y)) {
-				return vue_noeud.getNoeud();
+				return vue_noeud;
 			}
 		}
 		
@@ -89,6 +89,9 @@ public class VuePlan extends Vue {
 	}
 	
 	protected void dessine(Graphics g) {
+		// clear all former views
+		super.paintComponent(g);
+		
 		// si le plan est chargé
 		if (plan != null) {
 			Iterator<VueNoeud> it = vueNoeuds.iterator();
@@ -132,6 +135,25 @@ public class VuePlan extends Vue {
 	private void drawPoint(Graphics2D g, int x, int y) {
 		g.drawLine(x-5, y, x+5, y);
 		g.drawLine(x, y-5, x, y+5);
+	}
+	
+	public Plan getPlan() {
+		return plan;
+	}
+
+	public void setPlan(Plan plan) {
+		this.plan = plan;
+		
+		Iterator<Noeud> it = plan.getNoeuds().iterator();
+		
+		while (it.hasNext()) {
+			this.vueNoeuds.add(new VueNoeud(it.next()));
+		}
+	}
+
+	public void reset() {
+		vueEntrepot = null;
+		vueNoeuds.clear();
 	}
 
 }

@@ -25,6 +25,7 @@ public class VueTroncon extends Vue {
 	}
 	
 	public void dessine(Graphics g, Noeud noeud) {
+		super.paintComponent(g);
 		g.drawLine(noeud.getCoordX(), noeud.getCoordY(), troncon.getNoeudDestination().getCoordX(), troncon.getNoeudDestination().getCoordY());
 	}
 	

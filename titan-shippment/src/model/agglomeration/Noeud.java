@@ -104,11 +104,12 @@ public class Noeud {
 	@Override
 	public String toString() {
 		String retour = "\tNoeud " + id + " [" + coordX + "," + coordY + "] :\n";
-		int size = troncons.size();
 		
-		for (int i = 0; i < size; ++i) {
-			retour += "\t\t" + troncons.get(i).toString() + "\n";
+		Iterator<Troncon> it = troncons.iterator();
+		while (it.hasNext()) {
+			retour += "\t\t" + it.next().toString() + "\n";
 		}
+		
 		return retour;
 	}
 

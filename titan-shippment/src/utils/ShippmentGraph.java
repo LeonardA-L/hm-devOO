@@ -54,6 +54,45 @@ public class ShippmentGraph implements Graph {
 		return cost;
 	}
 
+	public ShippmentGraph createTSPGraph(ArrayList<Integer> nodes){
+		int n = nodes.size();
+		ShippmentGraph shGraph = new ShippmentGraph(n);
+		int[][] totalCosts = this.getCost();
+		int[][] costs = new int[n][n];
+		
+		int min = Integer.MAX_VALUE;
+		int max = -1;
+		for(int i : nodes){
+			for(int j : nodes){
+				costs[nodes.indexOf(i)][nodes.indexOf(j)] = totalCosts[i][j];
+				if(totalCosts[i][j] > max){
+					max = totalCosts[i][j];
+				}
+				if(totalCosts[i][j] < min){
+					min = totalCosts[i][j];
+				}
+			}
+		}
+		shGraph.setMaxArcCost(max);
+		shGraph.setMinArcCost(min);
+		shGraph.setNbVertices(n);
+		shGraph.setCost(costs);
+		
+		ArrayList<ArrayList<Integer>> succs = new ArrayList<ArrayList<Integer>>(n);
+		ArrayList<Integer> indexList = new ArrayList<Integer>();
+		for (int i=0; i< n;i++) {
+			indexList.add(i);
+		}
+		for (int i=0; i< n;i++) {
+			ArrayList<Integer> copyNodes = new ArrayList<Integer>(indexList);
+			//copyNodes.remove(i);
+			succs.add(copyNodes);
+		}
+		
+		shGraph.setSucc(succs);
+		return shGraph;
+	}
+	
 	public int[] getSucc(int i) throws ArrayIndexOutOfBoundsException{
 		if ((i<0) || (i>=nbVertices))
 			throw new ArrayIndexOutOfBoundsException();
@@ -136,5 +175,24 @@ public class ShippmentGraph implements Graph {
 
 	public void setCost(int[][] cost) {
 		this.cost = cost;
+	}
+	public ArrayList<ArrayList<Integer>> getSucc() {
+		return succ;
+	}
+
+	public void setSucc(ArrayList<ArrayList<Integer>> succ) {
+		this.succ = succ;
+	}
+
+	public void setNbVertices(int nbVertices) {
+		this.nbVertices = nbVertices;
+	}
+
+	public void setMaxArcCost(int maxArcCost) {
+		this.maxArcCost = maxArcCost;
+	}
+
+	public void setMinArcCost(int minArcCost) {
+		this.minArcCost = minArcCost;
 	}
 }

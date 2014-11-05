@@ -50,7 +50,7 @@ public class Plan {
 	 */
 	public int addNoeud(int coordX, int coordY, int id) {
 		Noeud n = new Noeud(coordX, coordY, id, new ArrayList<Troncon>());
-		return addNoeud(n);
+		return this.addNoeud(n);
 	}
 	
 	/**
@@ -106,6 +106,14 @@ public class Plan {
 		}
 		return matriceAdj;
 	}
+	
+	public void reset() {
+		// remove entrepot
+		entrepot = null;
+		
+		// remove all nodes
+		noeuds.clear();
+	}
 
 	
 	// GETTERS - SETTERS 
@@ -128,11 +136,20 @@ public class Plan {
 	
 	@Override
 	public String toString() {
-		String retour = "Plan [entrepotID=" + entrepot.getId() + "]\n";
-		retour += entrepot.toString();
+		String retour = "";
+		try{
+			int idEntrepot = entrepot.getId();
+			retour = "Plan [entrepotID=" + entrepot.getId() + "]\n";
+			retour += entrepot.toString();
+		} catch (NullPointerException e){
+			if(!noeuds.isEmpty())
+				retour = "Plan [entrepot non defini]\n";
+		}
+		
 		Iterator<Noeud> it = noeuds.iterator();
 		while(it.hasNext()) {
-			retour += it.next().toString();
+			Noeud n = it.next();
+			retour += n.toString();
 		}
 		return retour;
 	}
@@ -148,6 +165,7 @@ public class Plan {
 			shGraph.addNode(n);
 		}
 		//shGraph.fillBlankCosts();
+		shGraph.makeGraphComplete();
 		return shGraph;
 	}
 

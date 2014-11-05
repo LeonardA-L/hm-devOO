@@ -3,11 +3,15 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JOptionPane;
+
+import view.agglomeration.VueNoeud;
 import view.utils.InterfaceView;
 
 
 import model.planning.InterfacePlanning;
 import model.agglomeration.InterfaceAgglo;
+import model.agglomeration.Noeud;
 
 
 public class Controller implements ActionListener {
@@ -18,10 +22,14 @@ public class Controller implements ActionListener {
 	private InterfacePlanning interfacePlanning;
 	private InterfaceView interfaceView;
 	private UndoRedo undoRedo;
+	
+	private boolean mapLoaded;
+	private boolean livraisonsLoaded;
 
 	private Controller()
 	{
-		
+		mapLoaded = false;
+		livraisonsLoaded = false;
 	}
 	
 	// implement singleton
@@ -35,35 +43,72 @@ public class Controller implements ActionListener {
 	public void trigger(String action, int x, int y) {
 		if (action.equals("click_map")) {
 			// clic sur la carte aux coordonnées (x,y)
-			//VuePlan view_plan = interfaceView.getPlan();
+			VueNoeud view_noeud = interfaceView.getVue_plan().getWhoIsClicked(x, y);
 			
-			// savoir qui est cliqué
-			//Noeud noeud = view_plan.getWhoIsClicked(x, y);
-			
-			//if (noeud != null) {
+			if (view_noeud != null) {
 				// un noeud a bien été cliqué
-				// noeud.isLivraison() ? nothingToDo : addLivraisonWithThisNode;
-			//}
-			System.out.println("Clic recu en [" + x + "," + y + "]");
+				interfaceView.displayAlert("Ajouter une livraison", "Vous avez cliqué sur le noeud : " + view_noeud.getNoeud().toString(), "info");
+				
+				// node HL
+				view_noeud.highlight();
+				interfaceView.repaint();
+			}
 		}
 	}
 	
-	public void trigger(String action, String name) {
-		if (action.equals("click_button")) {
-			
-		}
+	public  InterfaceAgglo getReferenceToInterfaceAgglo() {
+		return interfaceAgglo;
 	}
-	public void trigger(String action, String name, String filename) {
-		// TODO Auto-generated method stub
+	
+	public void trigger(String action, String name) {
 		if (action.equals("loadFile")) {
 			if (name.equals("loadMap")) {
+				
+				String filename = interfaceView.loadFile();
+				
 				if (filename != null && filename.length() > 0) {
-					interfaceAgglo.BuildPlanFromXml(filename);
+					
+					// remove former map
+					interfaceAgglo.getPlan().reset();
+					interfaceView.getVue_plan().reset();
+					
+					boolean buildOk = interfaceAgglo.BuildPlanFromXml(filename);
+					
+					if (buildOk) {
+						mapLoaded = true;
+					}
+					else {
+						mapLoaded = false;
+						interfaceView.displayAlert("Erreur au chargement de la carte", "La carte n'a pas été chargée correctement.", "error");
+					}
+					
+					interfaceView.getVue_plan().setPlan(interfaceAgglo.getPlan());
+					interfaceView.repaint();
 				}
 			}
 			else if (name.equals("loadLivraisons")) {
-				//interfacePlanning ...
+				if (!mapLoaded) {
+					interfaceView.displayAlert("Impossible de charger les livraisons", "Vous devez charger une carte au préalable.", "warning");
+				}
+				else {
+					String filename = interfaceView.loadFile();
+					interfaceView.displayAlert("Livraisons", "Chargement des livraisons en cours ...", "info");
+					// reset livraisons
+					// load livraisons
+					livraisonsLoaded = true;
+				}
 			}
+		}
+		else if (action.equals("click_button")) {
+			if (!mapLoaded || !livraisonsLoaded) {
+				interfaceView.displayAlert("Impossible de calculer la tournée", "Vous devez charger une carte et une livraison au préalable.", "warning");
+			}
+			else {
+				interfaceView.displayAlert("Tournée", "Calcul de la tournée en cours ...", "info");
+				// reset tournee
+				// calcul tournee
+			}
+			
 		}
 		
 	}
