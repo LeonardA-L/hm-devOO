@@ -41,10 +41,53 @@ public class PathFinderTest {
 
 	}
 	
-	@Test
+	//@Test
 	public void noPathAvailable(){
 		ArrayList<Integer> actualPath = f.findShortestPath(3, 0);
 		assertNull(actualPath);
+	}
+	
+	@Test
+	public void findCycle(){
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		list.add(0);
+		list.add(4);
+		list.add(5);
+		ArrayList<Integer> e1 = new ArrayList<Integer>();
+		list.add(4);
+		list.add(5);
+		list.add(0);
+		ArrayList<Integer> e2 = new ArrayList<Integer>();
+		list.add(0);
+		list.add(4);
+		list.add(5);
+		ArrayList<Integer> e3 = new ArrayList<Integer>();
+		list.add(5);
+		list.add(0);
+		list.add(4);
+		
+		ArrayList<Integer> cycle = f.findCycle(1000000, list);
+		System.out.println(cycle);
+		
+		
+		boolean s1 = true;
+		for (int i = 0; i < e1.size(); i++) {
+			s1 &= e1.get(i) == cycle.get(i);
+		}
+		
+		boolean s2 = true;
+		for (int i = 0; i < e2.size(); i++) {
+			s2 &= e2.get(i) == cycle.get(i);
+		}
+		
+		boolean s3 = true;
+		for (int i = 0; i < e3.size(); i++) {
+			s3 &= e3.get(i) == cycle.get(i);
+		}
+		
+		
+		assertTrue(s1|s2|s3);
+		
 	}
 
 }

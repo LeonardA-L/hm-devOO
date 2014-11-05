@@ -26,7 +26,12 @@ public class InterfaceAgglo {
 		plan = p;
 		return true;
 	}
-		
+	
+	public float[][] GetFormatedMap(){
+		float[][] matrice = plan.GetMatrix();
+		return matrice;
+	}
+	
 	public Plan getPlan() {
 		return plan;
 	}
