@@ -18,10 +18,13 @@ public class Tournee {
 		this.itineraires = itineraires;
 	}
 	
+	// no sure this is still useful ... ?
 	public Tournee calcul() {
 		// do math stuff
 		return this;
 	}
+	
+	
 
 	public ArrayList<Livraison> getLivraisons() {
 		return livraisons;
