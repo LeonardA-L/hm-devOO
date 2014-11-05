@@ -47,7 +47,7 @@ public class InterfacePlanning {
 	}
 	
 	/**
-	 * 	Celle là elle est pour Quentin -> comment tu bind les clic souris et un point sur le graphique (id qui sert d'adresse)
+	 * 	Celle là elle est pour Quentin -> comment tu bind les clics souris et un point sur le graphique (id qui sert d'adresse)
 	 * @param idCLient
 	 * @param idLivraison
 	 * @param heureDebut
