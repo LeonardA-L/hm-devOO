@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import controller.Controller;
 
+
 import model.agglomeration.Noeud;
 
 public class InterfacePlanning {
@@ -23,6 +24,13 @@ public class InterfacePlanning {
 		return true;
 	}
 	
+	
+	private boolean generateLivraisons () {
+		return true;
+	}
+	public boolean addLivraison(int idClient, int idLivraison,String heureDebut, String heureFin, int adresse) {
+		return true;
+	}
 	
 	/**
 	 * Add a livraison in listeLivraisons (for use with the xml builder)
@@ -58,6 +66,7 @@ public class InterfacePlanning {
 	 */
 	public boolean AddLivraison(int idCLient, int idLivraison, String heureDebut, String heureFin, float xNew, float yNew, float xPrev, float yPrev) {
 		return false;
+>>>>>>> origin/master
 	}
 	
 	
