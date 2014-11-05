@@ -14,45 +14,49 @@ import org.junit.Test;
 public class PlanTest {
 
 	Plan dummy;
+	/**
+	 * This Plan returns a dummy graph used for testing.
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * @return
+	 */
+	public static Plan DummyPlanCreate(){
 
-
-
-
-
-
-
-/**
-   Generates the following graph with weights in parens.
-Ex.
-		       ____ _  	    ____  _    _       	  _
-		      /	___(_) __ _|  _	\| |  /	\   _ __ | |_ ___  _ __
-		     | |  _| |/	_` | |_) | | / _ \ | '_	\| __/ _ \| '_ \
-		     | |_| | | (_| |  __/| |/ ___ \| | | | || (_) | | |	|
-		      \____|_|\__, |_| 	 |_/_/ 	 \_\_| |_|\__\___/|_| |_|
-		       	      |___/
-
-
-
-			     ->1\
-			   /-	 \-
-		    (1)	./-	   \- (1)		 ->3\
-		      /--	     \--	       --|   --\ (3)
-		   /--		        \-	    --/		-\
-		 /-		          \-     --/		  ----|
-	        O-\    		            \---/		      V
-	          -\   			    -/ \-		    ->5
-	            -\  	         --/     \-		    |   
-		      --\ 	      --/	   \--		 --/
-		   (1)   -\        --/	(2)	      \-      --/ (3)
-			   -\    --/		        \-  -/
-			     ->2/			 ->4
-
-
-*/ 
-
+		Noeud storeHouse = new Noeud(0,1,5,new ArrayList<Troncon>());
+		Noeud n1 = new Noeud(1,0,0,new ArrayList<Troncon>());
+		Noeud n2 = new Noeud(1,2,1,new ArrayList<Troncon>());
+		Noeud n3 = new Noeud(2,0,2,new ArrayList<Troncon>());
+		Noeud n4 = new Noeud(2,2,3,new ArrayList<Troncon>());
+		Noeud n5 = new Noeud(3,1,4,new ArrayList<Troncon>());
+		
+		Plan gigaAnton = new Plan(storeHouse, new ArrayList<Noeud>());
+		
+		gigaAnton.addNoeud(n1);
+		gigaAnton.addNoeud(n2);
+		gigaAnton.addNoeud(n3);
+		gigaAnton.addNoeud(n4);
+		gigaAnton.addNoeud(n5);
+		gigaAnton.addNoeud(storeHouse);
+		
+		storeHouse.addTroncon(new Troncon("r1", 1, 1, n1));
+		storeHouse.addTroncon(new Troncon("r2", 1, 1, n2));
+		
+		n1.addTroncon(new Troncon("r3", 1, 1, n4));
+		n2.addTroncon(new Troncon("r4", 1, 2, n3));
+		n3.addTroncon(new Troncon("r5", 1, 3, n5));
+		n4.addTroncon(new Troncon("r6", 1, 3, n5));
+		n5.addTroncon(new Troncon("r6", 1, 0, storeHouse));
+		
+		return gigaAnton;
+	}
+	
 	public static Plan DummyPlanCreate(int nbNodes, int maxX, int maxY){
 		// creating map
-		String[] rues = {"Avenue des titans", "Rue de Léonard", "wess c ma ru, ru de yaannnn", "Anton Long Avenue", "GIGA AVENUE", "SSSSSSSS-GBD street"};
+		String[] rues = {"Avenue des titans", "Rue de Lï¿½onard", "wess c ma ru, ru de yaannnn", "Anton Long Avenue", "GIGA AVENUE", "SSSSSSSS-GBD street"};
 		
 		Noeud entrepot = new Noeud(20,30,-1, new ArrayList<Troncon>());
 		Plan plan = new Plan(entrepot, new ArrayList<Noeud>());

@@ -2,11 +2,30 @@ package tests;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
+
 import org.junit.Test;
 
 import utils.Graph;
 
 public class ShippmentGraphTest {
+	
+	@Test
+	public void testGetSucc() {
+		Graph g = PlanTest.DummyPlanCreate().computeShippmentGraph();
+		int[] expected = new int[]{1, 2};
+		
+		int[] actual = g.getSucc(0);
+		Arrays.sort(actual);
+		
+		for (int i = 0; i < actual.length; i++) {
+			assertEquals(expected[i], actual[i]);
+		}
+		
+		actual = g.getSucc(4);
+		assertEquals(5, actual[0]);
+	}
+	
 	/**
 	 * Checks that each arc of <code>RegularGraph(nbVertices,degree,minArcCost,maxArcCost)</code> 
 	 * has a cost ranging between<code>minArcCost</code> and <code>maxArcCost</code>
