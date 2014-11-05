@@ -66,7 +66,6 @@ public class InterfacePlanning {
 	 */
 	public boolean AddLivraison(int idCLient, int idLivraison, String heureDebut, String heureFin, float xNew, float yNew, float xPrev, float yPrev) {
 		return false;
->>>>>>> origin/master
 	}
 	
 	
