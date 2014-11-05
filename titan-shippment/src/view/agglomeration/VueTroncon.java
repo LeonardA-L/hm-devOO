@@ -2,8 +2,6 @@ package view.agglomeration;
 
 import java.awt.Graphics;
 
-import javax.swing.JPanel;
-
 import view.utils.Vue;
 import model.agglomeration.Noeud;
 import model.agglomeration.Troncon;

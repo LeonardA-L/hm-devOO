@@ -3,10 +3,8 @@ package model.planning;
 import java.util.ArrayList;
 
 import controller.Controller;
-import utils.XMLBuilder;
 
 import model.agglomeration.Noeud;
-import model.planning.*;
 
 public class InterfacePlanning {
 

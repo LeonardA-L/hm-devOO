@@ -5,8 +5,6 @@ import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-import controller.Controller;
-import model.agglomeration.Plan;
 import view.agglomeration.VuePlan;
 
 public class InterfaceView {

@@ -66,6 +66,7 @@ public class Controller implements ActionListener {
 					
 					// check
 					// addPlageHoraire
+					// interfaceView.askPlageHoraire();
 					// wait for new click
 				}	
 				

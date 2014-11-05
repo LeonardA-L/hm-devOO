@@ -5,8 +5,6 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import javax.swing.JPanel;
-
 import view.utils.Vue;
 import model.agglomeration.Noeud;
 import model.agglomeration.Troncon;

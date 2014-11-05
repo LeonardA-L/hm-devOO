@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.swing.BorderFactory;
-import javax.swing.JPanel;
 
 import view.utils.Vue;
 import controller.Controller;
