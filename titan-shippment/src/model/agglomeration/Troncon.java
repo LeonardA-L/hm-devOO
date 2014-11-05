@@ -3,10 +3,13 @@ package model.agglomeration;
 public class Troncon {
 	
 	private String nomRue;
-	private int vitesse;
-	private int longueur;
+	private float vitesse;
+	private float longueur;
 	private Noeud noeudDestination;
 	
+	/**
+	 * Constructor wo/parameters
+	 */
 	Troncon() {
 		this.nomRue = "";
 		this.vitesse = 0;
@@ -14,7 +17,14 @@ public class Troncon {
 		this.noeudDestination = new Noeud();
 	}
 	
-	public Troncon(String nomRue, int vitesse, int longueur,
+	/**
+	 * Constructor w/params
+	 * @param nomRue			Name of street
+	 * @param vitesse			Speed in the street
+	 * @param longueur			Length of street
+	 * @param noeudDestination	out node
+	 */
+	public Troncon(String nomRue, float vitesse, float longueur,
 			Noeud noeudDestination) {
 		this.nomRue = nomRue;
 		this.vitesse = vitesse;
@@ -22,6 +32,8 @@ public class Troncon {
 		this.noeudDestination = noeudDestination;
 	}
 
+	
+	// GETTERS - SETTERS
 	public String getNomRue() {
 		return nomRue;
 	}
@@ -30,7 +42,7 @@ public class Troncon {
 		this.nomRue = nomRue;
 	}
 
-	public int getVitesse() {
+	public float getVitesse() {
 		return vitesse;
 	}
 
@@ -38,12 +50,16 @@ public class Troncon {
 		this.vitesse = vitesse;
 	}
 
-	public int getLongueur() {
+	public float getLongueur() {
 		return longueur;
 	}
 
 	public void setLongueur(int longueur) {
 		this.longueur = longueur;
+	}
+	
+	public int GetTime(){
+		return longueur/vitesse;
 	}
 	
 	public Noeud getNoeudDestination() {
