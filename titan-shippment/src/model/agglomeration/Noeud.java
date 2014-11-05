@@ -56,8 +56,8 @@ public class Noeud {
 	/**
 	 * 
 	 */
-	public int[] GetCosts(int nbNoeuds){
-		int[] line = new int[nbNoeuds];
+	public float[] GetCosts(int nbNoeuds){
+		float[] line = new float[nbNoeuds];
 		Iterator<Troncon> it = troncons.iterator();
 		while(it.hasNext()){
 			Troncon troncon = it.next();

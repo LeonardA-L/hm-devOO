@@ -58,7 +58,7 @@ public class Troncon {
 		this.longueur = longueur;
 	}
 	
-	public int GetTime(){
+	public float GetTime(){
 		return longueur/vitesse;
 	}
 	
