@@ -39,7 +39,7 @@ public class GreedyBestFirstPathFinder implements PathFinder {
 	 *	@return the path 
 	 **/
 	@Override
-	public int[] findShortestPath(int start, int end) {
+	public ArrayList<Integer> findShortestPath(int start, int end) {
 		
 		boolean[] visited = new boolean[g.getNbVertices()];
 		PriorityQueue<Vertex> q = new PriorityQueue<Vertex>(g.getNbVertices());

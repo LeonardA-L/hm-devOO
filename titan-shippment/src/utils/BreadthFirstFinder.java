@@ -22,10 +22,11 @@ public class BreadthFirstFinder implements PathFinder {
     }
 
     @Override
-    public int[] findShortestPath(int start, int end) {
+    public ArrayList<Integer> findShortestPath(int start, int end) {
 
         if (start == end) {
-            return new int[]{start, end};
+            //return new int[]{start, end};
+        	return null;
         }
 
         //int[][] cost = g.getCost();
@@ -47,7 +48,8 @@ public class BreadthFirstFinder implements PathFinder {
                     
                     visited[n] = vertex;
                     if (n == end) {
-                        return backtrack(visited, end);
+                        //return backtrack(visited, end);
+                    	return null;
                     }
                 }
             }

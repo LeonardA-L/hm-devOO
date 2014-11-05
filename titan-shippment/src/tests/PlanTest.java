@@ -49,7 +49,7 @@ public class PlanTest {
 		n2.addTroncon(new Troncon("r4", 1, 2, n3));
 		n3.addTroncon(new Troncon("r5", 1, 3, n5));
 		n4.addTroncon(new Troncon("r6", 1, 3, n5));
-		n5.addTroncon(new Troncon("r6", 1, 0, storeHouse));
+		//n5.addTroncon(new Troncon("r6", 1, 0, storeHouse));
 		
 		return gigaAnton;
 	}

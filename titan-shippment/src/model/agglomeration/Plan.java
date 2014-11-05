@@ -73,7 +73,7 @@ public class Plan {
 		for(Noeud n : getNoeuds()){
 			shGraph.addNode(n);
 		}
-		shGraph.fillBlankCosts();
+		//shGraph.fillBlankCosts();
 		return shGraph;
 	}
 

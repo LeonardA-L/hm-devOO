@@ -1,5 +1,7 @@
 package utils;
 
+import java.util.ArrayList;
+
 public interface PathFinder {
-	public int[] findShortestPath(int start, int end);
+	public ArrayList<Integer> findShortestPath(int start, int end);
 }
