@@ -1,6 +1,7 @@
 package model.planning;
 
 import utils.XMLBuilder;
+import model.planning.Manager;
 
 
 public class InterfacePlanning {
@@ -19,8 +20,7 @@ public class InterfacePlanning {
 		return true;
 	}
 	
-	
-	
+
 	private boolean generateLivraisons () {
 		return true;
 	}
