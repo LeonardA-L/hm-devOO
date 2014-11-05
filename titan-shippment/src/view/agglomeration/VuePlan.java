@@ -1,4 +1,4 @@
-package view;
+package view.agglomeration;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -12,11 +12,12 @@ import java.util.Iterator;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
+import view.utils.Vue;
 import controller.Controller;
 import model.agglomeration.Noeud;
 import model.agglomeration.Plan;
 
-public class VuePlan extends JPanel {
+public class VuePlan extends Vue {
 	
 	private Plan plan;
 	
@@ -93,18 +94,22 @@ public class VuePlan extends JPanel {
 		return null;
 	}
 	
-	@Override
-	protected void paintComponent(Graphics g) {
-		// TODO Auto-generated method stub
-		
-		Graphics2D g2 = (Graphics2D)g;
-		
+	protected void dessine(Graphics g) {
 		Iterator<VueNoeud> it = vueNoeuds.iterator();
-		
 		while(it.hasNext()) {
 			VueNoeud vue_noeud = it.next();
 			vue_noeud.dessine(g);
 		}
+	}
+	
+	@Override
+	protected void paintComponent(Graphics g) {
+		// TODO Auto-generated method stub
+		dessine(g);
+		
+		//Graphics2D g2 = (Graphics2D)g;
+		
+		
 		
 		/*g2.setColor(Color.BLUE);
 		int nbNoeuds = plan.getNoeuds().size();

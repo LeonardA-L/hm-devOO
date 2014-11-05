@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import view.VuePlan;
+import view.agglomeration.VuePlan;
 import model.planning.Manager;
 import model.planning.PlageHoraire;
 import model.planning.InterfacePlanning;

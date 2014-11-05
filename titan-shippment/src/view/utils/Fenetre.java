@@ -1,4 +1,4 @@
-package view;
+package view.utils;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -15,6 +15,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
+import view.agglomeration.VuePlan;
 import model.agglomeration.Plan;
 
 public class Fenetre extends JFrame {
