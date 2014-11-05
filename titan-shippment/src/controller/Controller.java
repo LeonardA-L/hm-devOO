@@ -53,6 +53,20 @@ public class Controller implements ActionListener {
 			
 		}
 	}
+	public void trigger(String action, String name, String filename) {
+		// TODO Auto-generated method stub
+		if (action.equals("loadFile")) {
+			if (name.equals("loadMap")) {
+				if (filename != null && filename.length() > 0) {
+					interfaceAgglo.BuildPlanFromXml(filename);
+				}
+			}
+			else if (name.equals("loadLivraisons")) {
+				//interfacePlanning ...
+			}
+		}
+		
+	}
 	
 	public void actionPerformed(ActionEvent e) {
 		//appel des autres methodes en fonction de l'action event 
@@ -143,7 +157,4 @@ public class Controller implements ActionListener {
 		this.interfaceView = interfaceView;
 	}
 
-	
-
-	
 }
