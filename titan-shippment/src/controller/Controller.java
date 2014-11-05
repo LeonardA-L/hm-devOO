@@ -25,11 +25,14 @@ public class Controller implements ActionListener {
 	
 	private boolean mapLoaded;
 	private boolean livraisonsLoaded;
+	
+	private boolean addingNewLivraison;
 
 	private Controller()
 	{
 		mapLoaded = false;
 		livraisonsLoaded = false;
+		addingNewLivraison = false;
 	}
 	
 	// implement singleton
@@ -49,6 +52,23 @@ public class Controller implements ActionListener {
 				// un noeud a bien été cliqué
 				interfaceView.displayAlert("Ajouter une livraison", "Vous avez cliqué sur le noeud : " + view_noeud.getNoeud().toString(), "info");
 				
+				if (addingNewLivraison) {
+					// on a déjà cliqué sur un noeud, on précise après quel noeud on ajoute le nouveau
+					
+					// addLivraison
+					
+					// end process
+					addingNewLivraison = false;
+				}
+				else {
+					// premier clic sur un noeud
+					addingNewLivraison = true;
+					
+					// check
+					// addPlageHoraire
+					// wait for new click
+				}	
+				
 				// node HL
 				view_noeud.highlight();
 				interfaceView.repaint();
@@ -61,56 +81,59 @@ public class Controller implements ActionListener {
 	}
 	
 	public void trigger(String action, String name) {
-		if (action.equals("loadFile")) {
-			if (name.equals("loadMap")) {
-				
-				String filename = interfaceView.loadFile();
-				
-				if (filename != null && filename.length() > 0) {
+		if (addingNewLivraison) {
+			interfaceView.displayAlert("Impossible d'effectuer l'action demandée", "Vous ne pouvez pas charger de fichier ou calculer une nouvelle tournée pendant l'ajout d'un point de livraison.", "warning");
+		}
+		else {
+			if (action.equals("loadFile")) {
+				if (name.equals("loadMap")) {
+					String filename = interfaceView.loadFile();
 					
-					// remove former map
-					interfaceAgglo.getPlan().reset();
-					interfaceView.getVue_plan().reset();
-					
-					boolean buildOk = interfaceAgglo.BuildPlanFromXml(filename);
-					
-					if (buildOk) {
-						mapLoaded = true;
+					if (filename != null && filename.length() > 0) {
+						
+						// remove former map
+						interfaceAgglo.getPlan().reset();
+						interfaceView.getVue_plan().reset();
+						
+						boolean buildOk = interfaceAgglo.BuildPlanFromXml(filename);
+						
+						if (buildOk) {
+							mapLoaded = true;
+						}
+						else {
+							mapLoaded = false;
+							interfaceView.displayAlert("Erreur au chargement de la carte", "La carte n'a pas été chargée correctement.", "error");
+						}
+						
+						interfaceView.getVue_plan().setPlan(interfaceAgglo.getPlan());
+						interfaceView.repaint();
+					}
+				}
+				else if (name.equals("loadLivraisons")) {
+					if (!mapLoaded) {
+						interfaceView.displayAlert("Impossible de charger les livraisons", "Vous devez charger une carte au préalable.", "warning");
 					}
 					else {
-						mapLoaded = false;
-						interfaceView.displayAlert("Erreur au chargement de la carte", "La carte n'a pas été chargée correctement.", "error");
+						String filename = interfaceView.loadFile();
+						interfaceView.displayAlert("Livraisons", "Chargement des livraisons en cours ...", "info");
+						// reset livraisons
+						// load livraisons
+						livraisonsLoaded = true;
 					}
-					
-					interfaceView.getVue_plan().setPlan(interfaceAgglo.getPlan());
-					interfaceView.repaint();
 				}
 			}
-			else if (name.equals("loadLivraisons")) {
-				if (!mapLoaded) {
-					interfaceView.displayAlert("Impossible de charger les livraisons", "Vous devez charger une carte au préalable.", "warning");
+			else if (action.equals("click_button")) {
+				if (!mapLoaded || !livraisonsLoaded) {
+					interfaceView.displayAlert("Impossible de calculer la tournée", "Vous devez charger une carte et une livraison au préalable.", "warning");
 				}
 				else {
-					String filename = interfaceView.loadFile();
-					interfaceView.displayAlert("Livraisons", "Chargement des livraisons en cours ...", "info");
-					// reset livraisons
-					// load livraisons
-					livraisonsLoaded = true;
+					interfaceView.displayAlert("Tournée", "Calcul de la tournée en cours ...", "info");
+					// reset tournee
+					// calcul tournee
 				}
+				
 			}
 		}
-		else if (action.equals("click_button")) {
-			if (!mapLoaded || !livraisonsLoaded) {
-				interfaceView.displayAlert("Impossible de calculer la tournée", "Vous devez charger une carte et une livraison au préalable.", "warning");
-			}
-			else {
-				interfaceView.displayAlert("Tournée", "Calcul de la tournée en cours ...", "info");
-				// reset tournee
-				// calcul tournee
-			}
-			
-		}
-		
 	}
 	
 	public void actionPerformed(ActionEvent e) {
