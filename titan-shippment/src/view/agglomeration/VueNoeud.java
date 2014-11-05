@@ -40,14 +40,6 @@ public class VueNoeud extends Vue {
 	}
 	
 	public void dessine(Graphics g) {
-		
-		if (this.graphics_plan == null) {
-			this.graphics_plan = g;
-		}
-		
-		// reset point - ne fonctionne pas :(
-		super.paintComponent(g);
-		
 		int x = noeud.getCoordX();
 		int y = noeud.getCoordY();
 		g.setColor(this.color);
@@ -78,9 +70,6 @@ public class VueNoeud extends Vue {
 
 	public void highlight() {
 		this.setColor(Color.RED);
-		if (graphics_plan != null) {
-			this.dessine(graphics_plan);
-		}
 	}
 
 	public Color getColor() {
