@@ -50,7 +50,7 @@ public class Plan {
 	 */
 	public int addNoeud(int coordX, int coordY, int id) {
 		Noeud n = new Noeud(coordX, coordY, id, new ArrayList<Troncon>());
-		return addNoeud(n);
+		return this.addNoeud(n);
 	}
 	
 	/**
@@ -106,6 +106,14 @@ public class Plan {
 		}
 		return matriceAdj;
 	}
+	
+	public void reset() {
+		// remove entrepot
+		entrepot = null;
+		
+		// remove all nodes
+		noeuds.clear();
+	}
 
 	
 	// GETTERS - SETTERS 
@@ -137,10 +145,11 @@ public class Plan {
 			if(!noeuds.isEmpty())
 				retour = "Plan [entrepot non defini]\n";
 		}
-
+		
 		Iterator<Noeud> it = noeuds.iterator();
 		while(it.hasNext()) {
-			retour += it.next().toString();
+			Noeud n = it.next();
+			retour += n.toString();
 		}
 		return retour;
 	}

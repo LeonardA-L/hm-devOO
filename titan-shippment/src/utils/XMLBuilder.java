@@ -73,8 +73,6 @@ public class XMLBuilder {
 	public static Plan getPlan(String filename, InterfaceAgglo intf)
 	{
 		Plan plan = intf.getPlan();
-
-
 		Path path = (new File(filename)).toPath();
 		try (InputStream in = Files.newInputStream(path);
 			    BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
@@ -93,20 +91,19 @@ public class XMLBuilder {
 			    	int idNoeud=  0;
 			    	
 			    	if(line.contains("<Noeud")){
-			    		
 			    		int index = line.indexOf("id=")+4;
 			    		idNoeud = Integer.parseInt(line.substring(index, line.indexOf("\"", index)));
 			    		index = line.indexOf("x=", index)+3;
 			    		int x = Integer.parseInt(line.substring(index, line.indexOf("\"", index)));
 			    		index = line.indexOf("y=", index)+3;
 			    		int y = Integer.parseInt((line.substring(index, line.indexOf("\"", index))));
-			 
 			    		plan.addNoeud(x, y, idNoeud);
 			    	}			    	
 			    }
 			    
-			    if(in != null)
+			    if(in != null) {
 			    	in.close();
+			    }
 			    InputStream in1 = Files.newInputStream(path);
 			    BufferedReader reader1 = new BufferedReader(new InputStreamReader(in1));
 			    line = null;
@@ -137,18 +134,14 @@ public class XMLBuilder {
 			    		if(idNoeud == idDestination){
 			    			throw new Exception("Id is identical to destination for node" + idNoeud);
 			    		}
-			    		
-			    		Noeud destinationNode = plan.getNoeudById(idDestination);
 			    		plan.addTronconToNoeud(idNoeud, rue, vitesse, longueur, idDestination);
 			    		line = reader1.readLine();
 			    	}
-			    	
-			    	
-			    	
 			    }
-			    if(in1 != null)
+			    
+			    if(in1 != null) {
 			    	in1.close();
-			
+			    }
 		} catch (NoSuchFileException e) {
 			System.out.println("Fichier introuvable :" + e.getFile().toString());
 		} catch (NumberFormatException e) {

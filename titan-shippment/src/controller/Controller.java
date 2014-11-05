@@ -3,11 +3,15 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JOptionPane;
+
+import view.agglomeration.VueNoeud;
 import view.utils.InterfaceView;
 
 
 import model.planning.InterfacePlanning;
 import model.agglomeration.InterfaceAgglo;
+import model.agglomeration.Noeud;
 
 
 public class Controller implements ActionListener {
@@ -35,16 +39,13 @@ public class Controller implements ActionListener {
 	public void trigger(String action, int x, int y) {
 		if (action.equals("click_map")) {
 			// clic sur la carte aux coordonnées (x,y)
-			//VuePlan view_plan = interfaceView.getPlan();
+			VueNoeud view_noeud = interfaceView.getVue_plan().getWhoIsClicked(x, y);
 			
-			// savoir qui est cliqué
-			//Noeud noeud = view_plan.getWhoIsClicked(x, y);
-			
-			//if (noeud != null) {
+			if (view_noeud != null) {
 				// un noeud a bien été cliqué
-				// noeud.isLivraison() ? nothingToDo : addLivraisonWithThisNode;
-			//}
-			System.out.println("Clic recu en [" + x + "," + y + "]");
+				JOptionPane.showMessageDialog(null, "Vous avez cliqué sur le noeud : " + view_noeud.getNoeud().toString(), "Ajouter une livraison", JOptionPane.INFORMATION_MESSAGE);
+				view_noeud.highlight();
+			}
 		}
 	}
 	
@@ -62,7 +63,14 @@ public class Controller implements ActionListener {
 		if (action.equals("loadFile")) {
 			if (name.equals("loadMap")) {
 				if (filename != null && filename.length() > 0) {
-					interfaceAgglo.BuildPlanFromXml(filename);
+					
+					// remove former map
+					interfaceAgglo.getPlan().reset();
+					interfaceView.getVue_plan().reset();
+					
+					boolean buildOk = interfaceAgglo.BuildPlanFromXml(filename);
+					interfaceView.getVue_plan().setPlan(interfaceAgglo.getPlan());
+					interfaceView.getVue_plan().repaint();
 				}
 			}
 			else if (name.equals("loadLivraisons")) {

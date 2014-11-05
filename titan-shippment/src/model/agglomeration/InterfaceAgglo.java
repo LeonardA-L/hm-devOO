@@ -23,7 +23,7 @@ public class InterfaceAgglo {
 		if ( p == null ) {
 			return false;
 		}
-		plan = p;
+		this.setPlan(p);
 		return true;
 	}
 	

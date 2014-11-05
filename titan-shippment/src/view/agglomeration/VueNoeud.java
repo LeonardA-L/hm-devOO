@@ -1,5 +1,6 @@
 package view.agglomeration;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,14 +19,19 @@ public class VueNoeud extends Vue {
 	private Noeud noeud;
 	private ArrayList<VueTroncon> vues_troncons;
 	
+	private Color color;
+	private Graphics graphics_plan;
+	
 	public VueNoeud() {
 		this.noeud = null;
 		this.vues_troncons = new ArrayList<VueTroncon>();
+		this.color = Color.BLACK;
 	}
 	
 	public VueNoeud(Noeud noeud) {
 		this.noeud = noeud;
 		this.vues_troncons = new ArrayList<VueTroncon>();
+		this.color = Color.BLACK;
 		
 		Iterator<Troncon> it = noeud.getTroncons().iterator();
 		while (it.hasNext()) {
@@ -34,16 +40,20 @@ public class VueNoeud extends Vue {
 	}
 	
 	public void dessine(Graphics g) {
-		paintComponent(g);
-	}
-	
-	@Override
-	protected void paintComponent(Graphics g) {
-		// TODO Auto-generated method stub
+		
+		if (this.graphics_plan == null) {
+			this.graphics_plan = g;
+		}
+		
+		// reset point - ne fonctionne pas :(
+		super.paintComponent(g);
+		
 		int x = noeud.getCoordX();
 		int y = noeud.getCoordY();
+		g.setColor(this.color);
 		g.drawLine(x-5, y, x+5, y);
 		g.drawLine(x, y-5, x, y+5);
+		g.setColor(Color.BLACK);
 		
 		Iterator<VueTroncon> it = vues_troncons.iterator();
 		
@@ -64,6 +74,21 @@ public class VueNoeud extends Vue {
 
 	public Noeud getNoeud() {
 		return this.noeud;
+	}
+
+	public void highlight() {
+		this.setColor(Color.RED);
+		if (graphics_plan != null) {
+			this.dessine(graphics_plan);
+		}
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
 	}
 
 }
