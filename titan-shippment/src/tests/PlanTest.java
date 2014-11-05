@@ -14,7 +14,16 @@ import org.junit.Test;
 public class PlanTest {
 
 	Plan dummy;
-	
+	/**
+	 * This Plan returns a dummy graph used for testing.
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * @return
+	 */
 	public static Plan DummyPlanCreate(){
 
 		Noeud storeHouse = new Noeud(0,1,5,new ArrayList<Troncon>());
@@ -47,7 +56,7 @@ public class PlanTest {
 	
 	public static Plan DummyPlanCreate(int nbNodes, int maxX, int maxY){
 		// creating map
-		String[] rues = {"Avenue des titans", "Rue de Léonard", "wess c ma ru, ru de yaannnn", "Anton Long Avenue", "GIGA AVENUE", "SSSSSSSS-GBD street"};
+		String[] rues = {"Avenue des titans", "Rue de Lï¿½onard", "wess c ma ru, ru de yaannnn", "Anton Long Avenue", "GIGA AVENUE", "SSSSSSSS-GBD street"};
 		
 		Noeud entrepot = new Noeud(20,30,-1, new ArrayList<Troncon>());
 		Plan plan = new Plan(entrepot, new ArrayList<Noeud>());

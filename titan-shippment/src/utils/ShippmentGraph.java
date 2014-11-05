@@ -11,12 +11,12 @@ import model.agglomeration.Troncon;
 
 public class ShippmentGraph implements Graph {
 	
-	private final int NO_COST = 0;
+	private final int NO_START_COST = 0;
 	
 	private int nbVertices;
 	private int maxArcCost;
 	private int minArcCost;
-	private int[][] cost;
+	private int[][] cost; // cost[from][to]
 	private ArrayList<ArrayList<Integer>> succ; 
 
 	/**
@@ -87,14 +87,17 @@ public class ShippmentGraph implements Graph {
 	public void fillBlankCosts(){
 		for (int i = 0; i < cost.length; i++) {
 			for (int j = 0; j < cost.length; j++) {
-				if(cost[i][j] == NO_COST)
+				if(cost[i][j] == NO_START_COST)
 					cost[i][j] = maxArcCost+1;
 			}
 		}
 	}
-	/*
-	public Iterator<Integer> getVertexIterator() {
-		
+	
+	public int getCost(int from, int to) {
+		return cost[from][to];
 	}
-*/
+	
+	public ArrayList<Integer> getNeighbourIDs(int nodeID) {
+		return this.succ.get(nodeID);
+	}
 }
