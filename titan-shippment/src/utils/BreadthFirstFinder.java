@@ -42,13 +42,13 @@ public class BreadthFirstFinder implements PathFinder {
             int vertex = q.poll();
             int[] neighbours = g.getSucc(vertex);
             for (int n : neighbours) {
-                visited[n] = vertex;
-                if (n == end) {
-                    return backtrack(visited, end);
-                }
-
-                if (visited[n] == NOT_VISITED) {
+            	if (visited[n] == NOT_VISITED) {
                     q.add(n);
+                    
+                    visited[n] = vertex;
+                    if (n == end) {
+                        return backtrack(visited, end);
+                    }
                 }
             }
         }
