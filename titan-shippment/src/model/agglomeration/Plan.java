@@ -1,6 +1,7 @@
 package model.agglomeration;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import utils.ShippmentGraph;
 
@@ -37,6 +38,16 @@ public class Plan {
 			}
 		}
 		return null;
+	}
+	
+	public int[][] GetMatrix() {
+		int[][] matriceAdj = new int[noeuds.size()][noeuds.size()];
+		Iterator<Noeud> it = noeuds.iterator();
+		while(it.hasNext()){
+			Noeud noeud = it.next();
+			matriceAdj[noeud.getId()] = noeud.GetCosts(noeuds.size());
+		}
+		return matriceAdj;
 	}
 
 	public Noeud getEntrepot() {

@@ -1,6 +1,7 @@
 package model.agglomeration;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Noeud {
 	
@@ -30,6 +31,19 @@ public class Noeud {
 	
 	public void removeTroncon(int indexTroncon) {
 		this.troncons.remove(indexTroncon);
+	}
+	
+	/**
+	 * 
+	 */
+	public int[] GetCosts(int nbNoeuds){
+		int[] line = new int[nbNoeuds];
+		Iterator<Troncon> it = troncons.iterator();
+		while(it.hasNext()){
+			Troncon troncon = it.next();
+			line[troncon.getNoeudDestination().getId()] = troncon.GetTime();
+		}
+		return line;
 	}
 
 	public int getCoordX() {

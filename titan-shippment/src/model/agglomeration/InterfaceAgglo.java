@@ -19,6 +19,11 @@ public class InterfaceAgglo {
 	private boolean GeneratePlan() {
 		return true;
 	}
+	
+	public int[][] GetFormatedMap(){
+		int[][] matrice = plan.GetMatrix();
+		return matrice;
+	}
 
 	public Plan getPlan() {
 		return plan;

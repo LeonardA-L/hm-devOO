@@ -46,6 +46,10 @@ public class Troncon {
 		this.longueur = longueur;
 	}
 	
+	public int GetTime(){
+		return longueur/vitesse;
+	}
+	
 	public Noeud getNoeudDestination() {
 		return noeudDestination;
 	}
