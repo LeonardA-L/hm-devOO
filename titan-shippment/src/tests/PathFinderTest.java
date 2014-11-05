@@ -46,5 +46,15 @@ public class PathFinderTest {
 		ArrayList<Integer> actualPath = f.findShortestPath(3, 0);
 		assertNull(actualPath);
 	}
+	
+	@Test
+	public void findCycle(){
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		list.add(0);
+		list.add(4);
+		list.add(5);
+		ArrayList<Integer> cycle = f.findCycle(1000000, list);
+		System.out.println(cycle);
+	}
 
 }

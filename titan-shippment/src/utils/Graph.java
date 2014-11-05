@@ -1,5 +1,7 @@
 package utils;
 
+import java.util.ArrayList;
+
 /**
  * @author Christine Solnon
  *
@@ -44,4 +46,5 @@ public interface Graph {
 	public abstract int getNbSucc(int i)
 			throws ArrayIndexOutOfBoundsException;
 
+	public ShippmentGraph createTSPGraph(ArrayList<Integer> nodes);
 }

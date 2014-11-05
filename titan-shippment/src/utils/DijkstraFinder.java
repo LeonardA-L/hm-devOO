@@ -93,20 +93,24 @@ public class DijkstraFinder implements PathFinder {
 		return q.indexOf(selectedNode);
 	}
 
-	public int[] findCycle(int start, int end, int upperCostBound) {
+	public ArrayList<Integer> findCycle(int upperCostBound, ArrayList<Integer> nodes) {
+		ShippmentGraph subG = g.createTSPGraph(nodes);
+		
 		//TODO : not functional
-		int n = g.getNbVertices();
-		int minCost = g.getMinArcCost();
-		int maxCost = g.getMaxArcCost();
-		int[][] cost = g.getCost();
-		int[] next = new int[n];
+		int n = nodes.size();
+		int minCost = subG.getMinArcCost();
+		int maxCost = subG.getMaxArcCost();
+		int[][] cost = subG.getCost();
+		ArrayList<Integer> next = new ArrayList<Integer>();
 		Solver solver = new Solver();
+		
+		
 		
 		// Create variables
 		// xNext[i] = vertex visited after i
 		IntVar[] xNext = new IntVar[n];
 		for (int i = 0; i < n; i++)
-			xNext[i] = VariableFactory.enumerated("Next " + i, g.getSucc(i), solver);
+			xNext[i] = VariableFactory.enumerated("Next " + i, subG.getSucc(i), solver);
 		// xCost[i] = cost of arc (i,xNext[i])
 		IntVar[] xCost = VariableFactory.boundedArray("Cost ", n, minCost, maxCost, solver);
 		// xTotalCost = total cost of the solution
@@ -119,15 +123,16 @@ public class DijkstraFinder implements PathFinder {
 		solver.post(IntConstraintFactory.sum(xCost, xTotalCost));
 		
 		// limit CPU time
-		SearchMonitorFactory.limitTime(solver,10000);
+		SearchMonitorFactory.limitTime(solver,1000000);
 		// set the branching heuristic (branch on xNext only by selecting smallest domains first)
 		solver.set(IntStrategyFactory.firstFail_InDomainMin(xNext));
 		// try to find and prove the optimal solution
 		solver.findOptimalSolution(ResolutionPolicy.MINIMIZE,xTotalCost);
 		// record solution and state
 		if(solver.getMeasures().getSolutionCount()>0){
-			for(int i=0;i<n;i++) next[i] = xNext[i].getValue();
+			for(int i=0;i<n;i++) next.add(nodes.get(xNext[i].getValue()));
 			int totalCost = xTotalCost.getValue();
+			
 		}
 		else {
 			

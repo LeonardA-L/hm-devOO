@@ -74,6 +74,7 @@ public class Plan {
 			shGraph.addNode(n);
 		}
 		//shGraph.fillBlankCosts();
+		shGraph.makeGraphComplete();
 		return shGraph;
 	}
 
