@@ -15,7 +15,7 @@ public class Plan {
 	 * 	Constructor - no parameter
 	 */
 	Plan() {
-		this.entrepot = new Noeud();
+		this.entrepot = null;
 		this.noeuds = new ArrayList<Noeud>();
 	}
 
@@ -97,8 +97,8 @@ public class Plan {
 		return null;
 	}
 	
-	public int[][] GetMatrix() {
-		int[][] matriceAdj = new int[noeuds.size()][noeuds.size()];
+	public float[][] GetMatrix() {
+		float[][] matriceAdj = new float[noeuds.size()][noeuds.size()];
 		Iterator<Noeud> it = noeuds.iterator();
 		while(it.hasNext()){
 			Noeud noeud = it.next();

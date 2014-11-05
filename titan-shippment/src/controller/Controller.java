@@ -2,6 +2,7 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import view.utils.InterfaceView;
 
 
@@ -45,6 +46,26 @@ public class Controller implements ActionListener {
 			//}
 			System.out.println("Clic recu en [" + x + "," + y + "]");
 		}
+	}
+	
+	public void trigger(String action, String name) {
+		if (action.equals("click_button")) {
+			
+		}
+	}
+	public void trigger(String action, String name, String filename) {
+		// TODO Auto-generated method stub
+		if (action.equals("loadFile")) {
+			if (name.equals("loadMap")) {
+				if (filename != null && filename.length() > 0) {
+					interfaceAgglo.BuildPlanFromXml(filename);
+				}
+			}
+			else if (name.equals("loadLivraisons")) {
+				//interfacePlanning ...
+			}
+		}
+		
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -136,5 +157,4 @@ public class Controller implements ActionListener {
 		this.interfaceView = interfaceView;
 	}
 
-	
 }
