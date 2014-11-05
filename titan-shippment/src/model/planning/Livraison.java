@@ -16,8 +16,7 @@ public class Livraison {
 		this.setIdLivraison(0);
 	}
 
-	public Livraison(PlageHoraire plageHoraire, Noeud adresse, int idClient,
-			int idLivraison) {
+	public Livraison(PlageHoraire plageHoraire, Noeud adresse, int idClient, int idLivraison) {
 		this.plageHoraire = plageHoraire;
 		this.adresse = adresse;
 		this.idClient = idClient;
