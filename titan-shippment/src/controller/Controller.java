@@ -4,21 +4,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import view.VuePlan;
-import model.planning.Manager;
-import model.planning.PlageHoraire;
+import view.agglomeration.VuePlan;
+import view.utils.InterfaceView;
 import model.planning.InterfacePlanning;
 import model.agglomeration.InterfaceAgglo;
-import model.agglomeration.Noeud;
-import model.agglomeration.Plan;
+
 
 public class Controller implements ActionListener {
 
 	private static Controller INSTANCE = null;
 	
-	private Manager manager;
 	private InterfaceAgglo interfaceAgglo;
 	private InterfacePlanning interfacePlanning;
+	private InterfaceView interfaceView;
 	private UndoRedo undoRedo;
 
 	private Controller()
@@ -106,13 +104,6 @@ public class Controller implements ActionListener {
 		return undoRedo.Redo();
 	}
 	
-	public Manager getManager() {
-		return manager;
-	}
-
-	public void setManager(Manager manager) {
-		this.manager = manager;
-	}
 
 	public InterfaceAgglo getInterfaceAgglo() {
 		return interfaceAgglo;
@@ -136,6 +127,14 @@ public class Controller implements ActionListener {
 
 	public void setUndoRedo(UndoRedo undoRedo) {
 		this.undoRedo = undoRedo;
+	}
+
+	public InterfaceView getInterfaceView() {
+		return interfaceView;
+	}
+
+	public void setInterfaceView(InterfaceView interfaceView) {
+		this.interfaceView = interfaceView;
 	}
 
 	

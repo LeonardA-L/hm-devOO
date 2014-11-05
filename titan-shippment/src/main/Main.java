@@ -1,7 +1,7 @@
 package main;
 import tests.PlanTest;
 import utils.ShippmentGraph;
-import view.Fenetre;
+import view.utils.Fenetre;
 import model.agglomeration.Plan;
 
 public class Main {

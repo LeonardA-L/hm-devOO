@@ -1,4 +1,4 @@
-package view;
+package view.agglomeration;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
@@ -6,10 +6,11 @@ import java.util.Iterator;
 
 import javax.swing.JPanel;
 
+import view.utils.Vue;
 import model.agglomeration.Noeud;
 import model.agglomeration.Troncon;
 
-public class VueNoeud extends JPanel {
+public class VueNoeud extends Vue {
 	
 	// pixel
 	private final int TOLERANCE_CLICK = 10;
