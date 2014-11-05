@@ -2,6 +2,7 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import view.utils.InterfaceView;
 
 
@@ -44,6 +45,12 @@ public class Controller implements ActionListener {
 				// noeud.isLivraison() ? nothingToDo : addLivraisonWithThisNode;
 			//}
 			System.out.println("Clic recu en [" + x + "," + y + "]");
+		}
+	}
+	
+	public void trigger(String action, String name) {
+		if (action.equals("click_button")) {
+			
 		}
 	}
 	
@@ -135,6 +142,8 @@ public class Controller implements ActionListener {
 	public void setInterfaceView(InterfaceView interfaceView) {
 		this.interfaceView = interfaceView;
 	}
+
+	
 
 	
 }

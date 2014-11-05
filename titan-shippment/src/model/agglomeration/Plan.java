@@ -10,7 +10,7 @@ public class Plan {
 	private ArrayList<Noeud> noeuds;
 	
 	Plan() {
-		this.entrepot = new Noeud();
+		this.entrepot = null;
 		this.noeuds = new ArrayList<Noeud>();
 	}
 
