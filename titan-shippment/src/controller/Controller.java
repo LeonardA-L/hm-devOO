@@ -4,12 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-<<<<<<< HEAD
-import view.VuePlan;
-=======
 import view.agglomeration.VuePlan;
 import view.utils.InterfaceView;
->>>>>>> 7613a9481cdeae224041c48ba9228b190b8b2173
 import model.planning.Manager;
 import model.planning.PlageHoraire;
 import model.planning.InterfacePlanning;
