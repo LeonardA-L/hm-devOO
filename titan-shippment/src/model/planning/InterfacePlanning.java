@@ -1,11 +1,14 @@
 package model.planning;
 
+import controller.Controller;
 import utils.XMLBuilder;
+import model.agglomeration.InterfaceAgglo;
 import model.planning.Manager;
 
 
 public class InterfacePlanning {
 
+	Manager manager;
 	
 	/*	Call a method in XMLBuilder, giving it the name of the file
 	 * 	containing the plan. Then get back the array of elements to 
@@ -19,7 +22,19 @@ public class InterfacePlanning {
 		return true;
 	}
 	
-
+	/**
+	 * calculates the path for delivery
+	 */
+	public void CalculTournee(){
+		InterfaceAgglo interfaceAgglo = Controller.getInstance().getInterfaceAgglo();
+		int[][] matriceAdjacence = interfaceAgglo.GetFormatedMap();
+		
+		//TODO - Calcul Tournee
+		Tournee tournee = new Tournee();
+		
+		manager.setTournee(tournee);
+	}
+	
 	private boolean generateLivraisons () {
 		return true;
 	}
