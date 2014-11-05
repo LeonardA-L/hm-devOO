@@ -29,7 +29,7 @@ public class Fenetre extends JFrame {
 	private final int tailleX = 1000;
 	private final int tailleY = 600;
 
-	public Fenetre(Plan plan) {
+	public Fenetre() {
 		
 		// init window
 		this.setTitle("DevOO");
@@ -37,28 +37,28 @@ public class Fenetre extends JFrame {
 	    this.setLocationRelativeTo(null);               
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		initContainer(plan);
+		initContainer();
 		
 	}
 	
-	private void initContainer(Plan plan) {
+	private void initContainer() {
 		this.container = new JPanel();
 		this.container.setLayout(new BorderLayout());
 		
-		initTop(plan);
+		initTop();
 		initBottom();
 		
 		this.setContentPane(container);
 	}
 	
-	private void initTop(Plan plan) {
+	private void initTop() {
 		this.top = new JPanel();
 		Dimension sizeTop = new Dimension(this.tailleX, (int)(this.tailleY*7/8));
 		this.top.setSize(sizeTop);
 		this.top.setPreferredSize(sizeTop);
 		this.top.setLayout(new GridLayout(1,2));
 		
-		this.view_plan = new VuePlan(plan);
+		this.view_plan = new VuePlan();
 		this.top.add(this.view_plan, 0);
 		
 		// list livraisons & btn

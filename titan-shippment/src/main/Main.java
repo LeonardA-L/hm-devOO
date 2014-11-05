@@ -1,8 +1,12 @@
 package main;
+import controller.Controller;
 import tests.PlanTest;
 import utils.ShippmentGraph;
 import view.utils.Fenetre;
+import view.utils.InterfaceView;
+import model.agglomeration.InterfaceAgglo;
 import model.agglomeration.Plan;
+import model.planning.InterfacePlanning;
 
 public class Main {
 
@@ -27,8 +31,10 @@ public class Main {
 		// display MAP
 		System.out.println(plan.toString());
 		
-		Fenetre fenetre = new Fenetre(plan);
-		fenetre.setVisible(true);
+		Controller controller = Controller.getInstance();
+		controller.setInterfaceAgglo(new InterfaceAgglo());
+		controller.setInterfacePlanning(new InterfacePlanning());
+		controller.setInterfaceView(new InterfaceView());
 		
 	}
 }

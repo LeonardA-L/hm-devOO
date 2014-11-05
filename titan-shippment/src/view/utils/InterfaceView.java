@@ -7,8 +7,8 @@ public class InterfaceView {
 	
 	private VuePlan vue_plan;
 	
-	public InterfaceView(Plan plan) {
-		Fenetre fenetre = new Fenetre(plan);
+	public InterfaceView() {
+		Fenetre fenetre = new Fenetre();
 		fenetre.setVisible(true);
 		vue_plan = fenetre.getVuePlan();
 	}

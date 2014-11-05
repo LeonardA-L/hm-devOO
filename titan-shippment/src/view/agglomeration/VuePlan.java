@@ -25,20 +25,14 @@ public class VuePlan extends Vue {
 	private VueNoeud vueEntrepot;
 	private ArrayList<VueNoeud> vueNoeuds;
 	
-	public VuePlan(Plan plan) {
+	public VuePlan() {
 		this.setSize(500,200);
 		this.setPreferredSize(new Dimension(500,200));
 		this.setBorder(BorderFactory.createLineBorder(Color.RED));
-		this.plan = plan;
 		
-		this.vueEntrepot = new VueNoeud(plan.getEntrepot());
+		this.plan = null;
+		this.vueEntrepot = null;
 		this.vueNoeuds = new ArrayList<VueNoeud>();
-		
-		Iterator<Noeud> it = plan.getNoeuds().iterator();
-		
-		while (it.hasNext()) {
-			vueNoeuds.add(new VueNoeud(it.next()));
-		}
 		
 		this.addMouseListener(new MouseListener() {
 
@@ -95,10 +89,13 @@ public class VuePlan extends Vue {
 	}
 	
 	protected void dessine(Graphics g) {
-		Iterator<VueNoeud> it = vueNoeuds.iterator();
-		while(it.hasNext()) {
-			VueNoeud vue_noeud = it.next();
-			vue_noeud.dessine(g);
+		// si le plan est chargé
+		if (plan != null) {
+			Iterator<VueNoeud> it = vueNoeuds.iterator();
+			while(it.hasNext()) {
+				VueNoeud vue_noeud = it.next();
+				vue_noeud.dessine(g);
+			}
 		}
 	}
 	

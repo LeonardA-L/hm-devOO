@@ -12,6 +12,10 @@ public class VueTroncon extends Vue {
 	
 	private Troncon troncon;
 	
+	public VueTroncon() {
+		this.troncon = null;
+	}
+	
 	public VueTroncon(Troncon troncon) {
 		this.troncon = troncon;
 	}

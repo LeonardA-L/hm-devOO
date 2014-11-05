@@ -18,6 +18,11 @@ public class VueNoeud extends Vue {
 	private Noeud noeud;
 	private ArrayList<VueTroncon> vues_troncons;
 	
+	public VueNoeud() {
+		this.noeud = null;
+		this.vues_troncons = new ArrayList<VueTroncon>();
+	}
+	
 	public VueNoeud(Noeud noeud) {
 		this.noeud = noeud;
 		this.vues_troncons = new ArrayList<VueTroncon>();
@@ -46,7 +51,6 @@ public class VueNoeud extends Vue {
 			VueTroncon vue_troncon = it.next();
 			vue_troncon.dessine(g, noeud);
 		}
-		
 	}
 
 	public boolean estCliquee(int x, int y) {
