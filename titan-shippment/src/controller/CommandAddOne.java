@@ -1,6 +1,5 @@
 package controller;
 
-import model.planning.Manager;
 
 public class CommandAddOne implements ICommand {
 	private int newX;		// x coordinate of new livraison
@@ -11,11 +10,11 @@ public class CommandAddOne implements ICommand {
 	private String heureDebut;	// plage Horaire
 	private String heureFin;
 	
-	Manager manager;
 	
 	public boolean Execute () {
 		// Call manager and add a livraison
-		return manager.AddOneLivraison(newX, newY, heureDebut, heureFin, client, previousX, previousY);
+		//return manager.AddOneLivraison(newX, newY, heureDebut, heureFin, client, previousX, previousY);
+		return false;
 	}
 	
 	public boolean Unexecute () {
