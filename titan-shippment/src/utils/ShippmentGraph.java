@@ -1,5 +1,7 @@
 package utils;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import model.agglomeration.Noeud;
 import model.agglomeration.Troncon;
@@ -17,7 +19,9 @@ public class ShippmentGraph implements Graph {
 	private int maxArcCost;
 	private int minArcCost;
 	private int[][] cost; // cost[from][to]
-	private ArrayList<ArrayList<Integer>> succ; 
+	private ArrayList<ArrayList<Integer>> succ;
+	private Map<String, ArrayList<Integer>> paths;
+	private PathFinder f;
 
 	/**
 	 * Creates a graph such that each vertex is connected to the next <code>d</code> vertices (modulo <code>n</code>) and
@@ -29,6 +33,7 @@ public class ShippmentGraph implements Graph {
 		maxArcCost = -1;
 		minArcCost = Integer.MAX_VALUE;
 		cost = new int[nbVertices][nbVertices];
+		paths = new HashMap<String, ArrayList<Integer>>();
 		succ = new ArrayList<ArrayList<Integer>>(n);
 		while (succ.size() < n) succ.add(null); 
 	}
@@ -99,5 +104,37 @@ public class ShippmentGraph implements Graph {
 	
 	public ArrayList<Integer> getNeighbourIDs(int nodeID) {
 		return this.succ.get(nodeID);
+	}
+	
+	/**
+	 * Not available paths will be set to null
+	 */
+	public void makeGraphComplete(){
+		f = new DijkstraFinder(this);
+		for (int i = 0; i < cost.length; i++) {
+			for (int j = 0; j < cost.length; j++) {
+				ArrayList<Integer> pathFromIToJ = f.findShortestPath(i, j);
+				// popping the total distance of the path
+				if(pathFromIToJ != null){
+					int totalCost = pathFromIToJ.remove(pathFromIToJ.size()-1);
+					cost[i][j] = totalCost;
+					updateMinMax(totalCost);
+				}
+				paths.put(i+"-"+j, pathFromIToJ);
+			}
+		}
+		fillBlankCosts();
+	}
+
+	public Map<String, ArrayList<Integer>> getPaths() {
+		return paths;
+	}
+
+	public void setPaths(Map<String, ArrayList<Integer>> paths) {
+		this.paths = paths;
+	}
+
+	public void setCost(int[][] cost) {
+		this.cost = cost;
 	}
 }

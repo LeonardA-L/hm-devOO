@@ -22,7 +22,10 @@ public class DijkstraFinder implements PathFinder {
 	}
 	
 	@Override
-	public int[] findShortestPath(int start, int end) {
+	/**
+	 * Careful : the last value of this arrayList is the total distance of the path. Pop it to have the real path
+	 */
+	public ArrayList<Integer> findShortestPath(int start, int end) {
 		int n = g.getNbVertices();
 		int minCost = g.getMinArcCost();
 		int maxCost = g.getMaxArcCost();
@@ -46,6 +49,9 @@ public class DijkstraFinder implements PathFinder {
 		
 		while(!Q.isEmpty()){
 			int bestIndex = findShortestDistance(Q,dist);
+			if(bestIndex == -1){
+				return null;
+			}
 			int u = Q.get(bestIndex);
 			Q.remove(bestIndex);
 			
@@ -59,10 +65,14 @@ public class DijkstraFinder implements PathFinder {
 			}
 		}
 		
-		List<Integer> reversedPath = backtrack(prev, start, end);
+		ArrayList<Integer> reversedPath = backtrack(prev, start, end);
 		Collections.reverse(reversedPath);
 		
-		return toIntArray(reversedPath);
+		// Adding the total distance of the path to the list
+		// Careful : pop it
+		reversedPath.add(dist[end]);
+		
+		return reversedPath;
 	}
 	
 	/**
