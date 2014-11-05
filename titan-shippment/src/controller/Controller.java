@@ -48,8 +48,10 @@ public class Controller implements ActionListener {
 			if (view_noeud != null) {
 				// un noeud a bien été cliqué
 				interfaceView.displayAlert("Ajouter une livraison", "Vous avez cliqué sur le noeud : " + view_noeud.getNoeud().toString(), "info");
+				
+				// node HL
 				view_noeud.highlight();
-				interfaceView.getVue_plan().repaint();
+				interfaceView.repaint();
 			}
 		}
 	}
@@ -77,11 +79,11 @@ public class Controller implements ActionListener {
 					}
 					else {
 						mapLoaded = false;
-						interfaceView.displayAlert("Erreur au chargement de la carte","La carte n'a pas été chargée correctement.", "error");
+						interfaceView.displayAlert("Erreur au chargement de la carte", "La carte n'a pas été chargée correctement.", "error");
 					}
 					
 					interfaceView.getVue_plan().setPlan(interfaceAgglo.getPlan());
-					interfaceView.getVue_plan().repaint();
+					interfaceView.repaint();
 				}
 			}
 			else if (name.equals("loadLivraisons")) {

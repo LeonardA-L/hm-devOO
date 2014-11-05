@@ -52,4 +52,8 @@ public class InterfaceView {
         }
         return null;
 	}
+
+	public void repaint() {
+		vue_plan.repaint();
+	}
 }
