@@ -26,12 +26,12 @@ public class PlanTest {
 	 */
 	public static Plan DummyPlanCreate(){
 
-		Noeud storeHouse = new Noeud(0,1,5,new ArrayList<Troncon>());
-		Noeud n1 = new Noeud(1,0,0,new ArrayList<Troncon>());
-		Noeud n2 = new Noeud(1,2,1,new ArrayList<Troncon>());
-		Noeud n3 = new Noeud(2,0,2,new ArrayList<Troncon>());
-		Noeud n4 = new Noeud(2,2,3,new ArrayList<Troncon>());
-		Noeud n5 = new Noeud(3,1,4,new ArrayList<Troncon>());
+		Noeud storeHouse = new Noeud(0,1,0,new ArrayList<Troncon>());
+		Noeud n1 = new Noeud(1,0,1,new ArrayList<Troncon>());
+		Noeud n2 = new Noeud(1,2,2,new ArrayList<Troncon>());
+		Noeud n3 = new Noeud(2,0,3,new ArrayList<Troncon>());
+		Noeud n4 = new Noeud(2,2,4,new ArrayList<Troncon>());
+		Noeud n5 = new Noeud(3,1,5,new ArrayList<Troncon>());
 		
 		Plan gigaAnton = new Plan(storeHouse, new ArrayList<Noeud>());
 		
