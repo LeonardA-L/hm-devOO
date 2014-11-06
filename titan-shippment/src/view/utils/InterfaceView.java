@@ -17,11 +17,7 @@ public class InterfaceView {
 		Fenetre fenetre = new Fenetre();
 		fenetre.setVisible(true);
 		vue_plan = fenetre.getVuePlan();
-	}
-	
-	public InterfaceView(VuePlan vue_plan) {
-		this.vue_plan = vue_plan;
-		this.setVue_tournee(null);
+		vue_tournee = new VueTournee();
 	}
 	
 	public VueTournee getVue_tournee() {

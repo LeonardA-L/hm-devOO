@@ -136,6 +136,22 @@ public class VuePlan extends Vue {
 		g.drawLine(x, y-5, x, y+5);
 	}
 	
+	public void reset() {
+		vueEntrepot = null;
+		vueNoeuds.clear();
+	}
+
+	public VueNoeud getVueNoeudById(int id) {
+		Iterator<VueNoeud> it = vueNoeuds.iterator();
+		while(it.hasNext()) {
+			VueNoeud noeud = it.next();
+			if (noeud.getNoeud().getId() == id) {
+				return noeud;
+			}
+		}
+		return null;
+	}
+	
 	public Plan getPlan() {
 		return plan;
 	}
@@ -150,9 +166,28 @@ public class VuePlan extends Vue {
 		}
 	}
 
-	public void reset() {
-		vueEntrepot = null;
-		vueNoeuds.clear();
+	public double getRatioVueModele() {
+		return ratioVueModele;
+	}
+
+	public void setRatioVueModele(double ratioVueModele) {
+		this.ratioVueModele = ratioVueModele;
+	}
+
+	public VueNoeud getVueEntrepot() {
+		return vueEntrepot;
+	}
+
+	public void setVueEntrepot(VueNoeud vueEntrepot) {
+		this.vueEntrepot = vueEntrepot;
+	}
+
+	public ArrayList<VueNoeud> getVueNoeuds() {
+		return vueNoeuds;
+	}
+
+	public void setVueNoeuds(ArrayList<VueNoeud> vueNoeuds) {
+		this.vueNoeuds = vueNoeuds;
 	}
 
 }

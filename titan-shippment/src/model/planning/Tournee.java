@@ -24,6 +24,15 @@ public class Tournee {
 		return this;
 	}
 	
+	public int addItineraire(Itineraire itineraire) {
+		itineraires.add(itineraire);
+		return itineraires.size()-1;
+	}
+	
+	public int addLivraison(Livraison livraison) {
+		livraisons.add(livraison);
+		return livraisons.size()-1;
+	}
 	
 
 	public ArrayList<Livraison> getLivraisons() {
@@ -40,6 +49,11 @@ public class Tournee {
 
 	public void setItineraires(ArrayList<Itineraire> itineraires) {
 		this.itineraires = itineraires;
+	}
+
+	public void reset() {
+		livraisons.clear();
+		itineraires.clear();
 	}
 
 }

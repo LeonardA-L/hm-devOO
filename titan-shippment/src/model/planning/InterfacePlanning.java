@@ -15,6 +15,10 @@ public class InterfacePlanning {
 	private ArrayList<Livraison> listeLivraisons;
 	private Tournee tournee;
 	
+	public InterfacePlanning () {
+		listeLivraisons = new ArrayList<Livraison>();
+		tournee = null;
+	}
 	
 	/**	Call a method in XMLBuilder, giving it the name of the file
 	 * 	containing the plan. Then get back the array of elements to 

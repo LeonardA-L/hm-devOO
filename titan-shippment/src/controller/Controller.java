@@ -3,7 +3,6 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JOptionPane;
 
 import view.agglomeration.VueNoeud;
 import view.utils.InterfaceView;
@@ -11,7 +10,6 @@ import view.utils.InterfaceView;
 
 import model.planning.InterfacePlanning;
 import model.agglomeration.InterfaceAgglo;
-import model.agglomeration.Noeud;
 
 
 public class Controller implements ActionListener {
@@ -25,6 +23,7 @@ public class Controller implements ActionListener {
 	
 	private boolean mapLoaded;
 	private boolean livraisonsLoaded;
+	private boolean tourneeCalculed;
 	
 	private boolean addingNewLivraison;
 
@@ -33,6 +32,7 @@ public class Controller implements ActionListener {
 		mapLoaded = false;
 		livraisonsLoaded = false;
 		addingNewLivraison = false;
+		tourneeCalculed = false;
 	}
 	
 	// implement singleton
@@ -95,6 +95,7 @@ public class Controller implements ActionListener {
 						// remove former map
 						interfaceAgglo.getPlan().reset();
 						interfaceView.getVue_plan().reset();
+						mapLoaded = false;
 						
 						boolean buildOk = interfaceAgglo.BuildPlanFromXml(filename);
 						
@@ -102,10 +103,10 @@ public class Controller implements ActionListener {
 							mapLoaded = true;
 						}
 						else {
-							mapLoaded = false;
 							interfaceView.displayAlert("Erreur au chargement de la carte", "La carte n'a pas été chargée correctement.", "error");
 						}
 						
+						// set views
 						interfaceView.getVue_plan().setPlan(interfaceAgglo.getPlan());
 						interfaceView.repaint();
 					}
@@ -119,9 +120,32 @@ public class Controller implements ActionListener {
 						
 						if (filename != null && filename.length() > 0) {
 							interfaceView.displayAlert("Livraisons", "Chargement des livraisons en cours ...", "info");
-							// reset livraisons
+							
+							// reset livraisons + éventuellement tournees
+							if (tourneeCalculed) {
+								interfacePlanning.getTournee().reset();
+								interfaceView.getVue_tournee().reset();
+								tourneeCalculed = false;
+							}
+							interfacePlanning.getListeLivraisons().clear();
+							livraisonsLoaded = false;
+							
 							// load livraisons
-							livraisonsLoaded = true;
+							boolean buildOk = interfacePlanning.GetPlanningsFromBuilder(filename);
+							
+							if (buildOk) {
+								livraisonsLoaded = true;
+							}
+							
+							// set views
+							boolean creatingViewOk = interfaceView.getVue_tournee().setTournee(interfacePlanning.getTournee());
+							
+							if (!creatingViewOk) {
+								livraisonsLoaded = false;
+								interfaceView.displayAlert("Impossible de charger les livraisons", "Un noeud est introuvable.", "error");
+							}
+							
+							interfaceView.repaint();
 						}
 					}
 				}
@@ -134,6 +158,7 @@ public class Controller implements ActionListener {
 					interfaceView.displayAlert("Tournée", "Calcul de la tournée en cours ...", "info");
 					// reset tournee
 					// calcul tournee
+					tourneeCalculed = true;
 				}
 				
 			}

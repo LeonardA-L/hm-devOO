@@ -180,8 +180,8 @@ public static boolean getLivraisons(String filename, model.planning.InterfacePla
 		Path path = (new File(filename)).toPath();
 		
 		// temporary var
-		String t_heureDebut;
-		String t_heureFin;
+		String t_heureDebut = "";
+		String t_heureFin = "";
 		int t_idClient;
 		int t_idLivraison;
 		int t_adresseLivraison;
