@@ -157,7 +157,7 @@ public class XMLBuilder {
 	}
 
 
- //Waiting
+// Julien : working on it (6/11 19h30)
 public static ArrayList<Livraison> getLivraisons(String filename, model.planning.InterfacePlanning intf) {
 		
 		ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
