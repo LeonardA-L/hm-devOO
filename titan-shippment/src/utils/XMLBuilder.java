@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
+import java.util.ArrayList;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -16,6 +17,7 @@ import javax.xml.parsers.SAXParserFactory;
 import model.agglomeration.InterfaceAgglo;
 import model.agglomeration.Noeud;
 import model.agglomeration.Plan;
+import model.planning.Livraison;
 
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -154,9 +156,9 @@ public class XMLBuilder {
 		
 	}
 
-/*	
- * Waiting
-public Livraison getLivraison(String filename, model.agglomeration.InterfaceAgglo intf){
+
+ //Waiting
+public static ArrayList<Livraison> getLivraisons(String filename, model.planning.InterfacePlanning intf) {
 		
 		ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
 		
@@ -205,8 +207,7 @@ public Livraison getLivraison(String filename, model.agglomeration.InterfaceAggl
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
-		
-	}*/
+		return null;	
+	}
 
 }

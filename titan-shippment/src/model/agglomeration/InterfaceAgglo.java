@@ -1,6 +1,5 @@
 package model.agglomeration;
 
-
 import utils.XMLBuilder;
 
 public class InterfaceAgglo {
@@ -19,7 +18,7 @@ public class InterfaceAgglo {
 	 */
 	public boolean BuildPlanFromXml(String absFilePath) 
 	{
-		Plan p = XMLBuilder.getPlan(absFilePath, this);  	// actually we could call it createPlan as it's building it, not returning it
+		Plan p = XMLBuilder.getPlan(absFilePath, this);  
 		if ( p == null ) {
 			return false;
 		}

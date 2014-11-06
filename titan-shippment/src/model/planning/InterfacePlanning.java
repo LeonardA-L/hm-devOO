@@ -8,6 +8,8 @@ import controller.Controller;
 import model.agglomeration.InterfaceAgglo;
 import model.agglomeration.Noeud;
 
+import utils.XMLBuilder;
+
 public class InterfacePlanning {
 
 	private ArrayList<Livraison> listeLivraisons;
@@ -22,15 +24,11 @@ public class InterfacePlanning {
 	 *  			all livraisons have been created successfully)
 	 */
 	public boolean GetPlanningsFromBuilder(String absFilePath) {
-		//XMLBuiler.getLivraison(absFilePath, this);
-		return true;
-	}
-	
-	
-	private boolean generateLivraisons () {
-		return true;
-	}
-	public boolean addLivraison(int idClient, int idLivraison,String heureDebut, String heureFin, int adresse) {
+		ArrayList<Livraison> livraisons = XMLBuilder.getLivraisons(absFilePath, this);
+		if ( livraisons.size() == 0 ) {
+			return false;
+		}
+		this.setListeLivraisons(livraisons);
 		return true;
 	}
 	
@@ -82,7 +80,21 @@ public class InterfacePlanning {
 		
 		this.setTournee(tournee);
 	}
+
 	
+	// GETTERS - SETTERS
+	public ArrayList<Livraison> getListeLivraisons() {
+		return listeLivraisons;
+	}
+
+	public void setListeLivraisons(ArrayList<Livraison> listeLivraisons) {
+		this.listeLivraisons = listeLivraisons;
+	}
+
+	public Tournee getTournee() {
+		return tournee;
+	}
+
 	private void setTournee(Tournee tournee){
 		this.tournee = tournee;
 	}
