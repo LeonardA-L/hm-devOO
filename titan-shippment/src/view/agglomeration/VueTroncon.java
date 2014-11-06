@@ -1,5 +1,6 @@
 package view.agglomeration;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import view.utils.Vue;
@@ -9,15 +10,18 @@ import model.agglomeration.Troncon;
 public class VueTroncon extends Vue {
 	
 	private Troncon troncon;
+	private Color color;
 	
 	private final int RAYON_NOEUD = 5;
 	
 	public VueTroncon() {
 		this.troncon = null;
+		this.color = Color.BLACK;
 	}
 	
 	public VueTroncon(Troncon troncon) {
 		this.troncon = troncon;
+		this.color = Color.BLACK;
 	}
 	
 	public void dessine(Graphics g) {
@@ -42,12 +46,17 @@ public class VueTroncon extends Vue {
 		int coeffY = (int)Math.floor(RAYON_NOEUD*Math.sin(alpha));
 		
 		x += coeffX;
-		y += coeffY;
+		y -= coeffY;
 		
 		xPrime -= coeffX;
-		yPrime -= coeffY;*/
-		
+		yPrime += coeffY;*/
+		g.setColor(color);
 		g.drawLine(x, y, xPrime, yPrime);
+		g.setColor(Color.BLACK);
+	}
+
+	public void highlight() {
+		color = Color.GREEN;
 	}
 	
 	

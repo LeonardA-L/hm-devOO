@@ -6,10 +6,12 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import view.agglomeration.VuePlan;
+import view.planning.VueTournee;
 
 public class InterfaceView {
 	
 	private VuePlan vue_plan;
+	private VueTournee vue_tournee;
 	
 	public InterfaceView() {
 		Fenetre fenetre = new Fenetre();
@@ -19,6 +21,15 @@ public class InterfaceView {
 	
 	public InterfaceView(VuePlan vue_plan) {
 		this.vue_plan = vue_plan;
+		this.setVue_tournee(null);
+	}
+	
+	public VueTournee getVue_tournee() {
+		return vue_tournee;
+	}
+
+	public void setVue_tournee(VueTournee vue_tournee) {
+		this.vue_tournee = vue_tournee;
 	}
 
 	public VuePlan getVue_plan() {
