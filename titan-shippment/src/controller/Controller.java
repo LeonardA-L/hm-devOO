@@ -116,10 +116,13 @@ public class Controller implements ActionListener {
 					}
 					else {
 						String filename = interfaceView.loadFile();
-						interfaceView.displayAlert("Livraisons", "Chargement des livraisons en cours ...", "info");
-						// reset livraisons
-						// load livraisons
-						livraisonsLoaded = true;
+						
+						if (filename != null && filename.length() > 0) {
+							interfaceView.displayAlert("Livraisons", "Chargement des livraisons en cours ...", "info");
+							// reset livraisons
+							// load livraisons
+							livraisonsLoaded = true;
+						}
 					}
 				}
 			}

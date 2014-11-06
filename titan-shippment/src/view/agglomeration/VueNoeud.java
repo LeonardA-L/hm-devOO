@@ -13,6 +13,7 @@ public class VueNoeud extends Vue {
 	
 	// pixel
 	private final int TOLERANCE_CLICK = 10;
+	private final int RAYON = 5;
 	
 	private Noeud noeud;
 	private ArrayList<VueTroncon> vues_troncons;
@@ -41,8 +42,9 @@ public class VueNoeud extends Vue {
 		int x = noeud.getCoordX();
 		int y = noeud.getCoordY();
 		g.setColor(this.color);
-		g.drawLine(x-5, y, x+5, y);
-		g.drawLine(x, y-5, x, y+5);
+		g.drawOval(x-RAYON/2, y-RAYON/2, RAYON, RAYON);
+		//g.drawLine(x-5, y, x+5, y);
+		//g.drawLine(x, y-5, x, y+5);
 		g.setColor(Color.BLACK);
 		
 		Iterator<VueTroncon> it = vues_troncons.iterator();

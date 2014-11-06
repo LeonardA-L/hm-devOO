@@ -54,6 +54,7 @@ public class Fenetre extends JFrame {
 		this.top.setPreferredSize(sizeTop);
 		this.top.setLayout(new GridLayout(1,2));
 		
+		// VuePlan is a JPanel AND a VueObject => we should have cut this into 2 objects
 		this.view_plan = new VuePlan();
 		this.top.add(this.view_plan, 0);
 		
