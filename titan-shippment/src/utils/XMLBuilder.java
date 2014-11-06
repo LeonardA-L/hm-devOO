@@ -28,7 +28,12 @@ import org.xml.sax.XMLReader;
 //dans une autre classe/interface
 public class XMLBuilder {
 
-
+	/* this var is declared here because it will be found when 
+	/ calling to getLivraisons, but transmitted to interface agglo while
+	/ the getLivraison method is called by interface planning
+	*/
+	private static int t_entrepot = -1;
+	private boolean entrepotReady = false;
 	
 	//vérifie si le fichier est lisible et bien formé, et que l'uppermost balise est bien <Reseau> (pour un plan)
 	//ou <JourneeType> (pour une liste de livraisons)
@@ -157,57 +162,87 @@ public class XMLBuilder {
 	}
 
 
-// Julien : working on it (6/11 19h30)
-public static ArrayList<Livraison> getLivraisons(String filename, model.planning.InterfacePlanning intf) {
-		
-		ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
-		
+/**
+ * Xml parser and livraisons builder.
+ * Lines commmented with "// **** " are deprecated in my opinion.
+ * The methods parses the xml file containing livraisons and add them 
+ * "on the go" using the addLivraison method from InterfacePlanning.
+ * #####################################################################"
+ * # Not sure about error checks yet, a valid xml must be used for now #
+ * #####################################################################"
+ * 
+ * @param filename		xml file name/path
+ * @param intf			reference to the InterfacePlanning object
+ * @return	boolean		true or false depending on the success
+ */
+public static boolean getLivraisons(String filename, model.planning.InterfacePlanning intf) {
+		// **** ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
 		Path path = (new File(filename)).toPath();
+		
+		// temporary var
+		String t_heureDebut;
+		String t_heureFin;
+		int t_idClient;
+		int t_idLivraison;
+		int t_adresseLivraison;
+		
 		try (InputStream in = Files.newInputStream(path);
-			    BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
+			 BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
 			
-			if(getType(reader) != 1){
+			if(getType(reader) != 1) {
 				throw new IOException("The input file does not match the expected structure.");
 			}
-			    String line = null;
-			    
-	
-			    while ((line = reader.readLine()) != null) {
-			    	if(line.contains("<Entrepot")){
-			    		ArrayList<String> node = new ArrayList<String>();
-			    		int index = line.indexOf("adresse=")+9;
-			    		node.add(line.substring(index, line.indexOf("\"", index)));
-			    		data.add(node);
-			    	}
-			    	//nomRue="v0" vitesse="4,400000" longueur="300,200000" idNoeudDestination="1"
-			    	else if(line.contains("<Plage h")){
-			    		ArrayList<String> node = new ArrayList<String>();
-			    		int index = line.indexOf("heureDebut=")+12;
-			    		node.add(line.substring(index, line.indexOf("\"", index)));
-			    		index = line.indexOf("heureFin=", index)+10;
-			    		node.add(line.substring(index, line.indexOf("\"", index)));
-			    		data.add(node);
-			    	}
-			    	else if(line.contains("<Livraison")){
-			    		ArrayList<String> node = new ArrayList<String>();
-			    		int index = line.indexOf("id=")+4;
-			    		node.add(line.substring(index, line.indexOf("\"", index)));
-			    		index = line.indexOf("client=", index)+8;
-			    		node.add(line.substring(index, line.indexOf("\"", index)));
-			    		index = line.indexOf("adresse=", index)+9;
-			    		node.add(line.substring(index, line.indexOf("\"", index)));
-			    		data.add(node);
-			    	}
-			    }
-			    if(in != null)
-			    	in.close();
 			
-
+		    String line = null;
+		    // main loop through file
+		    while ((line = reader.readLine()) != null) {  	
+		    	if(line.contains("<Plage h")) {
+		    		// **** ArrayList<String> node = new ArrayList<String>();
+		    		int index = line.indexOf("heureDebut=")+12;	//12 = heureDebut.size()...
+		    		// **** node.add(line.substring(index, line.indexOf("\"", index)));
+		    		t_heureDebut = line.substring(index, line.indexOf("\"", index));	// *
+		    		index = line.indexOf("heureFin=", index)+10;	
+		    		// **** node.add(line.substring(index, line.indexOf("\"", index)));
+		    		t_heureFin = line.substring(index, line.indexOf("\"", index));
+		    		
+		    		// **** data.add(node);
+		    	}
+		    	else if(line.contains("<Livraison")){
+		    		// **** ArrayList<String> node = new ArrayList<String>();
+		    		int index = line.indexOf("id=")+4;
+		    		t_idLivraison = Integer.parseInt(line.substring(index, line.indexOf("\"", index)));
+		    		// **** node.add(line.substring(index, line.indexOf("\"", index)));
+		    		index = line.indexOf("client=", index)+8;
+		    		t_idClient = Integer.parseInt(line.substring(index, line.indexOf("\"", index)));
+		    		// **** node.add(line.substring(index, line.indexOf("\"", index)));
+		    		index = line.indexOf("adresse=", index)+9;
+		    		t_adresseLivraison = Integer.parseInt(line.substring(index, line.indexOf("\"", index)));
+		    		
+		    		boolean success = intf.AddLivraison(t_idClient, t_idLivraison, t_heureDebut, t_heureFin, t_adresseLivraison);
+		    		if(!success) {	// problem on interface side, stop parsing. 
+		    			return false; 
+		    		}
+		    		// **** node.add(line.substring(index, line.indexOf("\"", index)));
+		    		// **** data.add(node);
+		    	}
+		      	// get entrepot 
+		    	else if(line.contains("<Entrepot")){
+		    		ArrayList<String> node = new ArrayList<String>();
+		    		int index = line.indexOf("adresse=")+9;
+		    		// **** node.add(line.substring(index, line.indexOf("\"", index)));
+		    		// **** data.add(node);
+		    		// **** verifier que l'on substring bien l'adresse uniquement et pas les guillemets autours.
+		    		t_entrepot = Integer.parseInt(line.substring(index, line.indexOf("\"",index)));
+		    	}
+		    }
+		    if(in != null) {
+		    	in.close();
+		    }
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
-		return null;	
+		return true;	
 	}
 
 }
