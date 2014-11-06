@@ -1,22 +1,24 @@
 package model.planning;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import controller.Controller;
 
 
 import model.agglomeration.InterfaceAgglo;
 import model.agglomeration.Noeud;
-
 import utils.XMLBuilder;
 
 public class InterfacePlanning {
 
 	private ArrayList<Livraison> listeLivraisons;
+	private ArrayList<PlageHoraire> plagesHoraires;
 	private Tournee tournee;
 	
 	public InterfacePlanning () {
 		listeLivraisons = new ArrayList<Livraison>();
+		setPlagesHoraires(new ArrayList<PlageHoraire>());
 		tournee = null;
 	}
 	
@@ -46,7 +48,7 @@ public class InterfacePlanning {
 	 * @return
 	 */
 	public boolean AddLivraison(int idClient, int idLivraison, String heureDebut, String heureFin, int adresse) {
-		PlageHoraire ph = new PlageHoraire(heureDebut, heureFin);
+		PlageHoraire ph = this.getPlageHoraire(heureDebut, heureFin);
 		Noeud nd = Controller.getInstance().getInterfaceAgglo().getPlan().getNoeudById(adresse);
 		if (nd == null || ph == null) {
 			return false;
@@ -56,6 +58,19 @@ public class InterfacePlanning {
 		return true;
 	}
 	
+	private PlageHoraire getPlageHoraire(String heureDebut, String heureFin) {
+		Iterator<PlageHoraire> it = plagesHoraires.iterator();
+		while (it.hasNext()) {
+			PlageHoraire ph = it.next();
+			if (ph.getHeureDebut() == heureDebut && ph.getHeureFin() == heureFin) {
+				return ph;
+			}
+		}
+		PlageHoraire ph = new PlageHoraire(heureDebut, heureFin);
+		plagesHoraires.add(ph);
+		return ph;
+	}
+
 	/**
 	 * 	Celle là elle est pour Quentin -> comment tu bind les clics souris et un point sur le graphique (id qui sert d'adresse)
 	 * @param idCLient
@@ -84,6 +99,11 @@ public class InterfacePlanning {
 		
 		this.setTournee(tournee);
 	}
+	
+	public void reset() {
+		listeLivraisons.clear();
+		plagesHoraires.clear();
+	}
 
 	
 	// GETTERS - SETTERS
@@ -101,6 +121,14 @@ public class InterfacePlanning {
 
 	private void setTournee(Tournee tournee){
 		this.tournee = tournee;
+	}
+
+	public ArrayList<PlageHoraire> getPlagesHoraires() {
+		return plagesHoraires;
+	}
+
+	public void setPlagesHoraires(ArrayList<PlageHoraire> plagesHoraires) {
+		this.plagesHoraires = plagesHoraires;
 	}
 	
 }

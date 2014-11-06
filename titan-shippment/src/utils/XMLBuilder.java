@@ -195,7 +195,7 @@ public static ArrayList<Livraison> getLivraisons(String filename, model.planning
 			
 		    String line = null;
 		    // main loop through file
-		    while ((line = reader.readLine()) != null) {  	
+		    while ((line = reader.readLine()) != null) {
 		    	if(line.contains("<Plage h")) {
 		    		// **** ArrayList<String> node = new ArrayList<String>();
 		    		int index = line.indexOf("heureDebut=")+12;	//12 = heureDebut.size()...
@@ -238,11 +238,13 @@ public static ArrayList<Livraison> getLivraisons(String filename, model.planning
 		    if(in != null) {
 		    	in.close();
 		    }
+		    
+		    return intf.getListeLivraisons();
+		    
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
 		}
-		return null;	
 	}
 
 }

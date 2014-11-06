@@ -127,7 +127,7 @@ public class Controller implements ActionListener {
 								interfaceView.getVue_tournee().reset();
 								tourneeCalculed = false;
 							}
-							interfacePlanning.getListeLivraisons().clear();
+							interfacePlanning.reset();
 							livraisonsLoaded = false;
 							
 							// load livraisons
