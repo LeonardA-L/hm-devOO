@@ -175,7 +175,7 @@ public class XMLBuilder {
  * @param intf			reference to the InterfacePlanning object
  * @return	boolean		true or false depending on the success
  */
-public static boolean getLivraisons(String filename, model.planning.InterfacePlanning intf) {
+public static ArrayList<Livraison> getLivraisons(String filename, model.planning.InterfacePlanning intf) {
 		// **** ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
 		Path path = (new File(filename)).toPath();
 		
@@ -220,7 +220,7 @@ public static boolean getLivraisons(String filename, model.planning.InterfacePla
 		    		
 		    		boolean success = intf.AddLivraison(t_idClient, t_idLivraison, t_heureDebut, t_heureFin, t_adresseLivraison);
 		    		if(!success) {	// problem on interface side, stop parsing. 
-		    			return false; 
+		    			return null; 
 		    		}
 		    		// **** node.add(line.substring(index, line.indexOf("\"", index)));
 		    		// **** data.add(node);
@@ -240,9 +240,9 @@ public static boolean getLivraisons(String filename, model.planning.InterfacePla
 		    }
 		} catch (IOException e) {
 			e.printStackTrace();
-			return false;
+			return null;
 		}
-		return true;	
+		return null;	
 	}
 
 }
