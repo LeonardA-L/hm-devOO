@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import controller.Controller;
 
 
+import model.agglomeration.InterfaceAgglo;
 import model.agglomeration.Noeud;
 
 public class InterfacePlanning {
 
-	ArrayList<Livraison> listeLivraisons;
+	private ArrayList<Livraison> listeLivraisons;
+	private Tournee tournee;
 	
 	
 	/**	Call a method in XMLBuilder, giving it the name of the file
@@ -68,6 +70,21 @@ public class InterfacePlanning {
 		return false;
 	}
 	
+	/**
+	 * calculates the path for delivery
+	 */
+	public void CalculTournee(){
+		InterfaceAgglo interfaceAgglo = Controller.getInstance().getInterfaceAgglo();
+		float[][] matriceAdjacence = interfaceAgglo.GetFormatedMap();
+		
+		//TODO - Calcul Tournee
+		Tournee tournee = new Tournee();
+		
+		
+	}
 	
+	private void setTournee(Tournee tournee){
+		this.tournee = tournee;
+	}
 	
 }
