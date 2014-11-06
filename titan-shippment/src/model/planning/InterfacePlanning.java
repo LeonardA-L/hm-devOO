@@ -77,10 +77,10 @@ public class InterfacePlanning {
 		InterfaceAgglo interfaceAgglo = Controller.getInstance().getInterfaceAgglo();
 		float[][] matriceAdjacence = interfaceAgglo.GetFormatedMap();
 		
-		//TODO - Calcul Tournee
 		Tournee tournee = new Tournee();
+		//TODO - Calcul Tournee
 		
-		
+		this.setTournee(tournee);
 	}
 	
 	private void setTournee(Tournee tournee){
