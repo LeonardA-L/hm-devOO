@@ -8,7 +8,7 @@ import view.agglomeration.VueNoeud;
 import view.agglomeration.VueTroncon;
 import view.utils.Vue;
 
-public class VueItineraire extends Vue {
+public class VueItineraire implements Vue {
 
 	private VueNoeud depart;
 	private VueNoeud arrivee;
@@ -27,7 +27,7 @@ public class VueItineraire extends Vue {
 	}
 	
 	@Override
-	protected void dessine(Graphics g) {
+	public void dessine(Graphics g) {
 		
 		// paint first node
 		depart.dessine(g);

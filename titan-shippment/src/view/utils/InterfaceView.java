@@ -1,40 +1,25 @@
 package view.utils;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import view.agglomeration.VuePlan;
-import view.planning.VueTournee;
+import model.planning.Livraison;
+import view.agglomeration.VueNoeud;
+import view.planning.VueLivraison;
 
 public class InterfaceView {
 	
-	private VuePlan vue_plan;
-	private VueTournee vue_tournee;
-	
+	private VuePanel vuePanel;
+
 	public InterfaceView() {
 		Fenetre fenetre = new Fenetre();
 		fenetre.setVisible(true);
-		vue_plan = fenetre.getVuePlan();
-		vue_tournee = new VueTournee();
-	}
-	
-	public VueTournee getVue_tournee() {
-		return vue_tournee;
-	}
-
-	public void setVue_tournee(VueTournee vue_tournee) {
-		this.vue_tournee = vue_tournee;
-	}
-
-	public VuePlan getVue_plan() {
-		return vue_plan;
-	}
-
-	public void setVue_plan(VuePlan vue_plan) {
-		this.vue_plan = vue_plan;
+		vuePanel = fenetre.getVue();
 	}
 
 	public void displayAlert(String titre, String message, String type) {
@@ -63,6 +48,30 @@ public class InterfaceView {
 	}
 
 	public void repaint() {
-		vue_plan.repaint();
+		vuePanel.repaint();
+	}
+
+	public boolean genererVueLivraisons(ArrayList<Livraison> listeLivraisons) {
+		Iterator<Livraison> it = listeLivraisons.iterator();
+		while (it.hasNext()) {
+			Livraison livraison = it.next();
+			VueNoeud vue_noeud = vuePanel.getVue_plan().getVueNoeudById(livraison.getAdresse().getId());
+			
+			if (vue_noeud == null) {
+				vuePanel.getVues_livraisons().clear();
+				return false;
+			}
+			
+			vuePanel.getVues_livraisons().add(new VueLivraison(livraison, vue_noeud));
+		}
+		return true;
+	}
+	
+	public VuePanel getVuePanel() {
+		return vuePanel;
+	}
+
+	public void setVuePanel(VuePanel vuePanel) {
+		this.vuePanel = vuePanel;
 	}
 }

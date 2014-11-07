@@ -16,12 +16,12 @@ import view.agglomeration.VuePlan;
 
 public class Fenetre extends JFrame {
 	
-	private VuePlan view_plan;
+	private VuePanel vue;
 	private JPanel container;
 	private JPanel top;
 	private JPanel bottom;
 	private JPanel top_right;
-	
+
 	private final int tailleX = 1000;
 	private final int tailleY = 600;
 
@@ -55,8 +55,8 @@ public class Fenetre extends JFrame {
 		this.top.setLayout(new GridLayout(1,2));
 		
 		// VuePlan is a JPanel AND a VueObject => we should have cut this into 2 objects
-		this.view_plan = new VuePlan();
-		this.top.add(this.view_plan, 0);
+		this.vue = new VuePanel();
+		this.top.add(this.vue, 0);
 		
 		// list livraisons & btn
 		this.top_right = new JPanel();
@@ -114,14 +114,6 @@ public class Fenetre extends JFrame {
 		this.top_right.add(btn_panel, 1);
 	}
 
-	public VuePlan getVuePlan() {
-		return view_plan;
-	}
-
-	public void setVuePlan(VuePlan plan) {
-		this.view_plan = plan;
-	}
-
 	public JPanel getFenetreContainer() {
 		return container;
 	}
@@ -136,6 +128,14 @@ public class Fenetre extends JFrame {
 
 	public int getTailley() {
 		return tailleY;
+	}
+	
+	public VuePanel getVue() {
+		return vue;
+	}
+
+	public void setVue(VuePanel vue) {
+		this.vue = vue;
 	}
 	
 	

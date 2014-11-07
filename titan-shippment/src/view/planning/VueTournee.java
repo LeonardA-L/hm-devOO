@@ -13,7 +13,7 @@ import view.agglomeration.VuePlan;
 import view.agglomeration.VueTroncon;
 import view.utils.Vue;
 
-public class VueTournee extends Vue {
+public class VueTournee implements Vue {
 	
 	private Tournee tournee;
 	private ArrayList<VueLivraison> livraisons;
@@ -26,10 +26,7 @@ public class VueTournee extends Vue {
 	}
 
 	@Override
-	protected void dessine(Graphics g) {
-		// reset
-		super.paintComponent(g);
-		
+	public void dessine(Graphics g) {		
 		Iterator<VueItineraire> it = itineraires.iterator();
 		while (it.hasNext()) {
 			it.next().dessine(g);
@@ -60,7 +57,7 @@ public class VueTournee extends Vue {
 		Iterator<Itineraire> it = tournee.getItineraires().iterator();
 		while(it.hasNext()) {
 			Itineraire itineraire = it.next();
-			VuePlan vue_plan = Controller.getInstance().getInterfaceView().getVue_plan();
+			VuePlan vue_plan = Controller.getInstance().getInterfaceView().getVuePanel().getVue_plan();
 			VueNoeud depart = vue_plan.getVueNoeudById(itineraire.getDepart().getId());
 			VueNoeud arrivee = vue_plan.getVueNoeudById(itineraire.getArrivee().getId());
 			

@@ -9,28 +9,36 @@ import view.utils.Vue;
 import model.agglomeration.Noeud;
 import model.agglomeration.Troncon;
 
-public class VueNoeud extends Vue {
+public class VueNoeud implements Vue {
+	
+	enum Type {
+		CERCLE, CARRE, CROIX
+	}
 	
 	// pixel
 	private final int TOLERANCE_CLICK = 10;
-	private final int RAYON = 5;
 	
 	private Noeud noeud;
 	private ArrayList<VueTroncon> vues_troncons;
 	
 	private Color color;
-	private Graphics graphics_plan;
-	
+	private Type type;
+	private int taille;
+
 	public VueNoeud() {
 		this.noeud = null;
 		this.vues_troncons = new ArrayList<VueTroncon>();
 		this.color = Color.BLACK;
+		this.type = Type.CERCLE;
+		this.taille = 5;
 	}
 	
 	public VueNoeud(Noeud noeud) {
 		this.noeud = noeud;
 		this.vues_troncons = new ArrayList<VueTroncon>();
 		this.color = Color.BLACK;
+		this.type = Type.CERCLE;
+		this.taille = 5;
 		
 		Iterator<Troncon> it = noeud.getTroncons().iterator();
 		while (it.hasNext()) {
@@ -41,14 +49,25 @@ public class VueNoeud extends Vue {
 	public void dessine(Graphics g) {
 		int x = noeud.getCoordX();
 		int y = noeud.getCoordY();
+
 		g.setColor(this.color);
-		g.drawOval(x-RAYON/2, y-RAYON/2, RAYON, RAYON);
-		//g.drawLine(x-5, y, x+5, y);
-		//g.drawLine(x, y-5, x, y+5);
+		if (this.type == Type.CERCLE) {
+			g.drawOval(x-taille/2, y-taille/2, taille, taille);
+		}
+		else if (this.type == Type.CARRE) {
+			g.drawLine(x-taille/2, y-taille/2, x+taille/2, y-taille/2); // haut
+			g.drawLine(x-taille/2, y+taille/2, x+taille/2, y+taille/2); // bas
+			g.drawLine(x-taille/2, y-taille/2, x-taille/2, y+taille/2); // gauche
+			g.drawLine(x+taille/2, y-taille/2, x+taille/2, y+taille/2); // droite
+		}
+		else {
+			// croix
+			g.drawLine(x-taille/2, y, x+taille/2, y);
+			g.drawLine(x, y-taille/2, x, y+taille/2);
+		}
 		g.setColor(Color.BLACK);
 		
 		Iterator<VueTroncon> it = vues_troncons.iterator();
-		
 		while (it.hasNext()) {
 			VueTroncon vue_troncon = it.next();
 			vue_troncon.dessine(g, noeud);
@@ -70,6 +89,16 @@ public class VueNoeud extends Vue {
 
 	public void highlight() {
 		this.setColor(Color.RED);
+		this.setType(Type.CARRE);
+		this.setTaille(10);
+	}
+	
+	public int getTaille() {
+		return taille;
+	}
+
+	public void setTaille(int taille) {
+		this.taille = taille;
 	}
 
 	public Color getColor() {
@@ -78,6 +107,14 @@ public class VueNoeud extends Vue {
 
 	public void setColor(Color color) {
 		this.color = color;
+	}
+
+	public Type getType() {
+		return type;
+	}
+
+	public void setType(Type type) {
+		this.type = type;
 	}
 
 }

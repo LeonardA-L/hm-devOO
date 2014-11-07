@@ -7,7 +7,7 @@ import view.utils.Vue;
 import model.agglomeration.Noeud;
 import model.agglomeration.Troncon;
 
-public class VueTroncon extends Vue {
+public class VueTroncon implements Vue {
 	
 	private Troncon troncon;
 	private Color color;
@@ -28,9 +28,7 @@ public class VueTroncon extends Vue {
 		// cannot draw without node in
 	}
 	
-	public void dessine(Graphics g, Noeud noeud) {
-		super.paintComponent(g);
-		
+	public void dessine(Graphics g, Noeud noeud) {		
 		int x = noeud.getCoordX();
 		int y = noeud.getCoordY();
 		

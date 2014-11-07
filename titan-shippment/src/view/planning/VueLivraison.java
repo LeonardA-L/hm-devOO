@@ -6,23 +6,23 @@ import model.planning.Livraison;
 import view.agglomeration.VueNoeud;
 import view.utils.Vue;
 
-public class VueLivraison extends Vue {
+public class VueLivraison implements Vue {
 	
 	private Livraison livraison;
 	private VueNoeud noeud;
 	
 	public VueLivraison() {
-		livraison = null;
+		setLivraison(null);
 		setNoeud(null);
 	}
 	
 	public VueLivraison(Livraison livraison, VueNoeud noeud) {
-		this.livraison = livraison;
+		this.setLivraison(livraison);
 		this.noeud = noeud;
 	}
 
 	@Override
-	protected void dessine(Graphics g) {
+	public void dessine(Graphics g) {
 		// TODO Auto-generated method stub
 		noeud.highlight();
 		noeud.dessine(g);
@@ -34,6 +34,14 @@ public class VueLivraison extends Vue {
 
 	public void setNoeud(VueNoeud noeud) {
 		this.noeud = noeud;
+	}
+
+	public Livraison getLivraison() {
+		return livraison;
+	}
+
+	public void setLivraison(Livraison livraison) {
+		this.livraison = livraison;
 	}
 
 }

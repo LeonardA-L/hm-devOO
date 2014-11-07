@@ -47,13 +47,25 @@ public class Controller implements ActionListener {
 	
 	public void trigger(String action, int x, int y) {
 		if (action.equals("click_map")) {
+			
+			if (!mapLoaded) {
+				return;
+			}
+			
 			// clic sur la carte aux coordonnées (x,y)
-			VueNoeud view_noeud = interfaceView.getVue_plan().getWhoIsClicked(x, y);
+			VueNoeud view_noeud = interfaceView.getVuePanel().getVue_plan().getWhoIsClicked(x, y);
 			
 			if (view_noeud != null) {
+				
+				if (!livraisonsLoaded) {
+					interfaceView.displayAlert("Chargement des livraisons", "Vous devez charger les livraisons avant de pouvoir les modifier.", "warning");
+					return;
+				}
+				
 				if(!interfacePlanning.isNodeADelivery(view_noeud.getNoeud().getId()))	// check if node has a delivery already
 				{
 					interfaceView.displayAlert("Ajouter une livraison", "Vous avez cliqué sur le noeud : " + view_noeud.getNoeud().toString(), "info");
+					
 					if (addingNewLivraison) {
 						// on a déjà cliqué sur un noeud, on précise après quel noeud on ajoute le nouveau
 						
@@ -83,7 +95,7 @@ public class Controller implements ActionListener {
 					interfaceView.repaint();
 				}
 				else {
-					interfaceView.displayAlert("Ajouter une livraison", "Ce noeud à déjà une livraison.", "info");
+					interfaceView.displayAlert("Ajouter une livraison", "Ce noeud a déjà une livraison.", "info");
 				}
 			}
 		}
@@ -106,7 +118,7 @@ public class Controller implements ActionListener {
 						
 						// remove former map
 						interfaceAgglo.getPlan().reset();
-						interfaceView.getVue_plan().reset();
+						interfaceView.getVuePanel().getVue_plan().reset();
 						mapLoaded = false;
 						
 						boolean buildOk = interfaceAgglo.BuildPlanFromXml(filename);
@@ -119,7 +131,7 @@ public class Controller implements ActionListener {
 						}
 						
 						// set views
-						interfaceView.getVue_plan().setPlan(interfaceAgglo.getPlan());
+						interfaceView.getVuePanel().getVue_plan().setPlan(interfaceAgglo.getPlan());
 						interfaceView.repaint();
 					}
 				}
@@ -131,12 +143,10 @@ public class Controller implements ActionListener {
 						String filename = interfaceView.loadFile();
 						
 						if (filename != null && filename.length() > 0) {
-							interfaceView.displayAlert("Livraisons", "Chargement des livraisons en cours ...", "info");
-							
 							// reset livraisons + éventuellement tournees
 							if (tourneeCalculed) {
 								interfacePlanning.getTournee().reset();
-								interfaceView.getVue_tournee().reset();
+								interfaceView.getVuePanel().getVue_tournee().reset();
 								tourneeCalculed = false;
 							}
 							interfacePlanning.reset();
@@ -151,7 +161,9 @@ public class Controller implements ActionListener {
 							
 							
 							// set views
-							boolean creatingViewOk = interfaceView.getVue_tournee().setTournee(interfacePlanning.getTournee());
+							boolean creatingViewOk = interfaceView.genererVueLivraisons(interfacePlanning.getListeLivraisons());
+							// pour les tournées, rien à voir
+							// .getVue_tournee().setTournee(interfacePlanning.getTournee());
 							
 							if (!creatingViewOk) {
 								livraisonsLoaded = false;
