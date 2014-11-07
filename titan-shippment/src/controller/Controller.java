@@ -160,6 +160,8 @@ public class Controller implements ActionListener {
 						}
 						else {
 							interfaceView.displayAlert("Erreur au chargement de la carte", "La carte n'a pas été chargée correctement.", "error");
+							interfaceView.repaint();
+							return;
 						}
 						
 						// set views
@@ -184,6 +186,11 @@ public class Controller implements ActionListener {
 							if (buildOk) {
 								livraisonsLoaded = true;
 								interfaceAgglo.GetEntrepotFromBuilder(); // if the file was read w/o problem, the entrepot was found, time to fetch it
+							}
+							else {
+								interfaceView.displayAlert("Erreur au chargement des livraisons", "Les livraisons n'ont pas été chargées correctement", "error");
+								interfaceView.repaint();
+								return;
 							}
 							
 							
