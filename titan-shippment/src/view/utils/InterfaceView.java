@@ -4,6 +4,7 @@ import java.io.File;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import view.agglomeration.VuePlan;
 import view.planning.VueTournee;
@@ -50,6 +51,9 @@ public class InterfaceView {
 
 	public String loadFile() {
 		JFileChooser dialogue = new JFileChooser();
+		dialogue.setCurrentDirectory(new File("../"));
+		dialogue.setFileFilter(new FileNameExtensionFilter("Fichier XML", "xml"));
+		dialogue.setAcceptAllFileFilterUsed(false);
         dialogue.showOpenDialog(null);
         File file = dialogue.getSelectedFile();
         if (file != null) {
