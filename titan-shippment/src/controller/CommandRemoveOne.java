@@ -1,5 +1,6 @@
 package controller;
 
+import model.planning.InterfacePlanning;
 import model.planning.PlageHoraire;
 
 public class CommandRemoveOne implements ICommand{
@@ -7,16 +8,16 @@ public class CommandRemoveOne implements ICommand{
 	private int oldClient;
 	private PlageHoraire oldPlageHoraire;
 
-	public boolean Execute () {
-		return true;
-	}
-
-	public boolean Unexecute () {
-		return true;
-	}
-
 	public boolean CommandAddOne (int adr, PlageHoraire pH, int idClient) {
 		
 		return true;
+	}
+
+	public boolean Execute(InterfacePlanning interfaceP) {
+		return false;
+	}
+
+	public boolean Unexecute(InterfacePlanning interfaceP) {
+		return false;
 	}
 }
