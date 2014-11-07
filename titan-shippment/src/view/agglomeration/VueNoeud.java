@@ -115,6 +115,12 @@ public class VueNoeud implements Vue {
 		this.setTaille(taille);
 	}
 	
+	public void unhighlight() {
+		this.setColor(Color.BLACK);
+		this.setType(Type.CERCLE);
+		this.setTaille(5);
+	}
+	
 	public int getTaille() {
 		return taille;
 	}

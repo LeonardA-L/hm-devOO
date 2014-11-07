@@ -74,45 +74,64 @@ public class Controller implements ActionListener {
 					return;
 				}
 				
-				if(!interfacePlanning.isNodeADelivery(view_noeud.getNoeud().getId()))	// check if node has a delivery already
-				{
-					interfaceView.displayAlert("Ajouter une livraison", "Vous avez cliqué sur le noeud : " + view_noeud.getNoeud().toString(), "info");
-					
-					if (addingNewLivraison) {
-						// on a déjà cliqué sur un noeud, on précise après quel noeud on ajoute le nouveau
-						
-						// dummies (will not be instantiated or declared here later)
-						int idClient = 23;				// user input 
-						int adresse = 34;				// = view_noeud.getNoeud().getId() but user should be able to change it .. ?
-						int prevAdresse = 35;			// = view_noeud.getNoeud().getId() but user should be able to change it .. ?
-						int idLivraison = 18;			// call a method from interfacePlanning to get one, giving as paramters heureDebut and heureFin
-						String heureDebut = "8:0:0";	// user input
-						String heureFin = "12:0:0";		// user input
-						
-						// addLivraison
-						undoRedo.InsertAddCmd(idClient, idLivraison, heureDebut, heureFin, adresse, prevAdresse);
-						// end process
-						addingNewLivraison = false;
+				boolean isNodeADelivery = interfacePlanning.isNodeADelivery(view_noeud.getNoeud().getId());
+
+				interfaceView.displayAlert("Ajouter une livraison", "Vous avez cliqué sur le noeud : " + view_noeud.getNoeud().toString(), "info");
+				
+				if (addingNewLivraison) {
+					if (!isNodeADelivery) {
+						interfaceView.displayAlert("Ajouter une livraison", "Ce noeud n'a pas de livraison", "warning");
+						interruptAddingNewLivraison();
+						return;
 					}
-					else {
-						// premier clic sur un noeud
-						addingNewLivraison = true;
-						// check
-						// addPlageHoraire
-						// interfaceView.askPlageHoraire();
-						// wait for new click
-					}	
-					// node HL
-					view_noeud.highlight();
+					// on a déjà cliqué sur un noeud, on précise après quel noeud on ajoute le nouveau
+					
+					// dummies (will not be instantiated or declared here later)
+					int idClient = 23;				// user input 
+					int adresse = 34;				// = view_noeud.getNoeud().getId() but user should be able to change it .. ?
+					int prevAdresse = 35;			// = view_noeud.getNoeud().getId() but user should be able to change it .. ?
+					int idLivraison = 18;			// call a method from interfacePlanning to get one, giving as paramters heureDebut and heureFin
+					
+					String[] retour = interfaceView.askPlageHoraire(); // 0 : heure début / 1 : heure fin
+					if (retour[0] == null || retour[1] == null) {
+						interruptAddingNewLivraison();
+						return;
+					}
+					
+					String heureDebut = retour[0];
+					String heureFin = retour[1];		
+					
+					// addLivraison
+					undoRedo.InsertAddCmd(idClient, idLivraison, heureDebut, heureFin, adresse, prevAdresse);
+					
+					// end process
 					interfaceView.repaint();
+					interruptAddingNewLivraison();
+				}
+				else if (!addingNewLivraison) {
+					if (isNodeADelivery) {
+						interfaceView.displayAlert("Ajouter une livraison", "Ce noeud a déjà une livraison", "warning");
+						return;
+					}
+					// premier clic sur un noeud
+					addingNewLivraison = true;
+					// sauvegarde du view_noeud temporairement
+					// wait for new click
 				}
 				else {
-					interfaceView.displayAlert("Ajouter une livraison", "Ce noeud a déjà une livraison.", "info");
+					interfaceView.displayAlert("Ajouter une livraison", "", "warning");
 				}
+				// node HL
+				interfaceView.highlight(view_noeud);
 			}
 		}
 	}
 	
+
+	private void interruptAddingNewLivraison() {
+		addingNewLivraison = false;
+		interfaceView.clearHighlightedNodes();
+	}
 
 	/**
 	 * Called by the view in order to process user input on buttons

@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 import model.planning.PlageHoraire;
 import controller.Controller;
+import view.agglomeration.VueNoeud;
 import view.agglomeration.VuePlan;
 import view.planning.VueLivraison;
 import view.planning.VueTournee;
@@ -23,16 +24,19 @@ public class VuePanel extends JPanel {
 	private VueTournee vue_tournee;
 	private ArrayList<VueLivraison> vues_livraisons;
 	
+	private ArrayList<VueNoeud> noeud_highlighted;
+	
 	public VuePanel() {
 		// init views
 		vue_plan = new VuePlan();
 		vue_tournee = new VueTournee();
 		vues_livraisons = new ArrayList<VueLivraison>();
+		noeud_highlighted = new ArrayList<VueNoeud>();
 		
 		// init panel
 		this.setSize(500,200);
 		this.setPreferredSize(new Dimension(500,200));
-		this.setBorder(BorderFactory.createLineBorder(Color.RED));
+		this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
 		this.addMouseListener(new MouseListener() {
 
@@ -129,5 +133,13 @@ public class VuePanel extends JPanel {
 
 	public void setVue_tournee(VueTournee vue_tournee) {
 		this.vue_tournee = vue_tournee;
+	}
+
+	public ArrayList<VueNoeud> getNoeud_highlighted() {
+		return noeud_highlighted;
+	}
+
+	public void setNoeud_highlighted(ArrayList<VueNoeud> noeud_highlighted) {
+		this.noeud_highlighted = noeud_highlighted;
 	}
 }

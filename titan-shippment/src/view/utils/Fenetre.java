@@ -57,11 +57,11 @@ public class Fenetre extends JFrame {
 		Dimension sizeTop = new Dimension(this.tailleX, (int)(this.tailleY*7/8));
 		this.top.setSize(sizeTop);
 		this.top.setPreferredSize(sizeTop);
-		this.top.setLayout(new GridLayout(1,2));
+		this.top.setLayout(new BorderLayout());
 		
 		// VuePlan is a JPanel AND a VueObject => we should have cut this into 2 objects
 		this.vue = new VuePanel();
-		this.top.add(this.vue, 0);
+		this.top.add(this.vue, BorderLayout.CENTER);
 		
 		// list livraisons & btn
 		this.top_right = new JPanel();
@@ -71,8 +71,8 @@ public class Fenetre extends JFrame {
 		initLivraisonPanel();
 		initBtnPanel();		
 		
-		this.top.setBorder(BorderFactory.createLineBorder(Color.PINK));
-		this.top.add(this.top_right, 1);
+		this.top.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		this.top.add(this.top_right, BorderLayout.EAST);
 		
 		this.container.add(this.top, BorderLayout.CENTER);
 	}
@@ -97,19 +97,23 @@ public class Fenetre extends JFrame {
 	private void initLivraisonPanel() {
 		JPanel livraisons_panel = new JPanel();
 		livraisons_panel.setLayout(new BorderLayout());
-		livraisons_panel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+		livraisons_panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
 		livraisons_panel.add(new JLabel("Les livraisons"), BorderLayout.CENTER);
 		
 		Bouton undo = new Bouton("undo", "", false);
 		Bouton redo = new Bouton("redo", "", false);
 		undo.setIcon(new ImageIcon("images/undo.png"));
+		//undo.setPreferredSize(new Dimension(80,40));
 		redo.setIcon(new ImageIcon("images/redo.png"));
+		//redo.setPreferredSize(new Dimension(80,40));
 		
 		JPanel undoRedoPanel = new JPanel();
-		undoRedoPanel.setLayout(new GridLayout(1,2));
-		undoRedoPanel.add(undo, 0);
-		undoRedoPanel.add(redo, 1);
+		undoRedoPanel.setLayout(new BoxLayout(undoRedoPanel, BoxLayout.X_AXIS));
+		undoRedoPanel.add(Box.createHorizontalGlue());
+		undoRedoPanel.add(undo);
+		undoRedoPanel.add(redo);
+		undoRedoPanel.add(Box.createHorizontalGlue());
 		
 		livraisons_panel.add(undoRedoPanel, BorderLayout.NORTH);
 		this.top_right.add(livraisons_panel, 0);
@@ -117,18 +121,18 @@ public class Fenetre extends JFrame {
 	
 	private void initBtnPanel() {
 		JPanel btn_panel = new JPanel();
-		btn_panel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+		//btn_panel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
 		btn_panel.setLayout(new BoxLayout(btn_panel, BoxLayout.Y_AXIS));
 		
 		Bouton loadMap = new Bouton("loadMap", "Chargement de la carte", true);
 		Bouton loadLivraisons = new Bouton("loadLivraisons", "Chargement des livraisons", true);
 		Bouton calculTournee = new Bouton("calculTournee", "Calcul de la tournée", false);
 		
-		btn_panel.add(Box.createVerticalGlue());
+		btn_panel.add(Box.createGlue());
 		btn_panel.add(loadMap);
 		btn_panel.add(loadLivraisons);
 		btn_panel.add(calculTournee);
-		btn_panel.add(Box.createVerticalGlue());
+		btn_panel.add(Box.createGlue());
 		
 		this.top_right.add(btn_panel, 1);
 	}

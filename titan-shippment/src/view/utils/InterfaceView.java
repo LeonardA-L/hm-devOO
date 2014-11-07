@@ -33,6 +33,31 @@ public class InterfaceView {
 		}
 		JOptionPane.showMessageDialog(null, message, titre, type_alert);
 	}
+	
+	public String[] askPlageHoraire() {
+		String format = "\\d{1,2}:\\d{1,2}:\\d{1,2}";
+		String[] retour = new String[2];
+		
+		String heureDebut = JOptionPane.showInputDialog(null, "Veuillez entrer une heure de début (Format : H:M:S) : ");
+		if (heureDebut == null || !heureDebut.matches(format)) {
+			displayAlert("Erreur", "Mauvais format d'heures (H:M:S)", "error");
+			retour[0] = null;
+			retour[1] = null;
+			return retour;
+		}
+		
+		String heureFin = JOptionPane.showInputDialog(null, "Veuillez entrer une heure de fin (Format : H:M:S) : ");
+		if (heureFin == null || !heureFin.matches(format)) {
+			displayAlert("Erreur", "Mauvais format d'heures (H:M:S)", "error");
+			retour[0] = null;
+			retour[1] = null;
+			return retour;
+		}
+		
+		retour[0] = heureDebut;
+		retour[1] = heureFin;
+		return retour;
+	}
 
 	public String loadFile() {
 		JFileChooser dialogue = new JFileChooser();
@@ -49,6 +74,22 @@ public class InterfaceView {
 
 	public void repaint() {
 		vuePanel.repaint();
+	}
+	
+	
+	public void highlight(VueNoeud noeud) {
+		this.getVuePanel().getNoeud_highlighted().add(noeud);
+		noeud.highlight();
+		this.repaint();
+	}
+	
+	public void clearHighlightedNodes() {
+		Iterator<VueNoeud> it = this.getVuePanel().getNoeud_highlighted().iterator();
+		while (it.hasNext()) {
+			it.next().unhighlight();
+		}
+		this.getVuePanel().getNoeud_highlighted().clear();
+		this.repaint();
 	}
 
 	public boolean genererVueLivraisons(ArrayList<Livraison> listeLivraisons) {
