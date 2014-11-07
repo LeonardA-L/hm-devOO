@@ -67,6 +67,11 @@ public class InterfacePlanning {
 		return true;
 	}
 	
+	public boolean AddLivraisonAfter(int idClient, int idLivraison, String heureDebut, String heureFin, int adresse, int prevAdresse)
+	{
+		return false;
+	}
+	
 	// called to unexecute add command
 	// or to execute remove command
 	public boolean removeOneLivrison(int idLivraison)

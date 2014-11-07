@@ -22,7 +22,11 @@ public class CommandAddOne implements ICommand {
 	}
 
 	public boolean Execute (InterfacePlanning interfaceP) {
-		
+		boolean step1 = interfaceP.AddLivraisonAfter(idClient, idLivraison, heureDebut, heureFin, adresse, prevAdresse);
+		if(step1)	// if livraison added right, update tournee
+		{
+			interfaceP.CalculTournee();
+		}
 		return false;
 	}
 	
