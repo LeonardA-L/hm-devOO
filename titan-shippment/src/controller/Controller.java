@@ -63,7 +63,6 @@ public class Controller implements ActionListener {
 				else {
 					// premier clic sur un noeud
 					addingNewLivraison = true;
-					
 					// check
 					// addPlageHoraire
 					// interfaceView.askPlageHoraire();
@@ -136,6 +135,7 @@ public class Controller implements ActionListener {
 								livraisonsLoaded = true;
 								interfaceAgglo.GetEntrepotFromBuilder(); // if the file was read w/o problem, the entrepot was found, time to fetch it
 							}
+							
 							
 							// set views
 							boolean creatingViewOk = interfaceView.getVue_tournee().setTournee(interfacePlanning.getTournee());

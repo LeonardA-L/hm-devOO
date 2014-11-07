@@ -29,15 +29,16 @@ public class InterfacePlanning {
 	 *  @return 	true or false depending on the success of method (i.d. 
 	 *  			all livraisons have been created successfully)
 	 */
-	public boolean GetPlanningsFromBuilder(String absFilePath) {
-		/*ArrayList<Livraison> livraisons = XMLBuilder.getLivraisons(absFilePath, this);
-		if ( livraisons.size() == 0 ) {
+	public boolean GetPlanningsFromBuilder(String absFilePath) {	
+		boolean success = XMLBuilder.getLivraisons(absFilePath, this);
+		if(success)
+		{
+			return true;
+		}
+		else {
+			reset();
 			return false;
 		}
-		this.setListeLivraisons(livraisons);
-		return true;*/
-		
-		return XMLBuilder.getLivraisons(absFilePath, this);
 	}
 	
 	/**
