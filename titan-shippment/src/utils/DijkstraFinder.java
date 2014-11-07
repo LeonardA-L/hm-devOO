@@ -13,12 +13,13 @@ import solver.variables.IntVar;
 import solver.variables.VariableFactory;
 
 public class DijkstraFinder implements PathFinder {
-	Graph g;
+	Graph graph;
 	
+
 	public static final int UNDEFINED_NODE = -1;
 	
 	public DijkstraFinder(Graph g) {
-		this.g = g;
+		this.graph = g;
 	}
 	
 	@Override
@@ -26,10 +27,10 @@ public class DijkstraFinder implements PathFinder {
 	 * Careful : the last value of this arrayList is the total distance of the path. Pop it to have the real path
 	 */
 	public ArrayList<Integer> findShortestPath(int start, int end) {
-		int n = g.getNbVertices();
-		int minCost = g.getMinArcCost();
-		int maxCost = g.getMaxArcCost();
-		int[][] cost = g.getCost();
+		int n = graph.getNbVertices();
+		int minCost = graph.getMinArcCost();
+		int maxCost = graph.getMaxArcCost();
+		int[][] cost = graph.getCost();
 		int[] next = new int[n];
 		
 		boolean[] visited = new boolean[n];
@@ -55,7 +56,7 @@ public class DijkstraFinder implements PathFinder {
 			int u = Q.get(bestIndex);
 			Q.remove(bestIndex);
 			
-			int[] neighbours = g.getSucc(u);
+			int[] neighbours = graph.getSucc(u);
 			for(int v : neighbours){
 				int alt = dist[u] + cost[u][v];
 				if(alt < dist[v]){
@@ -94,9 +95,9 @@ public class DijkstraFinder implements PathFinder {
 	}
 
 	public ArrayList<Integer> findCycle(int upperCostBound, ArrayList<Integer> nodes) {
-		ShippmentGraph subG = g.createTSPGraph(nodes);
+		//TODO : what is that upperCostBound thing ?
+		ShippmentGraph subG = graph.createTSPGraph(nodes);
 		
-		//TODO : not functional
 		int n = nodes.size();
 		int minCost = subG.getMinArcCost();
 		int maxCost = subG.getMaxArcCost();
@@ -121,6 +122,8 @@ public class DijkstraFinder implements PathFinder {
 			solver.post(IntConstraintFactory.element(xCost[i], cost[i], xNext[i], 0, "none"));
 		//solver.post(IntConstraintFactory.circuit(xNext,0));
 		solver.post(IntConstraintFactory.sum(xCost, xTotalCost));
+		
+		//TODO : add time constraints
 		
 		// limit CPU time
 		SearchMonitorFactory.limitTime(solver,1000000);
@@ -168,4 +171,12 @@ public class DijkstraFinder implements PathFinder {
         }
         return a;
     }
+	
+	public Graph getGraph() {
+		return graph;
+	}
+
+	public void setGraph(Graph graph) {
+		this.graph = graph;
+	}
 }

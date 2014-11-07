@@ -21,7 +21,9 @@ public class ShippmentGraph implements Graph {
 	private int[][] cost; // cost[from][to]
 	private ArrayList<ArrayList<Integer>> succ;
 	private Map<String, ArrayList<Integer>> paths;
-	private PathFinder f;
+	private PathFinder pathFinder;
+
+	
 
 	/**
 	 * Creates a graph such that each vertex is connected to the next <code>d</code> vertices (modulo <code>n</code>) and
@@ -149,10 +151,10 @@ public class ShippmentGraph implements Graph {
 	 * Not available paths will be set to null
 	 */
 	public void makeGraphComplete(){
-		f = new DijkstraFinder(this);
+		pathFinder = new DijkstraFinder(this);
 		for (int i = 0; i < cost.length; i++) {
 			for (int j = 0; j < cost.length; j++) {
-				ArrayList<Integer> pathFromIToJ = f.findShortestPath(i, j);
+				ArrayList<Integer> pathFromIToJ = pathFinder.findShortestPath(i, j);
 				// popping the total distance of the path
 				if(pathFromIToJ != null){
 					int totalCost = pathFromIToJ.remove(pathFromIToJ.size()-1);
@@ -194,5 +196,13 @@ public class ShippmentGraph implements Graph {
 
 	public void setMinArcCost(int minArcCost) {
 		this.minArcCost = minArcCost;
+	}
+	
+	public PathFinder getPathFinder() {
+		return pathFinder;
+	}
+
+	public void setPathFinder(PathFinder f) {
+		this.pathFinder = f;
 	}
 }
