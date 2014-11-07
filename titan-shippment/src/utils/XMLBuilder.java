@@ -8,16 +8,13 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
-import java.util.ArrayList;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import model.agglomeration.InterfaceAgglo;
-import model.agglomeration.Noeud;
 import model.agglomeration.Plan;
-import model.planning.Livraison;
 
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -33,7 +30,7 @@ public class XMLBuilder {
 	/ the getLivraison method is called by interface planning
 	*/
 	private static int t_entrepot = -1;
-	private boolean entrepotReady = false;
+	private static boolean entrepotReady = false;
 	
 	//vérifie si le fichier est lisible et bien formé, et que l'uppermost balise est bien <Reseau> (pour un plan)
 	//ou <JourneeType> (pour une liste de livraisons)
@@ -175,7 +172,7 @@ public class XMLBuilder {
  * @param intf			reference to the InterfacePlanning object
  * @return	boolean		true or false depending on the success
  */
-public static ArrayList<Livraison> getLivraisons(String filename, model.planning.InterfacePlanning intf) {
+public static boolean getLivraisons(String filename, model.planning.InterfacePlanning intf) {
 		// **** ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
 		Path path = (new File(filename)).toPath();
 		
@@ -207,27 +204,27 @@ public static ArrayList<Livraison> getLivraisons(String filename, model.planning
 		    		
 		    		// **** data.add(node);
 		    	}
-		    	else if(line.contains("<Livraison")){
+		    	else if(line.contains("<Livraison id")){	// if only "<Livraison", it takes the line with <Livraisons> as well
 		    		// **** ArrayList<String> node = new ArrayList<String>();
 		    		int index = line.indexOf("id=")+4;
-		    		t_idLivraison = Integer.parseInt(line.substring(index, line.indexOf("\"", index)));
+		    		t_idLivraison = Integer.parseInt(line.substring(index, line.indexOf('"', index)));
 		    		// **** node.add(line.substring(index, line.indexOf("\"", index)));
 		    		index = line.indexOf("client=", index)+8;
-		    		t_idClient = Integer.parseInt(line.substring(index, line.indexOf("\"", index)));
+		    		t_idClient = Integer.parseInt(line.substring(index, line.indexOf('"', index)));
 		    		// **** node.add(line.substring(index, line.indexOf("\"", index)));
 		    		index = line.indexOf("adresse=", index)+9;
-		    		t_adresseLivraison = Integer.parseInt(line.substring(index, line.indexOf("\"", index)));
+		    		t_adresseLivraison = Integer.parseInt(line.substring(index, line.indexOf('"', index)));
 		    		
 		    		boolean success = intf.AddLivraison(t_idClient, t_idLivraison, t_heureDebut, t_heureFin, t_adresseLivraison);
 		    		if(!success) {	// problem on interface side, stop parsing. 
-		    			return null; 
+		    			return false; 
 		    		}
 		    		// **** node.add(line.substring(index, line.indexOf("\"", index)));
 		    		// **** data.add(node);
 		    	}
 		      	// get entrepot 
 		    	else if(line.contains("<Entrepot")){
-		    		ArrayList<String> node = new ArrayList<String>();
+		    		//ArrayList<String> node = new ArrayList<String>();
 		    		int index = line.indexOf("adresse=")+9;
 		    		// **** node.add(line.substring(index, line.indexOf("\"", index)));
 		    		// **** data.add(node);
@@ -239,12 +236,22 @@ public static ArrayList<Livraison> getLivraisons(String filename, model.planning
 		    	in.close();
 		    }
 		    
-		    return intf.getListeLivraisons();
+		    return true;
 		    
 		} catch (IOException e) {
 			e.printStackTrace();
-			return null;
+			return false;
 		}
 	}
 
+	// allows the interfaces to get the entrepot number when it has been read
+	public static int getEntrepot() {
+		if (entrepotReady) {
+			return t_entrepot;
+		}
+		else{
+			return -1;
+		}
+	}
+	
 }

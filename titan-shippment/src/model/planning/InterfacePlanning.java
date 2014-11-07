@@ -30,12 +30,14 @@ public class InterfacePlanning {
 	 *  			all livraisons have been created successfully)
 	 */
 	public boolean GetPlanningsFromBuilder(String absFilePath) {
-		ArrayList<Livraison> livraisons = XMLBuilder.getLivraisons(absFilePath, this);
+		/*ArrayList<Livraison> livraisons = XMLBuilder.getLivraisons(absFilePath, this);
 		if ( livraisons.size() == 0 ) {
 			return false;
 		}
 		this.setListeLivraisons(livraisons);
-		return true;
+		return true;*/
+		
+		return XMLBuilder.getLivraisons(absFilePath, this);
 	}
 	
 	/**

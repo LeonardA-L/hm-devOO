@@ -20,6 +20,7 @@ public class VueTournee extends Vue {
 	private ArrayList<VueItineraire> itineraires;
 	
 	public VueTournee() {
+		tournee = null;
 		livraisons = new ArrayList<VueLivraison>();
 		itineraires = new ArrayList<VueItineraire>();
 	}

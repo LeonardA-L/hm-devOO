@@ -20,7 +20,7 @@ public class Plan {
 	}
 
 	/**
-	 * 	Constructor - no parameter
+	 * 	Constructor - w/params
 	 *  @param entrepot  special node found in "livraison.xml"
 	 *  @param noeuds 	 all the nodes in the graph
 	 *  @see Noeud.java Troncon.java
@@ -121,8 +121,16 @@ public class Plan {
 		return entrepot;
 	}
 
-	public void setEntrepot(Noeud entrepot) {
-		this.entrepot = entrepot;
+	public boolean setEntrepot(int id) {
+		Noeud entrepot = getNoeudById(id);
+		if(entrepot != null)
+		{
+			this.entrepot = entrepot;
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public ArrayList<Noeud> getNoeuds() {

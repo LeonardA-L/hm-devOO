@@ -132,9 +132,9 @@ public class Controller implements ActionListener {
 							
 							// load livraisons
 							boolean buildOk = interfacePlanning.GetPlanningsFromBuilder(filename);
-							
 							if (buildOk) {
 								livraisonsLoaded = true;
+								interfaceAgglo.GetEntrepotFromBuilder(); // if the file was read w/o problem, the entrepot was found, time to fetch it
 							}
 							
 							// set views
