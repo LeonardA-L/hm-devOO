@@ -190,14 +190,22 @@ public class Controller implements ActionListener {
 				}
 			}
 			else if (action.equals("click_button")) {
-				if (!mapLoaded || !livraisonsLoaded) {
-					interfaceView.displayAlert("Impossible de calculer la tournée", "Vous devez charger une carte et une livraison au préalable.", "warning");
+				if (name.equals("calculTournee")) {
+					if (!mapLoaded || !livraisonsLoaded) {
+						interfaceView.displayAlert("Impossible de calculer la tournée", "Vous devez charger une carte et une livraison au préalable.", "warning");
+					}
+					else {
+						interfaceView.displayAlert("Tournée", "Calcul de la tournée en cours ...", "info");
+						// reset tournee
+						// calcul tournee
+						tourneeCalculed = true;
+					}
 				}
-				else {
-					interfaceView.displayAlert("Tournée", "Calcul de la tournée en cours ...", "info");
-					// reset tournee
-					// calcul tournee
-					tourneeCalculed = true;
+				else if (name.equals("undo")) {
+					interfaceView.displayAlert("UNDO", "Undo en cours", "info");
+				}
+				else if (name.equals("redo")) {
+					interfaceView.displayAlert("REDO", "Redo en cours", "info");
 				}
 				
 			}

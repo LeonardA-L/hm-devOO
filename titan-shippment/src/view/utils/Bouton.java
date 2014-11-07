@@ -3,6 +3,7 @@ package view.utils;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import controller.Controller;
@@ -16,6 +17,10 @@ public class Bouton extends JButton {
 		this.setText(text);
 		this.name = name;
 		this.loadFile = loadFile;
+		
+		if (loadFile) {
+			this.setIcon(new ImageIcon("images/upload.png"));
+		}
 		
 		this.addActionListener(new ActionListener() {
 

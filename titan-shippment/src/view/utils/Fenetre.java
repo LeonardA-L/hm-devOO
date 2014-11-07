@@ -2,12 +2,16 @@ package view.utils;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,13 +26,14 @@ public class Fenetre extends JFrame {
 	private JPanel bottom;
 	private JPanel top_right;
 
-	private final int tailleX = 1000;
-	private final int tailleY = 600;
+	private int tailleX = 1200;
+	private int tailleY = 800;
 
 	public Fenetre() {
 		
 		// init window
 		this.setTitle("DevOO");
+		//this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setSize(this.tailleX, this.tailleY);
 	    this.setLocationRelativeTo(null);               
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -91,8 +96,22 @@ public class Fenetre extends JFrame {
 	
 	private void initLivraisonPanel() {
 		JPanel livraisons_panel = new JPanel();
+		livraisons_panel.setLayout(new BorderLayout());
 		livraisons_panel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
-		livraisons_panel.add(new JLabel("Les livraisons"));
+		
+		livraisons_panel.add(new JLabel("Les livraisons"), BorderLayout.CENTER);
+		
+		Bouton undo = new Bouton("undo", "", false);
+		Bouton redo = new Bouton("redo", "", false);
+		undo.setIcon(new ImageIcon("images/undo.png"));
+		redo.setIcon(new ImageIcon("images/redo.png"));
+		
+		JPanel undoRedoPanel = new JPanel();
+		undoRedoPanel.setLayout(new GridLayout(1,2));
+		undoRedoPanel.add(undo, 0);
+		undoRedoPanel.add(redo, 1);
+		
+		livraisons_panel.add(undoRedoPanel, BorderLayout.NORTH);
 		this.top_right.add(livraisons_panel, 0);
 	}
 	
