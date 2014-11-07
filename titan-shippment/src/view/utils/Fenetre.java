@@ -15,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import view.agglomeration.VuePlan;
 
@@ -82,12 +83,24 @@ public class Fenetre extends JFrame {
 		Dimension sizeBottom = new Dimension(this.tailleX, (int)(this.tailleY/8));
 		this.bottom.setSize(sizeBottom);
 		this.bottom.setPreferredSize(sizeBottom);
+		this.bottom.setLayout( new BorderLayout() );
 		
 		Console console = new Console(sizeBottom);
 		console.log("Super Léonard");
 		console.log("GIGA ANTON");
+		console.log("GIGA ANTON1");
+		console.log("GIGA ANTON2");
+		console.log("GIGA ANTON3");
+		console.log("GIGA ANTON4");
+		console.log("GIGA ANTON5");
 		
-		this.bottom.add(console);
+		//JScrollPane scrollPane = new JScrollPane (new ScrolledConsole(console));
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setViewportView( console );
+		this.bottom.add( scrollPane, BorderLayout.NORTH );
+		
+		//this.bottom.add(scrollPane);
 		
 		this.bottom.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
