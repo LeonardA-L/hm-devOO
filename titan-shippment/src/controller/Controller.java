@@ -37,7 +37,6 @@ public class Controller implements ActionListener {
 		livraisonsLoaded = false;
 		addingNewLivraison = false;
 		tourneeCalculed = false;
-		undoRedo = new UndoRedo(interfacePlanning);	// will be passed to the command by undoRedo
 	}
 	
 	/**
@@ -261,8 +260,9 @@ public class Controller implements ActionListener {
 		return interfacePlanning;
 	}
 
-	public void setInterfacePlanning(InterfacePlanning interfacePlanning) {
+	public void setInterfacePlanning(InterfacePlanning interfacePlanning) {		
 		this.interfacePlanning = interfacePlanning;
+		undoRedo = new UndoRedo(this.interfacePlanning);
 	}
 
 	public UndoRedo getUndoRedo() {

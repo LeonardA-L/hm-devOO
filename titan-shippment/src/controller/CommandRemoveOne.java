@@ -12,7 +12,7 @@ public class CommandRemoveOne implements ICommand{
 	private String heureFin;
 	
 	public CommandRemoveOne(int idLivraison) {
-		idLivraison = this.idLivraison;
+		this.idLivraison = idLivraison;
 	}
 
 	public boolean Execute(InterfacePlanning interfaceP) {

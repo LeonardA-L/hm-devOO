@@ -21,12 +21,12 @@ public class CommandAddOne implements ICommand {
 	 * @param prevAdresse
 	 */
 	public CommandAddOne (int idClient, int idLivraison, String heureDebut, String heureFin, int adresse, int prevAdresse) {
-		idClient = this.idClient;
-		idLivraison = this.idLivraison;
-		heureDebut = this.heureDebut;
-		heureFin = this.heureFin;
-		adresse = this.adresse;
-		prevAdresse = this.prevAdresse;
+		this.idClient = idClient;
+		this.idLivraison = idLivraison;
+		this.heureDebut = heureDebut;
+		this.heureFin = heureFin;
+		this.adresse = adresse;
+		this.prevAdresse = prevAdresse;
 	}
 
 	public boolean Execute (InterfacePlanning interfaceP) {

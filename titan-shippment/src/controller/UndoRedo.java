@@ -8,10 +8,10 @@ import java.util.*;
 public class UndoRedo {
 	
 	// Undo and Redo stack for ICommand
-	Stack<ICommand> undoCmd;
-	Stack<ICommand> redoCmd;
+	private Stack<ICommand> undoCmd;
+	private Stack<ICommand> redoCmd;
 	// Interface reference to be passed to the command
-	InterfacePlanning interfaceP;
+	private InterfacePlanning interfaceP;
 	
 	/**
 	 * Constructor w/param
@@ -20,7 +20,7 @@ public class UndoRedo {
 	 */
 	public UndoRedo(InterfacePlanning interfaceP)
 	{
-		interfaceP = this.interfaceP;
+		this.interfaceP = interfaceP;
 		undoCmd = new Stack<ICommand>();
 		redoCmd = new Stack<ICommand>();
 	}
