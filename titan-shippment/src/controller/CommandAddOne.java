@@ -11,7 +11,15 @@ public class CommandAddOne implements ICommand {
 	private int adresse;		// id of node where delivery occur
 	private int prevAdresse;
 
-	
+	/**
+	 * Constructor w/param  (Parameters are explicited in UndoRedo)
+	 * @param idClient		
+	 * @param idLivraison
+	 * @param heureDebut
+	 * @param heureFin
+	 * @param adresse		
+	 * @param prevAdresse
+	 */
 	public CommandAddOne (int idClient, int idLivraison, String heureDebut, String heureFin, int adresse, int prevAdresse) {
 		idClient = this.idClient;
 		idLivraison = this.idLivraison;
@@ -32,6 +40,7 @@ public class CommandAddOne implements ICommand {
 	
 	public boolean Unexecute (InterfacePlanning interfaceP) {
 		// remove the livraison at coordinates
+		interfaceP.removeOneLivrison(idLivraison);
 		return true;
 	}
 	

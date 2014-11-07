@@ -4,16 +4,19 @@ import model.planning.InterfacePlanning;
 import model.planning.PlageHoraire;
 
 public class CommandRemoveOne implements ICommand{
-	private int oldAdresse;
-	private int oldClient;
-	private PlageHoraire oldPlageHoraire;
 
-	public boolean CommandAddOne (int adr, PlageHoraire pH, int idClient) {
-		
-		return true;
+	private int idLivraison;
+	private int idClient;
+	private int idAdresse;
+	private String heureDebut;
+	private String heureFin;
+	
+	public CommandRemoveOne(int idLivraison) {
+		idLivraison = this.idLivraison;
 	}
 
 	public boolean Execute(InterfacePlanning interfaceP) {
+		
 		return false;
 	}
 

@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import view.agglomeration.VueNoeud;
 import view.utils.InterfaceView;
 
-
 import model.planning.InterfacePlanning;
 import model.agglomeration.InterfaceAgglo;
 
@@ -28,16 +27,23 @@ public class Controller implements ActionListener {
 	
 	private boolean addingNewLivraison;
 
+	/**
+	 * 	Constructor
+	 *  Private in order to implement the singleton
+	 */
 	private Controller()
 	{
 		mapLoaded = false;
 		livraisonsLoaded = false;
 		addingNewLivraison = false;
 		tourneeCalculed = false;
-		undoRedo = new UndoRedo(interfacePlanning);
+		undoRedo = new UndoRedo(interfacePlanning);	// will be passed to the command by undoRedo
 	}
 	
-	// implement singleton
+	/**
+	 * Return the singleton
+	 * @return	Controller
+	 */
 	public static Controller getInstance() {
 		if (INSTANCE == null) {
 			INSTANCE = new Controller();	
@@ -45,6 +51,12 @@ public class Controller implements ActionListener {
 		return INSTANCE;
 	}
 	
+	/**
+	 * Called by the view in order to process user input on map
+	 * @param action	Action triggered
+	 * @param x			X Coord of the point clicked
+	 * @param y			Y Coord of the point clicked
+	 */
 	public void trigger(String action, int x, int y) {
 		if (action.equals("click_map")) {
 			
@@ -78,7 +90,7 @@ public class Controller implements ActionListener {
 						String heureFin = "12:0:0";		// user input
 						
 						// addLivraison
-						undoRedo.InsertAddCmd(interfacePlanning, idClient, idLivraison, heureDebut, heureFin, adresse, prevAdresse);
+						undoRedo.InsertAddCmd(idClient, idLivraison, heureDebut, heureFin, adresse, prevAdresse);
 						// end process
 						addingNewLivraison = false;
 					}
@@ -101,10 +113,12 @@ public class Controller implements ActionListener {
 		}
 	}
 	
-	public  InterfaceAgglo getReferenceToInterfaceAgglo() {
-		return interfaceAgglo;
-	}
-	
+
+	/**
+	 * Called by the view in order to process user input on buttons
+	 * @param action		Type of action
+	 * @param name			SubType of action
+	 */
 	public void trigger(String action, String name) {
 		if (addingNewLivraison) {
 			interfaceView.displayAlert("Impossible d'effectuer l'action demandée", "Vous ne pouvez pas charger de fichier ou calculer une nouvelle tournée pendant l'ajout d'un point de livraison.", "warning");
@@ -194,6 +208,9 @@ public class Controller implements ActionListener {
 		//appel des autres methodes en fonction de l'action event 
 	 }
 	
+	public  InterfaceAgglo getReferenceToInterfaceAgglo() {
+		return interfaceAgglo;
+	}
 	
 	private boolean undo() {
 		return undoRedo.Undo();

@@ -25,7 +25,6 @@ public class InterfacePlanning {
 		tournee = null;
 	}
 	
-	
 	//################################## Working with Livraisons #####################################
 	
 	/**	Call a method in XMLBuilder, giving it the name of the file
