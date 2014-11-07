@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
+
 import view.agglomeration.VueNoeud;
 import view.utils.InterfaceView;
 
@@ -33,6 +34,7 @@ public class Controller implements ActionListener {
 		livraisonsLoaded = false;
 		addingNewLivraison = false;
 		tourneeCalculed = false;
+		undoRedo = new UndoRedo(interfacePlanning);
 	}
 	
 	// implement singleton
@@ -49,29 +51,40 @@ public class Controller implements ActionListener {
 			VueNoeud view_noeud = interfaceView.getVue_plan().getWhoIsClicked(x, y);
 			
 			if (view_noeud != null) {
-				// un noeud a bien été cliqué
-				interfaceView.displayAlert("Ajouter une livraison", "Vous avez cliqué sur le noeud : " + view_noeud.getNoeud().toString(), "info");
-				
-				if (addingNewLivraison) {
-					// on a déjà cliqué sur un noeud, on précise après quel noeud on ajoute le nouveau
-					
-					// addLivraison
-					
-					// end process
-					addingNewLivraison = false;
+				if(!interfacePlanning.isNodeADelivery(view_noeud.getNoeud().getId()))	// check if node has a delivery already
+				{
+					interfaceView.displayAlert("Ajouter une livraison", "Vous avez cliqué sur le noeud : " + view_noeud.getNoeud().toString(), "info");
+					if (addingNewLivraison) {
+						// on a déjà cliqué sur un noeud, on précise après quel noeud on ajoute le nouveau
+						
+						// dummies (will not be instantiated or declared here later)
+						int idClient = 23;				// user input 
+						int adresse = 34;				// = view_noeud.getNoeud().getId() but user should be able to change it .. ?
+						int prevAdresse = 35;			// = view_noeud.getNoeud().getId() but user should be able to change it .. ?
+						int idLivraison = 18;			// call a method from interfacePlanning to get one, giving as paramters heureDebut and heureFin
+						String heureDebut = "8:0:0";	// user input
+						String heureFin = "12:0:0";		// user input
+						
+						// addLivraison
+						undoRedo.InsertAddCmd(interfacePlanning, idClient, idLivraison, heureDebut, heureFin, adresse, prevAdress);
+						// end process
+						addingNewLivraison = false;
+					}
+					else {
+						// premier clic sur un noeud
+						addingNewLivraison = true;
+						// check
+						// addPlageHoraire
+						// interfaceView.askPlageHoraire();
+						// wait for new click
+					}	
+					// node HL
+					view_noeud.highlight();
+					interfaceView.repaint();
 				}
 				else {
-					// premier clic sur un noeud
-					addingNewLivraison = true;
-					// check
-					// addPlageHoraire
-					// interfaceView.askPlageHoraire();
-					// wait for new click
-				}	
-				
-				// node HL
-				view_noeud.highlight();
-				interfaceView.repaint();
+					interfaceView.displayAlert("Ajouter une livraison", "Ce noeud à déjà une livraison.", "info");
+				}
 			}
 		}
 	}

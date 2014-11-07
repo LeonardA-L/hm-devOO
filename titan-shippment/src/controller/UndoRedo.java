@@ -1,19 +1,20 @@
 package controller;
 
+import model.planning.InterfacePlanning;
+
 import java.util.*;
 
 
 public class UndoRedo {
-
-	CommandAddOne addCmd;
-	CommandRemoveOne removeCmd;
 	
 	Stack<ICommand> undoCmd;
 	Stack<ICommand> redoCmd;
 	
-	public UndoRedo()
+	InterfacePlanning interfaceP;
+	
+	public UndoRedo(InterfacePlanning interfaceP)
 	{
-		
+		interfaceP = this.interfaceP;
 	}
 	
 	
@@ -41,9 +42,9 @@ public class UndoRedo {
 			return false;
 	}
 	
-	public boolean InsertAddCmd(int x, int y, int client, String heureDebut, String heureFin, int prevX, int prevY)
+	public boolean InsertAddCmd(InterfacePlanning itfP, int idClient, int idLivraison, String heureDebut, String heureFin, int adresse, int prevAdresse)
 	{
-		ICommand add = new CommandAddOne(x, y, heureDebut, heureFin, client, prevX, prevY);
+		ICommand add = new CommandAddOne(idClient, idLivraison, heureDebut, heureFin, adresse, prevAdresse);
 		// execute, add to stack if it worked
 		return true;
 	}

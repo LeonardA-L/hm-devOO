@@ -1,35 +1,35 @@
 package controller;
 
+import model.planning.InterfacePlanning;
 
 public class CommandAddOne implements ICommand {
-	private int newX;		// x coordinate of new livraison
-	private int newY;		// y coordinate of new livraison
-	private int previousX;	// x coordinate of livraison before the newly added livraisons in the itineraire
-	private int previousY;	// y coordinate ...
-	private int client;	// id client 
-	private String heureDebut;	// plage Horaire
+	
+	private int idClient;
+	private int idLivraison;
+	private String heureDebut;
 	private String heureFin;
+	private int adresse;		// id of node where delivery occur
+	private int prevAdresse;
+
 	
-	
-	public boolean Execute () {
-		// Call manager and add a livraison
-		//return manager.AddOneLivraison(newX, newY, heureDebut, heureFin, client, previousX, previousY);
+	public CommandAddOne (int idClient, int idLivraison, String heureDebut, String heureFin, int adresse, int prevAdresse) {
+		idClient = this.idClient;
+		idLivraison = this.idLivraison;
+		heureDebut = this.heureDebut;
+		heureFin = this.heureFin;
+		adresse = this.adresse;
+		prevAdresse = this.prevAdresse;
+	}
+
+	public boolean Execute (InterfacePlanning interfaceP) {
+		
 		return false;
 	}
 	
-	public boolean Unexecute () {
+	public boolean Unexecute (InterfacePlanning interfaceP) {
 		// remove the livraison at coordinates
 		return true;
 	}
 	
-	public CommandAddOne (int x, int y, String heureDebut,String heureFin, int idClient, int prevX, int prevY) {
-		newX = x;
-		newY = y;
-		previousX = prevX;
-		previousY = prevY;
-		client = idClient;
-		heureDebut = this.heureDebut;
-		heureFin = this.heureFin;
-	}
-
+	
 }

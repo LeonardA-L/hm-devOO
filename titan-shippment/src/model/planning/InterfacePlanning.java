@@ -16,11 +16,17 @@ public class InterfacePlanning {
 	private ArrayList<PlageHoraire> plagesHoraires;
 	private Tournee tournee;
 	
+	/**
+	 * 	Constructor w/o parameter
+	 */
 	public InterfacePlanning () {
 		listeLivraisons = new ArrayList<Livraison>();
 		setPlagesHoraires(new ArrayList<PlageHoraire>());
 		tournee = null;
 	}
+	
+	
+	//################################## Working with Livraisons #####################################
 	
 	/**	Call a method in XMLBuilder, giving it the name of the file
 	 * 	containing the plan. Then get back the array of elements to 
@@ -61,6 +67,13 @@ public class InterfacePlanning {
 		return true;
 	}
 	
+	// called to unexecute add command
+	// or to execute remove command
+	public boolean removeOneLivrison(int idLivraison)
+	{
+		return false;
+	}
+	
 	private PlageHoraire getPlageHoraire(String heureDebut, String heureFin) {
 		Iterator<PlageHoraire> it = plagesHoraires.iterator();
 		while (it.hasNext()) {
@@ -74,21 +87,13 @@ public class InterfacePlanning {
 		return ph;
 	}
 
-	/**
-	 * 	Celle là elle est pour Quentin -> comment tu bind les clics souris et un point sur le graphique (id qui sert d'adresse)
-	 * @param idCLient
-	 * @param idLivraison
-	 * @param heureDebut
-	 * @param heureFin
-	 * @param xNew
-	 * @param yNew
-	 * @param xPrev
-	 * @param yPrev
-	 * @return
-	 */
-	public boolean AddLivraison(int idCLient, int idLivraison, String heureDebut, String heureFin, float xNew, float yNew, float xPrev, float yPrev) {
-		return false;
+	public void reset() {
+		listeLivraisons.clear();
+		plagesHoraires.clear();
 	}
+
+	
+	//#################################### Working with Tournee ###############################
 	
 	/**
 	 * calculates the path for delivery
@@ -103,12 +108,19 @@ public class InterfacePlanning {
 		this.setTournee(tournee);
 	}
 	
-	public void reset() {
-		listeLivraisons.clear();
-		plagesHoraires.clear();
-	}
-
+	//################################### Working with view ####################################
 	
+	public boolean isNodeADelivery(int idNode){
+		for(Livraison l : listeLivraisons)
+		{
+			if (l.getAdresse().getId() == idNode){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	//---------------------------------------------------------------------------------
 	// GETTERS - SETTERS
 	public ArrayList<Livraison> getListeLivraisons() {
 		return listeLivraisons;
