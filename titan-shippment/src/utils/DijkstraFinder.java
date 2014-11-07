@@ -28,12 +28,8 @@ public class DijkstraFinder implements PathFinder {
 	 */
 	public ArrayList<Integer> findShortestPath(int start, int end) {
 		int n = graph.getNbVertices();
-		int minCost = graph.getMinArcCost();
-		int maxCost = graph.getMaxArcCost();
 		int[][] cost = graph.getCost();
-		int[] next = new int[n];
 		
-		boolean[] visited = new boolean[n];
 		int[] prev = new int[n];
 		int[] dist = new int[n];
 		
@@ -134,7 +130,7 @@ public class DijkstraFinder implements PathFinder {
 		// record solution and state
 		if(solver.getMeasures().getSolutionCount()>0){
 			for(int i=0;i<n;i++) next.add(nodes.get(xNext[i].getValue()));
-			int totalCost = xTotalCost.getValue();
+			//int totalCost = xTotalCost.getValue();
 			
 		}
 		else {
@@ -154,23 +150,6 @@ public class DijkstraFinder implements PathFinder {
 		return reversedPath;
 	}
 	
-	private int[] toIntArray(List<Integer> list) {
-        int[] ret = new int[list.size()];
-        for (int i = 0; i < ret.length; i++) {
-            ret[i] = list.get(i);
-        }
-        return ret;
-    }
-	
-	private int[] reverse(int[] a) {
-        for (int i = 0; i < a.length/2; i++) {
-            // Swap
-            int tmp = a[i];
-            a[i] = a[a.length-1];
-            a[a.length-1] = tmp;
-        }
-        return a;
-    }
 	
 	public Graph getGraph() {
 		return graph;
