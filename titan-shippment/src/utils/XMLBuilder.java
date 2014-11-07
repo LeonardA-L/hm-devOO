@@ -82,7 +82,8 @@ public class XMLBuilder {
 			    BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
 			
 			if(!checkWellformedness(filename)){
-				return plan;
+				intf.resetPlan();
+				return null;
 				//TODO
 			}
 			
@@ -147,12 +148,15 @@ public class XMLBuilder {
 			    	in1.close();
 			    }
 		} catch (NoSuchFileException e) {
-			System.out.println("Fichier introuvable :" + e.getFile().toString());
+			//System.out.println("Fichier introuvable :" + e.getFile().toString());
+			intf.resetPlan();
+			return null;
 		} catch (NumberFormatException e) {
-			//TODO
-			e.printStackTrace();
+			intf.resetPlan();
+			return null;
 		} catch (Exception e){
-			e.printStackTrace();
+			intf.resetPlan();
+			return null;
 		}
 		return plan ;
 		
@@ -240,7 +244,6 @@ public static boolean getLivraisons(String filename, model.planning.InterfacePla
 		    return true;
 		    
 		} catch (IOException e) {
-			e.printStackTrace();
 			return false;
 		}
 	}

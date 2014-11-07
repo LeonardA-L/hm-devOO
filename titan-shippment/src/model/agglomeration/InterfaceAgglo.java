@@ -44,6 +44,10 @@ public class InterfaceAgglo {
 		return matrice;
 	}
 	
+	public void resetPlan() {
+		plan.reset();
+	}
+	
 	public Plan getPlan() {
 		return plan;
 	}
