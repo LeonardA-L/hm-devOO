@@ -12,7 +12,7 @@ import model.agglomeration.Troncon;
 public class VueNoeud implements Vue {
 	
 	enum Type {
-		CERCLE, CARRE, CROIX
+		CERCLE, CARRE, CROIX, CARRE_PLEIN
 	}
 	
 	// pixel
@@ -55,10 +55,14 @@ public class VueNoeud implements Vue {
 			g.drawOval(x-taille/2, y-taille/2, taille, taille);
 		}
 		else if (this.type == Type.CARRE) {
-			g.drawLine(x-taille/2, y-taille/2, x+taille/2, y-taille/2); // haut
+			g.drawRect(x-taille/2, y-taille/2, taille, taille);
+			/*g.drawLine(x-taille/2, y-taille/2, x+taille/2, y-taille/2); // haut
 			g.drawLine(x-taille/2, y+taille/2, x+taille/2, y+taille/2); // bas
 			g.drawLine(x-taille/2, y-taille/2, x-taille/2, y+taille/2); // gauche
-			g.drawLine(x+taille/2, y-taille/2, x+taille/2, y+taille/2); // droite
+			g.drawLine(x+taille/2, y-taille/2, x+taille/2, y+taille/2);*/ // droite
+		}
+		else if (this.type == Type.CARRE_PLEIN) {
+			g.fillRect(x-taille/2, y-taille/2, taille, taille);
 		}
 		else {
 			// croix
@@ -89,8 +93,26 @@ public class VueNoeud implements Vue {
 
 	public void highlight() {
 		this.setColor(Color.RED);
-		this.setType(Type.CARRE);
+		this.setType(Type.CARRE_PLEIN);
 		this.setTaille(10);
+	}
+	
+	public void highlight(Color color) {
+		this.setColor(color);
+		this.setType(Type.CARRE_PLEIN);
+		this.setTaille(10);
+	}
+	
+	public void highlight(Color color, Type type) {
+		this.setColor(color);
+		this.setType(type);
+		this.setTaille(10);
+	}
+	
+	public void highlight(Color color, Type type, int taille) {
+		this.setColor(color);
+		this.setType(type);
+		this.setTaille(taille);
 	}
 	
 	public int getTaille() {

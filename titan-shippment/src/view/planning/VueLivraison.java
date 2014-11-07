@@ -1,5 +1,6 @@
 package view.planning;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import model.planning.Livraison;
@@ -25,6 +26,12 @@ public class VueLivraison implements Vue {
 	public void dessine(Graphics g) {
 		// TODO Auto-generated method stub
 		noeud.highlight();
+		noeud.dessine(g);
+	}
+	
+	public void dessine(Graphics g, Color color) {
+		// TODO Auto-generated method stub
+		noeud.highlight(color);
 		noeud.dessine(g);
 	}
 

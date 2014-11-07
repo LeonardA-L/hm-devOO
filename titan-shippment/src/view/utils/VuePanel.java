@@ -11,6 +11,7 @@ import java.util.Iterator;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
+import model.planning.PlageHoraire;
 import controller.Controller;
 import view.agglomeration.VuePlan;
 import view.planning.VueLivraison;
@@ -83,7 +84,25 @@ public class VuePanel extends JPanel {
 		
 		Iterator<VueLivraison> it = vues_livraisons.iterator();
 		while (it.hasNext()) {
-			it.next().dessine(g);
+			VueLivraison vueLivraison = it.next();
+			PlageHoraire ph = vueLivraison.getLivraison().getPlageHoraire();
+			
+			Color color = null;
+			try {
+				int heureDebut = Integer.parseInt(ph.getHeureDebut().replaceAll(":", ""));
+				int heureFin = Integer.parseInt(ph.getHeureFin().replaceAll(":", ""));
+				
+				final int LIMITE_MIN = 50 %255;
+				final int LIMITE_MAX = 200 %255;
+				final int MODULO = LIMITE_MAX-LIMITE_MIN+1;
+				
+				color = new Color(LIMITE_MIN + heureDebut%MODULO, LIMITE_MIN + heureFin%MODULO , LIMITE_MIN + (heureDebut+heureFin)%MODULO);
+			} catch (Exception e) {
+				// unparsable plage horaire
+				 color = new Color((int)(Math.random()*255), (int)(Math.random()*255), (int)(Math.random()*255));
+			}
+			
+			vueLivraison.dessine(g, color);
 		}
 		
 	}
