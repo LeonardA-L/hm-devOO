@@ -149,9 +149,9 @@ public class Controller implements ActionListener {
 					if (filename != null && filename.length() > 0) {
 						
 						// remove former map
-						interfaceAgglo.getPlan().reset();
-						interfaceView.getVuePanel().getVue_plan().reset();
-						mapLoaded = false;
+						resetPlan();
+						resetLivraisons();
+						resetTournee();
 						
 						boolean buildOk = interfaceAgglo.BuildPlanFromXml(filename);
 						
@@ -175,14 +175,9 @@ public class Controller implements ActionListener {
 						String filename = interfaceView.loadFile();
 						
 						if (filename != null && filename.length() > 0) {
-							// reset livraisons + éventuellement tournees
-							if (tourneeCalculed) {
-								interfacePlanning.getTournee().reset();
-								interfaceView.getVuePanel().getVue_tournee().reset();
-								tourneeCalculed = false;
-							}
-							interfacePlanning.reset();
-							livraisonsLoaded = false;
+							
+							resetLivraisons();
+							resetTournee();
 							
 							// load livraisons
 							boolean buildOk = interfacePlanning.GetPlanningsFromBuilder(filename);
@@ -213,6 +208,7 @@ public class Controller implements ActionListener {
 						interfaceView.displayAlert("Impossible de calculer la tournée", "Vous devez charger une carte et une livraison au préalable.", "warning");
 					}
 					else {
+						resetTournee();
 						interfaceView.displayAlert("Tournée", "Calcul de la tournée en cours ...", "info");
 						// reset tournee
 						// calcul tournee
@@ -230,6 +226,30 @@ public class Controller implements ActionListener {
 		}
 	}
 	
+	private void resetTournee() {
+		if (tourneeCalculed) {
+			interfacePlanning.resetTournee();
+			interfaceView.getVuePanel().resetTournee();
+			tourneeCalculed = false;
+		}
+	}
+
+	private void resetPlan() {
+		if (mapLoaded) {
+			interfaceAgglo.resetPlan();
+			interfaceView.getVuePanel().resetPlan();
+			mapLoaded = false;
+		}
+	}
+
+	private void resetLivraisons() {
+		if (livraisonsLoaded) {
+			interfacePlanning.resetLivraisons();
+			interfaceView.getVuePanel().resetLivraisons();
+			livraisonsLoaded = false;
+		}
+	}
+
 	public void actionPerformed(ActionEvent e) {
 		//appel des autres methodes en fonction de l'action event 
 	 }

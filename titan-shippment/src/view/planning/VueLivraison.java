@@ -34,6 +34,10 @@ public class VueLivraison implements Vue {
 		noeud.highlight(color);
 		noeud.dessine(g);
 	}
+	
+	public void reset() {
+		noeud.unhighlight();
+	}
 
 	public VueNoeud getNoeud() {
 		return noeud;

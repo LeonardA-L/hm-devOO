@@ -41,7 +41,7 @@ public class InterfacePlanning {
 			return true;
 		}
 		else {
-			reset();
+			resetLivraisons();
 			return false;
 		}
 	}
@@ -91,9 +91,13 @@ public class InterfacePlanning {
 		return ph;
 	}
 
-	public void reset() {
+	public void resetLivraisons() {
 		listeLivraisons.clear();
 		plagesHoraires.clear();
+	}
+	
+	public void resetTournee() {
+		tournee.reset();
 	}
 
 	

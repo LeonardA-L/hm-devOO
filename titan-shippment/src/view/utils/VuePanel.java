@@ -110,7 +110,23 @@ public class VuePanel extends JPanel {
 		}
 		
 	}
+	
+	public void resetLivraisons() {
+		Iterator<VueLivraison> it = vues_livraisons.iterator();
+		while (it.hasNext()) {
+			it.next().reset();
+		}
+		vues_livraisons.clear();
+	}
 
+	public void resetPlan() {
+		vue_plan.reset();
+	}
+	
+	public void resetTournee() {
+		vue_tournee.reset();
+	}
+	
 	public VuePlan getVue_plan() {
 		return vue_plan;
 	}
