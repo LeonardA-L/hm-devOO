@@ -1,16 +1,14 @@
 package tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
-import java.awt.List;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import utils.BreadthFirstFinder;
 import utils.DijkstraFinder;
 import utils.PathFinder;
 
@@ -41,6 +39,7 @@ public class PathFinderTest {
 
 	}
 	
+	// This test has been disabled due to a lack of test sets
 	//@Test
 	public void noPathAvailable(){
 		ArrayList<Integer> actualPath = f.findShortestPath(3, 0);
@@ -49,10 +48,13 @@ public class PathFinderTest {
 	
 	@Test
 	public void findCycle(){
+		// The list of nodes the cycle must go through
 		ArrayList<Integer> list = new ArrayList<Integer>();
 		list.add(0);
 		list.add(4);
 		list.add(5);
+		
+		// several results are accepted (0,4,5 and 4,5,0 ...)
 		ArrayList<Integer> e1 = new ArrayList<Integer>();
 		list.add(4);
 		list.add(5);
@@ -69,7 +71,7 @@ public class PathFinderTest {
 		ArrayList<Integer> cycle = f.findCycle(1000000, list);
 		System.out.println(cycle);
 		
-		
+		// check if the result is one of the following
 		boolean s1 = true;
 		for (int i = 0; i < e1.size(); i++) {
 			s1 &= e1.get(i) == cycle.get(i);

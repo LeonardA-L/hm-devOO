@@ -56,7 +56,7 @@ public class PlanTest {
 	
 	public static Plan DummyPlanCreate(int nbNodes, int maxX, int maxY){
 		// creating map
-		String[] rues = {"Avenue des titans", "Rue de L�onard", "wess c ma ru, ru de yaannnn", "Anton Long Avenue", "GIGA AVENUE", "SSSSSSSS-GBD street"};
+		String[] rues = {"Avenue des titans", "Rue de L�onard", "wess c ma ru, ru de yaannnn", "Anton Long Avenue", "GIGA AVENUE", "Persistence street"};
 		
 		Noeud entrepot = new Noeud(20,30,-1, new ArrayList<Troncon>());
 		Plan plan = new Plan(entrepot, new ArrayList<Noeud>());

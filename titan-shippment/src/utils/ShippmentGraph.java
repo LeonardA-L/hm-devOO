@@ -21,7 +21,9 @@ public class ShippmentGraph implements Graph {
 	private int[][] cost; // cost[from][to]
 	private ArrayList<ArrayList<Integer>> succ;
 	private Map<String, ArrayList<Integer>> paths;
-	private PathFinder f;
+	private PathFinder pathFinder;
+
+	
 
 	/**
 	 * Creates a graph such that each vertex is connected to the next <code>d</code> vertices (modulo <code>n</code>) and
@@ -54,6 +56,9 @@ public class ShippmentGraph implements Graph {
 		return cost;
 	}
 
+	/**
+	 * Will create a subgraph with a sub cost matrix only containing the desired nodes for a cycle
+	 */
 	public ShippmentGraph createTSPGraph(ArrayList<Integer> nodes){
 		int n = nodes.size();
 		ShippmentGraph shGraph = new ShippmentGraph(n);
@@ -128,6 +133,10 @@ public class ShippmentGraph implements Graph {
 			minArcCost = arcCost;
 	}
 	
+	/**
+	 * In order to get the PF algorithm working, we have to make sure that impossible routes won't be taken,
+	 * by giving them a higher than all weight, thus forcing Dijkstra to find for better solutions.
+	 */
 	public void fillBlankCosts(){
 		for (int i = 0; i < cost.length; i++) {
 			for (int j = 0; j < cost.length; j++) {
@@ -146,13 +155,16 @@ public class ShippmentGraph implements Graph {
 	}
 	
 	/**
-	 * Not available paths will be set to null
+	 * Will complete the cost matrix, by calculating every paths from node to node.
+	 * This way the cost matrix will be more accurate.
+	 * Also stores the computed paths into a map, for further use
+	 * <p>Note : Not available paths will be set to null</p>
 	 */
 	public void makeGraphComplete(){
-		f = new DijkstraFinder(this);
+		pathFinder = new DijkstraFinder(this);
 		for (int i = 0; i < cost.length; i++) {
 			for (int j = 0; j < cost.length; j++) {
-				ArrayList<Integer> pathFromIToJ = f.findShortestPath(i, j);
+				ArrayList<Integer> pathFromIToJ = pathFinder.findShortestPath(i, j);
 				// popping the total distance of the path
 				if(pathFromIToJ != null){
 					int totalCost = pathFromIToJ.remove(pathFromIToJ.size()-1);
@@ -194,5 +206,13 @@ public class ShippmentGraph implements Graph {
 
 	public void setMinArcCost(int minArcCost) {
 		this.minArcCost = minArcCost;
+	}
+	
+	public PathFinder getPathFinder() {
+		return pathFinder;
+	}
+
+	public void setPathFinder(PathFinder f) {
+		this.pathFinder = f;
 	}
 }
