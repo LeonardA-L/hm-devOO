@@ -240,7 +240,6 @@ public static boolean getLivraisons(String filename, model.planning.InterfacePla
 		    return true;
 		    
 		} catch (IOException e) {
-			e.printStackTrace();
 			return false;
 		}
 	}
