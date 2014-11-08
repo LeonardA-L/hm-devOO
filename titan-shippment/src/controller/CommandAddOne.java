@@ -4,8 +4,8 @@ import model.planning.InterfacePlanning;
 
 public class CommandAddOne implements ICommand {
 	
-	private int idClient;
 	private int idLivraison;
+	private int idClient;
 	private String heureDebut;
 	private String heureFin;
 	private int adresse;		// id of node where delivery occur
@@ -20,9 +20,8 @@ public class CommandAddOne implements ICommand {
 	 * @param adresse		
 	 * @param prevAdresse
 	 */
-	public CommandAddOne (int idClient, int idLivraison, String heureDebut, String heureFin, int adresse, int prevAdresse) {
+	public CommandAddOne (int idClient, String heureDebut, String heureFin, int adresse, int prevAdresse) {
 		this.idClient = idClient;
-		this.idLivraison = idLivraison;
 		this.heureDebut = heureDebut;
 		this.heureFin = heureFin;
 		this.adresse = adresse;
@@ -30,8 +29,8 @@ public class CommandAddOne implements ICommand {
 	}
 
 	public boolean Execute (InterfacePlanning interfaceP) {
-		boolean step1 = interfaceP.AddLivraisonAfter(idClient, idLivraison, heureDebut, heureFin, adresse, prevAdresse);
-		if(step1)	// if livraison added right, update tournee
+		idLivraison = interfaceP.AddLivraisonAfter(idClient, heureDebut, heureFin, adresse, prevAdresse);
+		if(idLivraison != -1)	// if livraison added right, update tournee
 		{
 			interfaceP.CalculTournee();
 		}

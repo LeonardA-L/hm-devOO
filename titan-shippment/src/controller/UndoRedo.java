@@ -89,9 +89,9 @@ public class UndoRedo {
 	 * @param prevAdresse			From user input (click) -> location of delivery before (see spec) 
 	 * @return True or False 		Depending on the success of method
 	 */
-	public boolean InsertAddCmd(int idClient, int idLivraison, String heureDebut, String heureFin, int adresse, int prevAdresse)
+	public boolean InsertAddCmd(int idClient, String heureDebut, String heureFin, int adresse, int prevAdresse)
 	{
-		ICommand add = new CommandAddOne(idClient, idLivraison, heureDebut, heureFin, adresse, prevAdresse);
+		ICommand add = new CommandAddOne(idClient, heureDebut, heureFin, adresse, prevAdresse);
 		add.Execute(interfaceP);
 		return true;
 	}

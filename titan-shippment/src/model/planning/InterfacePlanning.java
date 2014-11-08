@@ -16,6 +16,8 @@ public class InterfacePlanning {
 	private ArrayList<PlageHoraire> plagesHoraires;
 	private Tournee tournee;
 	
+	private static int idLivraison = -1;
+	
 	/**
 	 * 	Constructor w/o parameter
 	 */
@@ -66,11 +68,36 @@ public class InterfacePlanning {
 		return true;
 	}
 	
-	public boolean AddLivraisonAfter(int idClient, int idLivraison, String heureDebut, String heureFin, int adresse, int prevAdresse)
+	/**
+	 * Add a delivery from a click on the map.
+	 * @param idClient
+	 * @param heureDebut
+	 * @param heureFin
+	 * @param adresse
+	 * @param prevAdresse
+	 * @return			ID of the delivery which was created
+	 */
+	public int AddLivraisonAfter(int idClient, String heureDebut, String heureFin, int adresse, int prevAdresse)
 	{
-		return false;
+		// get a new Delivery ID to be used for the newly created delivery.
+		getNewDeliveryId();
+		boolean deliveryCreation = AddLivraison(idClient, idLivraison, heureDebut, heureFin, prevAdresse);
+		if(deliveryCreation){
+			return idLivraison;
+		}
+		return -1;
 	}
 	
+	public void getNewDeliveryId() {
+		if (idLivraison == -1) {	// init
+			int idMax = 0;
+			for(Livraison l : listeLivraisons) {
+				idMax = idMax < l.getIdLivraison() ? l.getIdLivraison() : idMax;
+			}
+			idLivraison = idMax;
+		}
+		idLivraison++;
+	}
 	// called to unexecute add command
 	// or to execute remove command
 	public boolean removeOneLivrison(int idLivraison)

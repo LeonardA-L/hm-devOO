@@ -98,28 +98,29 @@ public class Controller implements ActionListener {
 					
 					String heureDebut = retour[0];
 					String heureFin = retour[1];		
-					int idClient = Integer.parseInt(retour[2]);
-					// addLivraison
+					int idClient = Integer.parseInt(retour[2]);	// format is checked in InterfaceView (but not fully tested)
+					// addLivraison 	Note : the delivery id is calculated automatically when the delivery is actually created
 					undoRedo.InsertAddCmd(idClient, heureDebut, heureFin, newDeliveryAdress, prevAdresse);
 					
 					// end process
-					interfaceView.repaint();
+					interfaceView.repaint();	// should display the new node with the others
 					interruptAddingNewLivraison();
 				}
-				else if (!addingNewLivraison) {
+				else if (!addingNewLivraison) {	// first click on a node of the graph in order to add a delivery
+					// if node is already a delivery, stop.
 					if (interfacePlanning.isNodeADelivery(view_noeud.getNoeud().getId())) {
 						interfaceView.displayAlert("Ajouter une livraison", "Ce noeud a déjà une livraison", "warning");
 						return;
 					}
-					// premier clic sur un noeud
 					addingNewLivraison = true;
-					// sauvegarde du view_noeud temporairement
+					//saving the node id (if it has no delivery)
+					newDeliveryAdress = view_noeud.getNoeud().getId();
 					// wait for new click
 				}
 				else {
 					interfaceView.displayAlert("Ajouter une livraison", "", "warning");
 				}
-				// node HL
+				// node HL during creation process (in red)
 				interfaceView.highlight(view_noeud);
 			}
 		}

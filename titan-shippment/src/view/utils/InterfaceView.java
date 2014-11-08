@@ -36,13 +36,14 @@ public class InterfaceView {
 	
 	public String[] askPlageHoraire() {
 		String format = "\\d{1,2}:\\d{1,2}:\\d{1,2}";
-		String[] retour = new String[2];
+		String[] retour = new String[3];
 		
 		String heureDebut = JOptionPane.showInputDialog(null, "Veuillez entrer une heure de début (Format : H:M:S) : ");
 		if (heureDebut == null || !heureDebut.matches(format)) {
 			displayAlert("Erreur", "Mauvais format d'heures (H:M:S)", "error");
 			retour[0] = null;
 			retour[1] = null;
+			retour[2] = null;
 			return retour;
 		}
 		
@@ -51,11 +52,21 @@ public class InterfaceView {
 			displayAlert("Erreur", "Mauvais format d'heures (H:M:S)", "error");
 			retour[0] = null;
 			retour[1] = null;
+			retour[2] = null;
 			return retour;
 		}
 		
+		String idClient = JOptionPane.showInputDialog(null, "Veuillez entrer l'identifiant du client :");
+		if (idClient == null || !idClient.matches("[0-9]+")) {
+			displayAlert("Erreur", "L'identifiant doit être un nombre", "error");
+			retour[0] = null;
+			retour[1] = null;
+			retour[3] = null;
+			return retour;
+		}
 		retour[0] = heureDebut;
 		retour[1] = heureFin;
+		retour[2] = idClient;
 		return retour;
 	}
 
