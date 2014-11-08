@@ -80,7 +80,7 @@ public class InterfacePlanning {
 	public int AddLivraisonAfter(int idClient, String heureDebut, String heureFin, int adresse, int prevAdresse) {
 		// get a new Delivery ID to be used for the newly created delivery.
 		getNewDeliveryId();
-		boolean deliveryCreation = AddLivraison(idClient, idLivraison, heureDebut, heureFin, prevAdresse);
+		boolean deliveryCreation = AddLivraison(idClient, idLivraison, heureDebut, heureFin, adresse);
 		if(deliveryCreation) {
 			return idLivraison;
 		}

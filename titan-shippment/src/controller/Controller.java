@@ -5,10 +5,12 @@ import java.awt.event.ActionListener;
 
 
 
+import java.util.ArrayList;
+
 import view.agglomeration.VueNoeud;
 import view.utils.InterfaceView;
-
 import model.planning.InterfacePlanning;
+import model.planning.Livraison;
 import model.agglomeration.InterfaceAgglo;
 
 
@@ -108,6 +110,7 @@ public class Controller implements ActionListener {
 					if(!success) {
 						return;
 					}
+					interfaceView.genererVueLivraisons(interfacePlanning.getListeLivraisons());
 					interfaceView.repaint();	// should display the new node with the others
 					interruptAddingNewLivraison();
 				}
@@ -220,10 +223,19 @@ public class Controller implements ActionListener {
 					if(!undoRedo.Undo()) {
 						interfaceView.displayAlert("UNDO", "Rien à annuler", "info");
 					}
+					else{
+						System.out.println("Repainting after undo");
+						interfaceView.genererVueLivraisons(interfacePlanning.getListeLivraisons());
+						interfaceView.repaint();	// should display the new node with the others
+					}
 				}
 				else if (name.equals("redo")) {
 					if(!undoRedo.Redo()) {
 						interfaceView.displayAlert("REDO", "Rien à rétablir", "info");
+					}
+					else {
+						interfaceView.genererVueLivraisons(interfacePlanning.getListeLivraisons());
+						interfaceView.repaint();	// should display the new node with the others
 					}
 				}
 				

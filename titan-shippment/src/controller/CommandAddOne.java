@@ -31,6 +31,7 @@ public class CommandAddOne implements ICommand {
 	public boolean Execute (InterfacePlanning interfaceP) {
 		idLivraison = interfaceP.AddLivraisonAfter(idClient, heureDebut, heureFin, adresse, prevAdresse);
 		if(idLivraison == -1) {
+			System.out.println("# ------ Execute AddOne failed ------ #"); 	
 			return false;
 		}
 		System.out.println("# ------ DELIVERY CREATED id = "+idLivraison+" ------ #"); 	
@@ -39,9 +40,13 @@ public class CommandAddOne implements ICommand {
 	
 	public boolean Unexecute (InterfacePlanning interfaceP) {
 		// remove the livraison at coordinates
-		interfaceP.removeOneLivraison(idLivraison);
-		System.out.println("# ------ DELIVERY REMOVED id = "+idLivraison+" ------ #"); 	
-		return true;
+		boolean success = interfaceP.removeOneLivraison(idLivraison);
+		if (!success) {
+			System.out.println("# ------ Unexecute AddOne failed ------ #"); 	
+			return false;
+		}
+		System.out.println("# ------ DELIVERY REMOVED id = "+idLivraison+" ------ #"); 
+		return success;
 	}
 	
 	
