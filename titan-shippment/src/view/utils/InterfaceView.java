@@ -57,7 +57,7 @@ public class InterfaceView {
 		}
 		
 		String idClient = JOptionPane.showInputDialog(null, "Veuillez entrer l'identifiant du client :");
-		if (idClient == null || !idClient.matches("[0-9]+")) {
+		if (idClient == null || !(idClient.matches("[0-9]+"))) {
 			displayAlert("Erreur", "L'identifiant doit être un nombre", "error");
 			retour[0] = null;
 			retour[1] = null;
@@ -117,6 +117,22 @@ public class InterfaceView {
 			vuePanel.getVues_livraisons().add(new VueLivraison(livraison, vue_noeud));
 		}
 		return true;
+	}
+	
+	public boolean addAndUpdate(Livraison l) {
+		vuePanel.getVues_livraisons().add(new VueLivraison(l, vuePanel.getVue_plan().getVueNoeudById(l.getAdresse().getId())));
+		this.repaint();
+		return false;
+	}
+	
+	public boolean removeAndUpdate(int idLivraison) {
+		for(VueLivraison vl : vuePanel.getVues_livraisons()) {
+			if (vl.getLivraison().getIdLivraison() == idLivraison) {
+				vuePanel.getVues_livraisons().remove(vl);
+				return true;
+			}
+		}	
+		return false;
 	}
 	
 	public VuePanel getVuePanel() {

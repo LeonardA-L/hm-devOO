@@ -1,6 +1,7 @@
 package controller;
 
 import model.planning.InterfacePlanning;
+import view.utils.InterfaceView;
 
 
 // Comments here
@@ -11,12 +12,12 @@ public interface ICommand {
 	 * @param interfaceP
 	 * @return
 	 */
-	public boolean Execute(InterfacePlanning interfaceP);
+	public boolean Execute(InterfacePlanning interfaceP, InterfaceView interfaceV);
 	
 	/**
 	 * Un-execute a command
 	 * @param interfaceP
 	 * @return
 	 */
-	public boolean Unexecute(InterfacePlanning interfaceP);
+	public boolean Unexecute(InterfacePlanning interfaceP, InterfaceView interfaceV);
 }

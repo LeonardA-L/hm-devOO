@@ -39,6 +39,7 @@ public class Main {
 		controller.setInterfaceAgglo(new InterfaceAgglo());
 		controller.setInterfacePlanning(new InterfacePlanning());
 		controller.setInterfaceView(new InterfaceView());
+		controller.setUndoRedo(); 			// should always be called after setInterfaceView and setInterfacePlanning
 		
 	}
 }

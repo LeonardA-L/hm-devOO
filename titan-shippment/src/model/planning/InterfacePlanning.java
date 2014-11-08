@@ -101,7 +101,7 @@ public class InterfacePlanning {
 		}
 		idLivraison++;
 	}
-	
+
 	/**
 	 * Remove a delivery 
 	 * @param idLivraison
@@ -174,10 +174,36 @@ public class InterfacePlanning {
 	}
 	
 	//---------------------------------------------------------------------------------
-	// GETTERS - SETTERS
+	// GETTERS - SETTERS - UTILITIES
 	public ArrayList<Livraison> getListeLivraisons() {
 		return listeLivraisons;
 	}
+
+	public Livraison getLivraisonById(int id) {
+		for(Livraison l : listeLivraisons) {
+			if (l.getIdLivraison() == id) {
+				return l;
+			}
+		}
+		return null;
+	}
+	
+	public Livraison getLivraisonByAdr(int adresse) {
+		for(Livraison l : listeLivraisons) {
+			if (l.getAdresse().getId() == adresse) {
+				return l;
+			}
+		}
+		return null;
+	}
+	public Livraison getLivraisonByIndex(int index) {
+		return listeLivraisons.get(index);
+	}
+	
+	public int getIndexOfLivraison(Livraison l) {
+		return listeLivraisons.indexOf(l);	// returns -1 if l is not in listeLivraisons
+	}
+	
 
 	public void setListeLivraisons(ArrayList<Livraison> listeLivraisons) {
 		this.listeLivraisons = listeLivraisons;

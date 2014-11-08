@@ -1,6 +1,7 @@
 package controller;
 
 import model.planning.InterfacePlanning;
+import view.utils.InterfaceView;
 
 public class CommandAddOne implements ICommand {
 	
@@ -28,17 +29,19 @@ public class CommandAddOne implements ICommand {
 		this.prevAdresse = prevAdresse;
 	}
 
-	public boolean Execute (InterfacePlanning interfaceP) {
+	public boolean Execute (InterfacePlanning interfaceP, InterfaceView interfaceV) {
 		idLivraison = interfaceP.AddLivraisonAfter(idClient, heureDebut, heureFin, adresse, prevAdresse);
 		if(idLivraison == -1) {
 			System.out.println("# ------ Execute AddOne failed ------ #"); 	
 			return false;
 		}
-		System.out.println("# ------ DELIVERY CREATED id = "+idLivraison+" ------ #"); 	
+		System.out.println("# ------ DELIVERY CREATED id = "+idLivraison+" ------ #");
+		interfaceV.addAndUpdate(interfaceP.getLivraisonById(idLivraison));
+		interfaceV.repaint();
 		return true;
 	}
 	
-	public boolean Unexecute (InterfacePlanning interfaceP) {
+	public boolean Unexecute (InterfacePlanning interfaceP, InterfaceView interfaceV) {
 		// remove the livraison at coordinates
 		boolean success = interfaceP.removeOneLivraison(idLivraison);
 		if (!success) {
@@ -46,6 +49,8 @@ public class CommandAddOne implements ICommand {
 			return false;
 		}
 		System.out.println("# ------ DELIVERY REMOVED id = "+idLivraison+" ------ #"); 
+		interfaceV.removeAndUpdate(idLivraison);
+		interfaceV.repaint();
 		return success;
 	}
 	

@@ -110,8 +110,7 @@ public class Controller implements ActionListener {
 					if(!success) {
 						return;
 					}
-					interfaceView.genererVueLivraisons(interfacePlanning.getListeLivraisons());
-					interfaceView.repaint();	// should display the new node with the others
+					interfaceView.addAndUpdate(interfacePlanning.getLivraisonByAdr(newDeliveryAdress));
 					interruptAddingNewLivraison();
 				}
 				else {
@@ -123,7 +122,6 @@ public class Controller implements ActionListener {
 		}
 	}
 	
-
 	private void interruptAddingNewLivraison() {
 		addingNewLivraison = false;
 		interfaceView.clearHighlightedNodes();
@@ -223,19 +221,10 @@ public class Controller implements ActionListener {
 					if(!undoRedo.Undo()) {
 						interfaceView.displayAlert("UNDO", "Rien à annuler", "info");
 					}
-					else{
-						System.out.println("Repainting after undo");
-						interfaceView.genererVueLivraisons(interfacePlanning.getListeLivraisons());
-						interfaceView.repaint();	// should display the new node with the others
-					}
 				}
 				else if (name.equals("redo")) {
 					if(!undoRedo.Redo()) {
 						interfaceView.displayAlert("REDO", "Rien à rétablir", "info");
-					}
-					else {
-						interfaceView.genererVueLivraisons(interfacePlanning.getListeLivraisons());
-						interfaceView.repaint();	// should display the new node with the others
 					}
 				}
 				
@@ -291,7 +280,11 @@ public class Controller implements ActionListener {
 
 	public void setInterfacePlanning(InterfacePlanning interfacePlanning) {		
 		this.interfacePlanning = interfacePlanning;
-		undoRedo = new UndoRedo(this.interfacePlanning);
+	}
+	
+	public void setUndoRedo()
+	{
+		undoRedo = new UndoRedo(interfacePlanning, interfaceView);
 	}
 
 	public UndoRedo getUndoRedo() {

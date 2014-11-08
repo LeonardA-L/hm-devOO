@@ -1,6 +1,7 @@
 package controller;
 
 import model.planning.InterfacePlanning;
+import view.utils.InterfaceView;
 
 import java.util.*;
 
@@ -12,15 +13,17 @@ public class UndoRedo {
 	private Stack<ICommand> redoCmd;
 	// Interface reference to be passed to the command
 	private InterfacePlanning interfaceP;
+	private InterfaceView interfaceV;
 	
 	/**
 	 * Constructor w/param
 	 * @param interfaceP	Reference to the interface planning 
 	 * 						that will be used by the command
 	 */
-	public UndoRedo(InterfacePlanning interfaceP)
+	public UndoRedo(InterfacePlanning interfaceP, InterfaceView interfaceV)
 	{
 		this.interfaceP = interfaceP;
+		this.interfaceV = interfaceV;
 		undoCmd = new Stack<ICommand>();
 		redoCmd = new Stack<ICommand>();
 	}
@@ -38,7 +41,7 @@ public class UndoRedo {
 		if(!undoCmd.empty())
 		{
 			ICommand undoedCmd = undoCmd.pop();
-			boolean success = undoedCmd.Unexecute(interfaceP);
+			boolean success = undoedCmd.Unexecute(interfaceP, interfaceV);
 			if (success) {
 				redoCmd.push(undoedCmd);
 				return true;
@@ -61,7 +64,7 @@ public class UndoRedo {
 		if(!redoCmd.empty())
 		{
 			ICommand redoedCmd = redoCmd.pop();
-			boolean success = redoedCmd.Execute(interfaceP);
+			boolean success = redoedCmd.Execute(interfaceP, interfaceV);
 			if (success) {
 				undoCmd.push(redoedCmd);
 				return true;
@@ -92,7 +95,7 @@ public class UndoRedo {
 	public boolean InsertAddCmd(int idClient, String heureDebut, String heureFin, int adresse, int prevAdresse)
 	{
 		ICommand add = new CommandAddOne(idClient, heureDebut, heureFin, adresse, prevAdresse);
-		boolean success = add.Execute(interfaceP);
+		boolean success = add.Execute(interfaceP, interfaceV);
 		if(success) {
 			undoCmd.push(add);redoCmd.clear();
 		}
@@ -108,7 +111,7 @@ public class UndoRedo {
 	public boolean InsertRemoveCmd(int idLivraison)
 	{
 		ICommand rmv = new CommandRemoveOne(idLivraison);
-		boolean success = rmv.Execute(interfaceP);
+		boolean success = rmv.Execute(interfaceP, interfaceV);		// changes to do here
 		if(success) {
 			undoCmd.push(rmv);redoCmd.clear();
 		}
