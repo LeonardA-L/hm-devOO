@@ -26,6 +26,8 @@ public class Controller implements ActionListener {
 	private boolean tourneeCalculed;
 	
 	private boolean addingNewLivraison;
+	
+	private int newDeliveryAdress = -1;
 
 	/**
 	 * 	Constructor
@@ -63,34 +65,31 @@ public class Controller implements ActionListener {
 				return;
 			}
 			
-			// clic sur la carte aux coordonnées (x,y)
+			// clic sur la carte aux coordonnées (x,y) and 
 			VueNoeud view_noeud = interfaceView.getVuePanel().getVue_plan().getWhoIsClicked(x, y);
 			
-			if (view_noeud != null) {
+			if (view_noeud != null) {	//user has clicked on a node
 				
-				if (!livraisonsLoaded) {
+				if (!livraisonsLoaded) {	
 					interfaceView.displayAlert("Chargement des livraisons", "Vous devez charger les livraisons avant de pouvoir les modifier.", "warning");
 					return;
 				}
 				
-				boolean isNodeADelivery = interfacePlanning.isNodeADelivery(view_noeud.getNoeud().getId());
-
 				interfaceView.displayAlert("Ajouter une livraison", "Vous avez cliqué sur le noeud : " + view_noeud.getNoeud().toString(), "info");
 				
-				if (addingNewLivraison) {
-					if (!isNodeADelivery) {
+				if (addingNewLivraison) {	// true if there was a click on an empty node before that. 
+					// problem if the previous node is not already a delivery
+					if (!interfacePlanning.isNodeADelivery(view_noeud.getNoeud().getId())) {
 						interfaceView.displayAlert("Ajouter une livraison", "Ce noeud n'a pas de livraison", "warning");
 						interruptAddingNewLivraison();
 						return;
 					}
-					// on a déjà cliqué sur un noeud, on précise après quel noeud on ajoute le nouveau
-					
-					// dummies (will not be instantiated or declared here later)
-					int idClient = 23;				// user input 
-					int adresse = 34;				// = view_noeud.getNoeud().getId() but user should be able to change it .. ?
-					int prevAdresse = 35;			// = view_noeud.getNoeud().getId() but user should be able to change it .. ?
-					int idLivraison = 18;			// call a method from interfacePlanning to get one, giving as paramters heureDebut and heureFin
-					
+				
+					// Otherwise, it's ok, we can set the new delivery
+					// The id of node where the new delivery will take place was already saved with last trigger 
+					// -> now we save the id of the previous delivery in the Tournee
+					int prevAdresse = view_noeud.getNoeud().getId();
+					// The client id, the heureDebut and the heureFin ar asked to the user.	
 					String[] retour = interfaceView.askPlageHoraire(); // 0 : heure début / 1 : heure fin
 					if (retour[0] == null || retour[1] == null) {
 						interruptAddingNewLivraison();
@@ -99,16 +98,16 @@ public class Controller implements ActionListener {
 					
 					String heureDebut = retour[0];
 					String heureFin = retour[1];		
-					
+					int idClient = Integer.parseInt(retour[2]);
 					// addLivraison
-					undoRedo.InsertAddCmd(idClient, idLivraison, heureDebut, heureFin, adresse, prevAdresse);
+					undoRedo.InsertAddCmd(idClient, heureDebut, heureFin, newDeliveryAdress, prevAdresse);
 					
 					// end process
 					interfaceView.repaint();
 					interruptAddingNewLivraison();
 				}
 				else if (!addingNewLivraison) {
-					if (isNodeADelivery) {
+					if (interfacePlanning.isNodeADelivery(view_noeud.getNoeud().getId())) {
 						interfaceView.displayAlert("Ajouter une livraison", "Ce noeud a déjà une livraison", "warning");
 						return;
 					}
@@ -223,10 +222,14 @@ public class Controller implements ActionListener {
 					}
 				}
 				else if (name.equals("undo")) {
-					interfaceView.displayAlert("UNDO", "Undo en cours", "info");
+					if(!undoRedo.Undo()) {
+						interfaceView.displayAlert("UNDO", "Rien à annuler", "info");
+					}
 				}
 				else if (name.equals("redo")) {
-					interfaceView.displayAlert("REDO", "Redo en cours", "info");
+					if(!undoRedo.Redo()) {
+						interfaceView.displayAlert("REDO", "Rien à rétablir", "info");
+					}
 				}
 				
 			}
@@ -263,14 +266,6 @@ public class Controller implements ActionListener {
 	
 	public  InterfaceAgglo getReferenceToInterfaceAgglo() {
 		return interfaceAgglo;
-	}
-	
-	private boolean undo() {
-		return undoRedo.Undo();
-	}
-	
-	private boolean redo() {
-		return undoRedo.Redo();
 	}
 	
 	//------------------------------------------------------------------
