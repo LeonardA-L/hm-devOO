@@ -92,8 +92,11 @@ public class UndoRedo {
 	public boolean InsertAddCmd(int idClient, String heureDebut, String heureFin, int adresse, int prevAdresse)
 	{
 		ICommand add = new CommandAddOne(idClient, heureDebut, heureFin, adresse, prevAdresse);
-		add.Execute(interfaceP);
-		return true;
+		boolean success = add.Execute(interfaceP);
+		if(success) {
+			undoCmd.push(add);redoCmd.clear();
+		}
+		return success;
 	}
 	
 	/**
@@ -105,8 +108,11 @@ public class UndoRedo {
 	public boolean InsertRemoveCmd(int idLivraison)
 	{
 		ICommand rmv = new CommandRemoveOne(idLivraison);
-		rmv.Execute(interfaceP);
-		return true;
+		boolean success = rmv.Execute(interfaceP);
+		if(success) {
+			undoCmd.push(rmv);redoCmd.clear();
+		}
+		return success;
 	}
 	
 	

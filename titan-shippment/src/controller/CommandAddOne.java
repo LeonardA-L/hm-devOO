@@ -30,16 +30,17 @@ public class CommandAddOne implements ICommand {
 
 	public boolean Execute (InterfacePlanning interfaceP) {
 		idLivraison = interfaceP.AddLivraisonAfter(idClient, heureDebut, heureFin, adresse, prevAdresse);
-		if(idLivraison != -1)	// if livraison added right, update tournee
-		{
-			interfaceP.CalculTournee();
+		if(idLivraison == -1) {
+			return false;
 		}
-		return false;
+		System.out.println("# ------ DELIVERY CREATED id = "+idLivraison+" ------ #"); 	
+		return true;
 	}
 	
 	public boolean Unexecute (InterfacePlanning interfaceP) {
 		// remove the livraison at coordinates
-		interfaceP.removeOneLivrison(idLivraison);
+		interfaceP.removeOneLivraison(idLivraison);
+		System.out.println("# ------ DELIVERY REMOVED id = "+idLivraison+" ------ #"); 	
 		return true;
 	}
 	

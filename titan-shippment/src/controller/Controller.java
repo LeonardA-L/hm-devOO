@@ -65,57 +65,51 @@ public class Controller implements ActionListener {
 				return;
 			}
 			
-			// clic sur la carte aux coordonnées (x,y) and 
+			// clic sur la carte aux coordonnées (x,y) and get the associated point (if any)
 			VueNoeud view_noeud = interfaceView.getVuePanel().getVue_plan().getWhoIsClicked(x, y);
 			
-			if (view_noeud != null) {	//user has clicked on a node
-				
-				if (!livraisonsLoaded) {	
-					interfaceView.displayAlert("Chargement des livraisons", "Vous devez charger les livraisons avant de pouvoir les modifier.", "warning");
-					return;
-				}
-				
+			if (!livraisonsLoaded) {	
+				interfaceView.displayAlert("Chargement des livraisons", "Vous devez charger les livraisons avant de pouvoir les modifier.", "warning");
+				return;
+			}
+			
+			if (view_noeud != null) {	// user has clicked on a node and not on an empty part of map		
 				interfaceView.displayAlert("Ajouter une livraison", "Vous avez cliqué sur le noeud : " + view_noeud.getNoeud().toString(), "info");
 				
-				if (addingNewLivraison) {	// true if there was a click on an empty node before that. 
-					// problem if the previous node is not already a delivery
-					if (!interfacePlanning.isNodeADelivery(view_noeud.getNoeud().getId())) {
+				// 1st STEP : Click on a node where you want to add a delivery
+				if (!addingNewLivraison) {	
+					if (interfacePlanning.isNodeADelivery(view_noeud.getNoeud().getId())) { 	// if node is already a delivery, stop.
+						interfaceView.displayAlert("Ajouter une livraison", "Ce noeud a déjà une livraison", "warning");
+						return;
+					}
+					addingNewLivraison = true;  							// start process of adding new delivery
+					newDeliveryAdress = view_noeud.getNoeud().getId();		// saving the node id (if it has no delivery)
+				}
+				// 2nd STEP : Click on a node where there is a delivery
+				else if (addingNewLivraison) {	// true if there was a click on an empty node before that. 
+					if (!interfacePlanning.isNodeADelivery(view_noeud.getNoeud().getId())) { // if node is already a delivery, stop.
 						interfaceView.displayAlert("Ajouter une livraison", "Ce noeud n'a pas de livraison", "warning");
 						interruptAddingNewLivraison();
 						return;
 					}
 				
-					// Otherwise, it's ok, we can set the new delivery
-					// The id of node where the new delivery will take place was already saved with last trigger 
-					// -> now we save the id of the previous delivery in the Tournee
-					int prevAdresse = view_noeud.getNoeud().getId();
-					// The client id, the heureDebut and the heureFin ar asked to the user.	
-					String[] retour = interfaceView.askPlageHoraire(); // 0 : heure début / 1 : heure fin
+					// Fetch all data needed to create delivery.
+					int prevAdresse = view_noeud.getNoeud().getId();	// Node where previous delivery occurs.
+					String[] retour = interfaceView.askPlageHoraire(); 	// 0 : heureDebut / 1 : heureFin / 2 = client ID
 					if (retour[0] == null || retour[1] == null) {
 						interruptAddingNewLivraison();
 						return;
-					}
-					
+					}				
 					String heureDebut = retour[0];
 					String heureFin = retour[1];		
-					int idClient = Integer.parseInt(retour[2]);	// format is checked in InterfaceView (but not fully tested)
-					// addLivraison 	Note : the delivery id is calculated automatically when the delivery is actually created
-					undoRedo.InsertAddCmd(idClient, heureDebut, heureFin, newDeliveryAdress, prevAdresse);
-					
-					// end process
-					interfaceView.repaint();	// should display the new node with the others
-					interruptAddingNewLivraison();
-				}
-				else if (!addingNewLivraison) {	// first click on a node of the graph in order to add a delivery
-					// if node is already a delivery, stop.
-					if (interfacePlanning.isNodeADelivery(view_noeud.getNoeud().getId())) {
-						interfaceView.displayAlert("Ajouter une livraison", "Ce noeud a déjà une livraison", "warning");
+					int idClient = Integer.parseInt(retour[2]);			// format is checked in InterfaceView (but not fully tested)
+					// DELIVERY CREATION
+					boolean success = undoRedo.InsertAddCmd(idClient, heureDebut, heureFin, newDeliveryAdress, prevAdresse);
+					if(!success) {
 						return;
 					}
-					addingNewLivraison = true;
-					//saving the node id (if it has no delivery)
-					newDeliveryAdress = view_noeud.getNoeud().getId();
-					// wait for new click
+					interfaceView.repaint();	// should display the new node with the others
+					interruptAddingNewLivraison();
 				}
 				else {
 					interfaceView.displayAlert("Ajouter une livraison", "", "warning");

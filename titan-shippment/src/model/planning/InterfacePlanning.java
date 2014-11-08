@@ -77,34 +77,52 @@ public class InterfacePlanning {
 	 * @param prevAdresse
 	 * @return			ID of the delivery which was created
 	 */
-	public int AddLivraisonAfter(int idClient, String heureDebut, String heureFin, int adresse, int prevAdresse)
-	{
+	public int AddLivraisonAfter(int idClient, String heureDebut, String heureFin, int adresse, int prevAdresse) {
 		// get a new Delivery ID to be used for the newly created delivery.
 		getNewDeliveryId();
 		boolean deliveryCreation = AddLivraison(idClient, idLivraison, heureDebut, heureFin, prevAdresse);
-		if(deliveryCreation){
+		if(deliveryCreation) {
 			return idLivraison;
 		}
 		return -1;
 	}
 	
+	/**
+	 *  At init, the method finds the higher delivery id
+	 *  Then it always increment the idLivraison var.
+	 */
 	public void getNewDeliveryId() {
 		if (idLivraison == -1) {	// init
 			int idMax = 0;
 			for(Livraison l : listeLivraisons) {
 				idMax = idMax < l.getIdLivraison() ? l.getIdLivraison() : idMax;
 			}
-			idLivraison = idMax;
+			idLivraison = idMax + 1;
 		}
 		idLivraison++;
 	}
-	// called to unexecute add command
-	// or to execute remove command
-	public boolean removeOneLivrison(int idLivraison)
-	{
+	
+	/**
+	 * Remove a delivery 
+	 * @param idLivraison
+	 * @return  True or false depending on the success of the operation
+	 */
+	public boolean removeOneLivraison(int idLivraison) {
+		for(Livraison l : listeLivraisons) {
+			if(l.getIdLivraison() == idLivraison) {
+				listeLivraisons.remove(l);
+				return true;
+			}
+		}
 		return false;
 	}
 	
+	/**
+	 * Return the PlageHoraire associated with 
+	 * @param heureDebut
+	 * @param heureFin
+	 * @return
+	 */
 	private PlageHoraire getPlageHoraire(String heureDebut, String heureFin) {
 		Iterator<PlageHoraire> it = plagesHoraires.iterator();
 		while (it.hasNext()) {
