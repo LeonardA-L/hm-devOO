@@ -7,7 +7,6 @@ import utils.ShippmentGraph;
 
 public class Plan {
 	
-	private Noeud entrepot;
 	private ArrayList<Noeud> noeuds;
 	
 	
@@ -15,7 +14,6 @@ public class Plan {
 	 * 	Constructor - no parameter
 	 */
 	Plan() {
-		this.entrepot = null;
 		this.noeuds = new ArrayList<Noeud>();
 	}
 
@@ -25,8 +23,7 @@ public class Plan {
 	 *  @param noeuds 	 all the nodes in the graph
 	 *  @see Noeud.java Troncon.java
 	 */
-	public Plan(Noeud entrepot, ArrayList<Noeud> noeuds) {
-		this.entrepot = entrepot;
+	public Plan(ArrayList<Noeud> noeuds) {
 		this.noeuds = noeuds;
 	}
 	
@@ -108,8 +105,6 @@ public class Plan {
 	}
 	
 	public void reset() {
-		// remove entrepot
-		entrepot = null;
 		
 		// remove all nodes
 		noeuds.clear();
@@ -117,21 +112,6 @@ public class Plan {
 
 	
 	// GETTERS - SETTERS 
-	public Noeud getEntrepot() {
-		return entrepot;
-	}
-
-	public boolean setEntrepot(int id) {
-		Noeud entrepot = getNoeudById(id);
-		if(entrepot != null)
-		{
-			this.entrepot = entrepot;
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
 
 	public ArrayList<Noeud> getNoeuds() {
 		return noeuds;
@@ -144,15 +124,7 @@ public class Plan {
 	
 	@Override
 	public String toString() {
-		String retour = "";
-		try{
-			int idEntrepot = entrepot.getId();
-			retour = "Plan [entrepotID=" + entrepot.getId() + "]\n";
-			retour += entrepot.toString();
-		} catch (NullPointerException e){
-			if(!noeuds.isEmpty())
-				retour = "Plan [entrepot non defini]\n";
-		}
+		String retour = "Plan"+"\n";
 		
 		Iterator<Noeud> it = noeuds.iterator();
 		while(it.hasNext()) {

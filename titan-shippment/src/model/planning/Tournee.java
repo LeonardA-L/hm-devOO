@@ -2,7 +2,9 @@ package model.planning;
 
 import java.util.ArrayList;
 
+
 public class Tournee {
+	
 	
 	private ArrayList<Livraison> livraisons;
 	private ArrayList<Itineraire> itineraires;
@@ -23,6 +25,7 @@ public class Tournee {
 		// do math stuff
 		return this;
 	}
+	
 	
 	public int addItineraire(Itineraire itineraire) {
 		itineraires.add(itineraire);

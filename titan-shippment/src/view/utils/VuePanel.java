@@ -22,6 +22,7 @@ public class VuePanel extends JPanel {
 	
 	private VuePlan vue_plan;
 	private VueTournee vue_tournee;
+	private VueNoeud vue_entrepot;
 	private ArrayList<VueLivraison> vues_livraisons;
 	
 	private ArrayList<VueNoeud> noeud_highlighted;
@@ -32,6 +33,7 @@ public class VuePanel extends JPanel {
 		vue_tournee = new VueTournee();
 		vues_livraisons = new ArrayList<VueLivraison>();
 		noeud_highlighted = new ArrayList<VueNoeud>();
+		vue_noeud = new VueNoeud();
 		
 		// init panel
 		this.setSize(500,200);
@@ -149,6 +151,14 @@ public class VuePanel extends JPanel {
 
 	public void setVue_tournee(VueTournee vue_tournee) {
 		this.vue_tournee = vue_tournee;
+	}
+	
+	public VueNoeud getVue_entrepot(){
+		return vue_entrepot;
+	}
+	
+	public void setVue_entrepot(VueNoeud vue_entrepot){
+		this.vue_entrepot = vue_entrepot;
 	}
 
 	public ArrayList<VueNoeud> getNoeud_highlighted() {

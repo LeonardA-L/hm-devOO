@@ -15,6 +15,7 @@ public class InterfacePlanning {
 	private ArrayList<Livraison> listeLivraisons;
 	private ArrayList<PlageHoraire> plagesHoraires;
 	private Tournee tournee;
+	private Noeud entrepot;
 	
 	private static int s_idLivraison = -1;
 	
@@ -137,6 +138,34 @@ public class InterfacePlanning {
 		PlageHoraire ph = new PlageHoraire(heureDebut, heureFin);
 		plagesHoraires.add(ph);
 		return ph;
+	}
+	
+	public boolean GetEntrepotFromBuilder()
+	{
+		int idEntre = XMLBuilder.getEntrepot();
+		if(idEntre == -1) {
+			return false;
+		}
+		else {
+			Noeud entrepot = Controller.getInstance().getInterfaceAgglo().getPlan().getNoeudById(idEntre);
+				return this.setEntrepot(entrepot);
+		}
+	}
+	
+	public Noeud getEntrepot() {
+		return entrepot;
+	}
+
+	public boolean setEntrepot(Noeud entrepot) {
+		this.entrepot = entrepot;
+		if(entrepot != null)
+		{
+			this.entrepot = entrepot;
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public void resetLivraisons() {

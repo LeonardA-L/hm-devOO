@@ -27,18 +27,6 @@ public class InterfaceAgglo {
 	}
 	
 	
-	public boolean GetEntrepotFromBuilder()
-	{
-		int idEntre = XMLBuilder.getEntrepot();
-		if(idEntre == -1) {
-			return false;
-		}
-		else {
-			plan.setEntrepot(idEntre);
-			return true;
-		}
-	}
-	
 	public float[][] GetFormatedMap(){
 		float[][] matrice = plan.GetMatrix();
 		return matrice;
