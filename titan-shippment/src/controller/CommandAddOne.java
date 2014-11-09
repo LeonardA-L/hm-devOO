@@ -50,7 +50,7 @@ public class CommandAddOne implements ICommand {
 			return false;
 		}
 		interfaceV.removeAndUpdate(idLivraison);
-		System.out.println("# ------ DELIVERY REMOVED id = "+idLivraison+" ------ #"); 
+		System.out.println("# ------ DELIVERY UN-CREATED id = "+idLivraison+" ------ #"); 
 		return success;
 	}
 	
