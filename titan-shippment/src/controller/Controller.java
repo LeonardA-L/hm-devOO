@@ -197,7 +197,6 @@ public class Controller implements ActionListener {
 							boolean buildOk = interfacePlanning.GetPlanningsFromBuilder(filename);
 							if (buildOk) {
 								livraisonsLoaded = true;
-								interfacePlanning.GetEntrepotFromBuilder(); // if the file was read w/o problem, the entrepot was found, time to fetch it
 							}
 							else {
 								interfaceView.displayAlert("Erreur au chargement des livraisons", "Les livraisons n'ont pas été chargées correctement", "error");
@@ -207,7 +206,7 @@ public class Controller implements ActionListener {
 							
 							
 							// set views
-							boolean creatingViewOk = interfaceView.genererVueLivraisons(interfacePlanning.getListeLivraisons());
+							boolean creatingViewOk = interfaceView.genererVueLivraisons(interfacePlanning.getListeLivraisons(), interfacePlanning.getEntrepot());
 							// pour les tournées, rien à voir
 							// .getVue_tournee().setTournee(interfacePlanning.getTournee());
 							

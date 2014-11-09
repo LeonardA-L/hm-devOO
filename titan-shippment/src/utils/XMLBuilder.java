@@ -234,7 +234,7 @@ public static boolean getLivraisons(String filename, model.planning.InterfacePla
 		    		// **** node.add(line.substring(index, line.indexOf("\"", index)));
 		    		// **** data.add(node);
 		    		// **** verifier que l'on substring bien l'adresse uniquement et pas les guillemets autours.
-		    		t_entrepot = Integer.parseInt(line.substring(index, line.indexOf("\"",index)));
+		    		intf.setEntrepot(Integer.parseInt(line.substring(index, line.indexOf("\"",index))));
 		    	}
 		    }
 		    if(in != null) {

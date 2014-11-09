@@ -1,5 +1,6 @@
 package view.utils;
 
+import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -8,9 +9,11 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import model.agglomeration.Noeud;
 import model.planning.Livraison;
 import view.agglomeration.VueNoeud;
 import view.planning.VueLivraison;
+import view.utils.Type_i.Type;
 
 public class InterfaceView {
 	
@@ -114,7 +117,12 @@ public class InterfaceView {
 		this.repaint();
 	}
 
-	public boolean genererVueLivraisons(ArrayList<Livraison> listeLivraisons) {
+	public boolean genererVueLivraisons(ArrayList<Livraison> listeLivraisons, Noeud entrepot) {
+		
+		VueNoeud vue_entrepot = vuePanel.getVue_entrepot();
+		vue_entrepot.setNoeud(entrepot);
+		vue_entrepot.highlight(Color.BLUE, Type.CERCLE_PLEIN);
+		
 		Iterator<Livraison> it = listeLivraisons.iterator();
 		while (it.hasNext()) {
 			Livraison livraison = it.next();

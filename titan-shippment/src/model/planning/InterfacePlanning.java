@@ -140,18 +140,6 @@ public class InterfacePlanning {
 		return ph;
 	}
 	
-	public boolean GetEntrepotFromBuilder()
-	{
-		int idEntre = XMLBuilder.getEntrepot();
-		if(idEntre == -1) {
-			return false;
-		}
-		else {
-			Noeud entrepot = Controller.getInstance().getInterfaceAgglo().getPlan().getNoeudById(idEntre);
-				return this.setEntrepot(entrepot);
-		}
-	}
-	
 	public Noeud getEntrepot() {
 		return entrepot;
 	}
@@ -166,6 +154,11 @@ public class InterfacePlanning {
 		else {
 			return false;
 		}
+	}
+	
+	public boolean setEntrepot(int id) {
+		Noeud entrepot = Controller.getInstance().getInterfaceAgglo().getPlan().getNoeudById(id);
+		return this.setEntrepot(entrepot);
 	}
 
 	public void resetLivraisons() {

@@ -128,9 +128,16 @@ public class VuePanel extends JPanel {
 			vueLivraison.dessine(g, color);
 		}
 		
+		if (vue_entrepot != null) {
+			vue_entrepot.dessine(g);
+		}
+		
 	}
 	
 	public void resetLivraisons() {
+		vue_entrepot.unhighlight();
+		vue_entrepot.setNoeud(null);
+		
 		Iterator<VueLivraison> it = vues_livraisons.iterator();
 		while (it.hasNext()) {
 			it.next().reset();

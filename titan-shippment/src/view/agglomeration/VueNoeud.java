@@ -5,19 +5,21 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import view.utils.Type_i;
 import view.utils.Vue;
 import model.agglomeration.Noeud;
 import model.agglomeration.Troncon;
 
-public class VueNoeud implements Vue {
-	
-	enum Type {
-		CERCLE, CARRE, CROIX, CARRE_PLEIN, CERCLE_PLEIN
-	}
+
+public class VueNoeud implements Vue, Type_i {
 	
 	// pixel
 	private final int TOLERANCE_CLICK = 10;
 	
+	public void setNoeud(Noeud noeud) {
+		this.noeud = noeud;
+	}
+
 	private Noeud noeud;
 	private ArrayList<VueTroncon> vues_troncons;
 	
@@ -47,37 +49,39 @@ public class VueNoeud implements Vue {
 	}
 	
 	public void dessine(Graphics g) {
-		int x = noeud.getCoordX();
-		int y = noeud.getCoordY();
+		if (noeud != null) {
+			int x = noeud.getCoordX();
+			int y = noeud.getCoordY();
 
-		g.setColor(this.color);
-		if (this.type == Type.CERCLE) {
-			g.drawOval(x-taille/2, y-taille/2, taille, taille);
-		}
-		else if (this.type == Type.CERCLE_PLEIN) {
-			g.fillOval(x-taille/2, y-taille/2, taille, taille);
-		}
-		else if (this.type == Type.CARRE) {
-			g.drawRect(x-taille/2, y-taille/2, taille, taille);
-			/*g.drawLine(x-taille/2, y-taille/2, x+taille/2, y-taille/2); // haut
-			g.drawLine(x-taille/2, y+taille/2, x+taille/2, y+taille/2); // bas
-			g.drawLine(x-taille/2, y-taille/2, x-taille/2, y+taille/2); // gauche
-			g.drawLine(x+taille/2, y-taille/2, x+taille/2, y+taille/2);*/ // droite
-		}
-		else if (this.type == Type.CARRE_PLEIN) {
-			g.fillRect(x-taille/2, y-taille/2, taille, taille);
-		}
-		else {
-			// croix
-			g.drawLine(x-taille/2, y, x+taille/2, y);
-			g.drawLine(x, y-taille/2, x, y+taille/2);
-		}
-		g.setColor(Color.BLACK);
-		
-		Iterator<VueTroncon> it = vues_troncons.iterator();
-		while (it.hasNext()) {
-			VueTroncon vue_troncon = it.next();
-			vue_troncon.dessine(g, noeud);
+			g.setColor(this.color);
+			if (this.type == Type.CERCLE) {
+				g.drawOval(x-taille/2, y-taille/2, taille, taille);
+			}
+			else if (this.type == Type.CERCLE_PLEIN) {
+				g.fillOval(x-taille/2, y-taille/2, taille, taille);
+			}
+			else if (this.type == Type.CARRE) {
+				g.drawRect(x-taille/2, y-taille/2, taille, taille);
+				/*g.drawLine(x-taille/2, y-taille/2, x+taille/2, y-taille/2); // haut
+				g.drawLine(x-taille/2, y+taille/2, x+taille/2, y+taille/2); // bas
+				g.drawLine(x-taille/2, y-taille/2, x-taille/2, y+taille/2); // gauche
+				g.drawLine(x+taille/2, y-taille/2, x+taille/2, y+taille/2);*/ // droite
+			}
+			else if (this.type == Type.CARRE_PLEIN) {
+				g.fillRect(x-taille/2, y-taille/2, taille, taille);
+			}
+			else {
+				// croix
+				g.drawLine(x-taille/2, y, x+taille/2, y);
+				g.drawLine(x, y-taille/2, x, y+taille/2);
+			}
+			g.setColor(Color.BLACK);
+			
+			Iterator<VueTroncon> it = vues_troncons.iterator();
+			while (it.hasNext()) {
+				VueTroncon vue_troncon = it.next();
+				vue_troncon.dessine(g, noeud);
+			}
 		}
 	}
 
