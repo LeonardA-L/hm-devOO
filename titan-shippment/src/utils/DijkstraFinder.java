@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import model.planning.Livraison;
+import model.planning.PlageHoraire;
 import solver.ResolutionPolicy;
 import solver.Solver;
 import solver.constraints.IntConstraintFactory;
@@ -90,11 +92,21 @@ public class DijkstraFinder implements PathFinder {
 		return q.indexOf(selectedNode);
 	}
 
-	public ArrayList<Integer> findCycle(int upperCostBound, ArrayList<Integer> nodes) {
+	/**
+	 * It is really important not to mess up with the indexes in the following lists, as the Object concept is blown up in this method
+	 */
+	public ArrayList<Integer> findCycle(int upperCostBound, ArrayList<Livraison> livraisons) {
 		//TODO : what is that upperCostBound thing ?
+		ArrayList<Integer> nodes = new ArrayList<Integer>();
+		ArrayList<PlageHoraire> plages = new ArrayList<PlageHoraire>();
+		for(int i=0; i<livraisons.size();i++){	// do NOT use for in...
+			Livraison l = livraisons.get(i);
+			nodes.add(l.getAdresse().getId());
+			plages.add(l.getPlageHoraire());
+		}
 		ShippmentGraph subG = graph.createTSPGraph(nodes);
 		
-		int n = nodes.size();
+		int n = livraisons.size();
 		int minCost = subG.getMinArcCost();
 		int maxCost = subG.getMaxArcCost();
 		int[][] cost = subG.getCost();
@@ -106,17 +118,25 @@ public class DijkstraFinder implements PathFinder {
 		// Create variables
 		// xNext[i] = vertex visited after i
 		IntVar[] xNext = new IntVar[n];
-		for (int i = 0; i < n; i++)
+		IntVar[] xTime = new IntVar[n];
+		for (int i = 0; i < n; i++){
 			xNext[i] = VariableFactory.enumerated("Next " + i, subG.getSucc(i), solver);
+			int[] timeBounds = livraisons.get(i).getPlageHoraire().getBounds();
+			xTime[i] = VariableFactory.bounded("Arriving time at "+i, timeBounds[0], timeBounds[1], solver);
+		}
 		// xCost[i] = cost of arc (i,xNext[i])
 		IntVar[] xCost = VariableFactory.boundedArray("Cost ", n, minCost, maxCost, solver);
 		// xTotalCost = total cost of the solution
 		IntVar xTotalCost = VariableFactory.bounded("Total cost ", n*minCost, upperCostBound - 1, solver);
 		
 		// Add constraints
-		for (int i = 0; i < n; i++) 
+		for (int i = 0; i < n; i++){
 			solver.post(IntConstraintFactory.element(xCost[i], cost[i], xNext[i], 0, "none"));
-		//solver.post(IntConstraintFactory.circuit(xNext,0));
+			if(i != n-1){
+			solver.post(IntConstraintFactory.distance(xTime[xNext[i].getValue()], xTime[xNext[i+1].getValue()],"=",xCost[i]));
+			}
+		}
+		solver.post(IntConstraintFactory.circuit(xNext,0));
 		solver.post(IntConstraintFactory.sum(xCost, xTotalCost));
 		
 		//TODO : add time constraints

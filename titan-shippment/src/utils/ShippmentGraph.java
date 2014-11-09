@@ -168,6 +168,7 @@ public class ShippmentGraph implements Graph {
 				// popping the total distance of the path
 				if(pathFromIToJ != null){
 					int totalCost = pathFromIToJ.remove(pathFromIToJ.size()-1);
+					//pathFromIToJ.add(totalCost);
 					cost[i][j] = totalCost;
 					updateMinMax(totalCost);
 				}

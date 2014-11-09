@@ -26,7 +26,7 @@ public class PlanTest {
 	 */
 	public static Plan DummyPlanCreate(){
 
-		//Noeud storeHouse = new Noeud(0,1,0,new ArrayList<Troncon>());
+		Noeud storeHouse = new Noeud(0,1,0,new ArrayList<Troncon>());
 		Noeud n1 = new Noeud(1,0,1,new ArrayList<Troncon>());
 		Noeud n2 = new Noeud(1,2,2,new ArrayList<Troncon>());
 		Noeud n3 = new Noeud(2,0,3,new ArrayList<Troncon>());
@@ -40,15 +40,16 @@ public class PlanTest {
 		gigaAnton.addNoeud(n3);
 		gigaAnton.addNoeud(n4);
 		gigaAnton.addNoeud(n5);
+		gigaAnton.addNoeud(storeHouse);
 		
-		/*storeHouse.addTroncon(new Troncon("r1", 1, 1, n1));
-		storeHouse.addTroncon(new Troncon("r2", 1, 1, n2));*/
+		storeHouse.addTroncon(new Troncon("r1", 1, 1, n1));
+		storeHouse.addTroncon(new Troncon("r2", 1, 1, n2));
 		
 		n1.addTroncon(new Troncon("r3", 1, 1, n4));
 		n2.addTroncon(new Troncon("r4", 1, 2, n3));
 		n3.addTroncon(new Troncon("r5", 1, 3, n5));
 		n4.addTroncon(new Troncon("r6", 1, 3, n5));
-		//n5.addTroncon(new Troncon("r6", 1, 5, storeHouse));
+		n5.addTroncon(new Troncon("r6", 1, 5, storeHouse));
 		
 		return gigaAnton;
 	}

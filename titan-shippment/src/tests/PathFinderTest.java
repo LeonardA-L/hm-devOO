@@ -6,6 +6,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
+import model.agglomeration.Plan;
+import model.planning.Livraison;
+import model.planning.PlageHoraire;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,11 +19,13 @@ import utils.PathFinder;
 public class PathFinderTest {
 
 	PathFinder f;
+	Plan p;
 
 	@Before
 	public void createPF() {
 		//f = new BreadthFirstFinder(PlanTest.DummyPlanCreate().computeShippmentGraph());
-		f = new DijkstraFinder(PlanTest.DummyPlanCreate().computeShippmentGraph());
+		p = PlanTest.DummyPlanCreate();
+		f = new DijkstraFinder(p.computeShippmentGraph());
 	}
 
 	@Test
@@ -49,24 +55,25 @@ public class PathFinderTest {
 	@Test
 	public void findCycle(){
 		// The list of nodes the cycle must go through
-		ArrayList<Integer> list = new ArrayList<Integer>();
-		list.add(0);
-		list.add(4);
-		list.add(5);
+		ArrayList<Livraison> list = new ArrayList<Livraison>();
+		
+		list.add(new Livraison(new PlageHoraire("00:00:00", "00:00:50"),p.getNoeudById(0),10,0));
+		list.add(new Livraison(new PlageHoraire("00:00:01", "00:00:50"),p.getNoeudById(4),10,0));
+		list.add(new Livraison(new PlageHoraire("00:00:04", "00:00:50"),p.getNoeudById(5),10,0));
 		
 		// several results are accepted (0,4,5 and 4,5,0 ...)
 		ArrayList<Integer> e1 = new ArrayList<Integer>();
-		list.add(4);
-		list.add(5);
-		list.add(0);
+		e1.add(4);
+		e1.add(5);
+		e1.add(0);
 		ArrayList<Integer> e2 = new ArrayList<Integer>();
-		list.add(0);
-		list.add(4);
-		list.add(5);
+		e2.add(0);
+		e2.add(4);
+		e2.add(5);
 		ArrayList<Integer> e3 = new ArrayList<Integer>();
-		list.add(5);
-		list.add(0);
-		list.add(4);
+		e3.add(5);
+		e3.add(0);
+		e3.add(4);
 		
 		ArrayList<Integer> cycle = f.findCycle(1000000, list);
 		System.out.println(cycle);
