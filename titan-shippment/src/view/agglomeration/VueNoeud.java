@@ -14,10 +14,6 @@ public class VueNoeud implements Vue, Type_i {
 	
 	// pixel
 	private final int TOLERANCE_CLICK = 10;
-	
-	public void setNoeud(Noeud noeud) {
-		this.noeud = noeud;
-	}
 
 	private Noeud noeud;
 	private ArrayList<VueTroncon> vues_troncons;
@@ -92,11 +88,23 @@ public class VueNoeud implements Vue, Type_i {
 		}
 		return false;
 	}
+	
+	public ArrayList<VueTroncon> getVues_troncons() {
+		return vues_troncons;
+	}
+
+	public void setVues_troncons(ArrayList<VueTroncon> vues_troncons) {
+		this.vues_troncons = vues_troncons;
+	}
 
 	public Noeud getNoeud() {
 		return this.noeud;
 	}
-
+	
+	public void setNoeud(Noeud noeud) {
+		this.noeud = noeud;
+	}
+	
 	public void highlight() {
 		this.setColor(Color.RED);
 		this.setType(Type.CARRE_PLEIN);

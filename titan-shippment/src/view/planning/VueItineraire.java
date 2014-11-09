@@ -30,7 +30,6 @@ public class VueItineraire implements Vue {
 	@Override
 	public void dessine(Graphics g) {
 		
-		// paint first node
 		Noeud current_node = depart.getNoeud();
 		depart.dessine(g);
 		

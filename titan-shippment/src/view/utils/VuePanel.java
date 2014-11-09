@@ -134,7 +134,7 @@ public class VuePanel extends JPanel {
 		}
 		
 		if (vue_tournee.getTournee() != null) {
-			vue_tournee.dessine(g);
+			vue_tournee.dessine(g, vue_entrepot);
 		}
 		
 	}
