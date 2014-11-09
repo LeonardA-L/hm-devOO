@@ -10,7 +10,6 @@ import view.utils.Vue;
 import model.agglomeration.Noeud;
 import model.agglomeration.Troncon;
 
-
 public class VueNoeud implements Vue, Type_i {
 	
 	// pixel
@@ -52,6 +51,9 @@ public class VueNoeud implements Vue, Type_i {
 		if (noeud != null) {
 			int x = noeud.getCoordX();
 			int y = noeud.getCoordY();
+
+			
+			//System.out.println("Node drawn on coord X:"+x+"|Y:"+y);
 
 			g.setColor(this.color);
 			if (this.type == Type.CERCLE) {
@@ -151,5 +153,4 @@ public class VueNoeud implements Vue, Type_i {
 	public void setType(Type type) {
 		this.type = type;
 	}
-
 }

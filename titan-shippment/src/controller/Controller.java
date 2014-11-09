@@ -177,6 +177,7 @@ public class Controller implements ActionListener {
 						}
 						
 						// set views
+						interfaceAgglo.getPlan().fitJPanel(interfaceView.getVuePanel().getHeight(),interfaceView.getVuePanel().getWidth());
 						interfaceView.getVuePanel().getVue_plan().setPlan(interfaceAgglo.getPlan());
 						interfaceView.repaint();
 					}
