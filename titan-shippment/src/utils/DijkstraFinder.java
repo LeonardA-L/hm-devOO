@@ -95,7 +95,7 @@ public class DijkstraFinder implements PathFinder {
 	/**
 	 * It is really important not to mess up with the indexes in the following lists, as the Object concept is blown up in this method
 	 */
-	public ArrayList<Integer> findCycle(int upperCostBound, ArrayList<Livraison> livraisons) {
+	public ArrayList<Livraison> findCycle(int upperCostBound, ArrayList<Livraison> livraisons) {
 		//TODO : what is that upperCostBound thing ?
 		ArrayList<Integer> nodes = new ArrayList<Integer>();
 		ArrayList<PlageHoraire> plages = new ArrayList<PlageHoraire>();
@@ -111,6 +111,7 @@ public class DijkstraFinder implements PathFinder {
 		int maxCost = subG.getMaxArcCost();
 		int[][] cost = subG.getCost();
 		ArrayList<Integer> next = new ArrayList<Integer>();
+		ArrayList<Livraison> sortedList = new ArrayList<Livraison>();
 		Solver solver = new Solver();
 		
 		
@@ -149,7 +150,7 @@ public class DijkstraFinder implements PathFinder {
 		solver.findOptimalSolution(ResolutionPolicy.MINIMIZE,xTotalCost);
 		// record solution and state
 		if(solver.getMeasures().getSolutionCount()>0){
-			for(int i=0;i<n;i++) next.add(nodes.get(xNext[i].getValue()));
+			for(int i=0;i<n;i++) sortedList.add(livraisons.get(xNext[i].getValue()));
 			//int totalCost = xTotalCost.getValue();
 			
 		}
@@ -157,7 +158,7 @@ public class DijkstraFinder implements PathFinder {
 			
 		}
 		
-		return next;
+		return sortedList;
 	}
 	
 	private ArrayList<Integer> backtrack(int[] prev, int start, int end){

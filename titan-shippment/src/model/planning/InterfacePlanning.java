@@ -3,12 +3,13 @@ package model.planning;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import controller.Controller;
-
-
 import model.agglomeration.InterfaceAgglo;
 import model.agglomeration.Noeud;
+import model.agglomeration.Plan;
+import utils.DijkstraFinder;
+import utils.PathFinder;
 import utils.XMLBuilder;
+import controller.Controller;
 
 public class InterfacePlanning {
 
@@ -179,9 +180,16 @@ public class InterfacePlanning {
 	public void CalculTournee(){
 		InterfaceAgglo interfaceAgglo = Controller.getInstance().getInterfaceAgglo();
 		float[][] matriceAdjacence = interfaceAgglo.GetFormatedMap();
+		Plan plan = interfaceAgglo.getPlan();
+		ArrayList<Livraison> livraisons = getListeLivraisons();
+		
+		// Instanciate pathfinder
+		PathFinder pf = new DijkstraFinder(plan.computeShippmentGraph());
+		// Compute cycle (sorted list of livraison)
+		ArrayList<Livraison> cycle = pf.findCycle(100000, livraisons);
 		
 		Tournee tournee = new Tournee();
-		//TODO - Calcul Tournee
+		tournee.setLivraisons(cycle);
 		
 		this.setTournee(tournee);
 	}

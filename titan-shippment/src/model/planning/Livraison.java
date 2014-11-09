@@ -54,4 +54,7 @@ public class Livraison {
 	public void setIdLivraison(int idLivraison) {
 		this.idLivraison = idLivraison;
 	}
+	public String toString(){
+		return "Delivery to node n°"+adresse.getId();
+	}
 }

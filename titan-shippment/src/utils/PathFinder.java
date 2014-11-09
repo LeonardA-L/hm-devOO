@@ -20,5 +20,5 @@ public interface PathFinder {
 	 * @param livraisons a list of livraisons the cycle must fulfill
 	 * @return a list of nodes IDs for the shortest cycle
 	 */
-	public ArrayList<Integer> findCycle(int upperCostBound, ArrayList<Livraison> livraisons);
+	public ArrayList<Livraison> findCycle(int upperCostBound, ArrayList<Livraison> livraisons);
 }
