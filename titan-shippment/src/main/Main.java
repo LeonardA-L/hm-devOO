@@ -24,9 +24,9 @@ public class Main {
 		int nbNodes = 20;
 		int maxX = 500;
 		int maxY = 400;
-		Plan plan = PlanTest.DummyPlanCreate();
+		//Plan plan = PlanTest.DummyPlanCreate();
 		
-		ShippmentGraph shGraph = plan.computeShippmentGraph();
+		//ShippmentGraph shGraph = plan.computeShippmentGraph();
 
 		/*System.out.println(shGraph.getPaths().get("0-5"));
 		System.out.println(shGraph.getPaths().get("3-1"));

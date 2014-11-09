@@ -1,7 +1,13 @@
 package view.agglomeration;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.Stroke;
+
+import javax.swing.border.StrokeBorder;
 
 import view.utils.Vue;
 import model.agglomeration.Noeud;
@@ -11,6 +17,7 @@ public class VueTroncon implements Vue {
 	
 	private Troncon troncon;
 	private Color color;
+	private int stroke;
 	
 	private final int RAYON_NOEUD = 5;
 	
@@ -28,7 +35,10 @@ public class VueTroncon implements Vue {
 		// cannot draw without node in
 	}
 	
-	public void dessine(Graphics g, Noeud noeud) {		
+	public void dessine(Graphics g, Noeud noeud) {
+		
+		Graphics2D g2 = (Graphics2D)g;
+		
 		int x = noeud.getCoordX();
 		int y = noeud.getCoordY();
 		
@@ -48,13 +58,16 @@ public class VueTroncon implements Vue {
 		
 		xPrime -= coeffX;
 		yPrime += coeffY;*/
-		g.setColor(color);
-		g.drawLine(x, y, xPrime, yPrime);
-		g.setColor(Color.BLACK);
+		g2.setColor(color);
+		g2.setStroke(new BasicStroke(stroke));
+		g2.drawLine(x, y, xPrime, yPrime);
+		g2.setColor(Color.BLACK);
+		g2.setStroke(new BasicStroke(1));
 	}
 
 	public void highlight() {
 		color = Color.GREEN;
+		stroke = 3;
 	}
 	
 	
