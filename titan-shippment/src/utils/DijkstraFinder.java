@@ -123,6 +123,7 @@ public class DijkstraFinder implements PathFinder {
 		for (int i = 0; i < n; i++){
 			xNext[i] = VariableFactory.enumerated("Next " + i, subG.getSucc(i), solver);
 			int[] timeBounds = livraisons.get(i).getPlageHoraire().getBounds();
+			// add time variables and their boundaries
 			xTime[i] = VariableFactory.bounded("Arriving time at "+i, timeBounds[0], timeBounds[1], solver);
 		}
 		// xCost[i] = cost of arc (i,xNext[i])
@@ -133,9 +134,11 @@ public class DijkstraFinder implements PathFinder {
 		// Add constraints
 		for (int i = 0; i < n; i++){
 			solver.post(IntConstraintFactory.element(xCost[i], cost[i], xNext[i], 0, "none"));
+			/*
 			if(i != n-1){
 			solver.post(IntConstraintFactory.distance(xTime[xNext[i].getValue()], xTime[xNext[i+1].getValue()],"=",xCost[i]));
 			}
+			*/
 		}
 		solver.post(IntConstraintFactory.circuit(xNext,0));
 		solver.post(IntConstraintFactory.sum(xCost, xTotalCost));
