@@ -197,7 +197,7 @@ public class Controller implements ActionListener {
 							boolean buildOk = interfacePlanning.GetPlanningsFromBuilder(filename);
 							if (buildOk) {
 								livraisonsLoaded = true;
-								interfaceAgglo.GetEntrepotFromBuilder(); // if the file was read w/o problem, the entrepot was found, time to fetch it
+								interfacePlanning.GetEntrepotFromBuilder(); // if the file was read w/o problem, the entrepot was found, time to fetch it
 							}
 							else {
 								interfaceView.displayAlert("Erreur au chargement des livraisons", "Les livraisons n'ont pas été chargées correctement", "error");

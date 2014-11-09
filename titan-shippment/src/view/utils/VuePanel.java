@@ -34,7 +34,7 @@ public class VuePanel extends JPanel {
 		vue_tournee = new VueTournee();
 		vues_livraisons = new ArrayList<VueLivraison>();
 		noeud_highlighted = new ArrayList<VueNoeud>();
-		vue_noeud = new VueNoeud();
+		vue_entrepot = new VueNoeud();
 		
 		// init panel
 		this.setSize(500,200);
