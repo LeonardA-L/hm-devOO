@@ -34,6 +34,17 @@ public class InterfaceView {
 		JOptionPane.showMessageDialog(null, message, titre, type_alert);
 	}
 	
+	public boolean confirmUserInput(String titre, String message) {
+		int reply = JOptionPane.showConfirmDialog(null, message, titre, JOptionPane.YES_NO_OPTION);
+		if (reply == JOptionPane.YES_OPTION) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	
 	public String[] askPlageHoraire() {
 		String format = "\\d{1,2}:\\d{1,2}:\\d{1,2}";
 		String[] retour = new String[3];
@@ -136,7 +147,7 @@ public class InterfaceView {
 		return true;
 	}
 	
-	public boolean removeAndUpdate(int idLivraison) {
+	public boolean removeAndUpdate(int adresse) {
 		
 		VueLivraison toBeRemoved = null;
 		System.out.println("RemoveAndUpdate : before remove :");
@@ -147,7 +158,7 @@ public class InterfaceView {
 		
 		// searching view to delete
 		for(VueLivraison vl : vuePanel.getVues_livraisons()) {
-			if (vl.getLivraison().getIdLivraison() == idLivraison) {
+			if (vl.getLivraison().getAdresse().getId() == adresse) {
 				System.out.println("#### Vue to be deleted found ####");
 				toBeRemoved = vl;
 			}

@@ -13,17 +13,16 @@ public class CommandRemoveOne implements ICommand{
 	private String heureFin;
 	private int previousAdresseLivraison;
 	
-	public CommandRemoveOne(int idLivraison) {
-		this.idLivraison = idLivraison;
+	public CommandRemoveOne(int adresse) {
+		this.adresse = adresse;		
 	}
 
 	public boolean Execute(InterfacePlanning interfaceP, InterfaceView interfaceV) {
-		// first get all informations from the delivery we wanna delete in case of undo/redo
-		idClient = interfaceP.getLivraisonById(idLivraison).getIdClient();
-		adresse = interfaceP.getLivraisonById(idLivraison).getAdresse().getId();
-		heureDebut = interfaceP.getLivraisonById(idLivraison).getPlageHoraire().getHeureDebut();
-		heureFin = interfaceP.getLivraisonById(idLivraison).getPlageHoraire().getHeureFin();
-		
+		// first get all informations from the delivery we wanna delete in case of undo/redo	
+		idLivraison = interfaceP.getLivraisonByAdr(adresse).getIdLivraison();
+		idClient = interfaceP.getLivraisonByAdr(adresse).getIdClient();
+		heureDebut = interfaceP.getLivraisonByAdr(adresse).getPlageHoraire().getHeureDebut();
+		heureFin = interfaceP.getLivraisonByAdr(adresse).getPlageHoraire().getHeureFin();
 		// #### NEED TO KNOW WHICH WAS THE DELIVERY BEFORE THE ONE WE DELETE
 		// THE INFORMATION IS KNOWN BY THE TOURNEE ONLY SO IT WILL BE FETCHED WHEN THIS PART IS IMPLEMENTED
 		// previousAdresseLivraison = interfaceP.
@@ -34,7 +33,7 @@ public class CommandRemoveOne implements ICommand{
 			System.out.println("# ------ Execute RemoveOne failed ------ #"); 	
 			return false;
 		}
-		interfaceV.removeAndUpdate(idLivraison);
+		interfaceV.removeAndUpdate(adresse);
 		System.out.println("# ------ DELIVERY REMOVED id = "+idLivraison+" ------ #"); 
 		return success;
 	}
@@ -47,7 +46,7 @@ public class CommandRemoveOne implements ICommand{
 			System.out.println("# ------ Unexecute RemoveOne failed ------ #"); 	
 			return false;
 		}	
-		interfaceV.addAndUpdate(interfaceP.getLivraisonById(idLivraison));
+		interfaceV.addAndUpdate(interfaceP.getLivraisonByAdr(adresse));
 		System.out.println("# ------ DELIVERY RE-CREATED id = "+idLivraison+" ------ #");
 		return true;
 

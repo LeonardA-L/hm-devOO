@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -39,6 +40,22 @@ public class VuePanel extends JPanel {
 		this.setSize(500,200);
 		this.setPreferredSize(new Dimension(500,200));
 		this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		
+		this.addMouseMotionListener(new MouseMotionListener() {
+			
+			@Override
+			public void mouseMoved(MouseEvent arg0) {
+				int x = arg0.getX();
+				int y = arg0.getY();
+				Controller.getInstance().trigger("mouse_moved_on_map", x, y);;				
+			}
+			
+			@Override
+			public void mouseDragged(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 		this.addMouseListener(new MouseListener() {
 
