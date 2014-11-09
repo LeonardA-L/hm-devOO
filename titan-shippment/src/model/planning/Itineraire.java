@@ -1,6 +1,7 @@
 package model.planning;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import model.agglomeration.Noeud;
 import model.agglomeration.Plan;
@@ -22,6 +23,16 @@ public class Itineraire {
 		this.depart = new Noeud();
 		this.arrivee = new Noeud();
 		this.troncons = new ArrayList<Troncon>();
+	}
+	
+	@Override
+	public String toString() {
+		String texte = "\tItinéraire :\n\t\tDépart : " + depart.toString() + "\n\t\tArrivée : " + arrivee.toString() + "\n";
+		Iterator<Troncon> it = troncons.iterator();
+		while (it.hasNext()) {
+			texte += "\t\t\t" + it.next().toString() + "\n";
+		}
+		return texte;
 	}
 
 	public Noeud getDepart() {

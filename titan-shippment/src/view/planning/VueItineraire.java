@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import model.agglomeration.Noeud;
 import view.agglomeration.VueNoeud;
 import view.agglomeration.VueTroncon;
 import view.utils.Vue;
@@ -30,13 +31,15 @@ public class VueItineraire implements Vue {
 	public void dessine(Graphics g) {
 		
 		// paint first node
+		Noeud current_node = depart.getNoeud();
 		depart.dessine(g);
 		
 		Iterator<VueTroncon> it = troncons.iterator();
 		while (it.hasNext()) {
 			VueTroncon vue_troncon = it.next();
 			vue_troncon.highlight();
-			vue_troncon.dessine(g);
+			vue_troncon.dessine(g, current_node);
+			current_node = vue_troncon.getTroncon().getNoeudDestination();
 		}
 		
 		// paint last node

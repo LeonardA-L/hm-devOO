@@ -1,6 +1,7 @@
 package model.planning;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 public class Tournee {
@@ -24,6 +25,16 @@ public class Tournee {
 	public Tournee calcul() {
 		// do math stuff
 		return this;
+	}
+	
+	@Override
+	public String toString() {
+		String texte = "Tournée :\n";
+		Iterator<Itineraire> it = itineraires.iterator();
+		while (it.hasNext()) {
+			texte += it.next().toString();
+		}
+		return texte;
 	}
 	
 	

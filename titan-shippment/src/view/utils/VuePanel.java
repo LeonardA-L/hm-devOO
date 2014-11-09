@@ -133,6 +133,10 @@ public class VuePanel extends JPanel {
 			vue_entrepot.dessine(g);
 		}
 		
+		if (vue_tournee.getTournee() != null) {
+			vue_tournee.dessine(g);
+		}
+		
 	}
 	
 	public void resetLivraisons() {

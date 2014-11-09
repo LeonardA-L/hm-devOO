@@ -229,9 +229,12 @@ public class Controller implements ActionListener {
 					else {
 						resetTournee();
 						interfaceView.displayAlert("Tournée", "Calcul de la tournée en cours ...", "info");
-						// reset tournee
-						// calcul tournee
+						interfacePlanning.CalculTournee();
+						interfaceView.getVuePanel().getVue_tournee().setTournee(interfacePlanning.getTournee());
 						tourneeCalculed = true;
+						
+						System.out.println("Tournee : " + interfacePlanning.getTournee().toString());
+						interfaceView.repaint();
 					}
 				}
 				else if (name.equals("undo")) {

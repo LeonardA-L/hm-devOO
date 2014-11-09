@@ -70,14 +70,14 @@ public class VueTournee implements Vue {
 			
 			Iterator<Troncon> it_troncon = itineraire.getTroncons().iterator();
 			while (it_troncon.hasNext()) {
-				vue_itineraire.addVueTroncon(new VueTroncon(it_troncon.next()));
+				VueTroncon vue_troncon = new VueTroncon(it_troncon.next());
+				vue_troncon.highlight();
+				vue_itineraire.addVueTroncon(vue_troncon);
 			}
 			
 			itineraires.add(vue_itineraire);
 		}
-		
 		return true;
-		
 	}
 
 }

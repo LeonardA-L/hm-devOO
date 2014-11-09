@@ -18,7 +18,7 @@ public class VueTroncon implements Vue {
 	private Troncon troncon;
 	private Color color;
 	private int stroke;
-	
+
 	private final int RAYON_NOEUD = 5;
 	
 	public VueTroncon() {
@@ -61,6 +61,13 @@ public class VueTroncon implements Vue {
 		g2.setColor(color);
 		g2.setStroke(new BasicStroke(stroke));
 		g2.drawLine(x, y, xPrime, yPrime);
+		
+		if (stroke > 1) {
+			g2.setStroke(new BasicStroke(1));
+			// draw arrow to indicate direction
+			g2.setStroke(new BasicStroke(stroke));
+		}
+		
 		g2.setColor(Color.BLACK);
 		g2.setStroke(new BasicStroke(1));
 	}
@@ -70,6 +77,12 @@ public class VueTroncon implements Vue {
 		stroke = 3;
 	}
 	
-	
+	public Troncon getTroncon() {
+		return troncon;
+	}
+
+	public void setTroncon(Troncon troncon) {
+		this.troncon = troncon;
+	}
 
 }
