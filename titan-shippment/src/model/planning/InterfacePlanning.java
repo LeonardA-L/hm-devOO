@@ -6,6 +6,7 @@ import java.util.Iterator;
 import model.agglomeration.InterfaceAgglo;
 import model.agglomeration.Noeud;
 import model.agglomeration.Plan;
+import model.agglomeration.Troncon;
 import utils.DijkstraFinder;
 import utils.PathFinder;
 import utils.XMLBuilder;
@@ -188,9 +189,19 @@ public class InterfacePlanning {
 		// Compute cycle (sorted list of livraison)
 		ArrayList<Livraison> cycle = pf.findCycle(100000, livraisons);
 		
+		// Finding itineraires
+		ArrayList<Itineraire> itineraires = new ArrayList<Itineraire>();
+		for(int i=0;i<cycle.size() - 1;i++){	// No for in !	
+			Livraison l1 = cycle.get(i);
+			Livraison l2 = cycle.get(i+1);
+			Itineraire it = new Itineraire(l1.getAdresse(),l2.getAdresse(),new ArrayList<Troncon>());
+			// TODO Compute list of troncons
+			
+		}
+		
 		Tournee tournee = new Tournee();
 		tournee.setLivraisons(cycle);
-		
+		tournee.setItineraires(itineraires);
 		this.setTournee(tournee);
 	}
 	
