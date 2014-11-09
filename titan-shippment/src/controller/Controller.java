@@ -81,7 +81,11 @@ public class Controller implements ActionListener {
 				// 1st STEP : Click on a node where you want to add a delivery
 				if (!addingNewLivraison) {	
 					if (interfacePlanning.isNodeADelivery(view_noeud.getNoeud().getId())) { 	// if node is already a delivery, stop.
-						interfaceView.displayAlert("Ajouter une livraison", "Ce noeud a déjà une livraison", "warning");
+						boolean suppr = interfaceView.confirmUserInput("Suppression", "Supprimer cette livraison ? ");
+						if (suppr) {
+							undoRedo.InsertRemoveCmd(view_noeud.getNoeud().getId());
+							return;
+						}
 						return;
 					}
 					addingNewLivraison = true;  							// start process of adding new delivery
