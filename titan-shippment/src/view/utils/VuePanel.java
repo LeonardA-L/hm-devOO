@@ -19,6 +19,7 @@ import view.agglomeration.VuePlan;
 import view.planning.VueLivraison;
 import view.planning.VueTournee;
 
+
 public class VuePanel extends JPanel {
 	
 	private VuePlan vue_plan;
@@ -192,4 +193,5 @@ public class VuePanel extends JPanel {
 	public void setNoeud_highlighted(ArrayList<VueNoeud> noeud_highlighted) {
 		this.noeud_highlighted = noeud_highlighted;
 	}
+
 }

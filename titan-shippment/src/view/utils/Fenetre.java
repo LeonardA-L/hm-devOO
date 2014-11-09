@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 
+
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -38,6 +39,7 @@ public class Fenetre extends JFrame {
 		this.setSize(this.tailleX, this.tailleY);
 	    this.setLocationRelativeTo(null);               
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setResizable(false);
 		
 		initContainer();
 		
@@ -173,6 +175,5 @@ public class Fenetre extends JFrame {
 	public void setVue(VuePanel vue) {
 		this.vue = vue;
 	}
-	
 	
 }

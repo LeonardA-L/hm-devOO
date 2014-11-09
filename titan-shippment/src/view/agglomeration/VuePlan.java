@@ -74,9 +74,8 @@ public class VuePlan implements Vue {
 
 	public void setPlan(Plan plan) {
 		this.plan = plan;
-		
-		Iterator<Noeud> it = plan.getNoeuds().iterator();
-		
+
+		Iterator<Noeud> it = plan.getNoeuds().iterator();	
 		while (it.hasNext()) {
 			this.vueNoeuds.add(new VueNoeud(it.next()));
 		}

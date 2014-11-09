@@ -82,7 +82,7 @@ public class Controller implements ActionListener {
 				
 				// 1st STEP : Click on a node where you want to add a delivery
 				if (!addingNewLivraison) {	
-					if (interfacePlanning.isNodeADelivery(view_noeud.getNoeud().getId())) { 	// if node is already a delivery, stop.
+					if (!interfacePlanning.isNodeEntrepot(view_noeud.getNoeud().getId()) && interfacePlanning.isNodeADelivery(view_noeud.getNoeud().getId())) { 	// if node is already a delivery, stop.
 						boolean suppr = interfaceView.confirmUserInput("Suppression", "Supprimer cette livraison ? ");
 						if (suppr) {
 							undoRedo.InsertRemoveCmd(view_noeud.getNoeud().getId());
@@ -177,6 +177,7 @@ public class Controller implements ActionListener {
 						}
 						
 						// set views
+						interfaceAgglo.getPlan().fitJPanel(interfaceView.getVuePanel().getHeight(),interfaceView.getVuePanel().getWidth());
 						interfaceView.getVuePanel().getVue_plan().setPlan(interfaceAgglo.getPlan());
 						interfaceView.repaint();
 					}

@@ -188,11 +188,23 @@ public class InterfacePlanning {
 	
 	//################################### Working with view ####################################
 	
-	public boolean isNodeADelivery(int idNode){
+	public boolean isNodeADelivery(int idNode) {
+		
+		if (isNodeEntrepot(idNode)) {
+			return true;
+		}
+		
 		for(Livraison l : listeLivraisons) {
 			if (l.getAdresse().getId() == idNode) {
 				return true;
 			}
+		}
+		return false;
+	}
+	
+	public boolean isNodeEntrepot(int idNode) {
+		if (entrepot.getId() == idNode) {
+			return true;
 		}
 		return false;
 	}

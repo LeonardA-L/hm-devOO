@@ -1,5 +1,6 @@
 package model.agglomeration;
 
+import java.awt.List;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -110,6 +111,25 @@ public class Plan {
 		noeuds.clear();
 	}
 
+	public void fitJPanel(int xSize, int ySize) {
+		
+		int xMax = 0;
+		int yMax = 0;
+		
+		for(Noeud n : noeuds) {
+			xMax = n.getCoordX() > xMax ? n.getCoordX() : xMax;
+			yMax = n.getCoordY() > yMax ? n.getCoordY() : yMax;
+		}
+		
+		float xRatio = (float) xSize/ (float) xMax;
+		float yRatio = (float) ySize/ (float)yMax;
+		//System.out.println("xRatio = "+xRatio+" / yratio = "+yRatio);
+		for(Noeud n : noeuds) {
+			n.setCoordX((int)(n.getCoordX()*xRatio*1.1));
+			n.setCoordY((int)(n.getCoordY()*yRatio*0.85));
+		}
+	}
+	
 	
 	// GETTERS - SETTERS 
 

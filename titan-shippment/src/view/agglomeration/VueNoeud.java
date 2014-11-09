@@ -10,7 +10,6 @@ import view.utils.Vue;
 import model.agglomeration.Noeud;
 import model.agglomeration.Troncon;
 
-
 public class VueNoeud implements Vue, Type_i {
 	
 	// pixel
@@ -151,5 +150,4 @@ public class VueNoeud implements Vue, Type_i {
 	public void setType(Type type) {
 		this.type = type;
 	}
-
 }
