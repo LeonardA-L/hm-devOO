@@ -12,7 +12,7 @@ import model.agglomeration.Troncon;
 public class VueNoeud implements Vue {
 	
 	enum Type {
-		CERCLE, CARRE, CROIX, CARRE_PLEIN
+		CERCLE, CARRE, CROIX, CARRE_PLEIN, CERCLE_PLEIN
 	}
 	
 	// pixel
@@ -53,6 +53,9 @@ public class VueNoeud implements Vue {
 		g.setColor(this.color);
 		if (this.type == Type.CERCLE) {
 			g.drawOval(x-taille/2, y-taille/2, taille, taille);
+		}
+		else if (this.type == Type.CERCLE_PLEIN) {
+			g.fillOval(x-taille/2, y-taille/2, taille, taille);
 		}
 		else if (this.type == Type.CARRE) {
 			g.drawRect(x-taille/2, y-taille/2, taille, taille);
