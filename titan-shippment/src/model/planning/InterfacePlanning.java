@@ -200,18 +200,22 @@ public class InterfacePlanning {
 			// Compute list of troncons
 			String pathHash = ""+l1.getAdresse().getId()+"-"+l2.getAdresse().getId();
 			it.computeTronconsFromNodes(plan, shGraph.getPaths().get(pathHash));
+			itineraires.add(it);
 		}
-		// Loop
+		// Loop the cycle
 		Livraison l1 = cycle.get(cycle.size() - 1);
 		Livraison l2 = cycle.get(0);
 		Itineraire it = new Itineraire(l1.getAdresse(),l2.getAdresse(),new ArrayList<Troncon>());
 		// Compute list of troncons
 		String pathHash = ""+l1.getAdresse().getId()+"-"+l2.getAdresse().getId();
 		it.computeTronconsFromNodes(plan, shGraph.getPaths().get(pathHash));
+		itineraires.add(it);
 		
+		// Prepare the tournee
 		Tournee tournee = new Tournee();
 		tournee.setLivraisons(cycle);
 		tournee.setItineraires(itineraires);
+		
 		this.setTournee(tournee);
 	}
 	

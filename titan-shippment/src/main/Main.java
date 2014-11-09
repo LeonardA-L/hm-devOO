@@ -36,11 +36,14 @@ public class Main {
 		// display MAP
 		System.out.println(plan.toString());
 		*/
+		
+		
 		Controller controller = Controller.getInstance();
 		controller.setInterfaceAgglo(new InterfaceAgglo());
 		controller.setInterfacePlanning(new InterfacePlanning());
 		controller.setInterfaceView(new InterfaceView());
 		controller.setUndoRedo(); 			// should always be called after setInterfaceView and setInterfacePlanning
+		
 		
 	}
 }

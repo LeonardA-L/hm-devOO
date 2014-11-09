@@ -3,6 +3,7 @@ package model.planning;
 import java.util.ArrayList;
 
 import model.agglomeration.Noeud;
+import model.agglomeration.Plan;
 import model.agglomeration.Troncon;
 
 public class Itineraire {
@@ -47,4 +48,17 @@ public class Itineraire {
 		this.troncons = troncons;
 	}
 	
+	public void computeTronconsFromNodes(Plan p, ArrayList<Integer> nodesIds){
+		for(int i=0;i<nodesIds.size()-1;i++){
+			Noeud n1 = p.getNoeudById(nodesIds.get(i));
+			Noeud n2 = p.getNoeudById(nodesIds.get(i+1));
+			
+			for(Troncon t : n1.getTroncons()){
+				if(t.getNoeudDestination() == n2){
+					this.troncons.add(t);
+					break;
+				}
+			}
+		}
+	}
 }
