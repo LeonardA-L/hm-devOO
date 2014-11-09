@@ -23,6 +23,8 @@ public class Controller implements ActionListener {
 	private InterfaceView interfaceView;
 	private UndoRedo undoRedo;
 	
+	private VueNoeud bufVueNoeud;
+	
 	private boolean mapLoaded;
 	private boolean livraisonsLoaded;
 	private boolean tourneeCalculed;
@@ -122,6 +124,17 @@ public class Controller implements ActionListener {
 				}
 				// node HL during creation process (in red)
 				interfaceView.highlight(view_noeud);
+			}
+		}
+		else if (action.equals("mouse_moved_on_map")) {
+			VueNoeud view_noeud = interfaceView.getVuePanel().getVue_plan().getWhoIsClicked(x, y);
+			if (view_noeud != null) {
+				//TODO
+				//afficher en console ou en tooltip
+				if ( bufVueNoeud != view_noeud ) { // avoid spam
+					System.out.println(view_noeud.getNoeud().toString());
+					bufVueNoeud=view_noeud;
+				}
 			}
 		}
 	}
