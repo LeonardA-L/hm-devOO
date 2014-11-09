@@ -220,7 +220,7 @@ public static boolean getLivraisons(String filename, model.planning.InterfacePla
 		    		t_adresseLivraison = Integer.parseInt(line.substring(index, line.indexOf('"', index)));
 		    		
 		    		boolean success = intf.AddLivraison(t_idClient, t_idLivraison, t_heureDebut, t_heureFin, t_adresseLivraison);
-		    		System.out.println("Adding livraison : \n--Client : "+t_idClient+"\n--Livraison : "+t_idLivraison+"\n--HeureDebut : "+t_heureDebut+"\n--HeureFin : "+t_heureFin+"\n--Address"+t_adresseLivraison);
+		    		System.out.println("Adding livraison (XmlBuilder) : \n--Client : "+t_idClient+"\n--Livraison : "+t_idLivraison+"\n--HeureDebut : "+t_heureDebut+"\n--HeureFin : "+t_heureFin+"\n--Address"+t_adresseLivraison);
 		    		if(!success) {	// problem on interface side, stop parsing. 
 		    			return false; 
 		    		}

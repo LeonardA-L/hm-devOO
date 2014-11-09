@@ -110,7 +110,7 @@ public class Controller implements ActionListener {
 					if(!success) {
 						return;
 					}
-					interfaceView.addAndUpdate(interfacePlanning.getLivraisonByAdr(newDeliveryAdress));
+					//interfaceView.addAndUpdate(interfacePlanning.getLivraisonByAdr(newDeliveryAdress));
 					interruptAddingNewLivraison();
 				}
 				else {

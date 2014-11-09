@@ -27,17 +27,18 @@ public class CommandAddOne implements ICommand {
 		this.heureFin = heureFin;
 		this.adresse = adresse;
 		this.prevAdresse = prevAdresse;
+		this.idLivraison = -1;
 	}
 
 	public boolean Execute (InterfacePlanning interfaceP, InterfaceView interfaceV) {
-		idLivraison = interfaceP.AddLivraisonAfter(idClient, heureDebut, heureFin, adresse, prevAdresse);
+		// will return -1 if problem or the id of this new delivery
+		idLivraison = interfaceP.AddLivraisonAfter(idLivraison, idClient, heureDebut, heureFin, adresse, prevAdresse);
 		if(idLivraison == -1) {
 			System.out.println("# ------ Execute AddOne failed ------ #"); 	
 			return false;
-		}
-		System.out.println("# ------ DELIVERY CREATED id = "+idLivraison+" ------ #");
+		}	
 		interfaceV.addAndUpdate(interfaceP.getLivraisonById(idLivraison));
-		interfaceV.repaint();
+		System.out.println("# ------ DELIVERY CREATED id = "+idLivraison+" ------ #");
 		return true;
 	}
 	
@@ -48,9 +49,8 @@ public class CommandAddOne implements ICommand {
 			System.out.println("# ------ Unexecute AddOne failed ------ #"); 	
 			return false;
 		}
-		System.out.println("# ------ DELIVERY REMOVED id = "+idLivraison+" ------ #"); 
 		interfaceV.removeAndUpdate(idLivraison);
-		interfaceV.repaint();
+		System.out.println("# ------ DELIVERY REMOVED id = "+idLivraison+" ------ #"); 
 		return success;
 	}
 	

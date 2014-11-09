@@ -120,19 +120,55 @@ public class InterfaceView {
 	}
 	
 	public boolean addAndUpdate(Livraison l) {
+		System.out.println("AddAndUpdate : before add ----");
+		for(VueLivraison vl : vuePanel.getVues_livraisons()) {
+			System.out.print(vl.getLivraison().getIdLivraison()+" / ");
+		}
+		System.out.println();
+		//adding vue livraison
 		vuePanel.getVues_livraisons().add(new VueLivraison(l, vuePanel.getVue_plan().getVueNoeudById(l.getAdresse().getId())));
 		this.repaint();
-		return false;
+		System.out.println("AddAndUpdate : after add ----");
+		for(VueLivraison vl : vuePanel.getVues_livraisons()) {
+			System.out.print(vl.getLivraison().getIdLivraison()+" / ");
+		}
+		System.out.println();
+		return true;
 	}
 	
 	public boolean removeAndUpdate(int idLivraison) {
+		
+		VueLivraison toBeRemoved = null;
+		System.out.println("RemoveAndUpdate : before remove :");
+		for(VueLivraison vl : vuePanel.getVues_livraisons()) {
+			System.out.print(vl.getLivraison().getIdLivraison()+" / ");
+		}
+		System.out.println();
+		
+		// searching view to delete
 		for(VueLivraison vl : vuePanel.getVues_livraisons()) {
 			if (vl.getLivraison().getIdLivraison() == idLivraison) {
-				vuePanel.getVues_livraisons().remove(vl);
-				return true;
+				System.out.println("#### Vue to be deleted found ####");
+				toBeRemoved = vl;
 			}
 		}	
-		return false;
+		
+		// removal and repaint
+		if (toBeRemoved != null)
+		{
+			vuePanel.getVues_livraisons().remove(toBeRemoved);
+			this.repaint();
+		}
+		else {
+			System.out.println("To be removed is null");
+		}
+		
+		System.out.println("RemoveAndUpdate : after remove :");
+		for(VueLivraison vl : vuePanel.getVues_livraisons()) {
+			System.out.print(vl.getLivraison().getIdLivraison()+" / ");
+		}
+		System.out.println();
+		return true;
 	}
 	
 	public VuePanel getVuePanel() {

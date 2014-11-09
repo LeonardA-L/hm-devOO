@@ -16,7 +16,7 @@ public class InterfacePlanning {
 	private ArrayList<PlageHoraire> plagesHoraires;
 	private Tournee tournee;
 	
-	private static int idLivraison = -1;
+	private static int s_idLivraison = -1;
 	
 	/**
 	 * 	Constructor w/o parameter
@@ -77,29 +77,32 @@ public class InterfacePlanning {
 	 * @param prevAdresse
 	 * @return			ID of the delivery which was created
 	 */
-	public int AddLivraisonAfter(int idClient, String heureDebut, String heureFin, int adresse, int prevAdresse) {
-		// get a new Delivery ID to be used for the newly created delivery.
-		getNewDeliveryId();
+	public int AddLivraisonAfter(int idLivraison, int idClient, String heureDebut, String heureFin, int adresse, int prevAdresse) {
+		// If the delivery is added for the first time (and not through undo/redo, it doesn't have an id yet
+		if (idLivraison == -1) {
+			idLivraison = getNewDeliveryId();	// get an id
+			System.out.println("New delivery id chosen : "+s_idLivraison);
+		}
 		boolean deliveryCreation = AddLivraison(idClient, idLivraison, heureDebut, heureFin, adresse);
 		if(deliveryCreation) {
-			return idLivraison;
+			return idLivraison; // contains the chosen id for the new delivery
 		}
-		return -1;
+		return -1;		// in case of problem
 	}
 	
 	/**
 	 *  At init, the method finds the higher delivery id
 	 *  Then it always increment the idLivraison var.
 	 */
-	public void getNewDeliveryId() {
-		if (idLivraison == -1) {	// init
+	public int getNewDeliveryId() {
+		if (s_idLivraison == -1) {	// init for the first time the method is called.
 			int idMax = 0;
 			for(Livraison l : listeLivraisons) {
 				idMax = idMax < l.getIdLivraison() ? l.getIdLivraison() : idMax;
 			}
-			idLivraison = idMax + 1;
+			s_idLivraison = idMax++;
 		}
-		idLivraison++;
+		return ++s_idLivraison;		// returns an id that can't be used by any other delivery
 	}
 
 	/**
