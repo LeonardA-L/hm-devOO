@@ -52,9 +52,6 @@ public class VueNoeud implements Vue, Type_i {
 			int x = noeud.getCoordX();
 			int y = noeud.getCoordY();
 
-			
-			//System.out.println("Node drawn on coord X:"+x+"|Y:"+y);
-
 			g.setColor(this.color);
 			if (this.type == Type.CERCLE) {
 				g.drawOval(x-taille/2, y-taille/2, taille, taille);
