@@ -9,6 +9,7 @@ import model.agglomeration.Plan;
 import model.agglomeration.Troncon;
 import utils.DijkstraFinder;
 import utils.PathFinder;
+import utils.ShippmentGraph;
 import utils.XMLBuilder;
 import controller.Controller;
 
@@ -186,6 +187,7 @@ public class InterfacePlanning {
 		
 		// Instanciate pathfinder
 		PathFinder pf = new DijkstraFinder(plan.computeShippmentGraph());
+		ShippmentGraph shGraph = (ShippmentGraph)((DijkstraFinder)pf).getGraph();
 		// Compute cycle (sorted list of livraison)
 		ArrayList<Livraison> cycle = pf.findCycle(100000, livraisons);
 		
@@ -195,9 +197,17 @@ public class InterfacePlanning {
 			Livraison l1 = cycle.get(i);
 			Livraison l2 = cycle.get(i+1);
 			Itineraire it = new Itineraire(l1.getAdresse(),l2.getAdresse(),new ArrayList<Troncon>());
-			// TODO Compute list of troncons
-			
+			// Compute list of troncons
+			String pathHash = ""+l1.getAdresse().getId()+"-"+l2.getAdresse().getId();
+			it.computeTronconsFromNodes(plan, shGraph.getPaths().get(pathHash));
 		}
+		// Loop
+		Livraison l1 = cycle.get(cycle.size() - 1);
+		Livraison l2 = cycle.get(0);
+		Itineraire it = new Itineraire(l1.getAdresse(),l2.getAdresse(),new ArrayList<Troncon>());
+		// Compute list of troncons
+		String pathHash = ""+l1.getAdresse().getId()+"-"+l2.getAdresse().getId();
+		it.computeTronconsFromNodes(plan, shGraph.getPaths().get(pathHash));
 		
 		Tournee tournee = new Tournee();
 		tournee.setLivraisons(cycle);
