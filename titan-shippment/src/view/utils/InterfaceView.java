@@ -175,6 +175,7 @@ public class InterfaceView {
 		// removal and repaint
 		if (toBeRemoved != null)
 		{
+			toBeRemoved.getNoeud().unhighlight();
 			vuePanel.getVues_livraisons().remove(toBeRemoved);
 			this.repaint();
 		}
