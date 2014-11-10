@@ -28,12 +28,12 @@ public class CommandRemoveOne implements ICommand{
 		// previousAdresseLivraison = interfaceP.
 		
 		//  Now tell the model to delete delivery number "idLivraison"
+		interfaceV.removeAndUpdate(adresse);
 		boolean success = interfaceP.removeOneLivraison(idLivraison);
 		if (!success) {
 			System.out.println("# ------ Execute RemoveOne failed ------ #"); 	
 			return false;
 		}
-		interfaceV.removeAndUpdate(adresse);
 		System.out.println("# ------ DELIVERY REMOVED id = "+idLivraison+" ------ #"); 
 		return success;
 	}
