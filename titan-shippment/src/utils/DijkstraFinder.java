@@ -152,7 +152,7 @@ public class DijkstraFinder implements PathFinder {
 		//TODO : add time constraints
 		
 		// limit CPU time
-		SearchMonitorFactory.limitTime(solver,1000000);
+		SearchMonitorFactory.limitTime(solver,30000);
 		// set the branching heuristic (branch on xNext only by selecting smallest domains first)
 		solver.set(IntStrategyFactory.firstFail_InDomainMin(xNext));
 		// try to find and prove the optimal solution
