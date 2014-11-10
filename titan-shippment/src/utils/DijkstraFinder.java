@@ -2,8 +2,8 @@ package utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
+import model.agglomeration.Noeud;
 import model.planning.Livraison;
 import model.planning.PlageHoraire;
 import solver.ResolutionPolicy;
@@ -95,10 +95,14 @@ public class DijkstraFinder implements PathFinder {
 	/**
 	 * It is really important not to mess up with the indexes in the following lists, as the Object concept is blown up in this method
 	 */
-	public ArrayList<Livraison> findCycle(int upperCostBound, ArrayList<Livraison> livraisons) {
+	public ArrayList<Livraison> findCycle(int upperCostBound, ArrayList<Livraison> livraisons, Noeud storehouse) {
 		//TODO : what is that upperCostBound thing ?
 		ArrayList<Integer> nodes = new ArrayList<Integer>();
 		ArrayList<PlageHoraire> plages = new ArrayList<PlageHoraire>();
+		
+		Livraison storeHousePoint = new Livraison(null, storehouse,-1,-1);
+		livraisons.add(storeHousePoint);
+		
 		for(int i=0; i<livraisons.size();i++){	// do NOT use for in...
 			Livraison l = livraisons.get(i);
 			nodes.add(l.getAdresse().getId());
@@ -106,7 +110,7 @@ public class DijkstraFinder implements PathFinder {
 		}
 		ShippmentGraph subG = graph.createTSPGraph(nodes);
 		
-		int n = livraisons.size();
+		int n = nodes.size();
 		int minCost = subG.getMinArcCost();
 		int maxCost = subG.getMaxArcCost();
 		int[][] cost = subG.getCost();
@@ -122,9 +126,11 @@ public class DijkstraFinder implements PathFinder {
 		IntVar[] xTime = new IntVar[n];
 		for (int i = 0; i < n; i++){
 			xNext[i] = VariableFactory.enumerated("Next " + i, subG.getSucc(i), solver);
-			int[] timeBounds = livraisons.get(i).getPlageHoraire().getBounds();
-			// add time variables and their boundaries
-			xTime[i] = VariableFactory.bounded("Arriving time at "+i, timeBounds[0], timeBounds[1], solver);
+			if(livraisons.get(i).getPlageHoraire() != null){	// storehouse
+				int[] timeBounds = livraisons.get(i).getPlageHoraire().getBounds();
+				// add time variables and their boundaries
+				xTime[i] = VariableFactory.bounded("Arriving time at "+i, timeBounds[0], timeBounds[1], solver);
+			}
 		}
 		// xCost[i] = cost of arc (i,xNext[i])
 		IntVar[] xCost = VariableFactory.boundedArray("Cost ", n, minCost, maxCost, solver);

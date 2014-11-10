@@ -189,7 +189,7 @@ public class InterfacePlanning {
 		PathFinder pf = new DijkstraFinder(plan.computeShippmentGraph());
 		ShippmentGraph shGraph = (ShippmentGraph)((DijkstraFinder)pf).getGraph();
 		// Compute cycle (sorted list of livraison)
-		ArrayList<Livraison> cycle = pf.findCycle(100000, livraisons);
+		ArrayList<Livraison> cycle = pf.findCycle(100000, livraisons,this.entrepot);
 		
 		// Finding itineraires
 		ArrayList<Itineraire> itineraires = new ArrayList<Itineraire>();

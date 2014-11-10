@@ -2,6 +2,7 @@ package utils;
 
 import java.util.ArrayList;
 
+import model.agglomeration.Noeud;
 import model.planning.Livraison;
 
 public interface PathFinder {
@@ -20,5 +21,5 @@ public interface PathFinder {
 	 * @param livraisons a list of livraisons the cycle must fulfill
 	 * @return a list of nodes IDs for the shortest cycle
 	 */
-	public ArrayList<Livraison> findCycle(int upperCostBound, ArrayList<Livraison> livraisons);
+	public ArrayList<Livraison> findCycle(int upperCostBound, ArrayList<Livraison> livraisons, Noeud storehouse);
 }
