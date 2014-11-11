@@ -100,8 +100,19 @@ public class DijkstraFinder implements PathFinder {
 		ArrayList<Integer> nodes = new ArrayList<Integer>();
 		ArrayList<PlageHoraire> plages = new ArrayList<PlageHoraire>();
 		
-		Livraison storeHousePoint = new Livraison(null, storehouse,-1,-1);
-		livraisons.add(storeHousePoint);
+		// Check if the storehouse is already in the delivery list
+		boolean storehouseInList = false;
+		for(Livraison l : livraisons){
+			if(l.getAdresse() == storehouse){
+				storehouseInList = true;
+				break;
+			}
+		}
+		// If not, add it
+		if(!storehouseInList){
+			Livraison storeHousePoint = new Livraison(null, storehouse,-1,-1);
+			livraisons.add(storeHousePoint);
+		}
 		
 		for(int i=0; i<livraisons.size();i++){	// do NOT use for in...
 			Livraison l = livraisons.get(i);
@@ -128,6 +139,7 @@ public class DijkstraFinder implements PathFinder {
 			xNext[i] = VariableFactory.enumerated("Next " + i, subG.getSucc(i), solver);
 			if(livraisons.get(i).getPlageHoraire() != null){	// storehouse
 				int[] timeBounds = livraisons.get(i).getPlageHoraire().getBounds();
+				System.out.println(timeBounds[1]);
 				// add time variables and their boundaries
 				xTime[i] = VariableFactory.bounded("Arriving time at "+i, timeBounds[0], timeBounds[1], solver);
 			}
