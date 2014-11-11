@@ -129,6 +129,7 @@ public class Controller implements ActionListener {
 						return;
 					}
 					// Repaint the tournee
+					interfaceView.getVuePanel().resetTournee();
 					interfaceView.getVuePanel().getVue_tournee().setTournee(interfacePlanning.getTournee());
 					interfaceView.repaint();
 					interruptAddingNewLivraison();
