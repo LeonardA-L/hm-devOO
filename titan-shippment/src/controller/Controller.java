@@ -2,18 +2,10 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-
-
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-
-
 
 
 import view.agglomeration.VueNoeud;
@@ -78,7 +70,7 @@ public class Controller implements ActionListener {
 				return;
 			}
 
-			// clic sur la carte aux coordonnï¿½es (x,y) and get the associated point (if any)
+			// clic sur la carte aux coordonnées (x,y) and get the associated point (if any)
 			VueNoeud view_noeud = interfaceView.getVuePanel().getVue_plan().getWhoIsClicked(x, y);
 
 			if (!livraisonsLoaded) {	
@@ -96,7 +88,10 @@ public class Controller implements ActionListener {
 				// 1st STEP : Click on a node where you want to add a delivery
 				if (!addingNewLivraison) {	
 					
-					deleteNoeud(view_noeud.getNoeud().getId());
+					boolean deleted = deleteNoeud(view_noeud.getNoeud().getId());
+					if (deleted) {
+						return;
+					}
 					
 					addingNewLivraison = true;  							// start process of adding new delivery
 					newDeliveryAdress = view_noeud.getNoeud().getId();		// saving the node id (if it has no delivery)
@@ -332,7 +327,7 @@ public class Controller implements ActionListener {
 		}
 	}
 
-	private void deleteNoeud(int idNoeud) {
+	private boolean deleteNoeud(int idNoeud) {
 		boolean isEntrepot = interfacePlanning.isNodeEntrepot(idNoeud);
 		
 		if (!isEntrepot && interfacePlanning.isNodeADelivery(idNoeud)) { 	
@@ -341,15 +336,15 @@ public class Controller implements ActionListener {
 				undoRedo.InsertRemoveCmd(idNoeud);
 				interfaceView.getVuePanel().getVue_tournee().setTournee(interfacePlanning.getTournee());
 				interfaceView.repaint();
-				return;
+				return true;
 			}
-			return;
+			return false;
 		}
 		
 		if (isEntrepot) {
 			interfaceView.displayAlert("Supprimer une livraison", "Vous ne pouvez pas supprimer l'entrepot", "warning");
-			return;
 		}
+		return false;
 	}
 	
 	private void generateInstructions() throws IOException {
