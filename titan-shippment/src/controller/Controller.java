@@ -308,7 +308,7 @@ public class Controller implements ActionListener {
 		}
 	}
 
-	public void deleteNoeud(int idNoeud) {
+	private void deleteNoeud(int idNoeud) {
 		boolean isEntrepot = interfacePlanning.isNodeEntrepot(idNoeud);
 		
 		if (!isEntrepot && interfacePlanning.isNodeADelivery(idNoeud)) { 	
