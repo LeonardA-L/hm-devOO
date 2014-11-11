@@ -29,12 +29,13 @@ public class Tournee {
 	
 	public Livraison addLivraisonAfter(Livraison newDelivery, Livraison deliveryBefore)
 	{
-		Livraison deliveryAfter = null;
+		Livraison deliveryAfter = null; 
 		for(Livraison l : livraisons) {
 			if (l == deliveryBefore) {
 				int index = livraisons.lastIndexOf(l);
 				System.out.println("Livraison avant la nouvelle livraison à l'index "+index+" dans livraisons.");
-				livraisons.add(index, newDelivery);
+				livraisons.add(index+1, newDelivery);		// new delivery added at the right place
+				deliveryAfter = livraisons.get(index+2);
 			}
 		}
 		return deliveryAfter;

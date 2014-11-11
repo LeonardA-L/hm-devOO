@@ -90,9 +90,11 @@ public class InterfacePlanning {
 		}
 		boolean deliveryCreation = AddLivraison(idClient, idLivraison, heureDebut, heureFin, adresse);
 		if(deliveryCreation) {
-			// Add the new delivery to Tournee -> will return the delivery after, so that we can calculate the new itineraire
-			// calculate the 2 new itineraires 
-			// add them to tournee
+			Livraison deliveryBefore = this.getLivraisonByAdr(prevAdresse);
+			Livraison newDelivery = this.getLivraisonByAdr(adresse);
+			Livraison deliveryAfter = tournee.addLivraisonAfter(newDelivery, deliveryBefore);
+			Itineraire itBefore = findItineraire(deliveryBefore, newDelivery, Controller.getInstance().getInterfaceAgglo().getPlan());
+			Itineraire itAfter = findItineraire(newDelivery, deliveryAfter, Controller.getInstance().getInterfaceAgglo().getPlan());
 			return idLivraison; // contains the chosen id for the new delivery
 		}
 		return -1;		// in case of problem
