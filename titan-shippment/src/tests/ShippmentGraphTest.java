@@ -35,7 +35,7 @@ public class ShippmentGraphTest {
 		int nbVertices = 20;
 		int minArcCost = 1;
 		int maxArcCost = 10;
-		Graph g = PlanTest.DummyPlanCreate(nbVertices, 100, 100).computeShippmentGraph();
+		Graph g = UtilsTest.DummyPlanCreate(nbVertices, 100, 100).computeShippmentGraph();
 		for (int i=0; i<g.getNbVertices(); i++){
 			int[] succ = g.getSucc(i);
 			for (int j=0; j<g.getNbSucc(i); j++){
@@ -52,7 +52,7 @@ public class ShippmentGraphTest {
 	@Test
 	public void testNonArcCost(){
 		int nbVertices = 20;
-		Graph g = PlanTest.DummyPlanCreate(nbVertices, 100, 100).computeShippmentGraph();
+		Graph g = UtilsTest.DummyPlanCreate(nbVertices, 100, 100).computeShippmentGraph();
 		for (int i=0; i<g.getNbVertices(); i++){
 			for (int j=0; j<g.getNbVertices(); j++){
 				int[] succ = g.getSucc(i);

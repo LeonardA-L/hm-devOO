@@ -2,10 +2,11 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
-
-
-import java.util.ArrayList;
 
 import view.agglomeration.VueNoeud;
 import view.utils.InterfaceView;
@@ -30,6 +31,8 @@ public class Controller implements ActionListener {
 	private boolean addingNewLivraison;
 
 	private int newDeliveryAdress = -1;
+
+	final String dir = System.getProperty("user.home") + "/Desktop";
 
 	/**
 	 * 	Constructor
@@ -67,7 +70,7 @@ public class Controller implements ActionListener {
 				return;
 			}
 
-			// clic sur la carte aux coordonnï¿½es (x,y) and get the associated point (if any)
+			// clic sur la carte aux coordonnées (x,y) and get the associated point (if any)
 			VueNoeud view_noeud = interfaceView.getVuePanel().getVue_plan().getWhoIsClicked(x, y);
 
 			if (!livraisonsLoaded) {	
@@ -85,7 +88,10 @@ public class Controller implements ActionListener {
 				// 1st STEP : Click on a node where you want to add a delivery
 				if (!addingNewLivraison) {	
 					
-					deleteNoeud(view_noeud.getNoeud().getId());
+					boolean deleted = deleteNoeud(view_noeud.getNoeud().getId());
+					if (deleted) {
+						return;
+					}
 					
 					addingNewLivraison = true;  							// start process of adding new delivery
 					newDeliveryAdress = view_noeud.getNoeud().getId();		// saving the node id (if it has no delivery)
@@ -216,7 +222,7 @@ public class Controller implements ActionListener {
 
 							// set views
 							boolean creatingViewOk = interfaceView.genererVueLivraisons(interfacePlanning.getListeLivraisons(), interfacePlanning.getEntrepot());
-							// pour les tournï¿½es, rien ï¿½ voir
+							// pour les tournées, rien à voir
 							// .getVue_tournee().setTournee(interfacePlanning.getTournee());
 
 							if (!creatingViewOk) {
@@ -232,7 +238,7 @@ public class Controller implements ActionListener {
 			else if (action.equals("click_button")) {
 				if (name.equals("calculTournee")) {
 					if (!mapLoaded || !livraisonsLoaded) {
-						interfaceView.displayAlert("Impossible de calculer la tournée", "Vous devez charger une carte et une livraison au prï¿½alable.", "warning");
+						interfaceView.displayAlert("Impossible de calculer la tournée", "Vous devez charger une carte et une livraison au préalable.", "warning");
 					}
 					else {
 						resetTournee();
@@ -240,7 +246,7 @@ public class Controller implements ActionListener {
 						interfaceView.getVuePanel().getVue_tournee().setTournee(interfacePlanning.getTournee());
 						tourneeCalculed = true;
 
-						System.out.println("Tournee : " + interfacePlanning.getTournee().toString());
+						//System.out.println("Tournee : " + interfacePlanning.getTournee().toString());
 						interfaceView.repaint();
 					}
 				}
@@ -257,6 +263,19 @@ public class Controller implements ActionListener {
 					}
 					interfaceView.getVuePanel().getVue_tournee().setTournee(interfacePlanning.getTournee());
 					interfaceView.repaint();
+				}
+				else if (name.equals("generateInstructions")) {
+					System.out.println("Generating text instructions.");
+					if (!tourneeCalculed) {
+						interfaceView.displayAlert("Generation des instructions", "Impossible de généner le fichier d'instructions avant le calcul d'une tournée", "info");
+						return;
+					}
+					try {
+						generateInstructions();
+					} catch (IOException ex) {
+						interfaceView.displayAlert("Generation des instructions", ex.getMessage(), "info");
+					}
+					
 				}
 
 			}
@@ -308,7 +327,7 @@ public class Controller implements ActionListener {
 		}
 	}
 
-	private void deleteNoeud(int idNoeud) {
+	private boolean deleteNoeud(int idNoeud) {
 		boolean isEntrepot = interfacePlanning.isNodeEntrepot(idNoeud);
 		
 		if (!isEntrepot && interfacePlanning.isNodeADelivery(idNoeud)) { 	
@@ -317,15 +336,41 @@ public class Controller implements ActionListener {
 				undoRedo.InsertRemoveCmd(idNoeud);
 				interfaceView.getVuePanel().getVue_tournee().setTournee(interfacePlanning.getTournee());
 				interfaceView.repaint();
-				return;
+				return true;
 			}
-			return;
+			return false;
 		}
 		
 		if (isEntrepot) {
 			interfaceView.displayAlert("Supprimer une livraison", "Vous ne pouvez pas supprimer l'entrepot", "warning");
-			return;
 		}
+		return false;
+	}
+	
+	private void generateInstructions() throws IOException {
+        System.out.println("Write to dir : " + dir);
+		//File instructionFile = new File(dir);
+		//instructionFile.setWritable(true);
+		//Writer writer = null;
+		
+		String instructions = interfacePlanning.getTournee().toString();
+		
+		File file = new File("../Instructions/Instructions.txt");
+        BufferedWriter out = new BufferedWriter(new FileWriter(file,false));
+        try{
+                out.append(instructions);
+        } finally {
+                out.close();
+        } 
+		
+//		try {
+//		    writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dir), "utf-8"));
+//		    writer.write(instructions);
+//		} catch (IOException ex) {
+//			interfaceView.displayAlert("Generation des instructions", ex.getMessage(), "warning");
+//		} finally {
+//		   try {writer.close();} catch (Exception ex) {}
+//		}
 	}
 	
 	@Override
@@ -337,7 +382,8 @@ public class Controller implements ActionListener {
 	public  InterfaceAgglo getReferenceToInterfaceAgglo() {
 		return interfaceAgglo;
 	}
-
+	
+	
 	//------------------------------------------------------------------
 	// GETTERS - SETTERS
 	public InterfaceAgglo getInterfaceAgglo() {

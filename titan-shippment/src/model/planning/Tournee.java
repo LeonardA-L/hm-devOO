@@ -127,10 +127,21 @@ public class Tournee {
 	
 	@Override
 	public String toString() {
-		String texte = "Tournée :\n";
+		String texte = "#### INSTRUCTIONS DE LIVRAISON ####\n\n";
 		Iterator<Itineraire> it = itineraires.iterator();
 		while (it.hasNext()) {
-			texte += it.next().toString();
+			Itineraire itineraire = it.next();
+			int adresseLivraison = itineraire.getArrivee().getId();
+			for(Livraison l : livraisons) {
+				if(l.getAdresse().getId()==adresseLivraison) {
+					texte+="Livraison n°"+l.getIdLivraison()+" pour le client : "+l.getIdClient()+"\n";
+					//texte+="Heure de livraison entre "+l.getPlageHoraire().getHeureDebut()+" et "+l.getPlageHoraire().getHeureFin()+".\n\n";
+					break;
+				}
+			}
+			texte += "Itinéraire à suivre : \n";
+			texte += itineraire.toString();
+			texte += "\n----------------------------------------------------------------------------------------------\n\n";
 		}
 		return texte;
 	}
