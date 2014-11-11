@@ -162,6 +162,8 @@ public class Fenetre extends JFrame {
 		label_infoPoint = new JLabel();
 		label_infoPoint.setMaximumSize(new Dimension(tailleX/6, tailleX/5));
 		label_infoPoint.setPreferredSize(new Dimension(tailleX/6, tailleX/5));
+		label_infoPoint.setVerticalAlignment(JLabel.TOP);
+		label_infoPoint.setVerticalTextPosition(JLabel.TOP);
 
 		JPanel right_panel = new JPanel();
 		right_panel.setLayout(new BorderLayout());

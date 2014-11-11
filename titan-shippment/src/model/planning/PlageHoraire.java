@@ -58,4 +58,10 @@ public class PlageHoraire {
 		this.heureFin = heureFin;
 	}
 
+	@Override
+	public String toString() {
+		String msg = "";
+		msg += heureDebut + " ==> " + heureFin;
+		return msg;
+	}
 }
