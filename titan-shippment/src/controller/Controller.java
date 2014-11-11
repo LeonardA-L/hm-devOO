@@ -17,20 +17,18 @@ import model.agglomeration.InterfaceAgglo;
 public class Controller implements ActionListener {
 
 	private static Controller INSTANCE = null;
-	
+
 	private InterfaceAgglo interfaceAgglo;
 	private InterfacePlanning interfacePlanning;
 	private InterfaceView interfaceView;
 	private UndoRedo undoRedo;
-	
-	private VueNoeud bufVueNoeud;
-	
+
 	private boolean mapLoaded;
 	private boolean livraisonsLoaded;
 	private boolean tourneeCalculed;
-	
+
 	private boolean addingNewLivraison;
-	
+
 	private int newDeliveryAdress = -1;
 
 	/**
@@ -44,7 +42,7 @@ public class Controller implements ActionListener {
 		addingNewLivraison = false;
 		tourneeCalculed = false;
 	}
-	
+
 	/**
 	 * Return the singleton
 	 * @return	Controller
@@ -55,7 +53,7 @@ public class Controller implements ActionListener {
 		}
 		return INSTANCE;
 	}
-	
+
 	/**
 	 * Called by the view in order to process user input on map
 	 * @param action	Action triggered
@@ -64,22 +62,22 @@ public class Controller implements ActionListener {
 	 */
 	public void trigger(String action, int x, int y) {
 		if (action.equals("click_map")) {
-			
+
 			if (!mapLoaded) {
 				return;
 			}
-			
+
 			// clic sur la carte aux coordonnées (x,y) and get the associated point (if any)
 			VueNoeud view_noeud = interfaceView.getVuePanel().getVue_plan().getWhoIsClicked(x, y);
-			
+
 			if (!livraisonsLoaded) {	
 				interfaceView.displayAlert("Chargement des livraisons", "Vous devez charger les livraisons avant de pouvoir les modifier.", "warning");
 				return;
 			}
-			
+
 			if (view_noeud != null) {	// user has clicked on a node and not on an empty part of map		
 				interfaceView.displayAlert("Ajouter une livraison", "Vous avez cliqué sur le noeud : " + view_noeud.getNoeud().toString(), "info");
-				
+
 				// 1st STEP : Click on a node where you want to add a delivery
 				if (!addingNewLivraison) {	
 					if (!interfacePlanning.isNodeEntrepot(view_noeud.getNoeud().getId()) && interfacePlanning.isNodeADelivery(view_noeud.getNoeud().getId())) { 	// if node is already a delivery, stop.
@@ -100,7 +98,7 @@ public class Controller implements ActionListener {
 						interruptAddingNewLivraison();
 						return;
 					}
-				
+
 					// Fetch all data needed to create delivery.
 					int prevAdresse = view_noeud.getNoeud().getId();	// Node where previous delivery occurs.
 					String[] retour = interfaceView.askPlageHoraire(); 	// 0 : heureDebut / 1 : heureFin / 2 = client ID
@@ -128,17 +126,14 @@ public class Controller implements ActionListener {
 		}
 		else if (action.equals("mouse_moved_on_map")) {
 			VueNoeud view_noeud = interfaceView.getVuePanel().getVue_plan().getWhoIsClicked(x, y);
+			String infos = "";
 			if (view_noeud != null) {
-				//TODO
-				//afficher en console ou en tooltip
-				if ( bufVueNoeud != view_noeud ) { // avoid spam
-					System.out.println(view_noeud.getNoeud().toString());
-					bufVueNoeud=view_noeud;
-				}
+				infos = view_noeud.getNoeud().toString();
 			}
+			interfaceView.setInfoPoint(infos);
 		}
 	}
-	
+
 	private void interruptAddingNewLivraison() {
 		addingNewLivraison = false;
 		interfaceView.clearHighlightedNodes();
@@ -157,16 +152,16 @@ public class Controller implements ActionListener {
 			if (action.equals("loadFile")) {
 				if (name.equals("loadMap")) {
 					String filename = interfaceView.loadFile();
-					
+
 					if (filename != null && filename.length() > 0) {
-						
+
 						// remove former map
 						resetPlan();
 						resetLivraisons();
 						resetTournee();
-						
+
 						boolean buildOk = interfaceAgglo.BuildPlanFromXml(filename);
-						
+
 						if (buildOk) {
 							mapLoaded = true;
 						}
@@ -175,7 +170,7 @@ public class Controller implements ActionListener {
 							interfaceView.repaint();
 							return;
 						}
-						
+
 						// set views
 						interfaceAgglo.getPlan().fitJPanel(interfaceView.getVuePanel().getHeight(),interfaceView.getVuePanel().getWidth());
 						interfaceView.getVuePanel().getVue_plan().setPlan(interfaceAgglo.getPlan());
@@ -188,12 +183,12 @@ public class Controller implements ActionListener {
 					}
 					else {
 						String filename = interfaceView.loadFile();
-						
+
 						if (filename != null && filename.length() > 0) {
-							
+
 							resetLivraisons();
 							resetTournee();
-							
+
 							// load livraisons
 							boolean buildOk = interfacePlanning.GetPlanningsFromBuilder(filename);
 							if (buildOk) {
@@ -204,18 +199,18 @@ public class Controller implements ActionListener {
 								interfaceView.repaint();
 								return;
 							}
-							
-							
+
+
 							// set views
 							boolean creatingViewOk = interfaceView.genererVueLivraisons(interfacePlanning.getListeLivraisons(), interfacePlanning.getEntrepot());
 							// pour les tournées, rien à voir
 							// .getVue_tournee().setTournee(interfacePlanning.getTournee());
-							
+
 							if (!creatingViewOk) {
 								livraisonsLoaded = false;
 								interfaceView.displayAlert("Impossible de charger les livraisons", "Un noeud est introuvable.", "error");
 							}
-							
+
 							interfaceView.repaint();
 						}
 					}
@@ -232,7 +227,7 @@ public class Controller implements ActionListener {
 						interfacePlanning.CalculTournee();
 						interfaceView.getVuePanel().getVue_tournee().setTournee(interfacePlanning.getTournee());
 						tourneeCalculed = true;
-						
+
 						System.out.println("Tournee : " + interfacePlanning.getTournee().toString());
 						interfaceView.repaint();
 					}
@@ -247,11 +242,11 @@ public class Controller implements ActionListener {
 						interfaceView.displayAlert("REDO", "Rien à rétablir", "info");
 					}
 				}
-				
+
 			}
 		}
 	}
-	
+
 	private void resetTournee() {
 		if (tourneeCalculed) {
 			interfacePlanning.resetTournee();
@@ -278,12 +273,12 @@ public class Controller implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		//appel des autres methodes en fonction de l'action event 
-	 }
-	
+	}
+
 	public  InterfaceAgglo getReferenceToInterfaceAgglo() {
 		return interfaceAgglo;
 	}
-	
+
 	//------------------------------------------------------------------
 	// GETTERS - SETTERS
 	public InterfaceAgglo getInterfaceAgglo() {
@@ -301,7 +296,7 @@ public class Controller implements ActionListener {
 	public void setInterfacePlanning(InterfacePlanning interfacePlanning) {		
 		this.interfacePlanning = interfacePlanning;
 	}
-	
+
 	public void setUndoRedo()
 	{
 		undoRedo = new UndoRedo(interfacePlanning, interfaceView);
