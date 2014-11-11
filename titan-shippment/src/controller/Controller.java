@@ -75,6 +75,11 @@ public class Controller implements ActionListener {
 				return;
 			}
 
+			if (!tourneeCalculed) {
+				interfaceView.displayAlert("Modification de livraison", "Vous devez calculer une tournée avant de modifier des livraisons.", "warning");
+				return;
+			}
+			
 			if (view_noeud != null) {	// user has clicked on a node and not on an empty part of map		
 				
 				// 1st STEP : Click on a node where you want to add a delivery
@@ -83,6 +88,8 @@ public class Controller implements ActionListener {
 						boolean suppr = interfaceView.confirmUserInput("Suppression", "Supprimer cette livraison ? ");
 						if (suppr) {
 							undoRedo.InsertRemoveCmd(view_noeud.getNoeud().getId());
+							interfaceView.getVuePanel().getVue_tournee().setTournee(interfacePlanning.getTournee());
+							interfaceView.repaint();
 							return;
 						}
 						return;
@@ -113,7 +120,9 @@ public class Controller implements ActionListener {
 					if(!success) {
 						return;
 					}
-					//interfaceView.addAndUpdate(interfacePlanning.getLivraisonByAdr(newDeliveryAdress));
+					// Repaint the tournee
+					interfaceView.getVuePanel().getVue_tournee().setTournee(interfacePlanning.getTournee());
+					interfaceView.repaint();
 					interruptAddingNewLivraison();
 				}
 				else {
@@ -160,7 +169,7 @@ public class Controller implements ActionListener {
 	 */
 	public void trigger(String action, String name) {
 		if (addingNewLivraison) {
-			interfaceView.displayAlert("Impossible d'effectuer l'action demandï¿½e", "Vous ne pouvez pas charger de fichier ou calculer une nouvelle tournï¿½e pendant l'ajout d'un point de livraison.", "warning");
+			interfaceView.displayAlert("Impossible d'effectuer l'action demandée", "Vous ne pouvez pas charger de fichier ou calculer une nouvelle tournée pendant l'ajout d'un point de livraison.", "warning");
 		}
 		else {
 			if (action.equals("loadFile")) {
@@ -180,7 +189,7 @@ public class Controller implements ActionListener {
 							mapLoaded = true;
 						}
 						else {
-							interfaceView.displayAlert("Erreur au chargement de la carte", "La carte n'a pas ï¿½tï¿½ chargï¿½e correctement.", "error");
+							interfaceView.displayAlert("Erreur au chargement de la carte", "La carte n'a pas été chargée correctement.", "error");
 							interfaceView.repaint();
 							return;
 						}
@@ -193,7 +202,7 @@ public class Controller implements ActionListener {
 				}
 				else if (name.equals("loadLivraisons")) {
 					if (!mapLoaded) {
-						interfaceView.displayAlert("Impossible de charger les livraisons", "Vous devez charger une carte au prï¿½alable.", "warning");
+						interfaceView.displayAlert("Impossible de charger les livraisons", "Vous devez charger une carte au préalable.", "warning");
 					}
 					else {
 						String filename = interfaceView.loadFile();
@@ -209,7 +218,7 @@ public class Controller implements ActionListener {
 								livraisonsLoaded = true;
 							}
 							else {
-								interfaceView.displayAlert("Erreur au chargement des livraisons", "Les livraisons n'ont pas ï¿½tï¿½ chargï¿½es correctement", "error");
+								interfaceView.displayAlert("Erreur au chargement des livraisons", "Les livraisons n'ont pas été chargées correctement", "error");
 								interfaceView.repaint();
 								return;
 							}
@@ -233,7 +242,7 @@ public class Controller implements ActionListener {
 			else if (action.equals("click_button")) {
 				if (name.equals("calculTournee")) {
 					if (!mapLoaded || !livraisonsLoaded) {
-						interfaceView.displayAlert("Impossible de calculer la tournï¿½e", "Vous devez charger une carte et une livraison au prï¿½alable.", "warning");
+						interfaceView.displayAlert("Impossible de calculer la tournée", "Vous devez charger une carte et une livraison au prï¿½alable.", "warning");
 					}
 					else {
 						resetTournee();
@@ -247,13 +256,17 @@ public class Controller implements ActionListener {
 				}
 				else if (name.equals("undo")) {
 					if(!undoRedo.Undo()) {
-						interfaceView.displayAlert("UNDO", "Rien ï¿½ annuler", "info");
+						interfaceView.displayAlert("UNDO", "Rien à annuler", "info");
 					}
+					interfaceView.getVuePanel().getVue_tournee().setTournee(interfacePlanning.getTournee());
+					interfaceView.repaint();
 				}
 				else if (name.equals("redo")) {
 					if(!undoRedo.Redo()) {
-						interfaceView.displayAlert("REDO", "Rien ï¿½ rï¿½tablir", "info");
+						interfaceView.displayAlert("REDO", "Rien à rétablir", "info");
 					}
+					interfaceView.getVuePanel().getVue_tournee().setTournee(interfacePlanning.getTournee());
+					interfaceView.repaint();
 				}
 
 			}
