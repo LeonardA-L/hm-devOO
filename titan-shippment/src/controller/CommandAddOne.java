@@ -31,19 +31,30 @@ public class CommandAddOne implements ICommand {
 	}
 
 	public boolean Execute (InterfacePlanning interfaceP, InterfaceView interfaceV) {
+		
+		System.out.println("# ------ EXECUTING CommandAddOne ------ #");
+		
 		// will return -1 if problem or the id of this new delivery
 		idLivraison = interfaceP.AddLivraisonAfter(idLivraison, idClient, heureDebut, heureFin, adresse, prevAdresse);
 		if(idLivraison == -1) {
 			System.out.println("# ------ Execute AddOne failed ------ #"); 	
 			return false;
 		}	
-		interfaceV.addAndUpdate(interfaceP.getLivraisonById(idLivraison));
+		// MAJ DES VUES LIVRAISONS
+		interfaceV.addAndUpdate(interfaceP.getLivraisonById(idLivraison));	
+		// MAJ DES VUES TOURNEE
+		interfaceV.getVuePanel().resetTournee();
+		interfaceV.getVuePanel().getVue_tournee().setTournee(Controller.getInstance().getInterfacePlanning().getTournee());
+		interfaceV.repaint();
 		System.out.println("# ------ DELIVERY CREATED id = "+idLivraison+" ------ #");
 		return true;
 	}
 	
 	public boolean Unexecute (InterfacePlanning interfaceP, InterfaceView interfaceV) {
-		// remove the VueLivraison 
+		
+		System.out.println("# ------ UNEXECUTING CommandAddOne ------ #");
+		
+		// MAJ VueLivraison
 		interfaceV.removeAndUpdate(adresse);
 		// remove the livraison at coordinates
 		boolean success = interfaceP.removeOneLivraison(idLivraison);
@@ -51,6 +62,12 @@ public class CommandAddOne implements ICommand {
 			System.out.println("# ------ Unexecute AddOne failed ------ #"); 	
 			return false;
 		}	
+		
+		// MAJ VueTournee
+		interfaceV.getVuePanel().resetTournee();
+		interfaceV.getVuePanel().getVue_tournee().setTournee(Controller.getInstance().getInterfacePlanning().getTournee());
+		interfaceV.repaint();
+		
 		System.out.println("# ------ DELIVERY UN-CREATED id = "+idLivraison+" ------ #"); 
 		return success;
 	}

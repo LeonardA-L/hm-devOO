@@ -98,8 +98,14 @@ public class Tournee {
 			return adresseAfter;
 		}
 		adresseAfter = toBeRemoved.getArrivee().getId();
-		itineraires.remove(toBeRemoved);
-		System.out.println("Itinéraire supprimé de la liste des itinéraires.");
+		boolean deleteOk = itineraires.remove(toBeRemoved);
+		if (deleteOk) {
+			System.out.println("Itinéraire supprimé de la liste des itinéraires.");
+		}
+		else
+		{
+			System.out.println("Erreur à la suppression");
+		}
 		return adresseAfter;
 	}
 	public boolean removeLivraison(int adresse){

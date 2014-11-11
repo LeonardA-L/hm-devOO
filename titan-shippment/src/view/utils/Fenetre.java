@@ -68,7 +68,6 @@ public class Fenetre extends JFrame {
 		this.top.setPreferredSize(sizeTop);
 		this.top.setLayout(new BorderLayout());
 
-		// VuePlan is a JPanel AND a VueObject => we should have cut this into 2 objects
 		this.vue = new VuePanel();
 		this.top.add(this.vue, BorderLayout.CENTER);
 
@@ -94,7 +93,7 @@ public class Fenetre extends JFrame {
 		this.bottom.setLayout( new BorderLayout() );
 
 		Console console = new Console(sizeBottom);
-		console.log("Super Léonard");
+		console.log("Super Lï¿½onard");
 		console.log("GIGA ANTON");
 		console.log("GIGA ANTON1");
 		console.log("GIGA ANTON2");
@@ -180,7 +179,7 @@ public class Fenetre extends JFrame {
 
 		Bouton loadMap = new Bouton("loadMap", "Chargement de la carte", true);
 		Bouton loadLivraisons = new Bouton("loadLivraisons", "Chargement des livraisons", true);
-		Bouton calculTournee = new Bouton("calculTournee", "Calcul de la tournée", false);
+		Bouton calculTournee = new Bouton("calculTournee", "Calcul de la tournï¿½e", false);
 
 		btn_panel.add(Box.createGlue());
 		btn_panel.add(loadMap);

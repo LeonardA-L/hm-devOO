@@ -103,6 +103,7 @@ public class InterfacePlanning {
 				System.out.println("Adding new itineraires...");
 				Itineraire itBefore = findItineraire(deliveryBefore, newDelivery, Controller.getInstance().getInterfaceAgglo().getPlan());
 				Itineraire itAfter = findItineraire(newDelivery, deliveryAfter, Controller.getInstance().getInterfaceAgglo().getPlan());
+				System.out.println("Trying to remove former itineraire");
 				tournee.removeItineraireAfter(deliveryBefore); //on enlève l'ancien itinéraire entre deliveryBefore et deliveryAfter
 				tournee.addItineraireAfter(itBefore);
 				tournee.addItineraire(itAfter);
@@ -134,22 +135,32 @@ public class InterfacePlanning {
 	 */
 	public boolean removeOneLivraison(int idLivraison) {
 		Livraison toBeRemoved = null;
-		for(Livraison l : listeLivraisons) {
+		for(Livraison l : listeLivraisons) {	// find delivery in model
 			if(l.getIdLivraison() == idLivraison) {
 				toBeRemoved = l;
 				break;
 			}
 		}
 		if( toBeRemoved != null) {
+			// delete itineraires before and after delivery in tournee
 			int addAfter = tournee.removeItineraireAfter(toBeRemoved);
 			int addBefore = tournee.removeItineraireBefore(toBeRemoved);
-			tournee.removeLivraison(toBeRemoved.getAdresse().getId());
+			if (addAfter == -1 || addBefore == -1) {
+				System.out.println("removeOneLivraison - Erreur durant la suppression des itinéraires.");
+				System.out.println("addAfter = "+addAfter+" and addBefore = "+addBefore);
+				return false;
+			}
+			tournee.removeLivraison(toBeRemoved.getAdresse().getId());	// delete delivery from Tournee
+			// Find new itineraire
 			Itineraire newIt = findItineraire(getLivraisonByAdr(addBefore), getLivraisonByAdr(addAfter), Controller.getInstance().getInterfaceAgglo().getPlan());
-			tournee.addItineraire(newIt);
-			listeLivraisons.remove(toBeRemoved);
+			tournee.addItineraireAfter(newIt);		
+			listeLivraisons.remove(toBeRemoved);	// delete delivery from model
+			return true;
 		}
-	
-		return false;
+		else {
+			System.out.println("removeOneLivraison - The delivery marqued for removal was not found.");
+			return false;
+		}
 	}
 	
 	/**
