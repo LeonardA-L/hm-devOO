@@ -236,6 +236,10 @@ public class InterfacePlanning {
 	}
 	
 	public boolean isNodeEntrepot(int idNode) {
+		if (entrepot == null) {
+			return false;
+		}
+
 		if (entrepot.getId() == idNode) {
 			return true;
 		}
