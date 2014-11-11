@@ -361,7 +361,7 @@ public class Controller implements ActionListener {
 		String instructions = interfacePlanning.getTournee().toString();
 		
 		File file = new File("../Instructions/Instructions.txt");
-        BufferedWriter out = new BufferedWriter(new FileWriter(file,true));
+        BufferedWriter out = new BufferedWriter(new FileWriter(file,false));
         try{
                 out.append(instructions);
         } finally {
