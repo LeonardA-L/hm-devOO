@@ -285,20 +285,12 @@ public class Controller implements ActionListener {
 					interfaceView.displayAlert("Modification de livraison", "Vous devez calculer une tournée avant de modifier des livraisons.", "warning");
 					return;
 				}
-				
-				deleteNoeud(Integer.parseInt(name));
+				int idNoeud = Integer.parseInt(name);
+				boolean deleted = deleteNoeud(idNoeud);
+				if (deleted) {
+					return;
+				}
 			}
-		}
-	}
-	
-	public void trigger(String action, int idNoeud){
-		boolean suppr = interfaceView.confirmUserInput("Suppression", "Supprimer cette livraison ? ");
-		if (suppr) {
-			undoRedo.InsertRemoveCmd(idNoeud);
-			interfaceView.removeShippment(idNoeud);
-			interfaceView.getVuePanel().getVue_tournee().setTournee(interfacePlanning.getTournee());
-			interfaceView.repaint();
-			return;
 		}
 	}
 

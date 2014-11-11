@@ -41,7 +41,7 @@ public class CommandAddOne implements ICommand {
 			return false;
 		}	
 		// MAJ DES VUES LIVRAISONS
-		interfaceV.addAndUpdate(interfaceP.getLivraisonById(idLivraison));	
+		interfaceV.addAndUpdate(interfaceP.getLivraisonByAdr(adresse));	
 		// MAJ DES VUES TOURNEE
 		interfaceV.getVuePanel().resetTournee();
 		interfaceV.getVuePanel().getVue_tournee().setTournee(Controller.getInstance().getInterfacePlanning().getTournee());
