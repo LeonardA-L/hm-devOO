@@ -90,6 +90,9 @@ public class InterfacePlanning {
 		}
 		boolean deliveryCreation = AddLivraison(idClient, idLivraison, heureDebut, heureFin, adresse);
 		if(deliveryCreation) {
+			// Add the new delivery to Tournee -> will return the delivery after, so that we can calculate the new itineraire
+			// calculate the 2 new itineraires 
+			// add them to tournee
 			return idLivraison; // contains the chosen id for the new delivery
 		}
 		return -1;		// in case of problem
@@ -180,7 +183,7 @@ public class InterfacePlanning {
 	/**
 	 * calculates the path for delivery
 	 */
-	public void CalculTournee(){
+	public void CalculTournee() {
 		InterfaceAgglo interfaceAgglo = Controller.getInstance().getInterfaceAgglo();
 		float[][] matriceAdjacence = interfaceAgglo.GetFormatedMap();
 		Plan plan = interfaceAgglo.getPlan();
