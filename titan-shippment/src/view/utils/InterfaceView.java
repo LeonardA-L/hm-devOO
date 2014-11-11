@@ -115,9 +115,8 @@ public class InterfaceView {
 		this.vueLivraisonList.addLivraison(livraison);
 	}
 	
-	public boolean removeShippment(Livraison livraison){
-		
-		this.vueLivraisonList.removeLivraison(livraison);
+	public boolean removeShippment(int idNoeud){
+		this.vueLivraisonList.removeLivraison(idNoeud);
 		return true;
 	}
 	

@@ -91,6 +91,7 @@ public class Controller implements ActionListener {
 						boolean suppr = interfaceView.confirmUserInput("Suppression", "Supprimer cette livraison ? ");
 						if (suppr) {
 							undoRedo.InsertRemoveCmd(view_noeud.getNoeud().getId());
+							interfaceView.removeShippment(view_noeud.getNoeud().getId());
 							interfaceView.getVuePanel().getVue_tournee().setTournee(interfacePlanning.getTournee());
 							interfaceView.repaint();
 							return;

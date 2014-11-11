@@ -141,7 +141,7 @@ public class Fenetre extends JFrame {
 		
 		//Create shippment table
 		
-		String[] colHeadings = {"ID CLient","Heure debut","Heure Fin","Delete"};
+		String[] colHeadings = {"ID Client","Heure debut","Heure Fin","Delete", "ID Noeud"};
 		int numRows = 0 ;
 		DefaultTableModel model = new DefaultTableModel(numRows, colHeadings.length) ;
 		model.setColumnIdentifiers(colHeadings);

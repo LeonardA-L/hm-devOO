@@ -22,20 +22,22 @@ public class VueLivraisonList extends JTable {
 		this.getColumn("Delete").setCellRenderer(new ButtonRenderer());
 		this.getColumn("Delete").setCellEditor(
 		        new ButtonEditor(new JCheckBox()));
+		this.getColumnModel().getColumn(4).setMinWidth(0);
+		this.getColumnModel().getColumn(4).setMaxWidth(0);
 	}
 	
 	public void addLivraison(Livraison livraison){
 		DefaultTableModel  model = (DefaultTableModel )this.getModel();
-		model.addRow(new Object[]{String.valueOf(livraison.getIdClient()),livraison.getPlageHoraire().getHeureDebut(),livraison.getPlageHoraire().getHeureFin(),"Delete"});
+		model.addRow(new Object[]{String.valueOf(livraison.getIdClient()),livraison.getPlageHoraire().getHeureDebut(),livraison.getPlageHoraire().getHeureFin(),"Delete",livraison.getAdresse().getId()});
 	}
 	
-	public boolean removeLivraison(Livraison livraison){
+	public boolean removeLivraison(int idNoeud){
 		DefaultTableModel  model = (DefaultTableModel )this.getModel();
 		int rc= model.getRowCount();
 		int rowToDelete=-1;
 		int i = 0;
         while(i<rc){
-            if(Integer.parseInt(model.getValueAt(i, 0).toString())==livraison.getIdClient()){
+            if(Integer.parseInt(model.getValueAt(i, 4).toString())==idNoeud){
             	rowToDelete = i;
             	break;
             }
