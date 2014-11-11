@@ -66,11 +66,10 @@ public class Fenetre extends JFrame {
 		Dimension sizeTop = new Dimension(this.tailleX, (int)(this.tailleY*7/8));
 		this.top.setSize(sizeTop);
 		this.top.setPreferredSize(sizeTop);
-		this.top.setLayout(new GridLayout(1,2));
+		this.top.setLayout(new BorderLayout());
 
-		// VuePlan is a JPanel AND a VueObject => we should have cut this into 2 objects
 		this.vue = new VuePanel();
-		this.top.add(this.vue, 0);
+		this.top.add(this.vue, BorderLayout.CENTER);
 
 		// list livraisons & btn
 		this.top_right = new JPanel();
@@ -81,7 +80,7 @@ public class Fenetre extends JFrame {
 		initBtnPanel();		
 
 		this.top.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		this.top.add(this.top_right, 1);
+		this.top.add(this.top_right, BorderLayout.EAST);
 
 		this.container.add(this.top, BorderLayout.CENTER);
 	}
