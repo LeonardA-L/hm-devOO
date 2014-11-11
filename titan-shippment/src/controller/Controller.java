@@ -124,12 +124,20 @@ public class Controller implements ActionListener {
 			}
 		}
 		else if (action.equals("mouse_moved_on_map")) {
-			VueNoeud view_noeud = interfaceView.getVuePanel().getVue_plan().getWhoIsClicked(x, y);
-			String infos = "";
-			if (view_noeud != null) {
-				infos = view_noeud.getNoeud().toString();
+			if (mapLoaded) {
+				VueNoeud view_noeud = interfaceView.getVuePanel().getVue_plan().getWhoIsClicked(x, y);
+				String infos = "";
+
+				if (view_noeud != null) {
+					if(interfacePlanning.isNodeADelivery(view_noeud.getNoeud().getId())) {
+						infos = interfacePlanning.getLivraisonByAdr(view_noeud.getNoeud().getId()).toString();
+					}
+					else {
+						infos = view_noeud.getNoeud().toString();					
+					}				
+				}
+				interfaceView.setInfoPoint(infos);
 			}
-			interfaceView.setInfoPoint(infos);
 		}
 	}
 

@@ -8,12 +8,14 @@ public class Livraison {
 	private Noeud adresse;
 	private int idClient;
 	private int idLivraison;
+	private String heureLivraison;
 	
 	public Livraison() {
 		this.plageHoraire = new PlageHoraire();
 		this.adresse = new Noeud();
 		this.setIdClient(0);
 		this.setIdLivraison(0);
+		this.heureLivraison="";
 	}
 
 	public Livraison(PlageHoraire plageHoraire, Noeud adresse, int idClient, int idLivraison) {
@@ -21,6 +23,7 @@ public class Livraison {
 		this.adresse = adresse;
 		this.idClient = idClient;
 		this.idLivraison = idLivraison;
+		this.heureLivraison="";
 	}
 
 	public PlageHoraire getPlageHoraire() {
@@ -54,7 +57,20 @@ public class Livraison {
 	public void setIdLivraison(int idLivraison) {
 		this.idLivraison = idLivraison;
 	}
+	
+	public String getHeureLivraison() {
+		return heureLivraison;
+	}
+
+	public void setHeureLivraison(String heureLivraison) {
+		this.heureLivraison = heureLivraison;
+	}
+	
 	public String toString(){
-		return "Delivery to node nÂ°"+adresse.getId();
+		String msg = "";
+		msg += "Delivery to node n° "+adresse.getId()+"<br>";
+		msg += "Time slot "+plageHoraire.toString()+"<br>";
+		msg += "At "+((!heureLivraison.isEmpty())?heureLivraison:"[Not calculed yet]")+"<br>";
+		return msg;
 	}
 }
