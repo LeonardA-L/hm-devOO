@@ -77,6 +77,11 @@ public class VueTroncon implements Vue {
 		stroke = 3;
 	}
 	
+	public void highlight(Color color) {
+		this.color = color;
+		stroke = 3;
+	}
+	
 	public Troncon getTroncon() {
 		return troncon;
 	}
