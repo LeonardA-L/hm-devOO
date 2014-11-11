@@ -155,12 +155,12 @@ public class InterfacePlanning {
 			Itineraire newIt = findItineraire(getLivraisonByAdr(addBefore), getLivraisonByAdr(addAfter), Controller.getInstance().getInterfaceAgglo().getPlan());
 			tournee.addItineraireAfter(newIt);		
 			listeLivraisons.remove(toBeRemoved);	// delete delivery from model
+			return true;
 		}
 		else {
 			System.out.println("removeOneLivraison - The delivery marqued for removal was not found.");
+			return false;
 		}
-	
-		return false;
 	}
 	
 	/**
