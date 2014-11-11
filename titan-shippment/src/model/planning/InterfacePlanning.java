@@ -220,7 +220,6 @@ public class InterfacePlanning {
 	 */
 	public void CalculTournee() {
 		InterfaceAgglo interfaceAgglo = Controller.getInstance().getInterfaceAgglo();
-		float[][] matriceAdjacence = interfaceAgglo.GetFormatedMap();
 		Plan plan = interfaceAgglo.getPlan();
 		ArrayList<Livraison> livraisons = getListeLivraisons();
 		
