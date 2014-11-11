@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 
 
 import view.agglomeration.VueNoeud;
@@ -265,17 +264,11 @@ public class Controller implements ActionListener {
 					interfaceView.repaint();
 				}
 				else if (name.equals("generateInstructions")) {
-					System.out.println("Generating text instructions.");
 					if (!tourneeCalculed) {
-						interfaceView.displayAlert("Generation des instructions", "Impossible de généner le fichier d'instructions avant le calcul d'une tournée", "info");
+						interfaceView.displayAlert("Generation des instructions", "Impossible de généner le fichier d'instructions avant le calcul d'une tournée", "warning");
 						return;
 					}
-					try {
-						generateInstructions();
-					} catch (IOException ex) {
-						interfaceView.displayAlert("Generation des instructions", ex.getMessage(), "info");
-					}
-					
+					generateInstructions();
 				}
 
 			}
@@ -339,30 +332,24 @@ public class Controller implements ActionListener {
 		return false;
 	}
 	
-	private void generateInstructions() throws IOException {
-        System.out.println("Write to dir : " + dir);
-		//File instructionFile = new File(dir);
-		//instructionFile.setWritable(true);
-		//Writer writer = null;
-		
+	private void generateInstructions() {
 		String instructions = interfacePlanning.getTournee().toString();
-		
 		File file = new File("../Instructions/Instructions.txt");
-        BufferedWriter out = new BufferedWriter(new FileWriter(file,false));
+        BufferedWriter out = null;
         try{
-                out.append(instructions);
-        } finally {
-                out.close();
-        } 
-		
-//		try {
-//		    writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dir), "utf-8"));
-//		    writer.write(instructions);
-//		} catch (IOException ex) {
-//			interfaceView.displayAlert("Generation des instructions", ex.getMessage(), "warning");
-//		} finally {
-//		   try {writer.close();} catch (Exception ex) {}
-//		}
+        	out = new BufferedWriter(new FileWriter(file,false));
+        	out.append(instructions);
+            interfaceView.displayAlert("Succès", "Instructions chargées dans le fichier " + file.getAbsolutePath() + ".", "info");
+        } catch (Exception e) {
+        	interfaceView.displayAlert("Echec", "Impossible de charger les instructions dans le fichier " + file.getAbsolutePath() + ".", "error");
+        }
+        finally {
+        	try {
+        		out.close();
+        	} catch (Exception e) {
+        		
+        	}
+        }
 	}
 	
 	@Override
