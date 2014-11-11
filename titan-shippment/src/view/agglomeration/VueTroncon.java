@@ -75,12 +75,12 @@ public class VueTroncon implements Vue {
 
 	public void highlight() {
 		color = Color.GREEN;
-		stroke = 3;
+		stroke = 2;
 	}
 
 	public void highlight(Color color) {
 		this.color = color;
-		stroke = 3;
+		stroke = 2;
 	}
 
 	public Troncon getTroncon() {
@@ -90,7 +90,7 @@ public class VueTroncon implements Vue {
 	public void setTroncon(Troncon troncon) {
 		this.troncon = troncon;
 	}
-	private final int ARR_SIZE = 10;
+	private final int ARR_SIZE = 6;
 
 	void drawArrow(Graphics g1, int x1, int y1, int x2, int y2) {
 		Graphics2D g = (Graphics2D) g1.create();
