@@ -6,11 +6,14 @@ import java.awt.event.ActionListener;
 
 
 import java.io.BufferedWriter;
-
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+
+
 
 
 import view.agglomeration.VueNoeud;
@@ -37,7 +40,7 @@ public class Controller implements ActionListener {
 
 	private int newDeliveryAdress = -1;
 
-	final String dir = System.getProperty("user.home") + "\\Desktop";
+	final String dir = System.getProperty("user.home") + "/Desktop";
 
 	/**
 	 * 	Constructor
@@ -272,7 +275,12 @@ public class Controller implements ActionListener {
 						interfaceView.displayAlert("Generation des instructions", "Impossible de généner le fichier d'instructions avant le calcul d'une tournée", "info");
 						return;
 					}
-					generateInstructions();
+					try {
+						generateInstructions();
+					} catch (IOException ex) {
+						interfaceView.displayAlert("Generation des instructions", ex.getMessage(), "info");
+					}
+					
 				}
 
 			}
@@ -344,22 +352,30 @@ public class Controller implements ActionListener {
 		}
 	}
 	
-	private void generateInstructions() {
+	private void generateInstructions() throws IOException {
         System.out.println("Write to dir : " + dir);
 		//File instructionFile = new File(dir);
 		//instructionFile.setWritable(true);
-		Writer writer = null;
+		//Writer writer = null;
 		
 		String instructions = interfacePlanning.getTournee().toString();
 		
-		try {
-		    writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dir), "utf-8"));
-		    writer.write(instructions);
-		} catch (IOException ex) {
-			interfaceView.displayAlert("Generation des instructions", ex.getMessage(), "warning");
-		} finally {
-		   try {writer.close();} catch (Exception ex) {}
-		}
+		File file = new File("../Instructions/Instructions.txt");
+        BufferedWriter out = new BufferedWriter(new FileWriter(file,true));
+        try{
+                out.append(instructions);
+        } finally {
+                out.close();
+        } 
+		
+//		try {
+//		    writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dir), "utf-8"));
+//		    writer.write(instructions);
+//		} catch (IOException ex) {
+//			interfaceView.displayAlert("Generation des instructions", ex.getMessage(), "warning");
+//		} finally {
+//		   try {writer.close();} catch (Exception ex) {}
+//		}
 	}
 	
 	@Override

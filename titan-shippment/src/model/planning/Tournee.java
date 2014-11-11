@@ -139,9 +139,9 @@ public class Tournee {
 					break;
 				}
 			}
-			texte += "Itinéraire à suivre : \n\n";
+			texte += "Itinéraire à suivre : \n";
 			texte += itineraire.toString();
-			texte += "\n---------------------------------------------\n";
+			texte += "\n----------------------------------------------------------------------------------------------\n\n";
 		}
 		return texte;
 	}

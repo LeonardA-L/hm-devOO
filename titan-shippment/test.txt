@@ -1,0 +1,136 @@
+#### INSTRUCTIONS DE LIVRAISON ####
+
+Livraison n°1 pour le client : 611
+Itinéraire à suivre : 
+
+		Départ : Noeud n°40(coord x : 342, y : 55)
+		Arrivée : Noeud n°13(coord x : 140, y : 226)
+			Rue h0 - Vitesse limite : 4.7, longueur : 696.7, A destination du noeud : 30.
+			Rue h0 - Vitesse limite : 4.5, longueur : 745.2, A destination du noeud : 20.
+			Rue h0 - Vitesse limite : 4.4, longueur : 633.9, A destination du noeud : 10.
+			Rue v1 - Vitesse limite : 4.7, longueur : 604.3, A destination du noeud : 11.
+			Rue v1 - Vitesse limite : 4.4, longueur : 425.2, A destination du noeud : 12.
+			Rue v1 - Vitesse limite : 3.8, longueur : 318.7, A destination du noeud : 13.
+
+----------------------------------------------------------------------------------------------
+
+Livraison n°6 pour le client : 923
+Itinéraire à suivre : 
+
+		Départ : Noeud n°13(coord x : 140, y : 226)
+		Arrivée : Noeud n°67(coord x : 458, y : 498)
+			Rue h3 - Vitesse limite : 4.4, longueur : 416.0, A destination du noeud : 23.
+			Rue v2 - Vitesse limite : 4.1, longueur : 680.4, A destination du noeud : 24.
+			Rue v2 - Vitesse limite : 4.7, longueur : 519.1, A destination du noeud : 25.
+			Rue v2 - Vitesse limite : 4.6, longueur : 704.4, A destination du noeud : 26.
+			Rue v2 - Vitesse limite : 4.6, longueur : 507.1, A destination du noeud : 27.
+			Rue h7 - Vitesse limite : 3.8, longueur : 827.2, A destination du noeud : 37.
+			Rue h7 - Vitesse limite : 3.9, longueur : 418.6, A destination du noeud : 47.
+			Rue h7 - Vitesse limite : 4.4, longueur : 351.4, A destination du noeud : 57.
+			Rue h7 - Vitesse limite : 4.6, longueur : 794.6, A destination du noeud : 67.
+
+----------------------------------------------------------------------------------------------
+
+Livraison n°2 pour le client : 276
+Itinéraire à suivre : 
+
+		Départ : Noeud n°67(coord x : 458, y : 498)
+		Arrivée : Noeud n°14(coord x : 130, y : 322)
+			Rue h7 - Vitesse limite : 4.5, longueur : 794.6, A destination du noeud : 57.
+			Rue h7 - Vitesse limite : 4.6, longueur : 351.4, A destination du noeud : 47.
+			Rue h7 - Vitesse limite : 4.3, longueur : 418.6, A destination du noeud : 37.
+			Rue h7 - Vitesse limite : 4.7, longueur : 827.2, A destination du noeud : 27.
+			Rue v2 - Vitesse limite : 4.1, longueur : 507.1, A destination du noeud : 26.
+			Rue v2 - Vitesse limite : 3.9, longueur : 704.4, A destination du noeud : 25.
+			Rue v2 - Vitesse limite : 4.0, longueur : 519.1, A destination du noeud : 24.
+			Rue h4 - Vitesse limite : 4.5, longueur : 394.9, A destination du noeud : 14.
+
+----------------------------------------------------------------------------------------------
+
+Livraison n°3 pour le client : 300
+Itinéraire à suivre : 
+
+		Départ : Noeud n°14(coord x : 130, y : 322)
+		Arrivée : Noeud n°68(coord x : 451, y : 552)
+			Rue h4 - Vitesse limite : 4.1, longueur : 394.9, A destination du noeud : 24.
+			Rue v2 - Vitesse limite : 4.7, longueur : 519.1, A destination du noeud : 25.
+			Rue v2 - Vitesse limite : 4.6, longueur : 704.4, A destination du noeud : 26.
+			Rue v2 - Vitesse limite : 4.6, longueur : 507.1, A destination du noeud : 27.
+			Rue h7 - Vitesse limite : 3.8, longueur : 827.2, A destination du noeud : 37.
+			Rue h7 - Vitesse limite : 3.9, longueur : 418.6, A destination du noeud : 47.
+			Rue h7 - Vitesse limite : 4.4, longueur : 351.4, A destination du noeud : 57.
+			Rue h7 - Vitesse limite : 4.6, longueur : 794.6, A destination du noeud : 67.
+			Rue v6 - Vitesse limite : 3.9, longueur : 500.1, A destination du noeud : 68.
+
+----------------------------------------------------------------------------------------------
+
+Livraison n°8 pour le client : 709
+Itinéraire à suivre : 
+
+		Départ : Noeud n°68(coord x : 451, y : 552)
+		Arrivée : Noeud n°56(coord x : 413, y : 458)
+			Rue v6 - Vitesse limite : 4.0, longueur : 500.1, A destination du noeud : 67.
+			Rue h7 - Vitesse limite : 4.5, longueur : 794.6, A destination du noeud : 57.
+			Rue v5 - Vitesse limite : 4.2, longueur : 395.1, A destination du noeud : 56.
+
+----------------------------------------------------------------------------------------------
+
+Livraison n°5 pour le client : 156
+Itinéraire à suivre : 
+
+		Départ : Noeud n°56(coord x : 413, y : 458)
+		Arrivée : Noeud n°98(coord x : 663, y : 540)
+			Rue h6 - Vitesse limite : 3.8, longueur : 558.5, A destination du noeud : 66.
+			Rue h6 - Vitesse limite : 3.9, longueur : 500.8, A destination du noeud : 76.
+			Rue h6 - Vitesse limite : 4.7, longueur : 547.7, A destination du noeud : 86.
+			Rue v8 - Vitesse limite : 3.9, longueur : 624.0, A destination du noeud : 87.
+			Rue h7 - Vitesse limite : 4.4, longueur : 451.2, A destination du noeud : 97.
+			Rue v9 - Vitesse limite : 4.4, longueur : 278.6, A destination du noeud : 98.
+
+----------------------------------------------------------------------------------------------
+
+Livraison n°4 pour le client : 591
+Itinéraire à suivre : 
+
+		Départ : Noeud n°98(coord x : 663, y : 540)
+		Arrivée : Noeud n°43(coord x : 321, y : 231)
+			Rue v9 - Vitesse limite : 3.8, longueur : 278.6, A destination du noeud : 97.
+			Rue h7 - Vitesse limite : 4.0, longueur : 451.2, A destination du noeud : 87.
+			Rue v8 - Vitesse limite : 4.3, longueur : 624.0, A destination du noeud : 86.
+			Rue h6 - Vitesse limite : 3.9, longueur : 547.7, A destination du noeud : 76.
+			Rue h6 - Vitesse limite : 4.0, longueur : 500.8, A destination du noeud : 66.
+			Rue v6 - Vitesse limite : 3.8, longueur : 400.0, A destination du noeud : 65.
+			Rue h5 - Vitesse limite : 4.5, longueur : 616.0, A destination du noeud : 55.
+			Rue h5 - Vitesse limite : 4.6, longueur : 292.9, A destination du noeud : 45.
+			Rue v4 - Vitesse limite : 3.9, longueur : 452.6, A destination du noeud : 44.
+			Rue v4 - Vitesse limite : 4.6, longueur : 752.1, A destination du noeud : 43.
+
+----------------------------------------------------------------------------------------------
+
+Livraison n°7 pour le client : 68
+Itinéraire à suivre : 
+
+		Départ : Noeud n°43(coord x : 321, y : 231)
+		Arrivée : Noeud n°73(coord x : 502, y : 230)
+			Rue h3 - Vitesse limite : 4.4, longueur : 418.6, A destination du noeud : 53.
+			Rue v5 - Vitesse limite : 4.1, longueur : 627.2, A destination du noeud : 54.
+			Rue h4 - Vitesse limite : 4.3, longueur : 759.3, A destination du noeud : 64.
+			Rue v6 - Vitesse limite : 4.4, longueur : 408.0, A destination du noeud : 63.
+			Rue h3 - Vitesse limite : 4.7, longueur : 313.6, A destination du noeud : 73.
+
+----------------------------------------------------------------------------------------------
+
+Livraison n°-1 pour le client : -1
+Itinéraire à suivre : 
+
+		Départ : Noeud n°73(coord x : 502, y : 230)
+		Arrivée : Noeud n°40(coord x : 342, y : 55)
+			Rue v7 - Vitesse limite : 4.3, longueur : 648.7, A destination du noeud : 72.
+			Rue h2 - Vitesse limite : 4.6, longueur : 153.8, A destination du noeud : 62.
+			Rue v6 - Vitesse limite : 4.1, longueur : 447.5, A destination du noeud : 61.
+			Rue v6 - Vitesse limite : 4.1, longueur : 630.7, A destination du noeud : 60.
+			Rue h0 - Vitesse limite : 3.8, longueur : 299.8, A destination du noeud : 50.
+			Rue h0 - Vitesse limite : 3.8, longueur : 703.3, A destination du noeud : 40.
+
+----------------------------------------------------------------------------------------------
+

@@ -72,9 +72,9 @@ public class Troncon {
 
 	@Override
 	public String toString() {
-		return nomRue + " [vitesse=" + vitesse
-				+ ", longueur=" + longueur + ", idNoeudDestination="
-				+ noeudDestination.getId() + "]";
+		return "Rue "+nomRue + " - Vitesse limite : " + vitesse
+				+ ", longueur : " + longueur + ", A destination du noeud : "
+				+ noeudDestination.getId() + ".";
 	}
 	
 	
