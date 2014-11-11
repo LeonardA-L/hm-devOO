@@ -28,8 +28,7 @@ public class CommandRemoveOne implements ICommand{
 		heureFin = interfaceP.getLivraisonByAdr(adresse).getPlageHoraire().getHeureFin();
 		
 		// MAJ DU TABLEAU
-		int idNoeud = interfaceP.getLivraisonById(idLivraison).getAdresse().getId();
-		interfaceV.removeShippment(idNoeud);
+		interfaceV.removeShippment(adresse);
 		
 		//  MAJ VueLivraison
 		interfaceV.removeAndUpdate(adresse);
@@ -70,7 +69,7 @@ public class CommandRemoveOne implements ICommand{
 		interfaceV.repaint();
 		
 		// MAJ DU TABLEAU
-		interfaceV.addShippment(interfaceP.getLivraisonById(idLivraison));
+		interfaceV.addShippment(interfaceP.getLivraisonByAdr(adresse));
 		
 		System.out.println("# ------ DELIVERY RE-CREATED id = "+idLivraison+" ------ #");
 		return true;

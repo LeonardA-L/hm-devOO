@@ -48,7 +48,7 @@ public class CommandAddOne implements ICommand {
 		interfaceV.repaint();
 		
 		// MAJ DU TABLEAU
-		interfaceV.addShippment(interfaceP.getLivraisonById(idLivraison));
+		interfaceV.addShippment(interfaceP.getLivraisonByAdr(adresse));
 		
 		System.out.println("# ------ DELIVERY CREATED id = "+idLivraison+" ------ #");
 		return true;
@@ -59,7 +59,7 @@ public class CommandAddOne implements ICommand {
 		System.out.println("# ------ UNEXECUTING CommandAddOne ------ #");
 		
 		// MAJ DU TABLEAU
-		interfaceV.removeShippment(interfaceP.getLivraisonById(idLivraison).getAdresse().getId());
+		interfaceV.removeShippment(adresse);
 		
 		// MAJ VueLivraison
 		interfaceV.removeAndUpdate(adresse);
