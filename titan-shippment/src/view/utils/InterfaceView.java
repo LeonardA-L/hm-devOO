@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -20,12 +21,14 @@ public class InterfaceView {
 	
 	private VuePanel vuePanel;
 	private VueLivraisonList vueLivraisonList;
+	private JLabel infoPoint;
 
 	public InterfaceView() {
 		Fenetre fenetre = new Fenetre();
 		fenetre.setVisible(true);
 		vuePanel = fenetre.getVue();
 		vueLivraisonList = fenetre.getVueLivraisonList();
+		infoPoint = fenetre.getInfoPoint();
 	}
 
 	public void displayAlert(String titre, String message, String type) {
@@ -204,5 +207,9 @@ public class InterfaceView {
 
 	public void setVuePanel(VuePanel vuePanel) {
 		this.vuePanel = vuePanel;
+	}
+	
+	public void setInfoPoint(String txt) {
+		infoPoint.setText("<html>"+txt+"</html>");
 	}
 }
