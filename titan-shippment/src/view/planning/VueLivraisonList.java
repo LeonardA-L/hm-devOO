@@ -1,6 +1,7 @@
 package view.planning;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Graphics;
 
 import javax.swing.BoxLayout;
@@ -18,17 +19,20 @@ public class VueLivraisonList extends JTable {
 	
 	public VueLivraisonList(DefaultTableModel model){
 		super(model);
-		this.setPreferredScrollableViewportSize(this.getPreferredSize());
-		this.getColumn("Delete").setCellRenderer(new ButtonRenderer());
-		this.getColumn("Delete").setCellEditor(
+		this.setPreferredScrollableViewportSize(new Dimension(250,200));
+		this.getColumn("-").setCellRenderer(new ButtonRenderer());
+		this.getColumn("-").setCellEditor(
 		        new ButtonEditor(new JCheckBox()));
 		this.getColumnModel().getColumn(4).setMinWidth(0);
 		this.getColumnModel().getColumn(4).setMaxWidth(0);
+		
+		this.getColumnModel().getColumn(3).setMinWidth(50);
+		this.getColumnModel().getColumn(3).setMaxWidth(50);
 	}
 	
 	public void addLivraison(Livraison livraison){
 		DefaultTableModel  model = (DefaultTableModel )this.getModel();
-		model.addRow(new Object[]{String.valueOf(livraison.getIdClient()),livraison.getPlageHoraire().getHeureDebut(),livraison.getPlageHoraire().getHeureFin(),"Delete",livraison.getAdresse().getId()});
+		model.addRow(new Object[]{String.valueOf(livraison.getIdClient()),livraison.getPlageHoraire().getHeureDebut(),livraison.getPlageHoraire().getHeureFin(),"x",livraison.getAdresse().getId()});
 	}
 	
 	public boolean removeLivraison(int idNoeud){
