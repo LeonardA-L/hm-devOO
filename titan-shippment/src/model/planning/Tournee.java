@@ -27,8 +27,9 @@ public class Tournee {
 		return this;
 	}
 	
-	public boolean addLivraisonAfter(Livraison newDelivery, Livraison deliveryBefore)
+	public Livraison addLivraisonAfter(Livraison newDelivery, Livraison deliveryBefore)
 	{
+		Livraison deliveryAfter = null;
 		for(Livraison l : livraisons) {
 			if (l == deliveryBefore) {
 				int index = livraisons.lastIndexOf(l);
@@ -36,8 +37,12 @@ public class Tournee {
 				livraisons.add(index, newDelivery);
 			}
 		}
-		return true;
+		return deliveryAfter;
 	}	
+	
+	public boolean removeLivraison(){
+		return false;
+	}
 	
 	@Override
 	public String toString() {

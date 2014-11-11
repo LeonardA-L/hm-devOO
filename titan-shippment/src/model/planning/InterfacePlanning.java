@@ -19,6 +19,7 @@ public class InterfacePlanning {
 	private ArrayList<PlageHoraire> plagesHoraires;
 	private Tournee tournee;
 	private Noeud entrepot;
+	private ShippmentGraph shGraph;
 	
 	private static int s_idLivraison = -1;
 	
@@ -89,6 +90,9 @@ public class InterfacePlanning {
 		}
 		boolean deliveryCreation = AddLivraison(idClient, idLivraison, heureDebut, heureFin, adresse);
 		if(deliveryCreation) {
+			// Add the new delivery to Tournee -> will return the delivery after, so that we can calculate the new itineraire
+			// calculate the 2 new itineraires 
+			// add them to tournee
 			return idLivraison; // contains the chosen id for the new delivery
 		}
 		return -1;		// in case of problem
@@ -179,7 +183,7 @@ public class InterfacePlanning {
 	/**
 	 * calculates the path for delivery
 	 */
-	public void CalculTournee(){
+	public void CalculTournee() {
 		InterfaceAgglo interfaceAgglo = Controller.getInstance().getInterfaceAgglo();
 		float[][] matriceAdjacence = interfaceAgglo.GetFormatedMap();
 		Plan plan = interfaceAgglo.getPlan();
@@ -187,7 +191,7 @@ public class InterfacePlanning {
 		
 		// Instanciate pathfinder
 		PathFinder pf = new DijkstraFinder(plan.computeShippmentGraph());
-		ShippmentGraph shGraph = (ShippmentGraph)((DijkstraFinder)pf).getGraph();
+		shGraph = (ShippmentGraph)((DijkstraFinder)pf).getGraph();
 		// Compute cycle (sorted list of livraison)
 		ArrayList<Livraison> cycle = pf.findCycle(100000, livraisons,this.entrepot);
 		
@@ -196,19 +200,13 @@ public class InterfacePlanning {
 		for(int i=0;i<cycle.size() - 1;i++){	// No for in !	
 			Livraison l1 = cycle.get(i);
 			Livraison l2 = cycle.get(i+1);
-			Itineraire it = new Itineraire(l1.getAdresse(),l2.getAdresse(),new ArrayList<Troncon>());
-			// Compute list of troncons
-			String pathHash = ""+l1.getAdresse().getId()+"-"+l2.getAdresse().getId();
-			it.computeTronconsFromNodes(plan, shGraph.getPaths().get(pathHash));
+			Itineraire it = findItineraire(l1, l2, plan);
 			itineraires.add(it);
 		}
 		// Loop the cycle
 		Livraison l1 = cycle.get(cycle.size() - 1);
 		Livraison l2 = cycle.get(0);
-		Itineraire it = new Itineraire(l1.getAdresse(),l2.getAdresse(),new ArrayList<Troncon>());
-		// Compute list of troncons
-		String pathHash = ""+l1.getAdresse().getId()+"-"+l2.getAdresse().getId();
-		it.computeTronconsFromNodes(plan, shGraph.getPaths().get(pathHash));
+		Itineraire it = findItineraire(l1, l2, plan);
 		itineraires.add(it);
 		
 		// Prepare the tournee
@@ -217,6 +215,22 @@ public class InterfacePlanning {
 		tournee.setItineraires(itineraires);
 		
 		this.setTournee(tournee);
+	}
+	
+	/**
+	 * Computes an Itineraire object between two livraison points
+	 * Note : can only be called once the tournee has been calculated
+	 * @param l1 start livraison
+	 * @param l2 end livraison
+	 * @param plan the plan where it all happens
+	 * @return an Itineraire object
+	 */
+	public Itineraire findItineraire(Livraison l1, Livraison l2, Plan plan){
+		Itineraire it = new Itineraire(l1.getAdresse(),l2.getAdresse(),new ArrayList<Troncon>());
+		// Compute list of troncons
+		String pathHash = ""+l1.getAdresse().getId()+"-"+l2.getAdresse().getId();
+		it.computeTronconsFromNodes(plan, shGraph.getPaths().get(pathHash));
+		return it;
 	}
 	
 	//################################### Working with view ####################################
