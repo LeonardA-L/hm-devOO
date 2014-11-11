@@ -76,8 +76,7 @@ public class Controller implements ActionListener {
 			}
 
 			if (view_noeud != null) {	// user has clicked on a node and not on an empty part of map		
-				interfaceView.displayAlert("Ajouter une livraison", "Vous avez cliqué sur le noeud : " + view_noeud.getNoeud().toString(), "info");
-
+				
 				// 1st STEP : Click on a node where you want to add a delivery
 				if (!addingNewLivraison) {	
 					if (!interfacePlanning.isNodeEntrepot(view_noeud.getNoeud().getId()) && interfacePlanning.isNodeADelivery(view_noeud.getNoeud().getId())) { 	// if node is already a delivery, stop.
@@ -223,7 +222,6 @@ public class Controller implements ActionListener {
 					}
 					else {
 						resetTournee();
-						interfaceView.displayAlert("Tournée", "Calcul de la tournée en cours ...", "info");
 						interfacePlanning.CalculTournee();
 						interfaceView.getVuePanel().getVue_tournee().setTournee(interfacePlanning.getTournee());
 						tourneeCalculed = true;
