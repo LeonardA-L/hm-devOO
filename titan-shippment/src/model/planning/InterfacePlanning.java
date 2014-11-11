@@ -276,6 +276,11 @@ public class InterfacePlanning {
 	}
 	
 	public Livraison getLivraisonByAdr(int adresse) {
+		
+		if (adresse == entrepot.getId()) {
+			return null;
+		}
+		
 		for(Livraison l : listeLivraisons) {
 			if (l.getAdresse().getId() == adresse) {
 				return l;
