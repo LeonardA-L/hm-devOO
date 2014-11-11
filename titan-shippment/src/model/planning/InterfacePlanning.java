@@ -133,7 +133,7 @@ public class InterfacePlanning {
 	 * @param idLivraison
 	 * @return  True or false depending on the success of the operation
 	 */
-	public boolean removeOneLivraison(int idLivraison) {
+	public int removeOneLivraison(int idLivraison) {
 		Livraison toBeRemoved = null;
 		for(Livraison l : listeLivraisons) {	// find delivery in model
 			if(l.getIdLivraison() == idLivraison) {
@@ -148,18 +148,18 @@ public class InterfacePlanning {
 			if (addAfter == -1 || addBefore == -1) {
 				System.out.println("removeOneLivraison - Erreur durant la suppression des itinéraires.");
 				System.out.println("addAfter = "+addAfter+" and addBefore = "+addBefore);
-				return false;
+				return -1;
 			}
 			tournee.removeLivraison(toBeRemoved.getAdresse().getId());	// delete delivery from Tournee
 			// Find new itineraire
 			Itineraire newIt = findItineraire(getLivraisonByAdr(addBefore), getLivraisonByAdr(addAfter), Controller.getInstance().getInterfaceAgglo().getPlan());
-			tournee.addItineraireAfter(newIt);		
+			tournee.addItineraireAfter(newIt);
 			listeLivraisons.remove(toBeRemoved);	// delete delivery from model
-			return true;
+			return addBefore;
 		}
 		else {
 			System.out.println("removeOneLivraison - The delivery marqued for removal was not found.");
-			return false;
+			return -1;
 		}
 	}
 	
