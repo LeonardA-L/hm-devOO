@@ -1,5 +1,6 @@
 package view.planning;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -33,10 +34,19 @@ public class VueItineraire implements Vue {
 		Noeud current_node = depart.getNoeud();
 		depart.dessine(g);
 		
+		int x = this.depart.getNoeud().getCoordX();
+		int y = this.depart.getNoeud().getCoordY();
+		
+		final int LIMITE_MIN = 50 %255;
+		final int LIMITE_MAX = 200 %255;
+		final int MODULO = LIMITE_MAX-LIMITE_MIN+1;
+		
+		Color color = new Color(LIMITE_MIN + x%MODULO, LIMITE_MIN + y%MODULO , LIMITE_MIN + (x+y)%MODULO);
+		
 		Iterator<VueTroncon> it = troncons.iterator();
 		while (it.hasNext()) {
 			VueTroncon vue_troncon = it.next();
-			vue_troncon.highlight();
+			vue_troncon.highlight(color);
 			vue_troncon.dessine(g, current_node);
 			current_node = vue_troncon.getTroncon().getNoeudDestination();
 		}

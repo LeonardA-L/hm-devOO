@@ -38,11 +38,11 @@ public class VueTournee implements Vue {
 		}
 		
 		// get and display vueTroncon between entrepot & first node
-		VueTroncon vue_troncon1 = Controller.getInstance().getInterfaceView().getVuePanel().getVue_plan().getVueTronconByVueNodes(entrepot, itineraires.get(0).getDepart());
+		/*VueTroncon vue_troncon1 = Controller.getInstance().getInterfaceView().getVuePanel().getVue_plan().getVueTronconByVueNodes(entrepot, itineraires.get(0).getDepart());
 		if (vue_troncon1 != null) {
 			vue_troncon1.highlight();
 			vue_troncon1.dessine(g, itineraires.get(0).getDepart().getNoeud());
-		}
+		}*/
 		
 		Iterator<VueItineraire> it = itineraires.iterator();	
 		while (it.hasNext()) {
@@ -50,11 +50,11 @@ public class VueTournee implements Vue {
 		}
 		
 		// get and display vueTroncon between last node & entrepot
-		VueTroncon vue_troncon2 = Controller.getInstance().getInterfaceView().getVuePanel().getVue_plan().getVueTronconByVueNodes(itineraires.get(size-1).getDepart(), entrepot);
+		/*VueTroncon vue_troncon2 = Controller.getInstance().getInterfaceView().getVuePanel().getVue_plan().getVueTronconByVueNodes(itineraires.get(size-1).getDepart(), entrepot);
 		if (vue_troncon2 != null) {
 			vue_troncon2.highlight();
 			vue_troncon2.dessine(g, itineraires.get(size-1).getDepart().getNoeud());
-		}
+		}*/
 	}
 
 	public ArrayList<VueLivraison> getLivraisons() {
