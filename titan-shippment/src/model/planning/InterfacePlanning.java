@@ -103,6 +103,7 @@ public class InterfacePlanning {
 				System.out.println("Adding new itineraires...");
 				Itineraire itBefore = findItineraire(deliveryBefore, newDelivery, Controller.getInstance().getInterfaceAgglo().getPlan());
 				Itineraire itAfter = findItineraire(newDelivery, deliveryAfter, Controller.getInstance().getInterfaceAgglo().getPlan());
+				System.out.println("Trying to remove former itineraire");
 				tournee.removeItineraireAfter(deliveryBefore); //on enlève l'ancien itinéraire entre deliveryBefore et deliveryAfter
 				tournee.addItineraireAfter(itBefore);
 				tournee.addItineraire(itAfter);
