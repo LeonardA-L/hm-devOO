@@ -40,8 +40,8 @@ public class Tournee {
 			}
 		}
 		if (index != -1) {
+			deliveryAfter = livraisons.get(index+1);
 			livraisons.add(index+1, newDelivery);		// new delivery added at the right place
-			deliveryAfter = livraisons.get(index+2);
 		}
 		return deliveryAfter;
 	}	
