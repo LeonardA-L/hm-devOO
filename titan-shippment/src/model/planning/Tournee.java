@@ -27,6 +27,18 @@ public class Tournee {
 		return this;
 	}
 	
+	public boolean addLivraisonAfter(Livraison newDelivery, Livraison deliveryBefore)
+	{
+		for(Livraison l : livraisons) {
+			if (l == deliveryBefore) {
+				int index = livraisons.lastIndexOf(l);
+				System.out.println("Livraison avant la nouvelle livraison à l'index "+index+" dans livraisons.");
+				livraisons.add(index, newDelivery);
+			}
+		}
+		return true;
+	}	
+	
 	@Override
 	public String toString() {
 		String texte = "Tournée :\n";
