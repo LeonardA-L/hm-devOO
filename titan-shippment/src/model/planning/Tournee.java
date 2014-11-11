@@ -41,7 +41,44 @@ public class Tournee {
 		return deliveryAfter;
 	}	
 	
-	public boolean removeLivraison(){
+	public boolean addItineraire(Livraison startPoint, Livraison endPoint) {
+		
+		return false;
+	}
+	
+	public boolean removeItineraire(Livraison startPoint, Livraison endPoint)
+	{
+		Itineraire toBeRemoved = null;
+		for(Itineraire it : itineraires) {
+			if(it.getDepart()== startPoint.getAdresse() && it.getArrivee() == endPoint.getAdresse())
+			{
+				System.out.println("### Itinéraire à supprimer trouvé ###");
+				toBeRemoved = it;
+				break;
+			}
+		}
+		if( toBeRemoved == null) {
+			return false;
+		}
+		itineraires.remove(toBeRemoved);
+		System.out.println("Itinéraire supprimé de la liste des itinéraires.");
+		return true;
+	}
+	
+	public boolean removeLivraison(int adresse){
+		Livraison toBeRemoved = null;
+		for(Livraison l : livraisons) {
+			if(l.getAdresse().getId() == adresse) {
+				System.out.println("### Livraison à supprimer trouvée ###");
+				toBeRemoved = l;
+				break;
+			}
+		}
+		if (toBeRemoved == null) {
+			return false;
+		}
+		livraisons.remove(toBeRemoved);
+		System.out.println("Livraison supprimée de la liste des livraisons.");
 		return false;
 	}
 	
