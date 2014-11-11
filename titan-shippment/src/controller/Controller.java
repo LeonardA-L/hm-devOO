@@ -280,6 +280,7 @@ public class Controller implements ActionListener {
 		if (livraisonsLoaded) {
 			interfacePlanning.resetLivraisons();
 			interfaceView.getVuePanel().resetLivraisons();
+			interfaceView.resetShippmentTable();
 			livraisonsLoaded = false;
 		}
 	}

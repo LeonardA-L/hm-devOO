@@ -14,17 +14,20 @@ import model.agglomeration.Noeud;
 import model.planning.Livraison;
 import view.agglomeration.VueNoeud;
 import view.planning.VueLivraison;
+import view.planning.VueLivraisonList;
 import view.utils.Type_i.Type;
 
 public class InterfaceView {
 	
 	private VuePanel vuePanel;
+	private VueLivraisonList vueLivraisonList;
 	private JLabel infoPoint;
 
 	public InterfaceView() {
 		Fenetre fenetre = new Fenetre();
 		fenetre.setVisible(true);
 		vuePanel = fenetre.getVue();
+		vueLivraisonList = fenetre.getVueLivraisonList();
 		infoPoint = fenetre.getInfoPoint();
 	}
 
@@ -104,6 +107,9 @@ public class InterfaceView {
 		vuePanel.repaint();
 	}
 	
+	public void resetShippmentTable(){
+		this.vueLivraisonList.reset();
+	}
 	
 	public void highlight(VueNoeud noeud) {
 		this.getVuePanel().getNoeud_highlighted().add(noeud);
@@ -137,6 +143,7 @@ public class InterfaceView {
 			}
 			
 			vuePanel.getVues_livraisons().add(new VueLivraison(livraison, vue_noeud));
+			vueLivraisonList.addLivraison(livraison);
 		}
 		return true;
 	}

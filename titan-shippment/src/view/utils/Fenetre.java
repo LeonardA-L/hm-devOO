@@ -8,6 +8,8 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 
 
+
+
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -17,12 +19,15 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
 
 import view.agglomeration.VuePlan;
+import view.planning.VueLivraisonList;
 
 public class Fenetre extends JFrame {
 
 	private VuePanel vue;
+	private VueLivraisonList livraison_list;
 	private JPanel container;
 	private JPanel top;
 	private JPanel bottom;
@@ -112,8 +117,9 @@ public class Fenetre extends JFrame {
 
 	private void initLivraisonPanel() {
 		JPanel livraisons_panel = new JPanel();
-		livraisons_panel.setLayout(new BorderLayout());
+		livraisons_panel.setLayout(new BoxLayout(livraisons_panel, BoxLayout.Y_AXIS));
 		livraisons_panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
 
 		livraisons_panel.add(new JLabel("Les livraisons"), BorderLayout.CENTER);
 
@@ -130,8 +136,21 @@ public class Fenetre extends JFrame {
 		undoRedoPanel.add(undo);
 		undoRedoPanel.add(redo);
 		undoRedoPanel.add(Box.createHorizontalGlue());
+		
+		livraisons_panel.add(undoRedoPanel);
+		
+		//Create shippment table
+		
+		String[] colHeadings = {"ID CLient","Heure debut","Heure Fin"};
+		int numRows = 0 ;
+		DefaultTableModel model = new DefaultTableModel(numRows, colHeadings.length) ;
+		model.setColumnIdentifiers(colHeadings);
+		livraison_list = new VueLivraisonList(model);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setViewportView( livraison_list );
+		livraisons_panel.add(scrollPane);
 
-		livraisons_panel.add(undoRedoPanel, BorderLayout.NORTH);
 		this.top_right.add(livraisons_panel, 0);
 	}
 
@@ -192,6 +211,10 @@ public class Fenetre extends JFrame {
 
 	public VuePanel getVue() {
 		return vue;
+	}
+	
+	public VueLivraisonList getVueLivraisonList(){
+		return livraison_list;
 	}
 
 	public void setVue(VuePanel vue) {
