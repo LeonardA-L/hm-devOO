@@ -29,6 +29,25 @@ public class VueLivraisonList extends JTable {
 		model.addRow(new Object[]{String.valueOf(livraison.getIdClient()),livraison.getPlageHoraire().getHeureDebut(),livraison.getPlageHoraire().getHeureFin(),"Delete"});
 	}
 	
+	public boolean removeLivraison(Livraison livraison){
+		DefaultTableModel  model = (DefaultTableModel )this.getModel();
+		int rc= model.getRowCount();
+		int rowToDelete=-1;
+		int i = 0;
+        while(i<rc){
+            if(Integer.parseInt(model.getValueAt(i, 0).toString())==livraison.getIdClient()){
+            	rowToDelete = i;
+            	break;
+            }
+            i++;
+        }
+        if(rowToDelete==-1){
+        	return false;
+        }
+        model.removeRow(i);
+        return true;
+	}
+	
 	public void reset(){
 		DefaultTableModel model=(DefaultTableModel)this.getModel();
         int rc= model.getRowCount();

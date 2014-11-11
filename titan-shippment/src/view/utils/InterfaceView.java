@@ -111,6 +111,16 @@ public class InterfaceView {
 		this.vueLivraisonList.reset();
 	}
 	
+	public void addShippment(Livraison livraison ){
+		this.vueLivraisonList.addLivraison(livraison);
+	}
+	
+	public boolean removeShippment(Livraison livraison){
+		
+		this.vueLivraisonList.removeLivraison(livraison);
+		return true;
+	}
+	
 	public void highlight(VueNoeud noeud) {
 		this.getVuePanel().getNoeud_highlighted().add(noeud);
 		noeud.highlight();
