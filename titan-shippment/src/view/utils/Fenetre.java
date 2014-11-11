@@ -66,11 +66,11 @@ public class Fenetre extends JFrame {
 		Dimension sizeTop = new Dimension(this.tailleX, (int)(this.tailleY*7/8));
 		this.top.setSize(sizeTop);
 		this.top.setPreferredSize(sizeTop);
-		this.top.setLayout(new BorderLayout());
+		this.top.setLayout(new GridLayout(1,2));
 
 		// VuePlan is a JPanel AND a VueObject => we should have cut this into 2 objects
 		this.vue = new VuePanel();
-		this.top.add(this.vue, BorderLayout.CENTER);
+		this.top.add(this.vue, 0);
 
 		// list livraisons & btn
 		this.top_right = new JPanel();
@@ -81,7 +81,7 @@ public class Fenetre extends JFrame {
 		initBtnPanel();		
 
 		this.top.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		this.top.add(this.top_right, BorderLayout.EAST);
+		this.top.add(this.top_right, 1);
 
 		this.container.add(this.top, BorderLayout.CENTER);
 	}
@@ -94,7 +94,7 @@ public class Fenetre extends JFrame {
 		this.bottom.setLayout( new BorderLayout() );
 
 		Console console = new Console(sizeBottom);
-		console.log("Super Léonard");
+		console.log("Super Lï¿½onard");
 		console.log("GIGA ANTON");
 		console.log("GIGA ANTON1");
 		console.log("GIGA ANTON2");
@@ -180,7 +180,7 @@ public class Fenetre extends JFrame {
 
 		Bouton loadMap = new Bouton("loadMap", "Chargement de la carte", true);
 		Bouton loadLivraisons = new Bouton("loadLivraisons", "Chargement des livraisons", true);
-		Bouton calculTournee = new Bouton("calculTournee", "Calcul de la tournée", false);
+		Bouton calculTournee = new Bouton("calculTournee", "Calcul de la tournï¿½e", false);
 
 		btn_panel.add(Box.createGlue());
 		btn_panel.add(loadMap);
