@@ -125,7 +125,7 @@ public class Plan {
 		float yRatio = (float) ySize/ (float)yMax;
 		//System.out.println("xRatio = "+xRatio+" / yratio = "+yRatio);
 		for(Noeud n : noeuds) {
-			n.setCoordX((int)(n.getCoordX()*xRatio*1.1));
+			n.setCoordX((int)(n.getCoordX()*xRatio*1));
 			n.setCoordY((int)(n.getCoordY()*yRatio*0.85));
 		}
 	}

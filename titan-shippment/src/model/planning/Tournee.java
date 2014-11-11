@@ -29,18 +29,93 @@ public class Tournee {
 	
 	public Livraison addLivraisonAfter(Livraison newDelivery, Livraison deliveryBefore)
 	{
+		int index = -1;
 		Livraison deliveryAfter = null;
-		for(Livraison l : livraisons) {
+		for (Livraison l : livraisons) {
+			System.out.println("Livraison à l'index "+livraisons.lastIndexOf(l)+" = "+l.getAdresse().getId());
 			if (l == deliveryBefore) {
-				int index = livraisons.lastIndexOf(l);
-				System.out.println("Livraison avant la nouvelle livraison à l'index "+index+" dans livraisons.");
-				livraisons.add(index, newDelivery);
+				index = livraisons.lastIndexOf(l);
+				System.out.println("La livraisons précédent la nouvelle livraison est à l'index : "+index+" dans livraisons.");		
+				//break;
 			}
+		}
+		if (index != -1) {
+			deliveryAfter = livraisons.get(index+1);
+			livraisons.add(index+1, newDelivery);		// new delivery added at the right place
 		}
 		return deliveryAfter;
 	}	
 	
-	public boolean removeLivraison(){
+	public boolean addItineraireAfter(Itineraire newIte) {
+		int index = -1;
+		for(Itineraire it : itineraires) {
+			if (it.getArrivee() == newIte.getDepart()) {
+				index = itineraires.lastIndexOf(it);
+				break;
+			}
+		}
+		if (index != -1) {
+			itineraires.add(index+1, newIte);
+			return true;
+		}
+		return false;
+	}
+	
+	public int removeItineraireBefore(Livraison endPoint)
+	{
+		int adresseBefore = -1;
+		Itineraire toBeRemoved = null;
+		for(Itineraire it : itineraires) {
+			if(it.getArrivee() == endPoint.getAdresse())
+			{
+				System.out.println("### Itinéraire à supprimer trouvé ###");
+				toBeRemoved = it;
+				break;
+			}
+		}
+		if( toBeRemoved == null) {
+			return adresseBefore;
+		}
+		adresseBefore = toBeRemoved.getDepart().getId();
+		itineraires.remove(toBeRemoved);
+		System.out.println("Itinéraire supprimé de la liste des itinéraires.");
+		return adresseBefore;
+	}
+	
+	public int removeItineraireAfter(Livraison startPoint)
+	{
+		int adresseAfter = -1;
+		Itineraire toBeRemoved = null;
+		for(Itineraire it : itineraires) {
+			if(it.getDepart()== startPoint.getAdresse())
+			{
+				System.out.println("### Itinéraire à supprimer trouvé ###");
+				toBeRemoved = it;
+				break;
+			}
+		}
+		if( toBeRemoved == null) {
+			return adresseAfter;
+		}
+		adresseAfter = toBeRemoved.getArrivee().getId();
+		itineraires.remove(toBeRemoved);
+		System.out.println("Itinéraire supprimé de la liste des itinéraires.");
+		return adresseAfter;
+	}
+	public boolean removeLivraison(int adresse){
+		Livraison toBeRemoved = null;
+		for(Livraison l : livraisons) {
+			if(l.getAdresse().getId() == adresse) {
+				System.out.println("### Livraison à supprimer trouvée ###");
+				toBeRemoved = l;
+				break;
+			}
+		}
+		if (toBeRemoved == null) {
+			return false;
+		}
+		livraisons.remove(toBeRemoved);
+		System.out.println("Livraison supprimée de la liste des livraisons.");
 		return false;
 	}
 	

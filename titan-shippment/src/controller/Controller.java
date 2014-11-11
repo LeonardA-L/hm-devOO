@@ -67,7 +67,7 @@ public class Controller implements ActionListener {
 				return;
 			}
 
-			// clic sur la carte aux coordonnées (x,y) and get the associated point (if any)
+			// clic sur la carte aux coordonnï¿½es (x,y) and get the associated point (if any)
 			VueNoeud view_noeud = interfaceView.getVuePanel().getVue_plan().getWhoIsClicked(x, y);
 
 			if (!livraisonsLoaded) {	
@@ -75,18 +75,33 @@ public class Controller implements ActionListener {
 				return;
 			}
 
+			if (!tourneeCalculed) {
+				interfaceView.displayAlert("Modification de livraison", "Vous devez calculer une tournée avant de modifier des livraisons.", "warning");
+				return;
+			}
+			
 			if (view_noeud != null) {	// user has clicked on a node and not on an empty part of map		
 				
 				// 1st STEP : Click on a node where you want to add a delivery
 				if (!addingNewLivraison) {	
-					if (!interfacePlanning.isNodeEntrepot(view_noeud.getNoeud().getId()) && interfacePlanning.isNodeADelivery(view_noeud.getNoeud().getId())) { 	// if node is already a delivery, stop.
+					
+					boolean isEntrepot = interfacePlanning.isNodeEntrepot(view_noeud.getNoeud().getId());
+					
+					if (!isEntrepot && interfacePlanning.isNodeADelivery(view_noeud.getNoeud().getId())) { 	
 						boolean suppr = interfaceView.confirmUserInput("Suppression", "Supprimer cette livraison ? ");
 						if (suppr) {
 							undoRedo.InsertRemoveCmd(view_noeud.getNoeud().getId());
+							interfaceView.getVuePanel().getVue_tournee().setTournee(interfacePlanning.getTournee());
+							interfaceView.repaint();
 							return;
 						}
 						return;
 					}
+					if (isEntrepot) {
+						interfaceView.displayAlert("Supprimer une livraison", "Vous ne pouvez pas supprimer l'entrepot", "warning");
+						return;
+					}
+					
 					addingNewLivraison = true;  							// start process of adding new delivery
 					newDeliveryAdress = view_noeud.getNoeud().getId();		// saving the node id (if it has no delivery)
 				}
@@ -113,7 +128,9 @@ public class Controller implements ActionListener {
 					if(!success) {
 						return;
 					}
-					//interfaceView.addAndUpdate(interfacePlanning.getLivraisonByAdr(newDeliveryAdress));
+					// Repaint the tournee
+					interfaceView.getVuePanel().getVue_tournee().setTournee(interfacePlanning.getTournee());
+					interfaceView.repaint();
 					interruptAddingNewLivraison();
 				}
 				else {
@@ -130,7 +147,14 @@ public class Controller implements ActionListener {
 
 				if (view_noeud != null) {
 					if(interfacePlanning.isNodeADelivery(view_noeud.getNoeud().getId())) {
-						infos = interfacePlanning.getLivraisonByAdr(view_noeud.getNoeud().getId()).toString();
+						Livraison livraison = interfacePlanning.getLivraisonByAdr(view_noeud.getNoeud().getId());
+						if (livraison != null) {
+							infos = livraison.toString();
+						}
+						else {
+							// c'est l'entrepot
+							infos = "Entrepot";
+						}
 					}
 					else {
 						infos = view_noeud.getNoeud().toString();					
@@ -210,7 +234,7 @@ public class Controller implements ActionListener {
 
 							// set views
 							boolean creatingViewOk = interfaceView.genererVueLivraisons(interfacePlanning.getListeLivraisons(), interfacePlanning.getEntrepot());
-							// pour les tournées, rien à voir
+							// pour les tournï¿½es, rien ï¿½ voir
 							// .getVue_tournee().setTournee(interfacePlanning.getTournee());
 
 							if (!creatingViewOk) {
@@ -226,7 +250,7 @@ public class Controller implements ActionListener {
 			else if (action.equals("click_button")) {
 				if (name.equals("calculTournee")) {
 					if (!mapLoaded || !livraisonsLoaded) {
-						interfaceView.displayAlert("Impossible de calculer la tournée", "Vous devez charger une carte et une livraison au préalable.", "warning");
+						interfaceView.displayAlert("Impossible de calculer la tournée", "Vous devez charger une carte et une livraison au prï¿½alable.", "warning");
 					}
 					else {
 						resetTournee();
@@ -242,11 +266,15 @@ public class Controller implements ActionListener {
 					if(!undoRedo.Undo()) {
 						interfaceView.displayAlert("UNDO", "Rien à annuler", "info");
 					}
+					interfaceView.getVuePanel().getVue_tournee().setTournee(interfacePlanning.getTournee());
+					interfaceView.repaint();
 				}
 				else if (name.equals("redo")) {
 					if(!undoRedo.Redo()) {
 						interfaceView.displayAlert("REDO", "Rien à rétablir", "info");
 					}
+					interfaceView.getVuePanel().getVue_tournee().setTournee(interfacePlanning.getTournee());
+					interfaceView.repaint();
 				}
 
 			}

@@ -88,12 +88,26 @@ public class InterfacePlanning {
 			idLivraison = getNewDeliveryId();	// get an id
 			System.out.println("New delivery id chosen : "+s_idLivraison);
 		}
+		// add new delivery into model :
 		boolean deliveryCreation = AddLivraison(idClient, idLivraison, heureDebut, heureFin, adresse);
+		System.out.println("New Delivery added to livraisons in InterfacePlanning");
 		if(deliveryCreation) {
-			// Add the new delivery to Tournee -> will return the delivery after, so that we can calculate the new itineraire
-			// calculate the 2 new itineraires 
-			// add them to tournee
-			return idLivraison; // contains the chosen id for the new delivery
+			Livraison deliveryBefore = this.getLivraisonByAdr(prevAdresse);
+			System.out.println("Delivery that should be before the new one in Tournee : adresse = "+deliveryBefore.getAdresse().getId());
+			Livraison newDelivery = this.getLivraisonByAdr(adresse);
+			System.out.println("New delivery : adresse = "+newDelivery.getAdresse().getId());
+			Livraison deliveryAfter = tournee.addLivraisonAfter(newDelivery, deliveryBefore);
+			System.out.println("Delivery that should be after the new one in Tournee : adresse = "+deliveryAfter.getAdresse().getId());
+			
+			if(deliveryBefore != null && deliveryAfter != null) {
+				System.out.println("Adding new itineraires...");
+				Itineraire itBefore = findItineraire(deliveryBefore, newDelivery, Controller.getInstance().getInterfaceAgglo().getPlan());
+				Itineraire itAfter = findItineraire(newDelivery, deliveryAfter, Controller.getInstance().getInterfaceAgglo().getPlan());
+				tournee.removeItineraireAfter(deliveryBefore); //on enlève l'ancien itinéraire entre deliveryBefore et deliveryAfter
+				tournee.addItineraireAfter(itBefore);
+				tournee.addItineraire(itAfter);
+				return idLivraison; // contains the chosen id for the new delivery (in case of undo/redo)
+			}
 		}
 		return -1;		// in case of problem
 	}
@@ -119,12 +133,22 @@ public class InterfacePlanning {
 	 * @return  True or false depending on the success of the operation
 	 */
 	public boolean removeOneLivraison(int idLivraison) {
+		Livraison toBeRemoved = null;
 		for(Livraison l : listeLivraisons) {
 			if(l.getIdLivraison() == idLivraison) {
-				listeLivraisons.remove(l);
-				return true;
+				toBeRemoved = l;
+				break;
 			}
 		}
+		if( toBeRemoved != null) {
+			int addAfter = tournee.removeItineraireAfter(toBeRemoved);
+			int addBefore = tournee.removeItineraireBefore(toBeRemoved);
+			tournee.removeLivraison(toBeRemoved.getAdresse().getId());
+			Itineraire newIt = findItineraire(getLivraisonByAdr(addBefore), getLivraisonByAdr(addAfter), Controller.getInstance().getInterfaceAgglo().getPlan());
+			tournee.addItineraire(newIt);
+			listeLivraisons.remove(toBeRemoved);
+		}
+	
 		return false;
 	}
 	
@@ -276,6 +300,11 @@ public class InterfacePlanning {
 	}
 	
 	public Livraison getLivraisonByAdr(int adresse) {
+		
+		if (adresse == entrepot.getId()) {
+			return null;
+		}
+		
 		for(Livraison l : listeLivraisons) {
 			if (l.getAdresse().getId() == adresse) {
 				return l;
