@@ -179,12 +179,14 @@ public class Fenetre extends JFrame {
 
 		Bouton loadMap = new Bouton("loadMap", "Chargement de la carte", true);
 		Bouton loadLivraisons = new Bouton("loadLivraisons", "Chargement des livraisons", true);
-		Bouton calculTournee = new Bouton("calculTournee", "Calcul de la tournï¿½e", false);
+		Bouton calculTournee = new Bouton("calculTournee", "Calcul de la tournée", false);
+		Bouton generateInstruction = new Bouton("generateInstructions", "Générer instructions", false);
 
 		btn_panel.add(Box.createGlue());
 		btn_panel.add(loadMap);
 		btn_panel.add(loadLivraisons);
 		btn_panel.add(calculTournee);
+		btn_panel.add(generateInstruction);
 		btn_panel.add(Box.createGlue());
 
 		right_panel.add(btn_panel, BorderLayout.CENTER);

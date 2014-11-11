@@ -5,7 +5,16 @@ import java.awt.event.ActionListener;
 
 
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.net.URL;
 import java.util.ArrayList;
+
+import org.junit.Test;
 
 import view.agglomeration.VueNoeud;
 import view.utils.InterfaceView;
@@ -30,6 +39,8 @@ public class Controller implements ActionListener {
 	private boolean addingNewLivraison;
 
 	private int newDeliveryAdress = -1;
+
+	final String dir = System.getProperty("user.home") + "\\Desktop";
 
 	/**
 	 * 	Constructor
@@ -216,7 +227,7 @@ public class Controller implements ActionListener {
 
 							// set views
 							boolean creatingViewOk = interfaceView.genererVueLivraisons(interfacePlanning.getListeLivraisons(), interfacePlanning.getEntrepot());
-							// pour les tournï¿½es, rien ï¿½ voir
+							// pour les tournées, rien à voir
 							// .getVue_tournee().setTournee(interfacePlanning.getTournee());
 
 							if (!creatingViewOk) {
@@ -232,7 +243,7 @@ public class Controller implements ActionListener {
 			else if (action.equals("click_button")) {
 				if (name.equals("calculTournee")) {
 					if (!mapLoaded || !livraisonsLoaded) {
-						interfaceView.displayAlert("Impossible de calculer la tournée", "Vous devez charger une carte et une livraison au prï¿½alable.", "warning");
+						interfaceView.displayAlert("Impossible de calculer la tournée", "Vous devez charger une carte et une livraison au préalable.", "warning");
 					}
 					else {
 						resetTournee();
@@ -240,7 +251,7 @@ public class Controller implements ActionListener {
 						interfaceView.getVuePanel().getVue_tournee().setTournee(interfacePlanning.getTournee());
 						tourneeCalculed = true;
 
-						System.out.println("Tournee : " + interfacePlanning.getTournee().toString());
+						//System.out.println("Tournee : " + interfacePlanning.getTournee().toString());
 						interfaceView.repaint();
 					}
 				}
@@ -257,6 +268,14 @@ public class Controller implements ActionListener {
 					}
 					interfaceView.getVuePanel().getVue_tournee().setTournee(interfacePlanning.getTournee());
 					interfaceView.repaint();
+				}
+				else if (name.equals("generateInstructions")) {
+					System.out.println("Generating text instructions.");
+					if (!tourneeCalculed) {
+						interfaceView.displayAlert("Generation des instructions", "Impossible de généner le fichier d'instructions avant le calcul d'une tournée", "info");
+						return;
+					}
+					generateInstructions();
 				}
 
 			}
@@ -328,6 +347,24 @@ public class Controller implements ActionListener {
 		}
 	}
 	
+	private void generateInstructions() {
+        System.out.println("Write to dir : " + dir);
+		//File instructionFile = new File(dir);
+		//instructionFile.setWritable(true);
+		Writer writer = null;
+		
+		String instructions = interfacePlanning.getTournee().toString();
+		
+		try {
+		    writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dir), "utf-8"));
+		    writer.write(instructions);
+		} catch (IOException ex) {
+			interfaceView.displayAlert("Generation des instructions", ex.getMessage(), "warning");
+		} finally {
+		   try {writer.close();} catch (Exception ex) {}
+		}
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
@@ -337,7 +374,8 @@ public class Controller implements ActionListener {
 	public  InterfaceAgglo getReferenceToInterfaceAgglo() {
 		return interfaceAgglo;
 	}
-
+	
+	
 	//------------------------------------------------------------------
 	// GETTERS - SETTERS
 	public InterfaceAgglo getInterfaceAgglo() {
