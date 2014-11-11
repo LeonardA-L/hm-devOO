@@ -9,6 +9,9 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+import controller.Controller;
 
 public class ButtonEditor extends DefaultCellEditor {
     
@@ -49,8 +52,8 @@ public class ButtonEditor extends DefaultCellEditor {
 	     public JButton getButton(){return this.button;}
 	      
 	     public void actionPerformed(ActionEvent event) {
-	      JOptionPane.showMessageDialog(button, this.table.getModel().getValueAt(row, 0) + ": Ouch!");
-	    //  this.button = ((JButton)event.getSource());
+	    	 DefaultTableModel  model = (DefaultTableModel )table.getModel();
+	    	 Controller.getInstance().trigger("delete_noeud", model.getValueAt(row, 4).toString());
 	     }
 	  }
 	}

@@ -85,23 +85,7 @@ public class Controller implements ActionListener {
 				// 1st STEP : Click on a node where you want to add a delivery
 				if (!addingNewLivraison) {	
 					
-					boolean isEntrepot = interfacePlanning.isNodeEntrepot(view_noeud.getNoeud().getId());
-					
-					if (!isEntrepot && interfacePlanning.isNodeADelivery(view_noeud.getNoeud().getId())) { 	
-						boolean suppr = interfaceView.confirmUserInput("Suppression", "Supprimer cette livraison ? ");
-						if (suppr) {
-							undoRedo.InsertRemoveCmd(view_noeud.getNoeud().getId());
-							interfaceView.removeShippment(view_noeud.getNoeud().getId());
-							interfaceView.getVuePanel().getVue_tournee().setTournee(interfacePlanning.getTournee());
-							interfaceView.repaint();
-							return;
-						}
-						return;
-					}
-					if (isEntrepot) {
-						interfaceView.displayAlert("Supprimer une livraison", "Vous ne pouvez pas supprimer l'entrepot", "warning");
-						return;
-					}
+					deleteNoeud(view_noeud.getNoeud().getId());
 					
 					addingNewLivraison = true;  							// start process of adding new delivery
 					newDeliveryAdress = view_noeud.getNoeud().getId();		// saving the node id (if it has no delivery)
@@ -276,6 +260,26 @@ public class Controller implements ActionListener {
 				}
 
 			}
+			else if(action.equals("delete_noeud")){
+				
+				if (!tourneeCalculed) {
+					interfaceView.displayAlert("Modification de livraison", "Vous devez calculer une tournée avant de modifier des livraisons.", "warning");
+					return;
+				}
+				
+				deleteNoeud(Integer.parseInt(name));
+			}
+		}
+	}
+	
+	public void trigger(String action, int idNoeud){
+		boolean suppr = interfaceView.confirmUserInput("Suppression", "Supprimer cette livraison ? ");
+		if (suppr) {
+			undoRedo.InsertRemoveCmd(idNoeud);
+			interfaceView.removeShippment(idNoeud);
+			interfaceView.getVuePanel().getVue_tournee().setTournee(interfacePlanning.getTournee());
+			interfaceView.repaint();
+			return;
 		}
 	}
 
@@ -304,8 +308,31 @@ public class Controller implements ActionListener {
 		}
 	}
 
-	public void actionPerformed(ActionEvent e) {
-		//appel des autres methodes en fonction de l'action event 
+	public void deleteNoeud(int idNoeud) {
+		boolean isEntrepot = interfacePlanning.isNodeEntrepot(idNoeud);
+		
+		if (!isEntrepot && interfacePlanning.isNodeADelivery(idNoeud)) { 	
+			boolean suppr = interfaceView.confirmUserInput("Suppression", "Supprimer cette livraison ? ");
+			if (suppr) {
+				undoRedo.InsertRemoveCmd(idNoeud);
+				interfaceView.removeShippment(idNoeud);
+				interfaceView.getVuePanel().getVue_tournee().setTournee(interfacePlanning.getTournee());
+				interfaceView.repaint();
+				return;
+			}
+			return;
+		}
+		
+		if (isEntrepot) {
+			interfaceView.displayAlert("Supprimer une livraison", "Vous ne pouvez pas supprimer l'entrepot", "warning");
+			return;
+		}
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	public  InterfaceAgglo getReferenceToInterfaceAgglo() {
