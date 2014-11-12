@@ -1,6 +1,7 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 import model.agglomeration.Noeud;
@@ -127,6 +128,7 @@ public class DijkstraFinder implements PathFinder {
 		int[][] cost = subG.getCost();
 		ArrayList<Integer> next = new ArrayList<Integer>();
 		ArrayList<Livraison> sortedList = new ArrayList<Livraison>();
+		sortedList.ensureCapacity(n);
 		Solver solver = new Solver();
 		
 		
@@ -135,7 +137,7 @@ public class DijkstraFinder implements PathFinder {
 		// xNext[i] = vertex visited after i
 		IntVar[] xNext = new IntVar[n];
 		IntVar[] xTime = new IntVar[n];
-		for (int i = 0; i < n; i++){
+		for (int i = 0; i < n; i++) {
 			xNext[i] = VariableFactory.enumerated("Next " + i, subG.getSucc(i), solver);
 			if(livraisons.get(i).getPlageHoraire() != null){	// storehouse
 				int[] timeBounds = livraisons.get(i).getPlageHoraire().getBounds();
@@ -151,6 +153,7 @@ public class DijkstraFinder implements PathFinder {
 		
 		// Add constraints
 		for (int i = 0; i < n; i++){
+			System.out.println("node: " + livraisons.get(i).getAdresse().getId() +" i: "+i+" cost[i]: "+Arrays.toString(cost[i]));
 			solver.post(IntConstraintFactory.element(xCost[i], cost[i], xNext[i], 0, "none"));
 			/*
 			if(i != n-1){
@@ -170,10 +173,15 @@ public class DijkstraFinder implements PathFinder {
 		// try to find and prove the optimal solution
 		solver.findOptimalSolution(ResolutionPolicy.MINIMIZE,xTotalCost);
 		// record solution and state
-		if(solver.getMeasures().getSolutionCount()>0){
-			for(int i=0;i<n;i++) sortedList.add(livraisons.get(xNext[i].getValue()));
-			//int totalCost = xTotalCost.getValue();
-			
+		
+		if (solver.getMeasures().getSolutionCount() > 0) {
+			int current = xNext[0].getValue();
+			for(int i=0;i<n;i++) { 
+				sortedList.add(livraisons.get(xNext[current].getValue()));
+				current = xNext[current].getValue();
+				//int totalCost = xTotalCost.getValue();
+				//System.out.println("r: " +xNext[i].getValue() + "ex: " + solver.getExplainer().retrieve(xNext[i], i));
+			}
 		}
 		else {
 			
