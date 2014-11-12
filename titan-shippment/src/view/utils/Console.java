@@ -12,7 +12,7 @@ public class Console extends JLabel {
 		Dimension consoleSize = new Dimension((int)sizeBottomPanel.getWidth()-20, (int)sizeBottomPanel.getHeight()-20);
 		this.setSize(consoleSize);
 		this.setPreferredSize(consoleSize);
-		this.setText("Console...");
+		this.text = "Console...";
 		this.setText("<html>" + this.text + "</html>");
 	}
 	
