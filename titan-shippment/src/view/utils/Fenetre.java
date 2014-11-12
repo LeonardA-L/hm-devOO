@@ -93,13 +93,7 @@ public class Fenetre extends JFrame {
 		this.bottom.setLayout( new BorderLayout() );
 
 		Console console = new Console(sizeBottom);
-		console.log("Super L�onard");
-		console.log("GIGA ANTON");
-		console.log("GIGA ANTON1");
-		console.log("GIGA ANTON2");
-		console.log("GIGA ANTON3");
-		console.log("GIGA ANTON4");
-		console.log("GIGA ANTON5");
+	
 
 		//JScrollPane scrollPane = new JScrollPane (new ScrolledConsole(console));
 

@@ -64,7 +64,7 @@ public class CommandAddOne implements ICommand {
 		// MAJ VueLivraison
 		interfaceV.removeAndUpdate(adresse);
 		// remove the livraison at coordinates
-		int success = interfaceP.removeOneLivraison(idLivraison);
+		int success = interfaceP.removeOneLivraison(adresse);
 		if (success == -1) {
 			System.out.println("# ------ Unexecute AddOne failed ------ #"); 	
 			return false;

@@ -34,7 +34,7 @@ public class XMLBuilder {
 	
 	//vérifie si le fichier est lisible et bien formé, et que l'uppermost balise est bien <Reseau> (pour un plan)
 	//ou <JourneeType> (pour une liste de livraisons)
-	//modifier pour intégrer une validation against DTD
+	//modifier pour intï¿½grer une validation against DTD
 	public static boolean checkWellformedness(String file) {
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		factory.setValidating(false);
@@ -102,7 +102,10 @@ public class XMLBuilder {
 			    		int x = Integer.parseInt(line.substring(index, line.indexOf("\"", index)));
 			    		index = line.indexOf("y=", index)+3;
 			    		int y = Integer.parseInt((line.substring(index, line.indexOf("\"", index))));
-			    		plan.addNoeud(x, y, idNoeud);
+			    		if (!plan.addNoeud(x, y, idNoeud)) {
+			    			intf.resetPlan();
+			    			return null;
+			    		}
 			    	}			    	
 			    }
 			    
@@ -139,7 +142,10 @@ public class XMLBuilder {
 			    		if(idNoeud == idDestination){
 			    			throw new Exception("Id is identical to destination for node" + idNoeud);
 			    		}
-			    		plan.addTronconToNoeud(idNoeud, rue, vitesse, longueur, idDestination);
+			    		if (!plan.addTronconToNoeud(idNoeud, rue, vitesse, longueur, idDestination)) {
+			    			intf.resetPlan();
+			    			return null;
+			    		}
 			    		line = reader1.readLine();
 			    	}
 			    }

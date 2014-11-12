@@ -9,6 +9,7 @@ public class Livraison {
 	private int idClient;
 	private int idLivraison;
 	private String heureLivraison;
+	private Boolean isDelayed;
 	
 	public Livraison() {
 		this.plageHoraire = new PlageHoraire();
@@ -16,6 +17,7 @@ public class Livraison {
 		this.setIdClient(0);
 		this.setIdLivraison(0);
 		this.heureLivraison="";
+		this.isDelayed=false;
 	}
 
 	public Livraison(PlageHoraire plageHoraire, Noeud adresse, int idClient, int idLivraison) {
@@ -24,6 +26,7 @@ public class Livraison {
 		this.idClient = idClient;
 		this.idLivraison = idLivraison;
 		this.heureLivraison="";
+		this.isDelayed=false;
 	}
 
 	public PlageHoraire getPlageHoraire() {
@@ -64,6 +67,14 @@ public class Livraison {
 
 	public void setHeureLivraison(String heureLivraison) {
 		this.heureLivraison = heureLivraison;
+	}
+	
+	public void setIsDelayed(Boolean bool) {
+		this.isDelayed = bool;
+	}
+	
+	public Boolean isDelayed() {
+		return this.isDelayed;
 	}
 	
 	public String toString(){

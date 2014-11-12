@@ -12,6 +12,7 @@ public class Itineraire {
 	private Noeud depart;
 	private Noeud arrivee;
 	private ArrayList<Troncon> troncons;
+	private int durationSecondes;
 
 	public Itineraire(Noeud depart, Noeud arrivee, ArrayList<Troncon> troncons) {
 		this.depart = depart;
@@ -59,13 +60,19 @@ public class Itineraire {
 		this.troncons = troncons;
 	}
 	
+	public int getDurationSecondes() {
+		return this.durationSecondes;
+	}
+	
 	public void computeTronconsFromNodes(Plan p, ArrayList<Integer> nodesIds){
+		this.durationSecondes = 0;
 		for(int i=0;i<nodesIds.size()-1;i++){
 			Noeud n1 = p.getNoeudById(nodesIds.get(i));
 			Noeud n2 = p.getNoeudById(nodesIds.get(i+1));
 			
 			for(Troncon t : n1.getTroncons()){
 				if(t.getNoeudDestination() == n2){
+					this.durationSecondes += t.getLongueur()/t.getVitesse();
 					this.troncons.add(t);
 					break;
 				}

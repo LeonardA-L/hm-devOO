@@ -33,7 +33,7 @@ public class CommandRemoveOne implements ICommand{
 		//  MAJ VueLivraison
 		interfaceV.removeAndUpdate(adresse);
 		
-		previousAdresseLivraison = interfaceP.removeOneLivraison(idLivraison);
+		previousAdresseLivraison = interfaceP.removeOneLivraison(adresse);
 		if (previousAdresseLivraison == -1) {
 			System.out.println("# ------ Execute RemoveOne failed ------ #"); 	
 			return false;

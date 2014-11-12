@@ -44,11 +44,15 @@ public class Plan {
 	 * @param coordX	coord X of new node
 	 * @param coordY	coord Y of new node
 	 * @param id		id of new node
-	 * @return			index of created node in "noeuds"
+	 * @return			boolean if add worked
 	 */
-	public int addNoeud(int coordX, int coordY, int id) {
+	public boolean addNoeud(int coordX, int coordY, int id) {
+		if (coordX < 0 || coordY < 0 || id < 0) {
+			return false;
+		}
 		Noeud n = new Noeud(coordX, coordY, id, new ArrayList<Troncon>());
-		return this.addNoeud(n);
+		this.addNoeud(n);
+		return true;
 	}
 	
 	/**
