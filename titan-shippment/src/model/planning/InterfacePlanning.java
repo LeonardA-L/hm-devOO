@@ -104,7 +104,7 @@ public class InterfacePlanning {
 				Itineraire itBefore = findItineraire(deliveryBefore, newDelivery, Controller.getInstance().getInterfaceAgglo().getPlan());
 				Itineraire itAfter = findItineraire(newDelivery, deliveryAfter, Controller.getInstance().getInterfaceAgglo().getPlan());
 				System.out.println("Trying to remove former itineraire");
-				tournee.removeItineraireAfter(deliveryBefore); //on enlève l'ancien itinéraire entre deliveryBefore et deliveryAfter
+				tournee.removeItineraireAfter(deliveryBefore); //on enlï¿½ve l'ancien itinï¿½raire entre deliveryBefore et deliveryAfter
 				tournee.addItineraireAfter(itBefore);
 				tournee.addItineraire(itAfter);
 				return idLivraison; // contains the chosen id for the new delivery (in case of undo/redo)
@@ -146,7 +146,7 @@ public class InterfacePlanning {
 			int addAfter = tournee.removeItineraireAfter(toBeRemoved);
 			int addBefore = tournee.removeItineraireBefore(toBeRemoved);
 			if (addAfter == -1 || addBefore == -1) {
-				System.out.println("removeOneLivraison - Erreur durant la suppression des itinéraires.");
+				System.out.println("removeOneLivraison - Erreur durant la suppression des itinï¿½raires.");
 				System.out.println("addAfter = "+addAfter+" and addBefore = "+addBefore);
 				return -1;
 			}
@@ -225,9 +225,10 @@ public class InterfacePlanning {
 		
 		// Instanciate pathfinder
 		PathFinder pf = new DijkstraFinder(plan.computeShippmentGraph());
+		pf.setTimeout(30000);
 		shGraph = (ShippmentGraph)((DijkstraFinder)pf).getGraph();
 		// Compute cycle (sorted list of livraison)
-		ArrayList<Livraison> cycle = pf.findCycle(100000, livraisons,this.entrepot);
+		ArrayList<Livraison> cycle = pf.findCycle(Integer.MAX_VALUE, livraisons,this.entrepot);
 		
 		for (int i = 0; i < cycle.size(); ++i) {
 			try {

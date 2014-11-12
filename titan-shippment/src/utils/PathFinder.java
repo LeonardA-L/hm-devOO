@@ -32,4 +32,8 @@ public interface PathFinder {
 	 * @return a list of nodes IDs for the shortest cycle
 	 */
 	public ArrayList<Livraison> findCycleWithoutTimeWindows(int upperCostBound, ArrayList<Livraison> livraisons, Noeud storehouse);
+	
+	public int getTimeout();
+
+	public void setTimeout(int timeout);
 }
