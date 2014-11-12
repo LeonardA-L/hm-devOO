@@ -220,7 +220,6 @@ public class InterfacePlanning {
 	 */
 	public void CalculTournee() {
 		InterfaceAgglo interfaceAgglo = Controller.getInstance().getInterfaceAgglo();
-		float[][] matriceAdjacence = interfaceAgglo.GetFormatedMap();
 		Plan plan = interfaceAgglo.getPlan();
 		ArrayList<Livraison> livraisons = getListeLivraisons();
 		
@@ -229,6 +228,20 @@ public class InterfacePlanning {
 		shGraph = (ShippmentGraph)((DijkstraFinder)pf).getGraph();
 		// Compute cycle (sorted list of livraison)
 		ArrayList<Livraison> cycle = pf.findCycle(100000, livraisons,this.entrepot);
+		
+		for (int i = 0; i < cycle.size(); ++i) {
+			try {
+				System.out.println(cycle.get(i).toString());
+			}
+			catch(Exception e) {
+				/*if (i == 0) {
+					System.out.println("Entrepot =>");
+				}
+				else {
+					System.out.println("Erreur pour la livraison " + i);
+				}*/
+			}
+		}
 		
 		// Finding itineraires
 		ArrayList<Itineraire> itineraires = new ArrayList<Itineraire>();

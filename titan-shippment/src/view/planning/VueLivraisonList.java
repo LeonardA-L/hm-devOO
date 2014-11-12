@@ -20,8 +20,8 @@ public class VueLivraisonList extends JTable {
 	public VueLivraisonList(DefaultTableModel model){
 		super(model);
 		this.setPreferredScrollableViewportSize(new Dimension(250,200));
-		this.getColumn("-").setCellRenderer(new ButtonRenderer());
-		this.getColumn("-").setCellEditor(
+		this.getColumnModel().getColumn(3).setCellRenderer(new ButtonRenderer());
+		this.getColumnModel().getColumn(3).setCellEditor(
 		        new ButtonEditor(new JCheckBox()));
 		this.getColumnModel().getColumn(4).setMinWidth(0);
 		this.getColumnModel().getColumn(4).setMaxWidth(0);
