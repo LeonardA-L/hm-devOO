@@ -104,7 +104,7 @@ public class DijkstraFinder implements PathFinder {
 		// Check if the storehouse is already in the delivery list
 		boolean storehouseInList = false;
 		for(Livraison l : livraisons){
-			if(l.getAdresse() == storehouse){
+			if(l.getAdresse().getId() == storehouse.getId()){
 				storehouseInList = true;
 				break;
 			}
@@ -141,7 +141,6 @@ public class DijkstraFinder implements PathFinder {
 			xNext[i] = VariableFactory.enumerated("Next " + i, subG.getSucc(i), solver);
 			if(livraisons.get(i).getPlageHoraire() != null){	// storehouse
 				int[] timeBounds = livraisons.get(i).getPlageHoraire().getBounds();
-				System.out.println(timeBounds[1]);
 				// add time variables and their boundaries
 				xTime[i] = VariableFactory.bounded("Arriving time at "+i, timeBounds[0], timeBounds[1], solver);
 			}
