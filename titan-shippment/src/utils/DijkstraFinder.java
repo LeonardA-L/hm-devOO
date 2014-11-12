@@ -138,6 +138,7 @@ public class DijkstraFinder implements PathFinder {
 		nodes.clear();
 
 		nodes.add(storehouse.getId());
+		
 		for (PlageHoraire pl : plages) {
 			ArrayList<Livraison> liv = livraisonByTimeWindow.get(pl);
 			for (int i = 0; i < liv.size(); i++) {
@@ -145,9 +146,14 @@ public class DijkstraFinder implements PathFinder {
 			}
 		}
 		
-
-		ShippmentGraph subG = graph.createTSPGraph(nodes, livraisonByTimeWindow, plages, storeHousePoint);
-
+		
+		ShippmentGraph subG;
+		if (plages.size() > 1) {
+		subG= graph.createTSPGraph(nodes, livraisonByTimeWindow, plages, storeHousePoint);
+		}
+		else{
+			subG = graph.createTSPGrapWithoutTimeWindows(nodes);
+		}
 		// creating a sub graph with only the wanted nodes
 		// ShippmentGraph subG = graph.createTSPGraph(nodes);
 
@@ -196,11 +202,13 @@ public class DijkstraFinder implements PathFinder {
 		// record solution and state
 
 		// ------------------------- Retrieve result
-
+		System.out.println(solver);
 		if (solver.getMeasures().getSolutionCount() > 0) {
 			int current = xNext[0].getValue();
 			for (int i = 0; i < n; i++) {
-				sortedList.add(livraisons.get(xNext[current].getValue()));
+				Livraison l = livraisons.get(xNext[current].getValue());
+				if (l.getPlageHoraire() != null)	System.out.println(l);
+				sortedList.add(l);
 				current = xNext[current].getValue();
 				// int totalCost = xTotalCost.getValue();
 				// System.out.println("r: " +xNext[i].getValue() + "ex: " +
