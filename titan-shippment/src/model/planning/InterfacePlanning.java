@@ -21,9 +21,9 @@ public class InterfacePlanning {
 	private Tournee tournee;
 	private Noeud entrepot;
 	private ShippmentGraph shGraph;
-	
+
 	private static int s_idLivraison = -1;
-	
+
 	/**
 	 * 	Constructor w/o parameter
 	 */
@@ -32,9 +32,9 @@ public class InterfacePlanning {
 		setPlagesHoraires(new ArrayList<PlageHoraire>());
 		tournee = null;
 	}
-	
+
 	//################################## Working with Livraisons #####################################
-	
+
 	/**	Call a method in XMLBuilder, giving it the name of the file
 	 * 	containing the plan. Then get back the array of elements to 
 	 *  be used and build all livraisons from it 
@@ -53,7 +53,7 @@ public class InterfacePlanning {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Add a livraison in listeLivraisons (for use with the xml builder)
 	 * @param idClient			id of the client
@@ -73,7 +73,7 @@ public class InterfacePlanning {
 		listeLivraisons.add(liv);
 		return true;
 	}
-	
+
 	/**
 	 * Add a delivery from a click on the map.
 	 * @param idClient
@@ -92,14 +92,15 @@ public class InterfacePlanning {
 		// add new delivery into model :
 		boolean deliveryCreation = AddLivraison(idClient, idLivraison, heureDebut, heureFin, adresse);
 		System.out.println("New Delivery added to livraisons in InterfacePlanning");
-		
+
+
 		if(deliveryCreation) {					//if creatin went right in model
 			Noeud nodeBefore = null;		// fetched
 			Noeud nodeOfDelivery = null;	// fetched
 			Noeud nodeAfter = null;			// fetched
 			Livraison newDelivery = null;	// fetched
 			Livraison deliveryAfter = null;	// fetched
-			
+
 			// NODE BEFORE
 			if (entrepot.getId() == prevAdresse) {				// if prevAdresse is the same as warehouse
 				System.out.println("### Node before new delivery is the warehouse ###");
@@ -112,7 +113,7 @@ public class InterfacePlanning {
 			// NODE OF DELIVERY 
 			newDelivery = this.getLivraisonByAdr(adresse);
 			nodeOfDelivery = newDelivery.getAdresse();
-			
+
 			// NODE AFTER 
 			int adresseAfter = tournee.addLivraisonAfter(newDelivery, nodeBefore.getId());
 			if (adresseAfter == -1) {  // adresse after is entrepot
@@ -124,19 +125,22 @@ public class InterfacePlanning {
 				nodeAfter = deliveryAfter.getAdresse();
 				System.out.println("### Node after new delivery is NOT the warehouse ###");
 			}
-			
+
 			System.out.println("Adding new itineraires...");
 			Itineraire itBefore = findItineraire(nodeBefore, nodeOfDelivery, Controller.getInstance().getInterfaceAgglo().getPlan());
 			Itineraire itAfter = findItineraire(nodeOfDelivery, nodeAfter, Controller.getInstance().getInterfaceAgglo().getPlan());
 			System.out.println("Trying to remove former itineraire");
-			tournee.removeItineraireAfter(nodeBefore.getId()); //on enlève l'ancien itinéraire entre nodeBefore et node after
+			tournee.removeItineraireAfter(nodeBefore.getId()); //on enlï¿½ve l'ancien itinï¿½raire entre nodeBefore et node after
 			tournee.addItineraireAfter(itBefore);
 			tournee.addItineraire(itAfter);
+			
+			calculLivraisonsSchedule();
+
 			return idLivraison; // contains the chosen id for the new delivery (in case of undo/redo)
 		}
 		return -1;		
 	}
-	
+
 	/**
 	 *  At init, the method finds the higher delivery id
 	 *  Then it always increment the idLivraison var.
@@ -170,7 +174,7 @@ public class InterfacePlanning {
 			int addAfter = tournee.removeItineraireAfter(toBeRemoved.getAdresse().getId());
 			int addBefore = tournee.removeItineraireBefore(toBeRemoved.getAdresse().getId());
 			if (addAfter == -1 || addBefore == -1) {
-				System.out.println("removeOneLivraison - Erreur durant la suppression des itinéraires.");
+				System.out.println("removeOneLivraison - Erreur durant la suppression des itinï¿½raires.");
 				System.out.println("addAfter = "+addAfter+" and addBefore = "+addBefore);
 				return -1;
 			}
@@ -202,6 +206,8 @@ public class InterfacePlanning {
 			Itineraire newIt = findItineraire(nodeBefore, nodeAfter, Controller.getInstance().getInterfaceAgglo().getPlan());
 			tournee.addItineraireAfter(newIt);
 			listeLivraisons.remove(toBeRemoved);	// delete delivery from model
+			
+			calculLivraisonsSchedule();
 			return addBefore;
 		}
 		else {
@@ -209,7 +215,7 @@ public class InterfacePlanning {
 			return -1;
 		}
 	}
-	
+
 	/**
 	 * Return the PlageHoraire associated with 
 	 * @param heureDebut
@@ -220,15 +226,20 @@ public class InterfacePlanning {
 		Iterator<PlageHoraire> it = plagesHoraires.iterator();
 		while (it.hasNext()) {
 			PlageHoraire ph = it.next();
-			if (ph.getHeureDebut() == heureDebut && ph.getHeureFin() == heureFin) {
+			if (ph.getHeureDebut().equals(heureDebut) && ph.getHeureFin().equals(heureFin)) {
 				return ph;
 			}
 		}
+		String format = "\\d{1,2}:\\d{1,2}:\\d{1,2}";
+		if (!heureDebut.matches(format) || !heureFin.matches(format)) {
+			return null;
+		}
+		
 		PlageHoraire ph = new PlageHoraire(heureDebut, heureFin);
 		plagesHoraires.add(ph);
 		return ph;
 	}
-	
+
 	public Noeud getEntrepot() {
 		return entrepot;
 	}
@@ -244,7 +255,7 @@ public class InterfacePlanning {
 			return false;
 		}
 	}
-	
+
 	public boolean setEntrepot(int id) {
 		Noeud entrepot = Controller.getInstance().getInterfaceAgglo().getPlan().getNoeudById(id);
 		return this.setEntrepot(entrepot);
@@ -254,14 +265,14 @@ public class InterfacePlanning {
 		listeLivraisons.clear();
 		plagesHoraires.clear();
 	}
-	
+
 	public void resetTournee() {
 		tournee.reset();
 	}
 
-	
+
 	//#################################### Working with Tournee ###############################
-	
+
 	/**
 	 * calculates the path for delivery
 	 */
@@ -269,12 +280,14 @@ public class InterfacePlanning {
 		InterfaceAgglo interfaceAgglo = Controller.getInstance().getInterfaceAgglo();
 		Plan plan = interfaceAgglo.getPlan();
 		ArrayList<Livraison> livraisons = getListeLivraisons();
-		
+
 		// Instanciate pathfinder
 		PathFinder pf = new DijkstraFinder(plan.computeShippmentGraph());
+		pf.setTimeout(30000);
 		shGraph = (ShippmentGraph)((DijkstraFinder)pf).getGraph();
 		// Compute cycle (sorted list of livraison)
-		ArrayList<Livraison> cycle = pf.findCycle(100000, livraisons,this.entrepot);
+
+		ArrayList<Livraison> cycle = pf.findCycle(Integer.MAX_VALUE, livraisons,this.entrepot);
 		
 		for (int i = 0; i < cycle.size(); ++i) {
 			try {
@@ -289,30 +302,13 @@ public class InterfacePlanning {
 				}*/
 			}
 		}
-		
+
 		// Finding itineraires
-		int bufTime = 0;
-		bufTime = Misc.parseTimeStrToSec(cycle.get(1).getPlageHoraire().getHeureDebut());
 		ArrayList<Itineraire> itineraires = new ArrayList<Itineraire>();
 		for(int i=0;i<cycle.size() - 1;i++){	// No for in !
 			Livraison l1 = cycle.get(i);
 			Livraison l2 = cycle.get(i+1);
 			Itineraire it = findItineraire(l1, l2, plan);
-			bufTime += it.getDurationSecondes();
-			cycle.get(i+1).setIsDelayed(false);
-			if (0==i) { // first livraison append always at "HeureDebut"
-				bufTime -= it.getDurationSecondes();
-			}
-			// livraison can't append before "HeureDebut"
-			else if (bufTime<Misc.parseTimeStrToSec(cycle.get(i+1).getPlageHoraire().getHeureDebut())) {
-				bufTime = Misc.parseTimeStrToSec(cycle.get(i+1).getPlageHoraire().getHeureDebut());
-			}
-			// if delay
-			else if (bufTime>Misc.parseTimeStrToSec(cycle.get(i+1).getPlageHoraire().getHeureFin())) {
-				// TODO RAISE ERROR
-				cycle.get(i+1).setIsDelayed(true);
-			}
-			cycle.get(i+1).setHeureLivraison(Misc.parseTimeSecToStr(bufTime));
 			itineraires.add(it);
 		}
 		// Loop the cycle
@@ -320,15 +316,17 @@ public class InterfacePlanning {
 		Livraison l2 = cycle.get(0);
 		Itineraire it = findItineraire(l1, l2, plan);
 		itineraires.add(it);
-		
+
 		// Prepare the tournee
 		Tournee tournee = new Tournee();
 		tournee.setLivraisons(cycle);
 		tournee.setItineraires(itineraires);
-		
+
 		this.setTournee(tournee);
+		
+		calculLivraisonsSchedule();
 	}
-	
+
 	/**
 	 * Computes an Itineraire object between two livraison points
 	 * Note : can only be called once the tournee has been calculated
@@ -353,13 +351,13 @@ public class InterfacePlanning {
 		return it;
 	}
 	//################################### Working with view ####################################
-	
+
 	public boolean isNodeADelivery(int idNode) {
-		
+
 		if (isNodeEntrepot(idNode)) {
 			return true;
 		}
-		
+
 		for(Livraison l : listeLivraisons) {
 			if (l.getAdresse().getId() == idNode) {
 				return true;
@@ -367,7 +365,7 @@ public class InterfacePlanning {
 		}
 		return false;
 	}
-	
+
 	public boolean isNodeEntrepot(int idNode) {
 		if (entrepot == null) {
 			return false;
@@ -378,7 +376,7 @@ public class InterfacePlanning {
 		}
 		return false;
 	}
-	
+
 	//---------------------------------------------------------------------------------
 	// GETTERS - SETTERS - UTILITIES
 	public ArrayList<Livraison> getListeLivraisons() {
@@ -393,13 +391,13 @@ public class InterfacePlanning {
 		}
 		return null;
 	}
-	
+
 	public Livraison getLivraisonByAdr(int adresse) {
-		
+
 		if (adresse == entrepot.getId()) {
 			return null;
 		}
-		
+
 		for(Livraison l : listeLivraisons) {
 			if (l.getAdresse().getId() == adresse) {
 				return l;
@@ -407,14 +405,36 @@ public class InterfacePlanning {
 		}
 		return null;
 	}
+	
+	public void calculLivraisonsSchedule () {
+		int bufTime = 0;
+		bufTime = Misc.parseTimeStrToSec(tournee.getLivraisons().get(1).getPlageHoraire().getHeureDebut());
+		for (int i = 0 ; i < tournee.getLivraisons().size()-1 ; ++i ) {
+			bufTime += tournee.getItineraires().get(i).getDurationSecondes();
+			tournee.getLivraisons().get(i+1).setIsDelayed(false);
+			if (0==i) { // first livraison append always at "HeureDebut"
+				bufTime -= tournee.getItineraires().get(i).getDurationSecondes();
+			}
+			// livraison can't append before "HeureDebut"
+			else if (bufTime<Misc.parseTimeStrToSec(tournee.getLivraisons().get(i+1).getPlageHoraire().getHeureDebut())) {
+				bufTime = Misc.parseTimeStrToSec(tournee.getLivraisons().get(i+1).getPlageHoraire().getHeureDebut());
+			}
+			// if delay
+			else if (bufTime>Misc.parseTimeStrToSec(tournee.getLivraisons().get(i+1).getPlageHoraire().getHeureFin())) {
+				tournee.getLivraisons().get(i+1).setIsDelayed(true);
+			}
+			tournee.getLivraisons().get(i+1).setHeureLivraison(Misc.parseTimeSecToStr(bufTime));
+		}
+	}
+	
 	public Livraison getLivraisonByIndex(int index) {
 		return listeLivraisons.get(index);
 	}
-	
+
 	public int getIndexOfLivraison(Livraison l) {
 		return listeLivraisons.indexOf(l);	// returns -1 if l is not in listeLivraisons
 	}
-	
+
 
 	public void setListeLivraisons(ArrayList<Livraison> listeLivraisons) {
 		this.listeLivraisons = listeLivraisons;
@@ -435,5 +455,5 @@ public class InterfacePlanning {
 	public void setPlagesHoraires(ArrayList<PlageHoraire> plagesHoraires) {
 		this.plagesHoraires = plagesHoraires;
 	}
-	
+
 }

@@ -240,7 +240,11 @@ public static boolean getLivraisons(String filename, model.planning.InterfacePla
 		    		// **** node.add(line.substring(index, line.indexOf("\"", index)));
 		    		// **** data.add(node);
 		    		// **** verifier que l'on substring bien l'adresse uniquement et pas les guillemets autours.
-		    		intf.setEntrepot(Integer.parseInt(line.substring(index, line.indexOf("\"",index))));
+		    		boolean success = intf.setEntrepot(Integer.parseInt(line.substring(index, line.indexOf("\"",index))));
+		    	
+		    		if (!success) {
+		    			return false;
+		    		}
 		    	}
 		    }
 		    if(in != null) {
