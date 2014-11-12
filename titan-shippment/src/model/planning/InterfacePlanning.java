@@ -408,22 +408,32 @@ public class InterfacePlanning {
 	
 	public void calculLivraisonsSchedule () {
 		int bufTime = 0;
-		bufTime = Misc.parseTimeStrToSec(tournee.getLivraisons().get(1).getPlageHoraire().getHeureDebut());
+		try{
+			bufTime = Misc.parseTimeStrToSec(tournee.getLivraisons().get(1).getPlageHoraire().getHeureDebut());
+		}
+		catch(NullPointerException e){
+			// Storehouse, not to be calculated
+		}
 		for (int i = 0 ; i < tournee.getLivraisons().size()-1 ; ++i ) {
 			bufTime += tournee.getItineraires().get(i).getDurationSecondes();
 			tournee.getLivraisons().get(i+1).setIsDelayed(false);
-			if (0==i) { // first livraison append always at "HeureDebut"
-				bufTime -= tournee.getItineraires().get(i).getDurationSecondes();
+			try{
+				if (0==i) { // first livraison append always at "HeureDebut"
+					bufTime -= tournee.getItineraires().get(i).getDurationSecondes();
+				}
+				// livraison can't append before "HeureDebut"
+				else if (bufTime<Misc.parseTimeStrToSec(tournee.getLivraisons().get(i+1).getPlageHoraire().getHeureDebut())) {
+						bufTime = Misc.parseTimeStrToSec(tournee.getLivraisons().get(i+1).getPlageHoraire().getHeureDebut());
+				}
+				// if delay
+				else if (bufTime>Misc.parseTimeStrToSec(tournee.getLivraisons().get(i+1).getPlageHoraire().getHeureFin())) {
+					tournee.getLivraisons().get(i+1).setIsDelayed(true);
+				}
+				tournee.getLivraisons().get(i+1).setHeureLivraison(Misc.parseTimeSecToStr(bufTime));
 			}
-			// livraison can't append before "HeureDebut"
-			else if (bufTime<Misc.parseTimeStrToSec(tournee.getLivraisons().get(i+1).getPlageHoraire().getHeureDebut())) {
-				bufTime = Misc.parseTimeStrToSec(tournee.getLivraisons().get(i+1).getPlageHoraire().getHeureDebut());
+			catch(NullPointerException e){
+				// Storehouse
 			}
-			// if delay
-			else if (bufTime>Misc.parseTimeStrToSec(tournee.getLivraisons().get(i+1).getPlageHoraire().getHeureFin())) {
-				tournee.getLivraisons().get(i+1).setIsDelayed(true);
-			}
-			tournee.getLivraisons().get(i+1).setHeureLivraison(Misc.parseTimeSecToStr(bufTime));
 		}
 	}
 	

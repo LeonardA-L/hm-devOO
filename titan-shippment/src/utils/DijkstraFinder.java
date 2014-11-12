@@ -122,7 +122,7 @@ public class DijkstraFinder implements PathFinder {
 			}
 			livraisonByTimeWindow.get(pl).add(l);
 
-			if (!plages.contains(pl))
+			if (!plages.contains(pl) && pl != null)
 				plages.add(pl);
 		}
 
@@ -202,7 +202,7 @@ public class DijkstraFinder implements PathFinder {
 		// record solution and state
 
 		// ------------------------- Retrieve result
-		System.out.println(solver);
+		//System.out.println(solver);
 		if (solver.getMeasures().getSolutionCount() > 0) {
 			int current = xNext[0].getValue();
 			for (int i = 0; i < n; i++) {
