@@ -16,7 +16,7 @@ public class ButtonRenderer extends JButton  implements TableCellRenderer{
 	
   public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean isFocus, int row, int col) {
     //On écrit dans le bouton ce que contient la cellule
-    setText((value != null) ? value.toString() : "");
+    setText((value != null) ? "x" : "");
     //On retourne notre bouton
     return this;
   }
