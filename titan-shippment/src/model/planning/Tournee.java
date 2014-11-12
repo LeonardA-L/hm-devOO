@@ -27,23 +27,26 @@ public class Tournee {
 		return this;
 	}
 	
-	public Livraison addLivraisonAfter(Livraison newDelivery, Livraison deliveryBefore)
+	public int addLivraisonAfter(Livraison newDelivery, int adresseBefore)
 	{
-		int index = -1;
-		Livraison deliveryAfter = null;
+		int index = -1;		// index of livraisons
+		int adresseAfter = -1;	// adresse of node before the new delivery in the tournee
 		for (Livraison l : livraisons) {
-			System.out.println("Livraison à l'index "+livraisons.lastIndexOf(l)+" = "+l.getAdresse().getId());
-			if (l == deliveryBefore) {
+			if (l.getAdresse().getId() == adresseBefore) {
 				index = livraisons.lastIndexOf(l);
-				System.out.println("La livraisons précédent la nouvelle livraison est à l'index : "+index+" dans livraisons.");		
-				//break;
+				System.out.println("FOUND = La livraisons précédent la nouvelle livraison est à l'index : "+index+" dans livraisons.");		
+				break;
 			}
 		}
-		if (index != -1) {
-			deliveryAfter = livraisons.get(index+1);
-			livraisons.add(index+1, newDelivery);		// new delivery added at the right place
+		
+		if (index != -1 && index >= livraisons.size()) {		// if the delivery the user want to add is not at the end of tournee
+			adresseAfter = livraisons.get(index+1).getAdresse().getId();
+			livraisons.add(index+1, newDelivery);	
 		}
-		return deliveryAfter;
+		else {													// if the new delivery is at the end of tournee
+			livraisons.add(newDelivery);
+		}
+		return adresseAfter; 	// -1 if adresseAfter is the warehouse or the address if it is a delivery
 	}	
 	
 	public boolean addItineraireAfter(Itineraire newIte) {
@@ -61,12 +64,12 @@ public class Tournee {
 		return false;
 	}
 	
-	public int removeItineraireBefore(Livraison endPoint)
+	public int removeItineraireBefore(int endPoint)
 	{
 		int adresseBefore = -1;
 		Itineraire toBeRemoved = null;
 		for(Itineraire it : itineraires) {
-			if(it.getArrivee() == endPoint.getAdresse())
+			if(it.getArrivee().getId() == endPoint)
 			{
 				System.out.println("### Itinéraire à supprimer trouvé ###");
 				toBeRemoved = it;
@@ -82,12 +85,12 @@ public class Tournee {
 		return adresseBefore;
 	}
 	
-	public int removeItineraireAfter(Livraison startPoint)
+	public int removeItineraireAfter(int startPoint)
 	{
 		int adresseAfter = -1;
 		Itineraire toBeRemoved = null;
 		for(Itineraire it : itineraires) {
-			if(it.getDepart()== startPoint.getAdresse())
+			if(it.getDepart().getId()== startPoint)
 			{
 				System.out.println("### Itinéraire à supprimer trouvé ###");
 				toBeRemoved = it;

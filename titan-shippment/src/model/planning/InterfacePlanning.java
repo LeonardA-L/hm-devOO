@@ -91,26 +91,53 @@ public class InterfacePlanning {
 		// add new delivery into model :
 		boolean deliveryCreation = AddLivraison(idClient, idLivraison, heureDebut, heureFin, adresse);
 		System.out.println("New Delivery added to livraisons in InterfacePlanning");
-		if(deliveryCreation) {
-			Livraison deliveryBefore = this.getLivraisonByAdr(prevAdresse);
-			System.out.println("Delivery that should be before the new one in Tournee : adresse = "+deliveryBefore.getAdresse().getId());
-			Livraison newDelivery = this.getLivraisonByAdr(adresse);
-			System.out.println("New delivery : adresse = "+newDelivery.getAdresse().getId());
-			Livraison deliveryAfter = tournee.addLivraisonAfter(newDelivery, deliveryBefore);
-			System.out.println("Delivery that should be after the new one in Tournee : adresse = "+deliveryAfter.getAdresse().getId());
+		
+		if(deliveryCreation) {					//if creatin went right in model
+			Noeud nodeBefore = null;		// fetched
+			Noeud nodeOfDelivery = null;	// fetched
+			Noeud nodeAfter = null;			// fetched
+			Livraison newDelivery = null;	// fetched
+			Livraison deliveryAfter = null;	//fetched
 			
-			if(deliveryBefore != null && deliveryAfter != null) {
-				System.out.println("Adding new itineraires...");
-				Itineraire itBefore = findItineraire(deliveryBefore, newDelivery, Controller.getInstance().getInterfaceAgglo().getPlan());
-				Itineraire itAfter = findItineraire(newDelivery, deliveryAfter, Controller.getInstance().getInterfaceAgglo().getPlan());
-				System.out.println("Trying to remove former itineraire");
-				tournee.removeItineraireAfter(deliveryBefore); //on enlève l'ancien itinéraire entre deliveryBefore et deliveryAfter
-				tournee.addItineraireAfter(itBefore);
-				tournee.addItineraire(itAfter);
-				return idLivraison; // contains the chosen id for the new delivery (in case of undo/redo)
+			// NODE BEFORE
+			if (entrepot.getId() == prevAdresse) {				// if prevAdresse is the same as warehouse
+				System.out.println("### Node before new delivery is the warehouse ###");
+				nodeBefore = entrepot;
 			}
+			else {												// else, it is a delivery, we find it.
+				nodeBefore = this.getLivraisonByAdr(prevAdresse).getAdresse();
+			}
+			if (nodeBefore == null) {
+				System.out.println("### !!!! nodeBefore is null. !!!! ###");
+				return -1;
+			}
+			
+			// NODE OF DELIVERY 
+			newDelivery = this.getLivraisonByAdr(adresse);
+			nodeOfDelivery = newDelivery.getAdresse();
+			
+			// NODE AFTER 
+			int adresseAfter = tournee.addLivraisonAfter(newDelivery, nodeBefore.getId());
+			if (adresseAfter == -1) {  // adresse after is entrepot
+				nodeAfter = entrepot;
+				System.out.println("### Node after new delivery is the warehouse ###");
+			}
+			else {		// fetch delivery after and get its address
+				deliveryAfter = getLivraisonByAdr(adresseAfter);
+				nodeAfter = deliveryAfter.getAdresse();
+				System.out.println("### Node after new delivery is NOT the warehouse ###");
+			}
+			
+			System.out.println("Adding new itineraires...");
+			Itineraire itBefore = findItineraire(nodeBefore, nodeOfDelivery, Controller.getInstance().getInterfaceAgglo().getPlan());
+			Itineraire itAfter = findItineraire(nodeOfDelivery, nodeAfter, Controller.getInstance().getInterfaceAgglo().getPlan());
+			System.out.println("Trying to remove former itineraire");
+			tournee.removeItineraireAfter(nodeBefore.getId()); //on enlève l'ancien itinéraire entre nodeBefore et node after
+			tournee.addItineraireAfter(itBefore);
+			tournee.addItineraire(itAfter);
+			return idLivraison; // contains the chosen id for the new delivery (in case of undo/redo)
 		}
-		return -1;		// in case of problem
+		return -1;	
 	}
 	
 	/**
@@ -133,26 +160,46 @@ public class InterfacePlanning {
 	 * @param idLivraison
 	 * @return  True or false depending on the success of the operation
 	 */
-	public int removeOneLivraison(int idLivraison) {
+	public int removeOneLivraison(int adresse) {
 		Livraison toBeRemoved = null;
 		for(Livraison l : listeLivraisons) {	// find delivery in model
-			if(l.getIdLivraison() == idLivraison) {
+			if(l.getAdresse().getId() == adresse) {
 				toBeRemoved = l;
 				break;
 			}
 		}
-		if( toBeRemoved != null) {
-			// delete itineraires before and after delivery in tournee
-			int addAfter = tournee.removeItineraireAfter(toBeRemoved);
-			int addBefore = tournee.removeItineraireBefore(toBeRemoved);
+		if(toBeRemoved != null) {		// delivery to be removed found
+			// remove itineraires from tournee
+			int addAfter = tournee.removeItineraireAfter(toBeRemoved.getAdresse().getId());
+			int addBefore = tournee.removeItineraireBefore(toBeRemoved.getAdresse().getId());
 			if (addAfter == -1 || addBefore == -1) {
 				System.out.println("removeOneLivraison - Erreur durant la suppression des itinéraires.");
 				System.out.println("addAfter = "+addAfter+" and addBefore = "+addBefore);
 				return -1;
 			}
+			// remove former delivery from tournee
 			tournee.removeLivraison(toBeRemoved.getAdresse().getId());	// delete delivery from Tournee
 			// Find new itineraire
-			Itineraire newIt = findItineraire(getLivraisonByAdr(addBefore), getLivraisonByAdr(addAfter), Controller.getInstance().getInterfaceAgglo().getPlan());
+			Noeud nodeBefore = null;
+			Noeud nodeAfter = null;
+			if(addBefore == entrepot.getId()) {
+				nodeBefore = entrepot;
+				System.out.println("removeOneLivraison : node before is the warehouse");
+			}
+			else {
+				nodeBefore = getLivraisonByAdr(addBefore).getAdresse();
+				System.out.println("removeOneLivraison : node before is not the warehouse");
+			}
+			if (addAfter == entrepot.getId()) {
+				nodeAfter = entrepot;
+				System.out.println("removeOneLivraison : node after is the warehouse");
+			}
+			else {
+				nodeAfter = getLivraisonByAdr(addAfter).getAdresse();
+				System.out.println("removeOneLivraison : node after is not the warehouse");
+			}	
+			// create newIt and add it to Tournee
+			Itineraire newIt = findItineraire(nodeAfter, nodeBefore, Controller.getInstance().getInterfaceAgglo().getPlan());
 			tournee.addItineraireAfter(newIt);
 			listeLivraisons.remove(toBeRemoved);	// delete delivery from model
 			return addBefore;
@@ -280,7 +327,14 @@ public class InterfacePlanning {
 		it.computeTronconsFromNodes(plan, shGraph.getPaths().get(pathHash));
 		return it;
 	}
-	
+
+	public Itineraire findItineraire(Noeud adresseBefore, Noeud adresseAfter, Plan plan){
+		Itineraire it = new Itineraire(adresseBefore, adresseAfter,new ArrayList<Troncon>());
+		// Compute list of troncons
+		String pathHash = ""+adresseBefore.getId()+"-"+adresseAfter.getId();
+		it.computeTronconsFromNodes(plan, shGraph.getPaths().get(pathHash));
+		return it;
+	}
 	//################################### Working with view ####################################
 	
 	public boolean isNodeADelivery(int idNode) {
