@@ -100,18 +100,20 @@ public class DijkstraFinder implements PathFinder {
 		//TODO : what is that upperCostBound thing ?
 		ArrayList<Integer> nodes = new ArrayList<Integer>();
 		ArrayList<PlageHoraire> plages = new ArrayList<PlageHoraire>();
+		Livraison storeHousePoint = null;
 		
 		// Check if the storehouse is already in the delivery list
 		boolean storehouseInList = false;
 		for(Livraison l : livraisons){
 			if(l.getAdresse().getId() == storehouse.getId()){
 				storehouseInList = true;
+				storeHousePoint = l;
 				break;
 			}
 		}
 		// If not, add it
 		if(!storehouseInList){
-			Livraison storeHousePoint = new Livraison(null, storehouse,-1,-1);
+			storeHousePoint = new Livraison(null, storehouse,-1,-1);
 			livraisons.add(storeHousePoint);
 		}
 		
@@ -186,7 +188,16 @@ public class DijkstraFinder implements PathFinder {
 			
 		}
 		
-		return sortedList;
+		// Re-center the list (put the storehouse at the beginning of the tournee
+		ArrayList<Livraison> centeredList = new ArrayList<Livraison>();
+		// find storehouse's index in cycle
+		int indexStorehouse = sortedList.indexOf(storeHousePoint);
+		// Re center list
+		for(int i=indexStorehouse; i<indexStorehouse+n;i++){
+			centeredList.add(sortedList.get(i%sortedList.size()));
+		}
+		
+		return centeredList;
 	}
 	
 	private ArrayList<Integer> backtrack(int[] prev, int start, int end){
