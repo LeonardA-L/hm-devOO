@@ -31,6 +31,7 @@ public class VueLivraison implements Vue {
 	
 	public void dessine(Graphics g, Color color) {
 		// TODO Auto-generated method stub
+		color = (livraison.isDelayed()) ? Color.RED : color;
 		noeud.highlight(color);
 		noeud.dessine(g);
 	}

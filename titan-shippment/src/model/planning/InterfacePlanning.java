@@ -299,6 +299,7 @@ public class InterfacePlanning {
 			Livraison l2 = cycle.get(i+1);
 			Itineraire it = findItineraire(l1, l2, plan);
 			bufTime += it.getDurationSecondes();
+			cycle.get(i+1).setIsDelayed(false);
 			if (0==i) { // first livraison append always at "HeureDebut"
 				bufTime -= it.getDurationSecondes();
 			}
@@ -309,6 +310,7 @@ public class InterfacePlanning {
 			// if delay
 			else if (bufTime>Misc.parseTimeStrToSec(cycle.get(i+1).getPlageHoraire().getHeureFin())) {
 				// TODO RAISE ERROR
+				cycle.get(i+1).setIsDelayed(true);
 			}
 			cycle.get(i+1).setHeureLivraison(Misc.parseTimeSecToStr(bufTime));
 			itineraires.add(it);
