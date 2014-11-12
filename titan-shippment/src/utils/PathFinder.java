@@ -16,10 +16,20 @@ public interface PathFinder {
 	public ArrayList<Integer> findShortestPath(int start, int end);
 	
 	/**
-	 * Will find the shortest cycle around the nodes given as input, if any. Uses the choco lib and the TSP algorithm
-	 * @param upperCostBound unknow TODO (set to 10000 for now)
+	 * Will find the shortest cycle respecting time windows around the nodes given as input, if any. Uses the choco lib and the TSPTW algorithm
+	 * @param upperCostBound unknow TODO (set to 100000 for now)
 	 * @param livraisons a list of livraisons the cycle must fulfill
+	 * @param storehouse the node of the storehouse
 	 * @return a list of nodes IDs for the shortest cycle
 	 */
 	public ArrayList<Livraison> findCycle(int upperCostBound, ArrayList<Livraison> livraisons, Noeud storehouse);
+	
+	/**
+	 * Will find the shortest cycle around the nodes given as input, if any. Uses the choco lib and the TSP algorithm
+	 * @param upperCostBound unknow TODO (set to 100000 for now)
+	 * @param livraisons a list of livraisons the cycle must fulfill
+	 * @param storehouse the node of the storehouse
+	 * @return a list of nodes IDs for the shortest cycle
+	 */
+	public ArrayList<Livraison> findCycleWithoutTimeWindows(int upperCostBound, ArrayList<Livraison> livraisons, Noeud storehouse);
 }

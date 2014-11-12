@@ -1,10 +1,14 @@
 package utils;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import model.agglomeration.Noeud;
 import model.agglomeration.Troncon;
+import model.planning.Livraison;
+import model.planning.PlageHoraire;
 
 /**
  * @author Christine Solnon
@@ -59,17 +63,44 @@ public class ShippmentGraph implements Graph {
 	/**
 	 * Will create a subgraph with a sub cost matrix only containing the desired nodes for a cycle
 	 */
-	public ShippmentGraph createTSPGraph(ArrayList<Integer> nodes){
+	public ShippmentGraph createTSPGraph(ArrayList<Integer> nodes, Map<PlageHoraire,ArrayList<Livraison>> livraisonByTimeWindow, ArrayList<PlageHoraire> sortedPlages, Livraison storeHousePoint){
 		int n = nodes.size();
 		ShippmentGraph shGraph = new ShippmentGraph(n);
 		int[][] totalCosts = this.getCost();
 		int[][] costs = new int[n][n];
 		
+		for(int i=0;i<sortedPlages.size() - 1;i++){
+			ArrayList<Livraison> livraisonListPlage1 = livraisonByTimeWindow.get(sortedPlages.get(i));
+			ArrayList<Livraison> livraisonListPlage2 = livraisonByTimeWindow.get(sortedPlages.get(i+1));
+			
+			for(Livraison l1 : livraisonListPlage1){
+				for(Livraison l2 : livraisonListPlage1){
+					costs[nodes.indexOf(l1.getAdresse().getId())][nodes.indexOf(l2.getAdresse().getId())] = totalCosts[nodes.indexOf(l1.getAdresse().getId())][nodes.indexOf(l2.getAdresse().getId())];
+				}
+				for(Livraison l2 : livraisonListPlage2){
+					costs[nodes.indexOf(l1.getAdresse().getId())][nodes.indexOf(l2.getAdresse().getId())] = totalCosts[nodes.indexOf(l1.getAdresse().getId())][nodes.indexOf(l2.getAdresse().getId())];
+				}
+			}
+		}
+		ArrayList<Livraison> firstPlage = livraisonByTimeWindow.get(sortedPlages.get(0));
+		for(Livraison l2 : firstPlage){
+			costs[nodes.indexOf(storeHousePoint.getAdresse().getId())][nodes.indexOf(l2.getAdresse().getId())] = totalCosts[nodes.indexOf(storeHousePoint.getAdresse().getId())][nodes.indexOf(l2.getAdresse().getId())];
+		}
+		
+		ArrayList<Livraison> lastPlage = livraisonByTimeWindow.get(sortedPlages.get(sortedPlages.size()-1));
+		for(Livraison l1 : lastPlage){
+			costs[nodes.indexOf(l1.getAdresse().getId())][nodes.indexOf(storeHousePoint.getAdresse().getId())] = totalCosts[nodes.indexOf(l1.getAdresse().getId())][nodes.indexOf(storeHousePoint.getAdresse().getId())];
+		}
+		for(Livraison l1 : lastPlage){
+			for(Livraison l2 : lastPlage){
+				costs[nodes.indexOf(l1.getAdresse().getId())][nodes.indexOf(l2.getAdresse().getId())] = totalCosts[nodes.indexOf(l1.getAdresse().getId())][nodes.indexOf(l2.getAdresse().getId())];
+			}
+		}
+		
 		int min = Integer.MAX_VALUE;
 		int max = -1;
-		for(int i : nodes){
-			for(int j : nodes){
-				costs[nodes.indexOf(i)][nodes.indexOf(j)] = totalCosts[i][j];
+		for (int i = 0; i < costs.length; i++) {
+			for (int j = 0; j < costs.length; j++) {
 				if(totalCosts[i][j] > max){
 					max = totalCosts[i][j];
 				}
@@ -81,9 +112,9 @@ public class ShippmentGraph implements Graph {
 		shGraph.setMaxArcCost(max);
 		shGraph.setMinArcCost(min);
 		shGraph.setNbVertices(n);
-		shGraph.setCost(costs);
 		
 		ArrayList<ArrayList<Integer>> succs = new ArrayList<ArrayList<Integer>>(n);
+		/*
 		ArrayList<Integer> indexList = new ArrayList<Integer>();
 		for (int i=0; i< n;i++) {
 			indexList.add(i);
@@ -93,9 +124,66 @@ public class ShippmentGraph implements Graph {
 			//copyNodes.remove(i);
 			succs.add(copyNodes);
 		}
-		
+		*/
+		for (int i = 0; i < costs.length; i++) {
+			succs.add(new ArrayList<Integer>());
+			ArrayList<Integer> succlist = succs.get(i);
+			for (int j = 0; j < costs.length; j++) {
+				if(costs[i][j] != 0){
+					succlist.add(j);
+				}
+			}
+		}
+		/*
+		for (Iterator iterator = succs.iterator(); iterator.hasNext();) {
+			ArrayList<Integer> arrayList = (ArrayList<Integer>) iterator.next();
+			if (arrayList.isEmpty()) iterator.remove();
+			
+		}
+		*/
+		shGraph.setCost(costs);
 		shGraph.setSucc(succs);
+		shGraph.fillBlankCosts();
 		return shGraph;
+	}
+	
+	/**
+	* Will create a subgraph with a sub cost matrix only containing the desired nodes for a cycle
+	*/
+	public ShippmentGraph createTSPGrapWithoutTimeWindows(ArrayList<Integer> nodes){
+	int n = nodes.size();
+	ShippmentGraph shGraph = new ShippmentGraph(n);
+	int[][] totalCosts = this.getCost();
+	int[][] costs = new int[n][n];
+	int min = Integer.MAX_VALUE;
+	int max = -1;
+	for(int i : nodes){
+	for(int j : nodes){
+	costs[nodes.indexOf(i)][nodes.indexOf(j)] = totalCosts[i][j];
+	if(totalCosts[i][j] > max){
+	max = totalCosts[i][j];
+	}
+	if(totalCosts[i][j] < min){
+	min = totalCosts[i][j];
+	}
+	}
+	}
+	shGraph.setMaxArcCost(max);
+	shGraph.setMinArcCost(min);
+	shGraph.setNbVertices(n);
+	shGraph.setCost(costs);
+	ArrayList<ArrayList<Integer>> succs = new ArrayList<ArrayList<Integer>>(n);
+	ArrayList<Integer> indexList = new ArrayList<Integer>();
+	for (int i=0; i< n;i++) {
+	indexList.add(i);
+	}
+	for (int i=0; i< n;i++) {
+	ArrayList<Integer> copyNodes = new ArrayList<Integer>(indexList);
+	//copyNodes.remove(i);
+	succs.add(copyNodes);
+	}
+	shGraph.setSucc(succs);
+	return shGraph;
 	}
 	
 	public int[] getSucc(int i) throws ArrayIndexOutOfBoundsException{

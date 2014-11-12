@@ -1,6 +1,10 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.Map;
+
+import model.planning.Livraison;
+import model.planning.PlageHoraire;
 
 /**
  * @author Christine Solnon
@@ -46,5 +50,6 @@ public interface Graph {
 	public abstract int getNbSucc(int i)
 			throws ArrayIndexOutOfBoundsException;
 
-	public ShippmentGraph createTSPGraph(ArrayList<Integer> nodes);
+	public ShippmentGraph createTSPGraph(ArrayList<Integer> nodes,Map<PlageHoraire,ArrayList<Livraison>> livraisonByTimeWindow, ArrayList<PlageHoraire> sortedPlages, Livraison storeHousePoint);
+	public ShippmentGraph createTSPGrapWithoutTimeWindows(ArrayList<Integer> nodes);
 }
