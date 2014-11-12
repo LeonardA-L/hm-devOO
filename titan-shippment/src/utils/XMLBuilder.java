@@ -32,7 +32,7 @@ public class XMLBuilder {
 	private static int t_entrepot = -1;
 	private static boolean entrepotReady = false;
 	
-	//vérifie si le fichier est lisible et bien formé, et que l'uppermost balise est bien <Reseau> (pour un plan)
+	//vï¿½rifie si le fichier est lisible et bien formï¿½, et que l'uppermost balise est bien <Reseau> (pour un plan)
 	//ou <JourneeType> (pour une liste de livraisons)
 	//modifier pour intï¿½grer une validation against DTD
 	public static boolean checkWellformedness(String file) {
@@ -55,8 +55,8 @@ public class XMLBuilder {
 	}
 	
 	
-	//détermine s'il s'agit d'un plan ou d'une liste ed livraisons. A appeler a chaque chargement d'un xml.
-	//Note : public pour les tests. Eventuellement à mettre privé plus tard.
+	//dï¿½termine s'il s'agit d'un plan ou d'une liste ed livraisons. A appeler a chaque chargement d'un xml.
+	//Note : public pour les tests. Eventuellement ï¿½ mettre privï¿½ plus tard.
 	private static int getType(BufferedReader reader) throws IOException{
 			    String line = null;
 			    for(int i = 0; i<2; i++){
@@ -71,8 +71,8 @@ public class XMLBuilder {
 	}
 
 	
-	//Erreurs prises en charge : longueur négative, vitesse négative, tronçon : arrivée = destination
-	//rapports d'erreur envoyés sur System.err
+	//Erreurs prises en charge : longueur nï¿½gative, vitesse nï¿½gative, tronï¿½on : arrivï¿½e = destination
+	//rapports d'erreur envoyï¿½s sur System.err
 	//Renvoie un plan vide en cas d'erreur
 	public static Plan getPlan(String filename, InterfaceAgglo intf)
 	{
@@ -240,7 +240,11 @@ public static boolean getLivraisons(String filename, model.planning.InterfacePla
 		    		// **** node.add(line.substring(index, line.indexOf("\"", index)));
 		    		// **** data.add(node);
 		    		// **** verifier que l'on substring bien l'adresse uniquement et pas les guillemets autours.
-		    		intf.setEntrepot(Integer.parseInt(line.substring(index, line.indexOf("\"",index))));
+		    		boolean success = intf.setEntrepot(Integer.parseInt(line.substring(index, line.indexOf("\"",index))));
+		    	
+		    		if (!success) {
+		    			return false;
+		    		}
 		    	}
 		    }
 		    if(in != null) {

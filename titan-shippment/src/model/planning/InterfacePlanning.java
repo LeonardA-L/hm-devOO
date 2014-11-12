@@ -129,7 +129,7 @@ public class InterfacePlanning {
 			Itineraire itBefore = findItineraire(nodeBefore, nodeOfDelivery, Controller.getInstance().getInterfaceAgglo().getPlan());
 			Itineraire itAfter = findItineraire(nodeOfDelivery, nodeAfter, Controller.getInstance().getInterfaceAgglo().getPlan());
 			System.out.println("Trying to remove former itineraire");
-			tournee.removeItineraireAfter(nodeBefore.getId()); //on enlève l'ancien itinéraire entre nodeBefore et node after
+			tournee.removeItineraireAfter(nodeBefore.getId()); //on enlï¿½ve l'ancien itinï¿½raire entre nodeBefore et node after
 			tournee.addItineraireAfter(itBefore);
 			tournee.addItineraire(itAfter);
 			return idLivraison; // contains the chosen id for the new delivery (in case of undo/redo)
@@ -170,7 +170,7 @@ public class InterfacePlanning {
 			int addAfter = tournee.removeItineraireAfter(toBeRemoved.getAdresse().getId());
 			int addBefore = tournee.removeItineraireBefore(toBeRemoved.getAdresse().getId());
 			if (addAfter == -1 || addBefore == -1) {
-				System.out.println("removeOneLivraison - Erreur durant la suppression des itinéraires.");
+				System.out.println("removeOneLivraison - Erreur durant la suppression des itinï¿½raires.");
 				System.out.println("addAfter = "+addAfter+" and addBefore = "+addBefore);
 				return -1;
 			}
@@ -220,10 +220,15 @@ public class InterfacePlanning {
 		Iterator<PlageHoraire> it = plagesHoraires.iterator();
 		while (it.hasNext()) {
 			PlageHoraire ph = it.next();
-			if (ph.getHeureDebut() == heureDebut && ph.getHeureFin() == heureFin) {
+			if (ph.getHeureDebut().equals(heureDebut) && ph.getHeureFin().equals(heureFin)) {
 				return ph;
 			}
 		}
+		String format = "\\d{1,2}:\\d{1,2}:\\d{1,2}";
+		if (!heureDebut.matches(format) || !heureFin.matches(format)) {
+			return null;
+		}
+		
 		PlageHoraire ph = new PlageHoraire(heureDebut, heureFin);
 		plagesHoraires.add(ph);
 		return ph;
