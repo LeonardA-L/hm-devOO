@@ -226,10 +226,15 @@ public class InterfacePlanning {
 		Iterator<PlageHoraire> it = plagesHoraires.iterator();
 		while (it.hasNext()) {
 			PlageHoraire ph = it.next();
-			if (ph.getHeureDebut() == heureDebut && ph.getHeureFin() == heureFin) {
+			if (ph.getHeureDebut().equals(heureDebut) && ph.getHeureFin().equals(heureFin)) {
 				return ph;
 			}
 		}
+		String format = "\\d{1,2}:\\d{1,2}:\\d{1,2}";
+		if (!heureDebut.matches(format) || !heureFin.matches(format)) {
+			return null;
+		}
+		
 		PlageHoraire ph = new PlageHoraire(heureDebut, heureFin);
 		plagesHoraires.add(ph);
 		return ph;
