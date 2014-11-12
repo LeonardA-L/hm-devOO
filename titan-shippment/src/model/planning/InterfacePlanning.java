@@ -318,11 +318,11 @@ public class InterfacePlanning {
 		itineraires.add(it);
 
 		// Prepare the tournee
-		Tournee tournee = new Tournee();
-		tournee.setLivraisons(cycle);
-		tournee.setItineraires(itineraires);
+		Tournee tournees = new Tournee();
+		tournees.setLivraisons(cycle);
+		tournees.setItineraires(itineraires);
 
-		this.setTournee(tournee);
+		this.setTournee(tournees);
 		
 		calculLivraisonsSchedule();
 	}
