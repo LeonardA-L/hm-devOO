@@ -11,67 +11,52 @@ public class CommandRemoveOne implements ICommand{
 	private int adresse;
 	private String heureDebut;
 	private String heureFin;
-	private int previousAdresseLivraison;
+	private int adressePrecedente;
 	
+	/**
+	 * Constructor w/param 
+	 * @param adresse	Address of delivery to be deleted
+	 */
 	public CommandRemoveOne(int adresse) {
 		this.adresse = adresse;		
 	}
 
+	// See ICommand Interface
 	public boolean Execute(InterfacePlanning interfaceP, InterfaceView interfaceV) {
-		
-		System.out.println("# ------ EXECUTING CommandRemoveOne ------ #");
-		
-		// first get all informations from the delivery we wanna delete in case of undo/redo	
+		// save informations about soon to be deleted delivery
 		idLivraison = interfaceP.getLivraisonByAdr(adresse).getIdLivraison();
 		idClient = interfaceP.getLivraisonByAdr(adresse).getIdClient();
 		heureDebut = interfaceP.getLivraisonByAdr(adresse).getPlageHoraire().getHeureDebut();
 		heureFin = interfaceP.getLivraisonByAdr(adresse).getPlageHoraire().getHeureFin();
-		
-		// MAJ DU TABLEAU
+		// Updating 'ViewLivraionList'
 		interfaceV.removeShippment(adresse);
-		
-		//  MAJ VueLivraison
+		//  Updating 'VueLivraison'
 		interfaceV.removeAndUpdate(adresse);
-		
-		previousAdresseLivraison = interfaceP.removeOneLivraison(adresse);
-		if (previousAdresseLivraison == -1) {
-			System.out.println("# ------ Execute RemoveOne failed ------ #"); 	
+		adressePrecedente = interfaceP.removeOneLivraison(adresse);
+		if (adressePrecedente == -1) {
 			return false;
 		}
-		
-		// MAJ VueTournee
+		// MUpdating 'ViewTournee'
 		interfaceV.getVuePanel().resetTournee();
 		interfaceV.getVuePanel().getVue_tournee().setTournee(Controller.getInstance().getInterfacePlanning().getTournee());
 		interfaceV.repaint();
-		
-		System.out.println("# ------ DELIVERY REMOVED id = "+idLivraison+" ------ #"); 
 		return true;
 	}
 
+	// See ICommand Interface
 	public boolean Unexecute(InterfacePlanning interfaceP, InterfaceView interfaceV) {
-		
-		System.out.println("# ------ UNEXECUTING CommandRemoveOne ------ #");
-		
-		// Add the delivery that was deleted to the model : 
-		// will return -1 if problem or the id of this new delivery
-		idLivraison = interfaceP.AddLivraisonAfter(idLivraison, idClient, heureDebut, heureFin, adresse, previousAdresseLivraison);
+		idLivraison = interfaceP.AddLivraisonAfter(idLivraison, idClient, heureDebut, heureFin, adresse, adressePrecedente);
 		if(idLivraison == -1) {
-			System.out.println("Unexecute CommandRemoveOne : idLivraison = -1");	
 			return false;
 		}	
-		
-		// MAJ VueLivraison
+		//  Updating 'VueLivraison'
 		interfaceV.addAndUpdate(interfaceP.getLivraisonByAdr(adresse));
-		
-		// MAJ VueTournee
+		// MUpdating 'ViewTournee'
 		interfaceV.getVuePanel().resetTournee();
 		interfaceV.getVuePanel().getVue_tournee().setTournee(Controller.getInstance().getInterfacePlanning().getTournee());
 		interfaceV.repaint();
-		
-		// MAJ DU TABLEAU
+		// Updating 'ViewLivraionList'
 		interfaceV.addShippment(interfaceP.getLivraisonByAdr(adresse));
-		
-		System.out.println("# ------ DELIVERY RE-CREATED id = "+idLivraison+" ------ #");
 		return true;
 
 	}

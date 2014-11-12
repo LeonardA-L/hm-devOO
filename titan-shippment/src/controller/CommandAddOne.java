@@ -4,80 +4,66 @@ import model.planning.InterfacePlanning;
 import view.utils.InterfaceView;
 
 public class CommandAddOne implements ICommand {
-	
+
 	private int idLivraison;
 	private int idClient;
 	private String heureDebut;
 	private String heureFin;
-	private int adresse;		// id of node where delivery occur
-	private int prevAdresse;
+	private int adresse;		
+	private int adressePrecedente;
 
 	/**
-	 * Constructor w/param  (Parameters are explicited in UndoRedo)
-	 * @param idClient		
-	 * @param idLivraison
-	 * @param heureDebut
-	 * @param heureFin
-	 * @param adresse		
-	 * @param prevAdresse
+	 * Constructor w/param 
+	 * @param idClient					Client Id for new delivery
+	 * @param heureDebut				Time from which delivery can take place
+	 * @param heureFin					Time before which delivery must take place
+	 * @param adresse					Address for delivery
+	 * @param prevAdresse				Address of the delivery that must be take place before the new one
 	 */
-	public CommandAddOne (int idClient, String heureDebut, String heureFin, int adresse, int prevAdresse) {
+	public CommandAddOne (int idClient, String heureDebut, String heureFin, int adresse, int adressePrecedente) {
 		this.idClient = idClient;
 		this.heureDebut = heureDebut;
 		this.heureFin = heureFin;
 		this.adresse = adresse;
-		this.prevAdresse = prevAdresse;
+		this.adressePrecedente = adressePrecedente;
 		this.idLivraison = -1;
 	}
 
+	// See ICommand Interface
 	public boolean Execute (InterfacePlanning interfaceP, InterfaceView interfaceV) {
-		
-		System.out.println("# ------ EXECUTING CommandAddOne ------ #");
-		
-		// will return -1 if problem or the id of this new delivery
-		idLivraison = interfaceP.AddLivraisonAfter(idLivraison, idClient, heureDebut, heureFin, adresse, prevAdresse);
-		if(idLivraison == -1) {
-			System.out.println("# ------ Execute AddOne failed ------ #"); 	
+		idLivraison = interfaceP.AddLivraisonAfter(idLivraison, idClient, heureDebut, heureFin, adresse, adressePrecedente);
+		if(idLivraison == -1) { 
+			// Problem occured when trying to add new delivery to model
 			return false;
 		}	
-		// MAJ DES VUES LIVRAISONS
+		// Updating 'ViewLivraison'
 		interfaceV.addAndUpdate(interfaceP.getLivraisonByAdr(adresse));	
-		// MAJ DES VUES TOURNEE
+		// Updating 'ViewTournee'
 		interfaceV.getVuePanel().resetTournee();
 		interfaceV.getVuePanel().getVue_tournee().setTournee(Controller.getInstance().getInterfacePlanning().getTournee());
 		interfaceV.repaint();
-		
-		// MAJ DU TABLEAU
+		// Updating 'ViewLivraisonList'
 		interfaceV.addShippment(interfaceP.getLivraisonByAdr(adresse));
-		
-		System.out.println("# ------ DELIVERY CREATED id = "+idLivraison+" ------ #");
 		return true;
 	}
-	
-	public boolean Unexecute (InterfacePlanning interfaceP, InterfaceView interfaceV) {
-		
-		System.out.println("# ------ UNEXECUTING CommandAddOne ------ #");
-		
-		// MAJ DU TABLEAU
+
+	// See ICommand Interface
+	public boolean Unexecute (InterfacePlanning interfaceP, InterfaceView interfaceV) {		
+		// Updating 'ViewLivraisonList'
 		interfaceV.removeShippment(adresse);
-		
-		// MAJ VueLivraison
+		// Updating 'ViewLivraison'
 		interfaceV.removeAndUpdate(adresse);
-		// remove the livraison at coordinates
+		// Deleting delivery from model
 		int success = interfaceP.removeOneLivraison(adresse);
-		if (success == -1) {
-			System.out.println("# ------ Unexecute AddOne failed ------ #"); 	
+		if (success == -1) {	
 			return false;
 		}	
-		
-		// MAJ VueTournee
+		// Updating 'ViewTournee'
 		interfaceV.getVuePanel().resetTournee();
 		interfaceV.getVuePanel().getVue_tournee().setTournee(Controller.getInstance().getInterfacePlanning().getTournee());
 		interfaceV.repaint();
-		
-		System.out.println("# ------ DELIVERY UN-CREATED id = "+idLivraison+" ------ #"); 
 		return true;
 	}
-	
-	
+
+
 }
