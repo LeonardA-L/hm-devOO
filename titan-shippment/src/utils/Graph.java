@@ -1,6 +1,10 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.Map;
+
+import model.planning.Livraison;
+import model.planning.PlageHoraire;
 
 /**
  * @author Christine Solnon
@@ -46,5 +50,20 @@ public interface Graph {
 	public abstract int getNbSucc(int i)
 			throws ArrayIndexOutOfBoundsException;
 
-	public ShippmentGraph createTSPGraph(ArrayList<Integer> nodes);
+	/**
+	 * Creates a sub graph meeting TSPTW's requirements
+	 * @param nodes	A list of node ids for the desired cycle
+	 * @param livraisonByTimeWindow	the list of Livraison objects ordered by PlageHoraire
+	 * @param sortedPlages	a time sorted list of PlageHoraire objects
+	 * @param storeHousePoint	the storehouse
+	 * @return	a sub graph that can be piped into choco
+	 */
+	public ShippmentGraph createTSPGraph(ArrayList<Integer> nodes,Map<PlageHoraire,ArrayList<Livraison>> livraisonByTimeWindow, ArrayList<PlageHoraire> sortedPlages, Livraison storeHousePoint);
+	
+	/**
+	 * Creates a sub graph meeting TSP's requirements
+	 * @param nodes A list of node ids for the desired cycle
+	 * @return	a sub graph that can be piped into choco
+	 */
+	public ShippmentGraph createTSPGrapWithoutTimeWindows(ArrayList<Integer> nodes);
 }
