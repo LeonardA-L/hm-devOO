@@ -142,7 +142,17 @@ public class Fenetre extends JFrame {
 		
 		String[] colHeadings = {"ID Client","Heure Debut","Heure Fin"," ", "ID Noeud"};
 		int numRows = 0 ;
-		DefaultTableModel model = new DefaultTableModel(numRows, colHeadings.length) ;
+		DefaultTableModel model = new DefaultTableModel(numRows, colHeadings.length){
+		    @Override
+		    public boolean isCellEditable(int row, int column) {
+		    	if(column!=3){
+		    		return false;
+		    	}
+		    	else{
+		    		return true;
+		    	}
+		    }
+		};
 		model.setColumnIdentifiers(colHeadings);
 		livraison_list = new VueLivraisonList(model);
 		
