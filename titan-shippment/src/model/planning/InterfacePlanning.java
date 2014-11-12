@@ -98,7 +98,7 @@ public class InterfacePlanning {
 			Noeud nodeOfDelivery = null;	// fetched
 			Noeud nodeAfter = null;			// fetched
 			Livraison newDelivery = null;	// fetched
-			Livraison deliveryAfter = null;	//fetched
+			Livraison deliveryAfter = null;	// fetched
 			
 			// NODE BEFORE
 			if (entrepot.getId() == prevAdresse) {				// if prevAdresse is the same as warehouse
@@ -108,11 +108,7 @@ public class InterfacePlanning {
 			else {												// else, it is a delivery, we find it.
 				nodeBefore = this.getLivraisonByAdr(prevAdresse).getAdresse();
 			}
-			if (nodeBefore == null) {
-				System.out.println("### !!!! nodeBefore is null. !!!! ###");
-				return -1;
-			}
-			
+
 			// NODE OF DELIVERY 
 			newDelivery = this.getLivraisonByAdr(adresse);
 			nodeOfDelivery = newDelivery.getAdresse();
@@ -138,7 +134,7 @@ public class InterfacePlanning {
 			tournee.addItineraire(itAfter);
 			return idLivraison; // contains the chosen id for the new delivery (in case of undo/redo)
 		}
-		return -1;	
+		return -1;		
 	}
 	
 	/**
@@ -179,7 +175,10 @@ public class InterfacePlanning {
 				return -1;
 			}
 			// remove former delivery from tournee
-			tournee.removeLivraison(toBeRemoved.getAdresse().getId());	// delete delivery from Tournee
+			boolean removed = tournee.removeLivraison(toBeRemoved.getAdresse().getId());	// delete delivery from Tournee
+			if (!removed) {
+				System.out.println("Problem when removing livraison from tournee");
+			}
 			// Find new itineraire
 			Noeud nodeBefore = null;
 			Noeud nodeAfter = null;
@@ -200,7 +199,7 @@ public class InterfacePlanning {
 				System.out.println("removeOneLivraison : node after is not the warehouse");
 			}	
 			// create newIt and add it to Tournee
-			Itineraire newIt = findItineraire(nodeAfter, nodeBefore, Controller.getInstance().getInterfaceAgglo().getPlan());
+			Itineraire newIt = findItineraire(nodeBefore, nodeAfter, Controller.getInstance().getInterfaceAgglo().getPlan());
 			tournee.addItineraireAfter(newIt);
 			listeLivraisons.remove(toBeRemoved);	// delete delivery from model
 			return addBefore;

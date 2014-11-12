@@ -33,18 +33,20 @@ public class Tournee {
 		int adresseAfter = -1;	// adresse of node before the new delivery in the tournee
 		for (Livraison l : livraisons) {
 			if (l.getAdresse().getId() == adresseBefore) {
-				index = livraisons.lastIndexOf(l);
+				index = livraisons.indexOf(l);
 				System.out.println("FOUND = La livraisons précédent la nouvelle livraison est à l'index : "+index+" dans livraisons.");		
 				break;
 			}
 		}
 		
-		if (index != -1 && index >= livraisons.size()) {		// if the delivery the user want to add is not at the end of tournee
+		if (index+1 < livraisons.size()) {		// if the delivery the user want to add is not at the end of tournee
 			adresseAfter = livraisons.get(index+1).getAdresse().getId();
 			livraisons.add(index+1, newDelivery);	
+			System.out.println("addLivraisonAfter -- Adresse after is a delivery");
 		}
 		else {													// if the new delivery is at the end of tournee
 			livraisons.add(newDelivery);
+			System.out.println("addLivraisonAfter -- Adresse after is a NOT delivery");
 		}
 		return adresseAfter; 	// -1 if adresseAfter is the warehouse or the address if it is a delivery
 	}	
@@ -125,7 +127,7 @@ public class Tournee {
 		}
 		livraisons.remove(toBeRemoved);
 		System.out.println("Livraison supprimée de la liste des livraisons.");
-		return false;
+		return true;
 	}
 	
 	@Override
