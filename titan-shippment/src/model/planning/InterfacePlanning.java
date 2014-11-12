@@ -8,6 +8,7 @@ import model.agglomeration.Noeud;
 import model.agglomeration.Plan;
 import model.agglomeration.Troncon;
 import utils.DijkstraFinder;
+import utils.Misc;
 import utils.PathFinder;
 import utils.ShippmentGraph;
 import utils.XMLBuilder;
@@ -291,11 +292,26 @@ public class InterfacePlanning {
 		}
 		
 		// Finding itineraires
+		int bufTime = 0;
+		bufTime = Misc.parseTimeStrToSec(cycle.get(1).getPlageHoraire().getHeureDebut());
 		ArrayList<Itineraire> itineraires = new ArrayList<Itineraire>();
-		for(int i=0;i<cycle.size() - 1;i++){	// No for in !	
+		for(int i=0;i<cycle.size() - 1;i++){	// No for in !
 			Livraison l1 = cycle.get(i);
 			Livraison l2 = cycle.get(i+1);
 			Itineraire it = findItineraire(l1, l2, plan);
+			bufTime += it.getDurationSecondes();
+			if (0==i) { // first livraison append always at "HeureDebut"
+				bufTime -= it.getDurationSecondes();
+			}
+			// livraison can't append before "HeureDebut"
+			else if (bufTime<Misc.parseTimeStrToSec(cycle.get(i+1).getPlageHoraire().getHeureDebut())) {
+				bufTime = Misc.parseTimeStrToSec(cycle.get(i+1).getPlageHoraire().getHeureDebut());
+			}
+			// if delay
+			else if (bufTime>Misc.parseTimeStrToSec(cycle.get(i+1).getPlageHoraire().getHeureFin())) {
+				// TODO RAISE ERROR
+			}
+			cycle.get(i+1).setHeureLivraison(Misc.parseTimeSecToStr(bufTime));
 			itineraires.add(it);
 		}
 		// Loop the cycle
