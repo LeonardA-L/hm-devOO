@@ -13,11 +13,11 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 import model.planning.PlageHoraire;
-import controller.Controller;
 import view.agglomeration.VueNoeud;
 import view.agglomeration.VuePlan;
 import view.planning.VueLivraison;
 import view.planning.VueTournee;
+import controller.Controller;
 
 public class VuePanel extends JPanel {
 

@@ -1,19 +1,14 @@
 package view.planning;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Graphics;
 
-import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import model.planning.Livraison;
 import view.utils.ButtonEditor;
 import view.utils.ButtonRenderer;
-import model.planning.Livraison;
 
 public class VueLivraisonList extends JTable {
 

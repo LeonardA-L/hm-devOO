@@ -1,6 +1,5 @@
 package model.agglomeration;
 
-import java.awt.List;
 import java.util.ArrayList;
 import java.util.Iterator;
 

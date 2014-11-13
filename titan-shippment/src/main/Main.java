@@ -1,13 +1,9 @@
 package main;
 
-import controller.Controller;
-import tests.PlanTest;
-import utils.ShippmentGraph;
-import view.utils.Fenetre;
-import view.utils.InterfaceView;
 import model.agglomeration.InterfaceAgglo;
-import model.agglomeration.Plan;
 import model.planning.InterfacePlanning;
+import view.utils.InterfaceView;
+import controller.Controller;
 
 public class Main {
 

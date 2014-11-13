@@ -4,9 +4,9 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import view.utils.Vue;
 import model.agglomeration.Noeud;
 import model.agglomeration.Plan;
+import view.utils.Vue;
 
 public class VuePlan implements Vue {
 

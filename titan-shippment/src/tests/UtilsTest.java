@@ -2,11 +2,6 @@ package tests;
 
 import java.util.ArrayList;
 
-import utils.DijkstraFinder;
-import utils.PathFinder;
-import utils.ShippmentGraph;
-import controller.Controller;
-import model.agglomeration.InterfaceAgglo;
 import model.agglomeration.Noeud;
 import model.agglomeration.Plan;
 import model.agglomeration.Troncon;
@@ -14,6 +9,9 @@ import model.planning.Itineraire;
 import model.planning.Livraison;
 import model.planning.PlageHoraire;
 import model.planning.Tournee;
+import utils.DijkstraFinder;
+import utils.PathFinder;
+import utils.ShippmentGraph;
 
 public class UtilsTest {
 

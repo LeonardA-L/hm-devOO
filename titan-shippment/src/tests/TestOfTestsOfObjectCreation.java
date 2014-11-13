@@ -1,6 +1,6 @@
 package tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertSame;
 import main.Main;
 
 import org.junit.After;

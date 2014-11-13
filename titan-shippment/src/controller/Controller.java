@@ -6,11 +6,11 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 
-import view.agglomeration.VueNoeud;
-import view.utils.InterfaceView;
+import model.agglomeration.InterfaceAgglo;
 import model.planning.InterfacePlanning;
 import model.planning.Livraison;
-import model.agglomeration.InterfaceAgglo;
+import view.agglomeration.VueNoeud;
+import view.utils.InterfaceView;
 
 public class Controller implements ActionListener {
 

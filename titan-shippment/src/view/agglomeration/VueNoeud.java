@@ -5,10 +5,10 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import view.utils.Type_i;
-import view.utils.Vue;
 import model.agglomeration.Noeud;
 import model.agglomeration.Troncon;
+import view.utils.Type_i;
+import view.utils.Vue;
 
 public class VueNoeud implements Vue, Type_i {
 

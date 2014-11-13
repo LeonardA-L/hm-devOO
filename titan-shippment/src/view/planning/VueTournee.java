@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import controller.Controller;
 import model.agglomeration.Troncon;
 import model.planning.Itineraire;
 import model.planning.Tournee;
@@ -12,6 +11,7 @@ import view.agglomeration.VueNoeud;
 import view.agglomeration.VuePlan;
 import view.agglomeration.VueTroncon;
 import view.utils.Vue;
+import controller.Controller;
 
 public class VueTournee implements Vue {
 

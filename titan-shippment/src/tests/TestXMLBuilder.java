@@ -1,7 +1,5 @@
 package tests;
 
-import java.nio.file.NoSuchFileException;
-
 import model.agglomeration.InterfaceAgglo;
 import model.agglomeration.Plan;
 
