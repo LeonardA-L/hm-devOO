@@ -1,9 +1,12 @@
 package tests;
 
+import static org.junit.Assert.*;
+
 import java.util.ArrayList;
 
 import model.agglomeration.Plan;
 import model.planning.Livraison;
+import model.planning.PlageHoraire;
 import model.planning.Tournee;
 
 import org.junit.Before;
@@ -17,17 +20,16 @@ public class TourneeTest {
 
 	@Before
 	public void create() {
-		int nbNodes = 20;
-		int maxX = 100;
-		int maxY = 100;
-		plan = UtilsTest.DummyPlanCreate(nbNodes, maxX, maxY);
-		livraisons = UtilsTest.DummyDeliveriesListCreate(plan, 5);
+		plan = UtilsTest.planCreate();
+		livraisons = UtilsTest.deliveriesListCreate(plan);
 		tournee = new Tournee();
+		tournee.setLivraisons(livraisons);
+		tournee.addLivraison(new Livraison(new PlageHoraire("18:00:00", "19:00:00"), plan.getNoeuds().get(0), 4, 20));
 	}
 
 	@Test
-	public void test() {
-
+	public void livraisons() {
+		assertTrue(tournee.getLivraisons().size() == 5);
 	}
 
 }

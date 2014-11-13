@@ -13,7 +13,7 @@ public class ShippmentGraphTest {
 
 	@Test
 	public void testGetSucc() {
-		Graph g = PlanTest.DummyPlanCreate().computeShippmentGraph();
+		Graph g = UtilsTest.planCreate().computeShippmentGraph();
 		int[] expected = new int[] { 1, 2 };
 
 		int[] actual = g.getSucc(0);

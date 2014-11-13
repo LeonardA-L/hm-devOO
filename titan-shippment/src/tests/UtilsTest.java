@@ -111,4 +111,56 @@ public class UtilsTest {
 		it.computeTronconsFromNodes(plan, shGraph.getPaths().get(pathHash));
 		return it;
 	}
+
+	/**
+	 * This Plan returns a dummy graph used for testing.
+	 * @return plan
+	 */
+	public static Plan planCreate() {
+		Noeud storeHouse = new Noeud(0, 1, 0, new ArrayList<Troncon>());
+		Noeud n1 = new Noeud(1, 0, 1, new ArrayList<Troncon>());
+		Noeud n2 = new Noeud(1, 2, 2, new ArrayList<Troncon>());
+		Noeud n3 = new Noeud(2, 0, 3, new ArrayList<Troncon>());
+		Noeud n4 = new Noeud(2, 2, 4, new ArrayList<Troncon>());
+		Noeud n5 = new Noeud(3, 1, 5, new ArrayList<Troncon>());
+
+		Plan plan = new Plan(new ArrayList<Noeud>());
+
+		plan.addNoeud(n1);
+		plan.addNoeud(n2);
+		plan.addNoeud(n3);
+		plan.addNoeud(n4);
+		plan.addNoeud(n5);
+		plan.addNoeud(storeHouse);
+
+		storeHouse.addTroncon(new Troncon("r1", 1, 1, n1));
+		storeHouse.addTroncon(new Troncon("r2", 1, 1, n2));
+
+		n1.addTroncon(new Troncon("r3", 1, 1, n4));
+		n2.addTroncon(new Troncon("r4", 1, 2, n3));
+		n3.addTroncon(new Troncon("r5", 1, 3, n5));
+		n4.addTroncon(new Troncon("r6", 1, 3, n5));
+		n5.addTroncon(new Troncon("r6", 1, 5, storeHouse));
+		
+		plan.addTronconToNoeud(4, "Rue des Oliviers", 10.0F, 5.0F, 3);
+
+		return plan;
+	}
+
+	public static ArrayList<Livraison> deliveriesListCreate(Plan plan) {
+		int size = plan.getNoeuds().size();
+		ArrayList<Livraison> livraisons = new ArrayList<Livraison>();
+		
+		Livraison l1 = new Livraison(new PlageHoraire("12:00:00", "13:00:00"), plan.getNoeuds().get(3%size), 10, 50);
+		Livraison l2 = new Livraison(new PlageHoraire("14:00:00", "15:00:00"), plan.getNoeuds().get(2%size), 8, 40);
+		Livraison l3 = new Livraison(new PlageHoraire("18:00:00", "20:00:00"), plan.getNoeuds().get(1%size), 6, 30);
+		Livraison l4 = new Livraison(new PlageHoraire("22:00:00", "23:00:00"), plan.getNoeuds().get(0%size), 4, 20);
+		
+		livraisons.add(l1);
+		livraisons.add(l2);
+		livraisons.add(l3);
+		livraisons.add(l4);
+		
+		return livraisons;
+	}
 }
