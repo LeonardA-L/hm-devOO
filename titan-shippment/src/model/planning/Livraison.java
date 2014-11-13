@@ -11,6 +11,9 @@ public class Livraison {
 	private String heureLivraison;
 	private Boolean isDelayed;
 
+	/**
+	 * Constructor w/o parameters
+	 */
 	public Livraison() {
 		this.plageHoraire = new PlageHoraire();
 		this.adresse = new Noeud();
@@ -20,6 +23,13 @@ public class Livraison {
 		this.isDelayed = false;
 	}
 
+	/**
+	 * Constructors w parameters
+	 * @param plageHoraire		Time schedule for the delivery
+	 * @param adresse			Address of the delivery
+	 * @param idClient			Id of client 
+	 * @param idLivraison		Id of delivery
+	 */
 	public Livraison(PlageHoraire plageHoraire, Noeud adresse, int idClient, int idLivraison) {
 		this.plageHoraire = plageHoraire;
 		this.adresse = adresse;
@@ -29,6 +39,8 @@ public class Livraison {
 		this.isDelayed = false;
 	}
 
+	// ------------------------------------------------------------------
+	// GETTERS - SETTERS
 	public PlageHoraire getPlageHoraire() {
 		return plageHoraire;
 	}

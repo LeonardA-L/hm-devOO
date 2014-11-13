@@ -8,11 +8,19 @@ public class Tournee {
 	private ArrayList<Livraison> livraisons;
 	private ArrayList<Itineraire> itineraires;
 
+	/**
+	 * Constructor w/o parameter
+	 */
 	public Tournee() {
 		this.livraisons = new ArrayList<Livraison>();
 		this.itineraires = new ArrayList<Itineraire>();
 	}
 
+	/**
+	 * Constructor w/parameters
+	 * @param livraisons		Livraisons to be included in Tournee
+	 * @param itineraires		Itineraires between Lirvraisons
+	 */
 	public Tournee(ArrayList<Livraison> livraisons, ArrayList<Itineraire> itineraires) {
 		this.livraisons = livraisons;
 		this.itineraires = itineraires;
@@ -20,8 +28,7 @@ public class Tournee {
 
 	public int addLivraisonAfter(Livraison newDelivery, int adresseBefore) {
 		int index = -1; // index of livraisons
-		int adresseAfter = -1; // adresse of node before the new delivery in the
-								// tournee
+		int adresseAfter = -1; // adresse of node before the new delivery in the tournee
 		for (Livraison l : livraisons) {
 			if (l.getAdresse().getId() == adresseBefore) {
 				index = livraisons.indexOf(l);
@@ -30,9 +37,7 @@ public class Tournee {
 			}
 		}
 
-		if (index + 1 < livraisons.size()) { // if the delivery the user want to
-												// add is not at the end of
-												// tournee
+		if (index + 1 < livraisons.size()) { // if the delivery the user want to add is not at the end of tournee
 			adresseAfter = livraisons.get(index + 1).getAdresse().getId();
 			livraisons.add(index + 1, newDelivery);
 			System.out.println("addLivraisonAfter -- Adresse after is a delivery");
@@ -40,8 +45,7 @@ public class Tournee {
 			livraisons.add(newDelivery);
 			System.out.println("addLivraisonAfter -- Adresse after is a NOT delivery");
 		}
-		return adresseAfter; // -1 if adresseAfter is the warehouse or the
-								// address if it is a delivery
+		return adresseAfter; // -1 if adresseAfter is the warehouse or the address if it is a delivery
 	}
 
 	public boolean addItineraireAfter(Itineraire newIte) {

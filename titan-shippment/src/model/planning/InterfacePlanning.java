@@ -33,8 +33,7 @@ public class InterfacePlanning {
 		tournee = null;
 	}
 
-	// ################################## Working with Livraisons
-	// #####################################
+	// ################################## PART ABOUT Livraisons #####################################
 
 	/**
 	 * Call a method in XMLBuilder, giving it the name of the file containing the plan. Then get back the array of elements to be used and build all livraisons from it
@@ -82,35 +81,35 @@ public class InterfacePlanning {
 	/**
 	 * Add a delivery from a click on the map.
 	 * 
-	 * @param idClient
+	 * @param idClient	
+	 * 			  id of the client
 	 * @param heureDebut
+	 * 			  time from which the delivery can occur
 	 * @param heureFin
+	 * 			  time after which the delivery is late
 	 * @param adresse
+	 * 			  address where the the delivery takes place
 	 * @param prevAdresse
+	 * 			  address of the delivery that occurs before the new one in Tournee
 	 * @return ID of the delivery which was created
 	 */
 	public int addLivraisonAfter(int idLivraison, int idClient, String heureDebut, String heureFin, int adresse, int prevAdresse) {
-		// If the delivery is added for the first time (and not through
-		// undo/redo, it doesn't have an id yet
+		// If the delivery is added for the first time (and not through undo/redo), it doesn't have an id yet
 		if (idLivraison == -1) {
 			idLivraison = getNewDeliveryId(); // get an id
-			System.out.println("New delivery id chosen : " + s_idLivraison);
 		}
-		// add new delivery into model :
+		// Add new delivery into model :
 		boolean deliveryCreation = addLivraison(idClient, idLivraison, heureDebut, heureFin, adresse);
-		System.out.println("New Delivery added to livraisons in InterfacePlanning");
 
-		if (deliveryCreation) { // if creatin went right in model
-			Noeud nodeBefore = null; // fetched
-			Noeud nodeOfDelivery = null; // fetched
-			Noeud nodeAfter = null; // fetched
-			Livraison newDelivery = null; // fetched
-			Livraison deliveryAfter = null; // fetched
+		if (deliveryCreation) { // if creation went right in model
+			Noeud nodeBefore = null; 
+			Noeud nodeOfDelivery = null; 
+			Noeud nodeAfter = null; 
+			Livraison newDelivery = null;
+			Livraison deliveryAfter = null; 
 
 			// NODE BEFORE
-			if (entrepot.getId() == prevAdresse) { // if prevAdresse is the same
-													// as warehouse
-				System.out.println("### Node before new delivery is the warehouse ###");
+			if (entrepot.getId() == prevAdresse) { // if prevAdresse is the same as warehouse
 				nodeBefore = entrepot;
 			} else { // else, it is a delivery, we find it.
 				nodeBefore = this.getLivraisonByAdr(prevAdresse).getAdresse();
@@ -124,30 +123,20 @@ public class InterfacePlanning {
 			int adresseAfter = tournee.addLivraisonAfter(newDelivery, nodeBefore.getId());
 			if (adresseAfter == -1) { // adresse after is entrepot
 				nodeAfter = entrepot;
-				System.out.println("### Node after new delivery is the warehouse ###");
 			} else { // fetch delivery after and get its address
 				deliveryAfter = getLivraisonByAdr(adresseAfter);
 				nodeAfter = deliveryAfter.getAdresse();
-				System.out.println("### Node after new delivery is NOT the warehouse ###");
 			}
 
-			System.out.println("Adding new itineraires...");
 			Itineraire itBefore = findItineraire(nodeBefore, nodeOfDelivery, Controller.getInstance().getInterfaceAgglo().getPlan());
 			Itineraire itAfter = findItineraire(nodeOfDelivery, nodeAfter, Controller.getInstance().getInterfaceAgglo().getPlan());
-			System.out.println("Trying to remove former itineraire");
-			tournee.removeItineraireAfter(nodeBefore.getId()); // on enlï¿½ve
-																// l'ancien
-																// itinï¿½raire
-																// entre
-																// nodeBefore et
-																// node after
+			tournee.removeItineraireAfter(nodeBefore.getId()); // on enlève l'ancien itinéraire entre nodeBefore et node after
 			tournee.addItineraireAfter(itBefore);
 			tournee.addItineraire(itAfter);
 
 			calculLivraisonsSchedule();
 
-			return idLivraison; // contains the chosen id for the new delivery
-								// (in case of undo/redo)
+			return idLivraison; // contains the chosen id for the new delivery (in case of undo/redo)
 		}
 		return -1;
 	}
@@ -156,16 +145,14 @@ public class InterfacePlanning {
 	 * At init, the method finds the higher delivery id Then it always increment the idLivraison var.
 	 */
 	public int getNewDeliveryId() {
-		if (s_idLivraison == -1) { // init for the first time the method is
-									// called.
+		if (s_idLivraison == -1) { // init for the first time the method is called.
 			int idMax = 0;
 			for (Livraison l : listeLivraisons) {
 				idMax = idMax < l.getIdLivraison() ? l.getIdLivraison() : idMax;
 			}
 			s_idLivraison = idMax++;
 		}
-		return ++s_idLivraison; // returns an id that can't be used by any other
-								// delivery
+		return ++s_idLivraison; // Returns an id that can't be used by any other delivery
 	}
 
 	/**
@@ -176,19 +163,17 @@ public class InterfacePlanning {
 	 */
 	public int removeOneLivraison(int adresse) {
 		Livraison toBeRemoved = null;
-		for (Livraison l : listeLivraisons) { // find delivery in model
+		for (Livraison l : listeLivraisons) { // Find delivery in model
 			if (l.getAdresse().getId() == adresse) {
 				toBeRemoved = l;
 				break;
 			}
 		}
 		if (toBeRemoved != null) { // delivery to be removed found
-			// remove itineraires from tournee
+			// Remove itineraires from tournee
 			int addAfter = tournee.removeItineraireAfter(toBeRemoved.getAdresse().getId());
 			int addBefore = tournee.removeItineraireBefore(toBeRemoved.getAdresse().getId());
 			if (addAfter == -1 || addBefore == -1) {
-				System.out.println("removeOneLivraison - Erreur durant la suppression des itinï¿½raires.");
-				System.out.println("addAfter = " + addAfter + " and addBefore = " + addBefore);
 				return -1;
 			}
 			// remove former delivery from tournee
@@ -201,17 +186,13 @@ public class InterfacePlanning {
 			Noeud nodeAfter = null;
 			if (addBefore == entrepot.getId()) {
 				nodeBefore = entrepot;
-				System.out.println("removeOneLivraison : node before is the warehouse");
 			} else {
 				nodeBefore = getLivraisonByAdr(addBefore).getAdresse();
-				System.out.println("removeOneLivraison : node before is not the warehouse");
 			}
 			if (addAfter == entrepot.getId()) {
 				nodeAfter = entrepot;
-				System.out.println("removeOneLivraison : node after is the warehouse");
 			} else {
 				nodeAfter = getLivraisonByAdr(addAfter).getAdresse();
-				System.out.println("removeOneLivraison : node after is not the warehouse");
 			}
 			// create newIt and add it to Tournee
 			Itineraire newIt = findItineraire(nodeBefore, nodeAfter, Controller.getInstance().getInterfaceAgglo().getPlan());
@@ -221,7 +202,6 @@ public class InterfacePlanning {
 			calculLivraisonsSchedule();
 			return addBefore;
 		} else {
-			System.out.println("removeOneLivraison - The delivery marqued for removal was not found.");
 			return -1;
 		}
 	}
@@ -231,7 +211,7 @@ public class InterfacePlanning {
 	 * 
 	 * @param heureDebut
 	 * @param heureFin
-	 * @return
+	 * @return The PlageHoraire object
 	 */
 	private PlageHoraire getPlageHoraire(String heureDebut, String heureFin) {
 		Iterator<PlageHoraire> it = plagesHoraires.iterator();
@@ -249,25 +229,6 @@ public class InterfacePlanning {
 		PlageHoraire ph = new PlageHoraire(heureDebut, heureFin);
 		plagesHoraires.add(ph);
 		return ph;
-	}
-
-	public Noeud getEntrepot() {
-		return entrepot;
-	}
-
-	public boolean setEntrepot(Noeud entrepot) {
-		this.entrepot = entrepot;
-		if (entrepot != null) {
-			this.entrepot = entrepot;
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	public boolean setEntrepot(int id) {
-		Noeud entrepot = Controller.getInstance().getInterfaceAgglo().getPlan().getNoeudById(id);
-		return this.setEntrepot(entrepot);
 	}
 
 	public void resetLivraisons() {
@@ -358,6 +319,11 @@ public class InterfacePlanning {
 	// ################################### Working with view
 	// ####################################
 
+	/**
+	 * Check wether or not the node whose id is idNode is a delivery point
+	 * @param idNode	ID of node (i.d. the delivery location)
+	 * @return
+	 */
 	public boolean isNodeADelivery(int idNode) {
 
 		if (isNodeEntrepot(idNode)) {
@@ -372,6 +338,11 @@ public class InterfacePlanning {
 		return false;
 	}
 
+	/**
+	 * Check wether or not the node whose id is idNode is the warehouse
+	 * @param idNode	ID of node
+	 * @return
+	 */
 	public boolean isNodeEntrepot(int idNode) {
 		if (entrepot == null) {
 			return false;
@@ -389,6 +360,13 @@ public class InterfacePlanning {
 		return listeLivraisons;
 	}
 
+	/**
+	 * Return a delivery determined by its ID.
+	 * @param id 
+	 * 			Id of the delivery (should not be used unless you know
+	 * 			exactly what you are doing, as they are not unique)
+	 * @return
+	 */
 	public Livraison getLivraisonById(int id) {
 		for (Livraison l : listeLivraisons) {
 			if (l.getIdLivraison() == id) {
@@ -398,6 +376,12 @@ public class InterfacePlanning {
 		return null;
 	}
 
+	/**
+	 * Return a delivery determined by its address.
+	 * @param adresse
+	 * 			Address of the delivery 
+	 * @return
+	 */
 	public Livraison getLivraisonByAdr(int adresse) {
 
 		if (adresse == entrepot.getId()) {
@@ -412,6 +396,9 @@ public class InterfacePlanning {
 		return null;
 	}
 
+	/**
+	 * 	Add time constraints to the Tournee
+	 */
 	public void calculLivraisonsSchedule() {
 		int bufTime = 0;
 		try {
@@ -441,6 +428,7 @@ public class InterfacePlanning {
 		}
 	}
 
+	
 	public Livraison getLivraisonByIndex(int index) {
 		return listeLivraisons.get(index);
 	}
@@ -470,4 +458,25 @@ public class InterfacePlanning {
 		this.plagesHoraires = plagesHoraires;
 	}
 
+
+	public Noeud getEntrepot() {
+		return entrepot;
+	}
+
+	public boolean setEntrepot(Noeud entrepot) {
+		this.entrepot = entrepot;
+		if (entrepot != null) {
+			this.entrepot = entrepot;
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public boolean setEntrepot(int id) {
+		Noeud entrepot = Controller.getInstance().getInterfaceAgglo().getPlan().getNoeudById(id);
+		return this.setEntrepot(entrepot);
+	}
+
+	
 }

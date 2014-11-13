@@ -26,17 +26,14 @@ public class InterfaceAgglo {
 	}
 
 	/**
-	 * Deprecated
+	 *   Reset the map in the model
 	 */
-	public float[][] GetFormatedMap() {
-		float[][] matrice = plan.getMatrix();
-		return matrice;
-	}
-
 	public void resetPlan() {
 		plan.reset();
 	}
 
+	// ------------------------------------------------------------------
+	// GETTERS - SETTERS
 	public Plan getPlan() {
 		return plan;
 	}

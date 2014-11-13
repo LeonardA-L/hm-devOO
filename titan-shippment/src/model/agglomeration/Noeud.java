@@ -73,6 +73,7 @@ public class Noeud {
 		return line;
 	}
 
+	// ------------------------------------------------------------------
 	// GETTERS - SETTERS
 	public int getCoordX() {
 		return coordX;
@@ -108,13 +109,7 @@ public class Noeud {
 
 	@Override
 	public String toString() {
-		String retour = "Noeud nï¿½" + id + "(coord x : " + coordX + ", y : " + coordY + ")";
-
-		// Iterator<Troncon> it = troncons.iterator();
-		// while (it.hasNext()) {
-		// retour += "" + it.next().toString() + "\n";
-		// }
-
+		String retour = "Noeud n°" + id + "(coord x : " + coordX + ", y : " + coordY + ")";
 		return retour;
 	}
 

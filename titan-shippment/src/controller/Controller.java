@@ -31,7 +31,7 @@ public class Controller implements ActionListener {
 	final String ERROR_DELIVERY_MOD = "Erreur - Modification des livraisons";
 	final String ERROR_MAP = "Erreur - Chargement Plan";
 	final String ERROR_TOURNEE = "Erreur - Calcul de la tournee";
-	final String ERROR_INSTRUC = "Erreur - Gï¿½nï¿½ration des instructions";
+	final String ERROR_INSTRUC = "Erreur - Gération des instructions";
 	final String WARNING_UNDO = "Undo";
 	final String WARNING_REDO = "Redo";
 
@@ -80,7 +80,7 @@ public class Controller implements ActionListener {
 				return;
 			}
 			if (!tourneeCalculed) {
-				interfaceView.displayAlert(ERROR_DELIVERY_MOD, "Vous devez calculer une tournï¿½e avant de modifier des livraisons.", "warning");
+				interfaceView.displayAlert(ERROR_DELIVERY_MOD, "Vous devez calculer une tournée avant de modifier des livraisons.", "warning");
 				return;
 			}
 
@@ -102,12 +102,7 @@ public class Controller implements ActionListener {
 
 					// -- Input user for data about new delivery
 					int adressePrecedente = view_noeud.getNoeud().getId();
-					String[] retour = interfaceView.askPlageHoraire(); // 0 :
-																		// heureDebut
-																		// / 1 :
-																		// heureFin
-																		// / 2 =
-																		// idClient
+					String[] retour = interfaceView.askPlageHoraire(); // 0 : heureDebut / 1 : heureFin / 2 = idClient
 					if (retour[0] == null || retour[1] == null) {
 						interruptAddingNewLivraison();
 						return;
@@ -166,7 +161,7 @@ public class Controller implements ActionListener {
 	 */
 	public void trigger(String action, String name) {
 		if (addingNewLivraison) {
-			interfaceView.displayAlert(ERROR_TOURNEE, "Vous ne pouvez pas charger de fichier ou calculer une nouvelle tournï¿½e pendant l'ajout d'un point de livraison.", "warning");
+			interfaceView.displayAlert(ERROR_TOURNEE, "Vous ne pouvez pas charger de fichier ou calculer une nouvelle tournée pendant l'ajout d'un point de livraison.", "warning");
 		} else {
 			if (action.equals("loadFile")) {
 				if (name.equals("loadMap")) { // LOAD MAP
@@ -182,7 +177,7 @@ public class Controller implements ActionListener {
 						if (buildOk) {
 							mapLoaded = true;
 						} else {
-							interfaceView.displayAlert(ERROR_MAP, "La carte n'a pas ï¿½tï¿½ chargï¿½e correctement.", "error");
+							interfaceView.displayAlert(ERROR_MAP, "La carte n'a pas ï¿½tï¿½ chargée correctement.", "error");
 							interfaceView.repaint();
 							return;
 						}
@@ -193,7 +188,7 @@ public class Controller implements ActionListener {
 					}
 				} else if (name.equals("loadLivraisons")) { // LOAD DELIVERIES
 					if (!mapLoaded) {
-						interfaceView.displayAlert(ERROR_DELIVERY_LOAD, "Vous devez charger une carte au prï¿½alable.", "warning");
+						interfaceView.displayAlert(ERROR_DELIVERY_LOAD, "Vous devez charger une carte au préalable.", "warning");
 					} else {
 						String filename = interfaceView.loadFile();
 
@@ -202,21 +197,18 @@ public class Controller implements ActionListener {
 							resetLivraisons();
 							resetTournee();
 
-							// load livraisons
+							// Load deliveries
 							boolean buildOk = interfacePlanning.GetPlanningsFromBuilder(filename);
 							if (buildOk) {
 								livraisonsLoaded = true;
 							} else {
-								interfaceView.displayAlert(ERROR_DELIVERY_LOAD, "Les livraisons n'ont pas ï¿½tï¿½ chargï¿½es correctement", "error");
+								interfaceView.displayAlert(ERROR_DELIVERY_LOAD, "Les livraisons n'ont pas été chargées correctement", "error");
 								interfaceView.repaint();
 								return;
 							}
 
-							// set views
+							// Set views
 							boolean creatingViewOk = interfaceView.genererVueLivraisons(interfacePlanning.getListeLivraisons(), interfacePlanning.getEntrepot());
-							// pour les tournï¿½es, rien ï¿½ voir
-							// .getVue_tournee().setTournee(interfacePlanning.getTournee());
-
 							if (!creatingViewOk) {
 								livraisonsLoaded = false;
 								interfaceView.displayAlert(ERROR_DELIVERY_LOAD, "Un noeud est introuvable.", "error");
@@ -229,32 +221,29 @@ public class Controller implements ActionListener {
 			} else if (action.equals("click_button")) {
 				if (name.equals("calculTournee")) {
 					if (!mapLoaded || !livraisonsLoaded) {
-						interfaceView.displayAlert(ERROR_TOURNEE, "Vous devez charger une carte et une livraison au prï¿½alable.", "warning");
+						interfaceView.displayAlert(ERROR_TOURNEE, "Vous devez charger une carte et une livraison au préalable.", "warning");
 					} else {
 						resetTournee();
 						interfacePlanning.calculTournee();
 						interfaceView.getVuePanel().getVue_tournee().setTournee(interfacePlanning.getTournee());
 						tourneeCalculed = true;
-
-						// System.out.println("Tournee : " +
-						// interfacePlanning.getTournee().toString());
 						interfaceView.repaint();
 					}
 				} else if (name.equals("undo")) {
 					if (!undoRedo.Undo()) {
-						interfaceView.displayAlert(WARNING_UNDO, "Rien ï¿½ annuler", "info");
+						interfaceView.displayAlert(WARNING_UNDO, "Rien à annuler", "info");
 					}
 					interfaceView.getVuePanel().getVue_tournee().setTournee(interfacePlanning.getTournee());
 					interfaceView.repaint();
 				} else if (name.equals("redo")) {
 					if (!undoRedo.Redo()) {
-						interfaceView.displayAlert(WARNING_REDO, "Rien ï¿½ rï¿½tablir", "info");
+						interfaceView.displayAlert(WARNING_REDO, "Rien à rétablir", "info");
 					}
 					interfaceView.getVuePanel().getVue_tournee().setTournee(interfacePlanning.getTournee());
 					interfaceView.repaint();
 				} else if (name.equals("generateInstructions")) {
 					if (!tourneeCalculed) {
-						interfaceView.displayAlert(ERROR_INSTRUC, "Impossible de gï¿½nï¿½ner le fichier d'instructions avant le calcul d'une tournï¿½e", "warning");
+						interfaceView.displayAlert(ERROR_INSTRUC, "Impossible de généner le fichier d'instructions avant le calcul d'une tournée", "warning");
 						return;
 					}
 					generateInstructions();
@@ -263,7 +252,7 @@ public class Controller implements ActionListener {
 			} else if (action.equals("delete_noeud")) {
 
 				if (!tourneeCalculed) {
-					interfaceView.displayAlert(ERROR_DELIVERY_MOD, "Vous devez calculer une tournï¿½e avant de modifier des livraisons.", "warning");
+					interfaceView.displayAlert(ERROR_DELIVERY_MOD, "Vous devez calculer une tournée avant de modifier des livraisons.", "warning");
 					return;
 				}
 				int idNoeud = Integer.parseInt(name);
@@ -327,7 +316,7 @@ public class Controller implements ActionListener {
 		try {
 			out = new BufferedWriter(new FileWriter(file, false));
 			out.append(instructions);
-			interfaceView.displayAlert("Succï¿½s", "Instructions chargï¿½es dans le fichier " + file.getAbsolutePath() + ".", "info");
+			interfaceView.displayAlert("Succès", "Instructions chargées dans le fichier " + file.getAbsolutePath() + ".", "info");
 		} catch (Exception e) {
 			interfaceView.displayAlert("Echec", "Impossible de charger les instructions dans le fichier " + file.getAbsolutePath() + ".", "error");
 		} finally {
@@ -340,8 +329,7 @@ public class Controller implements ActionListener {
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-	}
+	public void actionPerformed(ActionEvent arg0) {}
 
 	public InterfaceAgglo getReferenceToInterfaceAgglo() {
 		return interfaceAgglo;

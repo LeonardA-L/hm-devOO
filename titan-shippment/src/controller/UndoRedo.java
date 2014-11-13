@@ -75,8 +75,9 @@ public class UndoRedo {
 	// -----------------------------------------------
 
 	/**
-	 * Create and execute a new CommandAddOne. This method is used to add a delivery only if the Tournee HAS BEEN CALCULTED, and the Tournee is calculated again and updated.
-	 * 
+	 * Create and execute a new CommandAddOne. This method is used to add a delivery 
+	 * only if the Tournee HAS BEEN CALCULTED, and the Tournee is calculated again and updated.
+	 *
 	 * @param idClient
 	 *            From user input, via a popup
 	 * @param idLivraison
@@ -102,7 +103,8 @@ public class UndoRedo {
 	}
 
 	/**
-	 * Create and execute a new CommandRemoveOne. This method can be used to delete any Livraison from the list of Livraisons.
+	 * Create and execute a new CommandRemoveOne. This method can be used to delete 
+	 * any Livraison from the list of Livraisons.
 	 * 
 	 * @param idLivraison
 	 *            From user input (click on map)

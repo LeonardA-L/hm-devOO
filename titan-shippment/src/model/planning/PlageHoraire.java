@@ -5,11 +5,19 @@ public class PlageHoraire {
 	private String heureDebut;
 	private String heureFin;
 
+	/**
+	 * Constructor w/o parameter
+	 */
 	public PlageHoraire() {
 		this.setHeureDebut("");
 		this.setHeureFin("");
 	}
 
+	/**
+	 * Constructor w/parameters
+	 * @param heureDebut		Starting time
+	 * @param heureFin			Ending time
+	 */
 	public PlageHoraire(String heureDebut, String heureFin) {
 		this.heureDebut = heureDebut;
 		this.heureFin = heureFin;
@@ -17,8 +25,7 @@ public class PlageHoraire {
 
 	/**
 	 * Parses the String dates of the object into boundary timestamps
-	 * 
-	 * @return
+	 * @return  Time boundaries
 	 */
 	public int[] getBounds() {
 		int[] bounds = new int[2];
@@ -43,6 +50,8 @@ public class PlageHoraire {
 		return bounds;
 	}
 
+	// ------------------------------------------------------------------
+	// GETTERS - SETTERS
 	public String getHeureDebut() {
 		return heureDebut;
 	}

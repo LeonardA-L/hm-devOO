@@ -126,17 +126,23 @@ public class Plan {
 		return matriceAdj;
 	}
 
+	/**
+	 *  Remove all nodes in plan
+	 */
 	public void reset() {
-
-		// remove all nodes
 		noeuds.clear();
 	}
 
+	/**
+	 * This methods recalculate the coordinates of each node so that any map 
+	 * fits in our 500*500px JPanel
+	 * @param xSize
+	 * @param ySize
+	 */
 	public void fitJPanel(int xSize, int ySize) {
-
 		int xMax = 0;
 		int yMax = 0;
-
+		
 		for (Noeud n : noeuds) {
 			xMax = n.getCoordX() > xMax ? n.getCoordX() : xMax;
 			yMax = n.getCoordY() > yMax ? n.getCoordY() : yMax;
@@ -144,15 +150,28 @@ public class Plan {
 
 		float xRatio = (float) xSize / (float) xMax;
 		float yRatio = (float) ySize / (float) yMax;
-		// System.out.println("xRatio = "+xRatio+" / yratio = "+yRatio);
 		for (Noeud n : noeuds) {
 			n.setCoordX((int) (n.getCoordX() * xRatio));
 			n.setCoordY((int) (n.getCoordY() * yRatio * 0.95));
 		}
 	}
 
-	// GETTERS - SETTERS
+	/**
+	 * Computes a ShippmentGraph object from this one, meeting choco's requirements
+	 */
+	public ShippmentGraph computeShippmentGraph() {
+		ShippmentGraph shGraph = new ShippmentGraph(getNoeuds().size());
+		for (Noeud n : getNoeuds()) {
+			shGraph.addNode(n);
+		}
+		// Computes every path between every node couple
+		shGraph.makeGraphComplete();
+		return shGraph;
+	}
 
+	
+	// ------------------------------------------------------------------
+	// GETTERS - SETTERS
 	public ArrayList<Noeud> getNoeuds() {
 		return noeuds;
 	}
@@ -172,19 +191,4 @@ public class Plan {
 		}
 		return retour;
 	}
-
-	/**
-	 * Computes a ShippmentGraph object from this one, meeting choco's requirements
-	 */
-	public ShippmentGraph computeShippmentGraph() {
-		ShippmentGraph shGraph = new ShippmentGraph(getNoeuds().size());
-		for (Noeud n : getNoeuds()) {
-			shGraph.addNode(n);
-		}
-		// shGraph.fillBlankCosts();
-		// Computes every path between every node couple
-		shGraph.makeGraphComplete();
-		return shGraph;
-	}
-
 }

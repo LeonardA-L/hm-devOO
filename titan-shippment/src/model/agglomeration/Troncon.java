@@ -36,6 +36,7 @@ public class Troncon {
 		this.noeudDestination = noeudDestination;
 	}
 
+	// ------------------------------------------------------------------
 	// GETTERS - SETTERS
 	public String getNomRue() {
 		return nomRue;
