@@ -1,6 +1,6 @@
 package tests;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
@@ -17,8 +17,7 @@ public class PlanTest {
 
 	/**
 	 * This Plan returns a dummy graph used for testing.
-	 * 
-	 * @return
+	 * @return plan
 	 */
 	public static Plan DummyPlanCreate() {
 
@@ -29,14 +28,14 @@ public class PlanTest {
 		Noeud n4 = new Noeud(2, 2, 4, new ArrayList<Troncon>());
 		Noeud n5 = new Noeud(3, 1, 5, new ArrayList<Troncon>());
 
-		Plan gigaAnton = new Plan(new ArrayList<Noeud>());
+		Plan plan = new Plan(new ArrayList<Noeud>());
 
-		gigaAnton.addNoeud(n1);
-		gigaAnton.addNoeud(n2);
-		gigaAnton.addNoeud(n3);
-		gigaAnton.addNoeud(n4);
-		gigaAnton.addNoeud(n5);
-		gigaAnton.addNoeud(storeHouse);
+		plan.addNoeud(n1);
+		plan.addNoeud(n2);
+		plan.addNoeud(n3);
+		plan.addNoeud(n4);
+		plan.addNoeud(n5);
+		plan.addNoeud(storeHouse);
 
 		storeHouse.addTroncon(new Troncon("r1", 1, 1, n1));
 		storeHouse.addTroncon(new Troncon("r2", 1, 1, n2));
@@ -46,21 +45,32 @@ public class PlanTest {
 		n3.addTroncon(new Troncon("r5", 1, 3, n5));
 		n4.addTroncon(new Troncon("r6", 1, 3, n5));
 		n5.addTroncon(new Troncon("r6", 1, 5, storeHouse));
+		
+		plan.addTronconToNoeud(4, "Rue des Oliviers", 10.0F, 5.0F, 3);
 
-		return gigaAnton;
+		return plan;
 	}
 
 	@Before
 	public void setUp() {
-		int nbNodes = 20;
-		int maxX = 100;
-		int maxY = 100;
-		dummy = UtilsTest.DummyPlanCreate(nbNodes, maxX, maxY);
+		dummy = PlanTest.DummyPlanCreate();
 	}
 
 	@Test
 	public void weHaveAPlan() {
 		assertNotNull(this.dummy);
+	}
+	
+	@Test
+	public void nodes() {
+		assertTrue(this.dummy.getNoeuds().size() == 6);
+		assertNotNull(this.dummy.getNoeudById(4));
+	}
+	
+	@Test
+	public void troncons() {
+		assertTrue(this.dummy.getNoeudById(4).getTroncons().size() == 2);
+		assertTrue(this.dummy.getNoeudById(4).getTroncons().get(1).getNomRue() == "Rue des Oliviers");
 	}
 
 }
