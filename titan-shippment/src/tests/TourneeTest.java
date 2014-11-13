@@ -3,6 +3,7 @@ package tests;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import model.agglomeration.Plan;
 import model.planning.Livraison;
@@ -29,7 +30,30 @@ public class TourneeTest {
 
 	@Test
 	public void livraisons() {
+		assertFalse(tournee.getLivraisons().isEmpty());
 		assertTrue(tournee.getLivraisons().size() == 5);
+	}
+	
+	@Test
+	public void addNext() {
+		tournee.addLivraisonAfter(new Livraison(new PlageHoraire("18:00:00", "19:00:00"), plan.getNoeuds().get(0), 4, 100), 20);
+		Iterator<Livraison> it = tournee.getLivraisons().iterator();
+		while (it.hasNext()) {
+			int id = it.next().getAdresse().getId();
+			if (!it.hasNext()) {
+				break;
+			}
+			if (id == 20) {
+				assertTrue(it.next().getAdresse().getId() == 100);
+			}
+		}
+	}
+	
+	@Test
+	public void reset() {
+		tournee.reset();
+		assertTrue(tournee.getItineraires().size() == 0);
+		assertTrue(tournee.getLivraisons().size() == 0);
 	}
 
 }
