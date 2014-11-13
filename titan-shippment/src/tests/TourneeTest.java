@@ -35,6 +35,20 @@ public class TourneeTest {
 	}
 	
 	@Test
+	public void addAndRemoveLivraison() {
+		int sizeBefore = tournee.getLivraisons().size();
+		tournee.addLivraison(new Livraison(new PlageHoraire("10:00:00", "14:00:00"), plan.getNoeuds().get(4), 2, 1000));
+		tournee.removeLivraison(4);
+		int sizeAfter = tournee.getLivraisons().size();
+		assertTrue(sizeBefore == sizeAfter);
+		Iterator<Livraison> it = tournee.getLivraisons().iterator();
+		while (it.hasNext()) {
+			int idLivraison = it.next().getIdLivraison();
+			assertFalse(idLivraison == 1000);
+		}
+	}
+	
+	@Test
 	public void addNext() {
 		tournee.addLivraisonAfter(new Livraison(new PlageHoraire("18:00:00", "19:00:00"), plan.getNoeuds().get(0), 4, 100), 20);
 		Iterator<Livraison> it = tournee.getLivraisons().iterator();

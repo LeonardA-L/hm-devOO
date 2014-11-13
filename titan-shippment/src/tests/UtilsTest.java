@@ -59,7 +59,7 @@ public class UtilsTest {
 
 	public static Plan DummyPlanCreate(int nbNodes, int maxX, int maxY) {
 		// creating map
-		String[] rues = { "Avenue des titans", "Rue de Lï¿½onard", "Super rue", "Anton Long Avenue", "GIGA AVENUE", "Persistence street" };
+		String[] rues = { "Avenue des titans", "Rue de Léonard", "Super rue", "Anton Long Avenue", "GIGA AVENUE", "Persistence street" };
 
 		// Noeud entrepot = new Noeud(20,30,-1, new ArrayList<Troncon>());
 		Plan plan = new Plan(new ArrayList<Noeud>());
@@ -126,12 +126,12 @@ public class UtilsTest {
 
 		Plan plan = new Plan(new ArrayList<Noeud>());
 
+		plan.addNoeud(storeHouse);
 		plan.addNoeud(n1);
 		plan.addNoeud(n2);
 		plan.addNoeud(n3);
 		plan.addNoeud(n4);
 		plan.addNoeud(n5);
-		plan.addNoeud(storeHouse);
 
 		storeHouse.addTroncon(new Troncon("r1", 1, 1, n1));
 		storeHouse.addTroncon(new Troncon("r2", 1, 1, n2));
