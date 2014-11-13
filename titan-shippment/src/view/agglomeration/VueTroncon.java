@@ -16,13 +16,18 @@ public class VueTroncon implements Vue {
 	private Color color;
 	private int stroke;
 
-	private final int RAYON_NOEUD = 5;
-
+	/**
+	 * Constructor w/o parameters
+	 */
 	public VueTroncon() {
 		this.troncon = null;
 		this.color = Color.BLACK;
 	}
 
+	/**
+	 * Constructor w/parameter
+	 * @param troncon	Tronçon associated with view
+	 */
 	public VueTroncon(Troncon troncon) {
 		this.troncon = troncon;
 		this.color = Color.BLACK;
@@ -42,17 +47,6 @@ public class VueTroncon implements Vue {
 		int xPrime = troncon.getNoeudDestination().getCoordX();
 		int yPrime = troncon.getNoeudDestination().getCoordY();
 
-		/*
-		 * double distanceY = Math.abs(y-yPrime); double distanceX = Math.abs(x-xPrime);
-		 * 
-		 * double alpha = Math.atan(distanceY/distanceX);
-		 * 
-		 * int coeffX = (int)Math.floor(RAYON_NOEUD*Math.cos(alpha)); int coeffY = (int)Math.floor(RAYON_NOEUD*Math.sin(alpha));
-		 * 
-		 * x += coeffX; y -= coeffY;
-		 * 
-		 * xPrime -= coeffX; yPrime += coeffY;
-		 */
 		g2.setColor(color);
 		g2.setStroke(new BasicStroke(stroke));
 		g2.drawLine(x, y, xPrime, yPrime);
