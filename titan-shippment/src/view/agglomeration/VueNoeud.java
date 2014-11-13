@@ -22,6 +22,9 @@ public class VueNoeud implements Vue, Type_i {
 	private Type type;
 	private int taille;
 
+	/**
+	 * Constructor w/o parameter
+	 */
 	public VueNoeud() {
 		this.noeud = null;
 		this.vues_troncons = new ArrayList<VueTroncon>();
@@ -30,6 +33,10 @@ public class VueNoeud implements Vue, Type_i {
 		this.taille = 5;
 	}
 
+	/**
+	 * Constructor w/parameters
+	 * @param noeud		Node associated with view
+	 */
 	public VueNoeud(Noeud noeud) {
 		this.noeud = noeud;
 		this.vues_troncons = new ArrayList<VueTroncon>();
@@ -43,6 +50,9 @@ public class VueNoeud implements Vue, Type_i {
 		}
 	}
 
+	/**
+	 * Draw a node 
+	 */
 	public void dessine(Graphics g) {
 		if (noeud != null) {
 			int x = noeud.getCoordX();
@@ -76,6 +86,12 @@ public class VueNoeud implements Vue, Type_i {
 		}
 	}
 
+	/**
+	 * Check wether a click at coordinates (x,y)
+	 * @param x		x coordinate of click
+	 * @param y		y coordinate of click
+	 * @return	True if coordinates fits node, false otherwise
+	 */
 	public boolean estCliquee(int x, int y) {
 		int noeudX = this.noeud.getCoordX();
 		int noeudY = this.noeud.getCoordY();
@@ -85,6 +101,8 @@ public class VueNoeud implements Vue, Type_i {
 		return false;
 	}
 
+	// ------------------------------------------------------------------
+	// GETTERS - SETTERS
 	public ArrayList<VueTroncon> getVues_troncons() {
 		return vues_troncons;
 	}

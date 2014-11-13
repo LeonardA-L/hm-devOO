@@ -26,13 +26,18 @@ public class Tournee {
 		this.itineraires = itineraires;
 	}
 
+	/**
+	 * Adds a delivery in the 'tournée' after another delivery
+	 * @param newDelivery		The new delivery to be added to the 'tournée'
+	 * @param adresseBefore		Address of the delivery that takes place before
+	 * @return	Address of delivery before newly added 'tournée' or -1 it is the warehouse
+	 */
 	public int addLivraisonAfter(Livraison newDelivery, int adresseBefore) {
 		int index = -1; // index of livraisons
 		int adresseAfter = -1; // adresse of node before the new delivery in the tournee
 		for (Livraison l : livraisons) {
 			if (l.getAdresse().getId() == adresseBefore) {
 				index = livraisons.indexOf(l);
-				System.out.println("FOUND = La livraisons precedent la nouvelle livraison est a l'index : " + index + " dans livraisons.");
 				break;
 			}
 		}
@@ -40,14 +45,18 @@ public class Tournee {
 		if (index + 1 < livraisons.size()) { // if the delivery the user want to add is not at the end of tournee
 			adresseAfter = livraisons.get(index + 1).getAdresse().getId();
 			livraisons.add(index + 1, newDelivery);
-			System.out.println("addLivraisonAfter -- Adresse after is a delivery");
 		} else { // if the new delivery is at the end of tournee
 			livraisons.add(newDelivery);
-			System.out.println("addLivraisonAfter -- Adresse after is a NOT delivery");
 		}
-		return adresseAfter; // -1 if adresseAfter is the warehouse or the address if it is a delivery
+		return adresseAfter;
 	}
 
+	/**
+	 * Adds a new 'itineraire' after a certain delivery 
+	 * (whose adress is the starting point of the 'itineraire')
+	 * @param newIte
+	 * @return
+	 */
 	public boolean addItineraireAfter(Itineraire newIte) {
 		int index = -1;
 		for (Itineraire it : itineraires) {
@@ -63,12 +72,16 @@ public class Tournee {
 		return false;
 	}
 
+	/**
+	 * Remove 'itineraire' whose ending point is at address endPoint
+	 * @param endPoint		Adress where the itineraire ends
+	 * @return
+	 */
 	public int removeItineraireBefore(int endPoint) {
 		int adresseBefore = -1;
 		Itineraire toBeRemoved = null;
 		for (Itineraire it : itineraires) {
 			if (it.getArrivee().getId() == endPoint) {
-				System.out.println("### Itineraire a supprimer trouve ###");
 				toBeRemoved = it;
 				break;
 			}
@@ -78,16 +91,19 @@ public class Tournee {
 		}
 		adresseBefore = toBeRemoved.getDepart().getId();
 		itineraires.remove(toBeRemoved);
-		System.out.println("Itineraire supprime de la liste des itineraires.");
 		return adresseBefore;
 	}
 
+	/**
+	 * Remove 'itineraire' whose start point is at address startPoint
+	 * @param startPoint		Adress frpom which the 'itineraire' starts
+	 * @return
+	 */
 	public int removeItineraireAfter(int startPoint) {
 		int adresseAfter = -1;
 		Itineraire toBeRemoved = null;
 		for (Itineraire it : itineraires) {
 			if (it.getDepart().getId() == startPoint) {
-				System.out.println("### Itineraire a supprimer trouve ###");
 				toBeRemoved = it;
 				break;
 			}
@@ -96,20 +112,19 @@ public class Tournee {
 			return adresseAfter;
 		}
 		adresseAfter = toBeRemoved.getArrivee().getId();
-		boolean deleteOk = itineraires.remove(toBeRemoved);
-		if (deleteOk) {
-			System.out.println("Itineraire supprime de la liste des itineraires.");
-		} else {
-			System.out.println("Erreur a la suppression");
-		}
+		itineraires.remove(toBeRemoved);
 		return adresseAfter;
 	}
 
+	/**
+	 * Remove 'livraison' at address 'adresse' from tournee
+	 * @param adresse
+	 * @return	
+	 */
 	public boolean removeLivraison(int adresse) {
 		Livraison toBeRemoved = null;
 		for (Livraison l : livraisons) {
 			if (l.getAdresse().getId() == adresse) {
-				System.out.println("### Livraison a supprimer trouvee ###");
 				toBeRemoved = l;
 				break;
 			}
@@ -118,31 +133,11 @@ public class Tournee {
 			return false;
 		}
 		livraisons.remove(toBeRemoved);
-		System.out.println("Livraison supprimee de la liste des livraisons.");
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		String texte = "#### INSTRUCTIONS DE LIVRAISON ####\n\n";
-		Iterator<Itineraire> it = itineraires.iterator();
-		while (it.hasNext()) {
-			Itineraire itineraire = it.next();
-			int adresseLivraison = itineraire.getArrivee().getId();
-			for (Livraison l : livraisons) {
-				if (l.getAdresse().getId() == adresseLivraison) {
-					texte += "Livraison no" + l.getIdLivraison() + " pour le client : " + l.getIdClient() + "\n";
-					// texte+="Heure de livraison entre "+l.getPlageHoraire().getHeureDebut()+" et "+l.getPlageHoraire().getHeureFin()+".\n\n";
-					break;
-				}
-			}
-			texte += "Itineraire a suivre : \n";
-			texte += itineraire.toString();
-			texte += "\n----------------------------------------------------------------------------------------------\n\n";
-		}
-		return texte;
-	}
-
+	// ------------------------------------------------------------------
+	// GETTERS - SETTERS
 	public int addItineraire(Itineraire itineraire) {
 		itineraires.add(itineraire);
 		return itineraires.size() - 1;
@@ -172,6 +167,27 @@ public class Tournee {
 	public void reset() {
 		livraisons.clear();
 		itineraires.clear();
+	}
+	
+	@Override
+	public String toString() {
+		String texte = "#### INSTRUCTIONS DE LIVRAISON ####\n\n";
+		Iterator<Itineraire> it = itineraires.iterator();
+		while (it.hasNext()) {
+			Itineraire itineraire = it.next();
+			int adresseLivraison = itineraire.getArrivee().getId();
+			for (Livraison l : livraisons) {
+				if (l.getAdresse().getId() == adresseLivraison) {
+					texte += "Livraison no" + l.getIdLivraison() + " pour le client : " + l.getIdClient() + "\n";
+					// texte+="Heure de livraison entre "+l.getPlageHoraire().getHeureDebut()+" et "+l.getPlageHoraire().getHeureFin()+".\n\n";
+					break;
+				}
+			}
+			texte += "Itineraire a suivre : \n";
+			texte += itineraire.toString();
+			texte += "\n----------------------------------------------------------------------------------------------\n\n";
+		}
+		return texte;
 	}
 
 }

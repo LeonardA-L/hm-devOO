@@ -36,7 +36,7 @@ public class Itineraire {
 	}
 
 	/**
-	 * 
+	 * Find tronçons between ordered path of nodes
 	 * @param p 	Plan 
 	 * @param nodesIds		Nodes 
 	 */

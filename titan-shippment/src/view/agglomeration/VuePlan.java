@@ -83,6 +83,8 @@ public class VuePlan implements Vue {
 		return null;
 	}
 
+	// ------------------------------------------------------------------
+	// GETTERS - SETTERS
 	public Plan getPlan() {
 		return plan;
 	}
