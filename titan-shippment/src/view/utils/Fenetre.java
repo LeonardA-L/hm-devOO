@@ -56,8 +56,7 @@ public class Fenetre extends JFrame {
 
 	private void initTop() {
 		this.top = new JPanel();
-		Dimension sizeTop = new Dimension(this.tailleX,
-				(int) (this.tailleY * 7 / 8));
+		Dimension sizeTop = new Dimension(this.tailleX, (int) (this.tailleY * 7 / 8));
 		this.top.setSize(sizeTop);
 		this.top.setPreferredSize(sizeTop);
 		this.top.setLayout(new BorderLayout());
@@ -81,8 +80,7 @@ public class Fenetre extends JFrame {
 
 	private void initBottom() {
 		this.bottom = new JPanel();
-		Dimension sizeBottom = new Dimension(this.tailleX,
-				(int) (this.tailleY / 8));
+		Dimension sizeBottom = new Dimension(this.tailleX, (int) (this.tailleY / 8));
 		this.bottom.setSize(sizeBottom);
 		this.bottom.setPreferredSize(sizeBottom);
 		this.bottom.setLayout(new BorderLayout());
@@ -105,8 +103,7 @@ public class Fenetre extends JFrame {
 
 	private void initLivraisonPanel() {
 		JPanel livraisons_panel = new JPanel();
-		livraisons_panel.setLayout(new BoxLayout(livraisons_panel,
-				BoxLayout.Y_AXIS));
+		livraisons_panel.setLayout(new BoxLayout(livraisons_panel, BoxLayout.Y_AXIS));
 		livraisons_panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 		livraisons_panel.add(new JLabel("Les livraisons"), BorderLayout.CENTER);
@@ -129,11 +126,9 @@ public class Fenetre extends JFrame {
 
 		// Create shippment table
 
-		String[] colHeadings = { "ID Client", "Heure Debut", "Heure Fin", " ",
-				"ID Noeud" };
+		String[] colHeadings = { "ID Client", "Heure Debut", "Heure Fin", " ", "ID Noeud" };
 		int numRows = 0;
-		DefaultTableModel model = new DefaultTableModel(numRows,
-				colHeadings.length) {
+		DefaultTableModel model = new DefaultTableModel(numRows, colHeadings.length) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				if (column != 3) {
@@ -160,8 +155,7 @@ public class Fenetre extends JFrame {
 
 		label_infoPoint = new JLabel();
 		label_infoPoint.setMaximumSize(new Dimension(tailleX / 6, tailleX / 5));
-		label_infoPoint
-				.setPreferredSize(new Dimension(tailleX / 6, tailleX / 5));
+		label_infoPoint.setPreferredSize(new Dimension(tailleX / 6, tailleX / 5));
 		label_infoPoint.setVerticalAlignment(JLabel.TOP);
 		label_infoPoint.setVerticalTextPosition(JLabel.TOP);
 
@@ -179,12 +173,9 @@ public class Fenetre extends JFrame {
 		this.top_right.add(right_panel, 0);
 
 		Bouton loadMap = new Bouton("loadMap", "Chargement de la carte", true);
-		Bouton loadLivraisons = new Bouton("loadLivraisons",
-				"Chargement des livraisons", true);
-		Bouton calculTournee = new Bouton("calculTournee",
-				"Calcul de la tourn�e", false);
-		Bouton generateInstruction = new Bouton("generateInstructions",
-				"G�n�rer instructions", false);
+		Bouton loadLivraisons = new Bouton("loadLivraisons", "Chargement des livraisons", true);
+		Bouton calculTournee = new Bouton("calculTournee", "Calcul de la tourn�e", false);
+		Bouton generateInstruction = new Bouton("generateInstructions", "G�n�rer instructions", false);
 
 		btn_panel.add(Box.createGlue());
 		btn_panel.add(loadMap);

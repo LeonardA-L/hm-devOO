@@ -56,10 +56,7 @@ public class VueNoeud implements Vue, Type_i {
 			} else if (this.type == Type.CARRE) {
 				g.drawRect(x - taille / 2, y - taille / 2, taille, taille);
 				/*
-				 * g.drawLine(x-taille/2, y-taille/2, x+taille/2, y-taille/2);
-				 * // haut g.drawLine(x-taille/2, y+taille/2, x+taille/2,
-				 * y+taille/2); // bas g.drawLine(x-taille/2, y-taille/2,
-				 * x-taille/2, y+taille/2); // gauche g.drawLine(x+taille/2,
+				 * g.drawLine(x-taille/2, y-taille/2, x+taille/2, y-taille/2); // haut g.drawLine(x-taille/2, y+taille/2, x+taille/2, y+taille/2); // bas g.drawLine(x-taille/2, y-taille/2, x-taille/2, y+taille/2); // gauche g.drawLine(x+taille/2,
 				 * y-taille/2, x+taille/2, y+taille/2);
 				 */// droite
 			} else if (this.type == Type.CARRE_PLEIN) {
@@ -82,9 +79,7 @@ public class VueNoeud implements Vue, Type_i {
 	public boolean estCliquee(int x, int y) {
 		int noeudX = this.noeud.getCoordX();
 		int noeudY = this.noeud.getCoordY();
-		if (x >= noeudX - TOLERANCE_CLICK && x <= noeudX + TOLERANCE_CLICK
-				&& y >= noeudY - TOLERANCE_CLICK
-				&& y <= noeudY + TOLERANCE_CLICK) {
+		if (x >= noeudX - TOLERANCE_CLICK && x <= noeudX + TOLERANCE_CLICK && y >= noeudY - TOLERANCE_CLICK && y <= noeudY + TOLERANCE_CLICK) {
 			return true;
 		}
 		return false;

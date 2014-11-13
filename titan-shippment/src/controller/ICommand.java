@@ -12,8 +12,7 @@ public interface ICommand {
 	 * @param interfaceP
 	 * @return
 	 */
-	public boolean Execute(InterfacePlanning interfaceP,
-			InterfaceView interfaceV);
+	public boolean Execute(InterfacePlanning interfaceP, InterfaceView interfaceV);
 
 	/**
 	 * Un-execute a command
@@ -21,6 +20,5 @@ public interface ICommand {
 	 * @param interfaceP
 	 * @return
 	 */
-	public boolean Unexecute(InterfacePlanning interfaceP,
-			InterfaceView interfaceV);
+	public boolean Unexecute(InterfacePlanning interfaceP, InterfaceView interfaceV);
 }

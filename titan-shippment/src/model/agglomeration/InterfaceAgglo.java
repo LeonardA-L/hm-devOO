@@ -11,8 +11,7 @@ public class InterfaceAgglo {
 	}
 
 	/**
-	 * Asks the builder to construct a plan from file absFilePath, using the
-	 * instance of Plan in InterfaceAgglo.
+	 * Asks the builder to construct a plan from file absFilePath, using the instance of Plan in InterfaceAgglo.
 	 * 
 	 * @param absFilePath
 	 *            xml absolute file path

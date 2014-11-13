@@ -13,8 +13,7 @@ public class Tournee {
 		this.itineraires = new ArrayList<Itineraire>();
 	}
 
-	public Tournee(ArrayList<Livraison> livraisons,
-			ArrayList<Itineraire> itineraires) {
+	public Tournee(ArrayList<Livraison> livraisons, ArrayList<Itineraire> itineraires) {
 		this.livraisons = livraisons;
 		this.itineraires = itineraires;
 	}
@@ -26,9 +25,7 @@ public class Tournee {
 		for (Livraison l : livraisons) {
 			if (l.getAdresse().getId() == adresseBefore) {
 				index = livraisons.indexOf(l);
-				System.out
-						.println("FOUND = La livraisons precedent la nouvelle livraison est a l'index : "
-								+ index + " dans livraisons.");
+				System.out.println("FOUND = La livraisons precedent la nouvelle livraison est a l'index : " + index + " dans livraisons.");
 				break;
 			}
 		}
@@ -38,12 +35,10 @@ public class Tournee {
 												// tournee
 			adresseAfter = livraisons.get(index + 1).getAdresse().getId();
 			livraisons.add(index + 1, newDelivery);
-			System.out
-					.println("addLivraisonAfter -- Adresse after is a delivery");
+			System.out.println("addLivraisonAfter -- Adresse after is a delivery");
 		} else { // if the new delivery is at the end of tournee
 			livraisons.add(newDelivery);
-			System.out
-					.println("addLivraisonAfter -- Adresse after is a NOT delivery");
+			System.out.println("addLivraisonAfter -- Adresse after is a NOT delivery");
 		}
 		return adresseAfter; // -1 if adresseAfter is the warehouse or the
 								// address if it is a delivery
@@ -99,8 +94,7 @@ public class Tournee {
 		adresseAfter = toBeRemoved.getArrivee().getId();
 		boolean deleteOk = itineraires.remove(toBeRemoved);
 		if (deleteOk) {
-			System.out
-					.println("Itineraire supprime de la liste des itineraires.");
+			System.out.println("Itineraire supprime de la liste des itineraires.");
 		} else {
 			System.out.println("Erreur a la suppression");
 		}
@@ -133,8 +127,7 @@ public class Tournee {
 			int adresseLivraison = itineraire.getArrivee().getId();
 			for (Livraison l : livraisons) {
 				if (l.getAdresse().getId() == adresseLivraison) {
-					texte += "Livraison no" + l.getIdLivraison()
-							+ " pour le client : " + l.getIdClient() + "\n";
+					texte += "Livraison no" + l.getIdLivraison() + " pour le client : " + l.getIdClient() + "\n";
 					// texte+="Heure de livraison entre "+l.getPlageHoraire().getHeureDebut()+" et "+l.getPlageHoraire().getHeureFin()+".\n\n";
 					break;
 				}

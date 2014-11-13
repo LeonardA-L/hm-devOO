@@ -43,13 +43,11 @@ public class VueTroncon implements Vue {
 		int yPrime = troncon.getNoeudDestination().getCoordY();
 
 		/*
-		 * double distanceY = Math.abs(y-yPrime); double distanceX =
-		 * Math.abs(x-xPrime);
+		 * double distanceY = Math.abs(y-yPrime); double distanceX = Math.abs(x-xPrime);
 		 * 
 		 * double alpha = Math.atan(distanceY/distanceX);
 		 * 
-		 * int coeffX = (int)Math.floor(RAYON_NOEUD*Math.cos(alpha)); int coeffY
-		 * = (int)Math.floor(RAYON_NOEUD*Math.sin(alpha));
+		 * int coeffX = (int)Math.floor(RAYON_NOEUD*Math.cos(alpha)); int coeffY = (int)Math.floor(RAYON_NOEUD*Math.sin(alpha));
 		 * 
 		 * x += coeffX; y -= coeffY;
 		 * 
@@ -101,7 +99,6 @@ public class VueTroncon implements Vue {
 
 		// Draw horizontal arrow starting in (0, 0)
 		g.drawLine(0, 0, len, 0);
-		g.fillPolygon(new int[] { len, len - ARR_SIZE, len - ARR_SIZE, len },
-				new int[] { 0, -ARR_SIZE, ARR_SIZE, 0 }, 4);
+		g.fillPolygon(new int[] { len, len - ARR_SIZE, len - ARR_SIZE, len }, new int[] { 0, -ARR_SIZE, ARR_SIZE, 0 }, 4);
 	}
 }

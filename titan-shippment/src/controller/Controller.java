@@ -73,23 +73,14 @@ public class Controller implements ActionListener {
 				return;
 			}
 
-			VueNoeud view_noeud = interfaceView.getVuePanel().getVue_plan()
-					.getWhoIsClicked(x, y);
+			VueNoeud view_noeud = interfaceView.getVuePanel().getVue_plan().getWhoIsClicked(x, y);
 
 			if (!livraisonsLoaded) {
-				interfaceView
-						.displayAlert(
-								ERROR_DELIVERY_LOAD,
-								"Vous devez charger les livraisons avant de pouvoir les modifier.",
-								"warning");
+				interfaceView.displayAlert(ERROR_DELIVERY_LOAD, "Vous devez charger les livraisons avant de pouvoir les modifier.", "warning");
 				return;
 			}
 			if (!tourneeCalculed) {
-				interfaceView
-						.displayAlert(
-								ERROR_DELIVERY_MOD,
-								"Vous devez calculer une tourn�e avant de modifier des livraisons.",
-								"warning");
+				interfaceView.displayAlert(ERROR_DELIVERY_MOD, "Vous devez calculer une tourn�e avant de modifier des livraisons.", "warning");
 				return;
 			}
 
@@ -102,11 +93,9 @@ public class Controller implements ActionListener {
 					addingNewLivraison = true;
 					nouvelleAdresseLivraison = view_noeud.getNoeud().getId();
 				} else if (addingNewLivraison) { // 2nd step
-					if (!interfacePlanning.isNodeADelivery(view_noeud
-							.getNoeud().getId())) { // stop if node is already a
-													// delivery
-						interfaceView.displayAlert("Ajouter une livraison",
-								"Ce noeud n'a pas de livraison", "warning");
+					if (!interfacePlanning.isNodeADelivery(view_noeud.getNoeud().getId())) { // stop if node is already a
+																								// delivery
+						interfaceView.displayAlert("Ajouter une livraison", "Ce noeud n'a pas de livraison", "warning");
 						interruptAddingNewLivraison();
 						return;
 					}
@@ -127,31 +116,24 @@ public class Controller implements ActionListener {
 					String heureFin = retour[1];
 					int idClient = Integer.parseInt(retour[2]);
 					// Actual delivery creation :
-					boolean success = undoRedo.InsertAddCmd(idClient,
-							heureDebut, heureFin, nouvelleAdresseLivraison,
-							adressePrecedente);
+					boolean success = undoRedo.InsertAddCmd(idClient, heureDebut, heureFin, nouvelleAdresseLivraison, adressePrecedente);
 					if (!success) {
 						return;
 					}
 					interruptAddingNewLivraison();
 				} else {
-					interfaceView.displayAlert("Ajouter une livraison", "",
-							"warning");
+					interfaceView.displayAlert("Ajouter une livraison", "", "warning");
 				}
 				interfaceView.highlight(view_noeud); // red node
 			}
 		} else if (action.equals("mouse_moved_on_map")) {
 			if (mapLoaded) {
-				VueNoeud view_noeud = interfaceView.getVuePanel().getVue_plan()
-						.getWhoIsClicked(x, y);
+				VueNoeud view_noeud = interfaceView.getVuePanel().getVue_plan().getWhoIsClicked(x, y);
 				String infos = "";
 
 				if (view_noeud != null) {
-					if (interfacePlanning.isNodeADelivery(view_noeud.getNoeud()
-							.getId())) {
-						Livraison livraison = interfacePlanning
-								.getLivraisonByAdr(view_noeud.getNoeud()
-										.getId());
+					if (interfacePlanning.isNodeADelivery(view_noeud.getNoeud().getId())) {
+						Livraison livraison = interfacePlanning.getLivraisonByAdr(view_noeud.getNoeud().getId());
 						if (livraison != null) {
 							infos = livraison.toString();
 						} else {
@@ -167,8 +149,7 @@ public class Controller implements ActionListener {
 	}
 
 	/**
-	 * Reset the state of the trigger (right above in code) so that a delivery
-	 * creation process doesn't start with next user click.
+	 * Reset the state of the trigger (right above in code) so that a delivery creation process doesn't start with next user click.
 	 */
 	private void interruptAddingNewLivraison() {
 		addingNewLivraison = false;
@@ -185,11 +166,7 @@ public class Controller implements ActionListener {
 	 */
 	public void trigger(String action, String name) {
 		if (addingNewLivraison) {
-			interfaceView
-					.displayAlert(
-							ERROR_TOURNEE,
-							"Vous ne pouvez pas charger de fichier ou calculer une nouvelle tourn�e pendant l'ajout d'un point de livraison.",
-							"warning");
+			interfaceView.displayAlert(ERROR_TOURNEE, "Vous ne pouvez pas charger de fichier ou calculer une nouvelle tourn�e pendant l'ajout d'un point de livraison.", "warning");
 		} else {
 			if (action.equals("loadFile")) {
 				if (name.equals("loadMap")) { // LOAD MAP
@@ -201,32 +178,22 @@ public class Controller implements ActionListener {
 						resetLivraisons();
 						resetTournee();
 
-						boolean buildOk = interfaceAgglo
-								.buildPlanFromXml(filename);
+						boolean buildOk = interfaceAgglo.buildPlanFromXml(filename);
 						if (buildOk) {
 							mapLoaded = true;
 						} else {
-							interfaceView
-									.displayAlert(
-											ERROR_MAP,
-											"La carte n'a pas �t� charg�e correctement.",
-											"error");
+							interfaceView.displayAlert(ERROR_MAP, "La carte n'a pas �t� charg�e correctement.", "error");
 							interfaceView.repaint();
 							return;
 						}
 						// Set views and scale map
-						interfaceAgglo.getPlan().fitJPanel(
-								interfaceView.getVuePanel().getHeight(),
-								interfaceView.getVuePanel().getWidth());
-						interfaceView.getVuePanel().getVue_plan()
-								.setPlan(interfaceAgglo.getPlan());
+						interfaceAgglo.getPlan().fitJPanel(interfaceView.getVuePanel().getHeight(), interfaceView.getVuePanel().getWidth());
+						interfaceView.getVuePanel().getVue_plan().setPlan(interfaceAgglo.getPlan());
 						interfaceView.repaint();
 					}
 				} else if (name.equals("loadLivraisons")) { // LOAD DELIVERIES
 					if (!mapLoaded) {
-						interfaceView.displayAlert(ERROR_DELIVERY_LOAD,
-								"Vous devez charger une carte au pr�alable.",
-								"warning");
+						interfaceView.displayAlert(ERROR_DELIVERY_LOAD, "Vous devez charger une carte au pr�alable.", "warning");
 					} else {
 						String filename = interfaceView.loadFile();
 
@@ -236,32 +203,23 @@ public class Controller implements ActionListener {
 							resetTournee();
 
 							// load livraisons
-							boolean buildOk = interfacePlanning
-									.GetPlanningsFromBuilder(filename);
+							boolean buildOk = interfacePlanning.GetPlanningsFromBuilder(filename);
 							if (buildOk) {
 								livraisonsLoaded = true;
 							} else {
-								interfaceView
-										.displayAlert(
-												ERROR_DELIVERY_LOAD,
-												"Les livraisons n'ont pas �t� charg�es correctement",
-												"error");
+								interfaceView.displayAlert(ERROR_DELIVERY_LOAD, "Les livraisons n'ont pas �t� charg�es correctement", "error");
 								interfaceView.repaint();
 								return;
 							}
 
 							// set views
-							boolean creatingViewOk = interfaceView
-									.genererVueLivraisons(interfacePlanning
-											.getListeLivraisons(),
-											interfacePlanning.getEntrepot());
+							boolean creatingViewOk = interfaceView.genererVueLivraisons(interfacePlanning.getListeLivraisons(), interfacePlanning.getEntrepot());
 							// pour les tourn�es, rien � voir
 							// .getVue_tournee().setTournee(interfacePlanning.getTournee());
 
 							if (!creatingViewOk) {
 								livraisonsLoaded = false;
-								interfaceView.displayAlert(ERROR_DELIVERY_LOAD,
-										"Un noeud est introuvable.", "error");
+								interfaceView.displayAlert(ERROR_DELIVERY_LOAD, "Un noeud est introuvable.", "error");
 							}
 
 							interfaceView.repaint();
@@ -271,16 +229,11 @@ public class Controller implements ActionListener {
 			} else if (action.equals("click_button")) {
 				if (name.equals("calculTournee")) {
 					if (!mapLoaded || !livraisonsLoaded) {
-						interfaceView
-								.displayAlert(
-										ERROR_TOURNEE,
-										"Vous devez charger une carte et une livraison au pr�alable.",
-										"warning");
+						interfaceView.displayAlert(ERROR_TOURNEE, "Vous devez charger une carte et une livraison au pr�alable.", "warning");
 					} else {
 						resetTournee();
 						interfacePlanning.calculTournee();
-						interfaceView.getVuePanel().getVue_tournee()
-								.setTournee(interfacePlanning.getTournee());
+						interfaceView.getVuePanel().getVue_tournee().setTournee(interfacePlanning.getTournee());
 						tourneeCalculed = true;
 
 						// System.out.println("Tournee : " +
@@ -289,27 +242,19 @@ public class Controller implements ActionListener {
 					}
 				} else if (name.equals("undo")) {
 					if (!undoRedo.Undo()) {
-						interfaceView.displayAlert(WARNING_UNDO,
-								"Rien � annuler", "info");
+						interfaceView.displayAlert(WARNING_UNDO, "Rien � annuler", "info");
 					}
-					interfaceView.getVuePanel().getVue_tournee()
-							.setTournee(interfacePlanning.getTournee());
+					interfaceView.getVuePanel().getVue_tournee().setTournee(interfacePlanning.getTournee());
 					interfaceView.repaint();
 				} else if (name.equals("redo")) {
 					if (!undoRedo.Redo()) {
-						interfaceView.displayAlert(WARNING_REDO,
-								"Rien � r�tablir", "info");
+						interfaceView.displayAlert(WARNING_REDO, "Rien � r�tablir", "info");
 					}
-					interfaceView.getVuePanel().getVue_tournee()
-							.setTournee(interfacePlanning.getTournee());
+					interfaceView.getVuePanel().getVue_tournee().setTournee(interfacePlanning.getTournee());
 					interfaceView.repaint();
 				} else if (name.equals("generateInstructions")) {
 					if (!tourneeCalculed) {
-						interfaceView
-								.displayAlert(
-										ERROR_INSTRUC,
-										"Impossible de g�n�ner le fichier d'instructions avant le calcul d'une tourn�e",
-										"warning");
+						interfaceView.displayAlert(ERROR_INSTRUC, "Impossible de g�n�ner le fichier d'instructions avant le calcul d'une tourn�e", "warning");
 						return;
 					}
 					generateInstructions();
@@ -318,11 +263,7 @@ public class Controller implements ActionListener {
 			} else if (action.equals("delete_noeud")) {
 
 				if (!tourneeCalculed) {
-					interfaceView
-							.displayAlert(
-									ERROR_DELIVERY_MOD,
-									"Vous devez calculer une tourn�e avant de modifier des livraisons.",
-									"warning");
+					interfaceView.displayAlert(ERROR_DELIVERY_MOD, "Vous devez calculer une tourn�e avant de modifier des livraisons.", "warning");
 					return;
 				}
 				int idNoeud = Integer.parseInt(name);
@@ -363,12 +304,10 @@ public class Controller implements ActionListener {
 		boolean isEntrepot = interfacePlanning.isNodeEntrepot(idNoeud);
 
 		if (!isEntrepot && interfacePlanning.isNodeADelivery(idNoeud)) {
-			boolean suppr = interfaceView.confirmUserInput("Suppression",
-					"Supprimer cette livraison ? ");
+			boolean suppr = interfaceView.confirmUserInput("Suppression", "Supprimer cette livraison ? ");
 			if (suppr) {
 				undoRedo.InsertRemoveCmd(idNoeud);
-				interfaceView.getVuePanel().getVue_tournee()
-						.setTournee(interfacePlanning.getTournee());
+				interfaceView.getVuePanel().getVue_tournee().setTournee(interfacePlanning.getTournee());
 				interfaceView.repaint();
 				return true;
 			}
@@ -376,8 +315,7 @@ public class Controller implements ActionListener {
 		}
 
 		if (isEntrepot) {
-			interfaceView.displayAlert("Supprimer une livraison",
-					"Vous ne pouvez pas supprimer l'entrepot", "warning");
+			interfaceView.displayAlert("Supprimer une livraison", "Vous ne pouvez pas supprimer l'entrepot", "warning");
 		}
 		return false;
 	}
@@ -389,14 +327,9 @@ public class Controller implements ActionListener {
 		try {
 			out = new BufferedWriter(new FileWriter(file, false));
 			out.append(instructions);
-			interfaceView.displayAlert(
-					"Succ�s",
-					"Instructions charg�es dans le fichier "
-							+ file.getAbsolutePath() + ".", "info");
+			interfaceView.displayAlert("Succ�s", "Instructions charg�es dans le fichier " + file.getAbsolutePath() + ".", "info");
 		} catch (Exception e) {
-			interfaceView.displayAlert("Echec",
-					"Impossible de charger les instructions dans le fichier "
-							+ file.getAbsolutePath() + ".", "error");
+			interfaceView.displayAlert("Echec", "Impossible de charger les instructions dans le fichier " + file.getAbsolutePath() + ".", "error");
 		} finally {
 			try {
 				out.close();
@@ -408,8 +341,6 @@ public class Controller implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public InterfaceAgglo getReferenceToInterfaceAgglo() {

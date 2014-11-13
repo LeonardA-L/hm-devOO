@@ -60,12 +60,10 @@ public class VuePlan implements Vue {
 		while (it.hasNext()) {
 
 			if (it.next().getNoeud().getId() == n1.getNoeud().getId()) {
-				Iterator<VueTroncon> it_vues_troncons = it.next()
-						.getVues_troncons().iterator();
+				Iterator<VueTroncon> it_vues_troncons = it.next().getVues_troncons().iterator();
 				while (it_vues_troncons.hasNext()) {
 					VueTroncon vue_troncon = it_vues_troncons.next();
-					if (vue_troncon.getTroncon().getNoeudDestination().getId() == n2
-							.getNoeud().getId()) {
+					if (vue_troncon.getTroncon().getNoeudDestination().getId() == n2.getNoeud().getId()) {
 						return vue_troncon;
 					}
 				}

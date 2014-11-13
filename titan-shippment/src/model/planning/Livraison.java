@@ -20,8 +20,7 @@ public class Livraison {
 		this.isDelayed = false;
 	}
 
-	public Livraison(PlageHoraire plageHoraire, Noeud adresse, int idClient,
-			int idLivraison) {
+	public Livraison(PlageHoraire plageHoraire, Noeud adresse, int idClient, int idLivraison) {
 		this.plageHoraire = plageHoraire;
 		this.adresse = adresse;
 		this.idClient = idClient;
@@ -82,9 +81,7 @@ public class Livraison {
 		String msg = "";
 		msg += "Delivery to node no " + adresse.getId() + "<br>";
 		msg += "Time slot " + plageHoraire.toString() + "<br>";
-		msg += "At "
-				+ ((!heureLivraison.isEmpty()) ? heureLivraison
-						: "[Not calculed yet]") + "<br>";
+		msg += "At " + ((!heureLivraison.isEmpty()) ? heureLivraison : "[Not calculed yet]") + "<br>";
 		return msg;
 	}
 }

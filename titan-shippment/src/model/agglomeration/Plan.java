@@ -61,8 +61,7 @@ public class Plan {
 	}
 
 	/**
-	 * Add a troncon to a node previously created with addNode() (to be used
-	 * from xmlbuilder
+	 * Add a troncon to a node previously created with addNode() (to be used from xmlbuilder
 	 * 
 	 * @param idNoeud
 	 *            Node Id on which the troncon is added
@@ -76,8 +75,7 @@ public class Plan {
 	 *            Node toward which goes the troncon
 	 * @return True or false dependig on the success of method.
 	 */
-	public boolean addTronconToNoeud(int idNoeud, String nomRue, float vitesse,
-			float longueur, int idnoeudDestination) {
+	public boolean addTronconToNoeud(int idNoeud, String nomRue, float vitesse, float longueur, int idnoeudDestination) {
 		Noeud in = getNoeudById(idNoeud);
 		Noeud out = getNoeudById(idnoeudDestination);
 		if (in == null || out == null) {
@@ -176,8 +174,7 @@ public class Plan {
 	}
 
 	/**
-	 * Computes a ShippmentGraph object from this one, meeting choco's
-	 * requirements
+	 * Computes a ShippmentGraph object from this one, meeting choco's requirements
 	 */
 	public ShippmentGraph computeShippmentGraph() {
 		ShippmentGraph shGraph = new ShippmentGraph(getNoeuds().size());

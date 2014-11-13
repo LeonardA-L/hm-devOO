@@ -27,8 +27,7 @@ public class ButtonEditor extends DefaultCellEditor {
 		button.addActionListener(bListener);
 	}
 
-	public Component getTableCellEditorComponent(JTable table, Object value,
-			boolean isSelected, int row, int column) {
+	public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
 		// On d�finit le num�ro de ligne � notre listener
 		bListener.setRow(row);
 		// Idem pour le num�ro de colonne
@@ -64,8 +63,7 @@ public class ButtonEditor extends DefaultCellEditor {
 
 		public void actionPerformed(ActionEvent event) {
 			DefaultTableModel model = (DefaultTableModel) table.getModel();
-			Controller.getInstance().trigger("delete_noeud",
-					model.getValueAt(row, 4).toString());
+			Controller.getInstance().trigger("delete_noeud", model.getValueAt(row, 4).toString());
 		}
 	}
 }

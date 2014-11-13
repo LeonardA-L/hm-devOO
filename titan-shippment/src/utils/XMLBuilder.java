@@ -26,9 +26,7 @@ import org.xml.sax.XMLReader;
 public class XMLBuilder {
 
 	/*
-	 * this var is declared here because it will be found when / calling to
-	 * getLivraisons, but transmitted to interface agglo while / the
-	 * getLivraison method is called by interface planning
+	 * this var is declared here because it will be found when / calling to getLivraisons, but transmitted to interface agglo while / the getLivraison method is called by interface planning
 	 */
 	private static int t_entrepot = -1;
 	private static boolean entrepotReady = false;
@@ -79,9 +77,7 @@ public class XMLBuilder {
 	public static Plan getPlan(String filename, InterfaceAgglo intf) {
 		Plan plan = intf.getPlan();
 		Path path = (new File(filename)).toPath();
-		try (InputStream in = Files.newInputStream(path);
-				BufferedReader reader = new BufferedReader(
-						new InputStreamReader(in))) {
+		try (InputStream in = Files.newInputStream(path); BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
 
 			if (!checkWellformedness(filename)) {
 				intf.resetPlan();
@@ -90,8 +86,7 @@ public class XMLBuilder {
 			}
 
 			if (getType(reader) != 0) {
-				throw new IOException(
-						"The input file does not match the expected structure.");
+				throw new IOException("The input file does not match the expected structure.");
 			}
 			String line = null;
 
@@ -100,14 +95,11 @@ public class XMLBuilder {
 
 				if (line.contains("<Noeud")) {
 					int index = line.indexOf("id=") + 4;
-					idNoeud = Integer.parseInt(line.substring(index,
-							line.indexOf("\"", index)));
+					idNoeud = Integer.parseInt(line.substring(index, line.indexOf("\"", index)));
 					index = line.indexOf("x=", index) + 3;
-					int x = Integer.parseInt(line.substring(index,
-							line.indexOf("\"", index)));
+					int x = Integer.parseInt(line.substring(index, line.indexOf("\"", index)));
 					index = line.indexOf("y=", index) + 3;
-					int y = Integer.parseInt((line.substring(index,
-							line.indexOf("\"", index))));
+					int y = Integer.parseInt((line.substring(index, line.indexOf("\"", index))));
 					if (!plan.addNoeud(x, y, idNoeud)) {
 						intf.resetPlan();
 						return null;
@@ -119,44 +111,35 @@ public class XMLBuilder {
 				in.close();
 			}
 			InputStream in1 = Files.newInputStream(path);
-			BufferedReader reader1 = new BufferedReader(new InputStreamReader(
-					in1));
+			BufferedReader reader1 = new BufferedReader(new InputStreamReader(in1));
 			line = null;
 			int idNoeud = 0;
 			while ((line = reader1.readLine()) != null) {
 				if (line.contains("<Noeud")) {
 					int index = line.indexOf("id=") + 4;
-					idNoeud = Integer.parseInt(line.substring(index,
-							line.indexOf("\"", index)));
+					idNoeud = Integer.parseInt(line.substring(index, line.indexOf("\"", index)));
 				}
 
 				while (line.contains("<LeTronconSortant")) {
 					int index = line.indexOf("nomRue=") + 8;
-					String rue = line.substring(index,
-							line.indexOf("\"", index));
+					String rue = line.substring(index, line.indexOf("\"", index));
 					index = line.indexOf("vitesse=", index) + 9;
 
-					float vitesse = Float.parseFloat(line.substring(index,
-							line.indexOf("\"", index)).replace(',', '.'));
+					float vitesse = Float.parseFloat(line.substring(index, line.indexOf("\"", index)).replace(',', '.'));
 					if (vitesse < 0) {
 						throw new NumberFormatException("Negative speed");
 					}
 					index = line.indexOf("longueur=", index) + 10;
-					float longueur = Float.parseFloat(line.substring(index,
-							line.indexOf("\"", index)).replace(',', '.'));
+					float longueur = Float.parseFloat(line.substring(index, line.indexOf("\"", index)).replace(',', '.'));
 					if (longueur < 0) {
 						throw new NumberFormatException("Negative length");
 					}
 					index = line.indexOf("idNoeudDestination=", index) + 20;
-					int idDestination = Integer.parseInt(line.substring(index,
-							line.indexOf("\"", index)));
+					int idDestination = Integer.parseInt(line.substring(index, line.indexOf("\"", index)));
 					if (idNoeud == idDestination) {
-						throw new Exception(
-								"Id is identical to destination for node"
-										+ idNoeud);
+						throw new Exception("Id is identical to destination for node" + idNoeud);
 					}
-					if (!plan.addTronconToNoeud(idNoeud, rue, vitesse,
-							longueur, idDestination)) {
+					if (!plan.addTronconToNoeud(idNoeud, rue, vitesse, longueur, idDestination)) {
 						intf.resetPlan();
 						return null;
 					}
@@ -184,13 +167,8 @@ public class XMLBuilder {
 	}
 
 	/**
-	 * Xml parser and livraisons builder. Lines commmented with "// **** " are
-	 * deprecated in my opinion. The methods parses the xml file containing
-	 * livraisons and add them "on the go" using the addLivraison method from
-	 * InterfacePlanning.
-	 * #####################################################################" #
-	 * Not sure about error checks yet, a valid xml must be used for now #
-	 * #####################################################################"
+	 * Xml parser and livraisons builder. Lines commmented with "// **** " are deprecated in my opinion. The methods parses the xml file containing livraisons and add them "on the go" using the addLivraison method from InterfacePlanning.
+	 * #####################################################################" # Not sure about error checks yet, a valid xml must be used for now # #####################################################################"
 	 * 
 	 * @param filename
 	 *            xml file name/path
@@ -198,8 +176,7 @@ public class XMLBuilder {
 	 *            reference to the InterfacePlanning object
 	 * @return boolean true or false depending on the success
 	 */
-	public static boolean getLivraisons(String filename,
-			model.planning.InterfacePlanning intf) {
+	public static boolean getLivraisons(String filename, model.planning.InterfacePlanning intf) {
 		// **** ArrayList<ArrayList<String>> data = new
 		// ArrayList<ArrayList<String>>();
 		Path path = (new File(filename)).toPath();
@@ -211,76 +188,39 @@ public class XMLBuilder {
 		int t_idLivraison;
 		int t_adresseLivraison;
 
-		try (InputStream in = Files.newInputStream(path);
-				BufferedReader reader = new BufferedReader(
-						new InputStreamReader(in))) {
+		try (InputStream in = Files.newInputStream(path); BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
 
 			if (getType(reader) != 1) {
-				throw new IOException(
-						"The input file does not match the expected structure.");
+				throw new IOException("The input file does not match the expected structure.");
 			}
 
 			String line = null;
 			// main loop through file
 			while ((line = reader.readLine()) != null) {
 				if (line.contains("<Plage h")) {
-					// **** ArrayList<String> node = new ArrayList<String>();
-					int index = line.indexOf("heureDebut=") + 12; // 12 =
-																	// heureDebut.size()...
-					// **** node.add(line.substring(index, line.indexOf("\"",
-					// index)));
-					t_heureDebut = line.substring(index,
-							line.indexOf("\"", index)); // *
+					int index = line.indexOf("heureDebut=") + 12;
+					t_heureDebut = line.substring(index, line.indexOf("\"", index));
 					index = line.indexOf("heureFin=", index) + 10;
-					// **** node.add(line.substring(index, line.indexOf("\"",
-					// index)));
-					t_heureFin = line.substring(index,
-							line.indexOf("\"", index));
+					t_heureFin = line.substring(index, line.indexOf("\"", index));
 
-					// **** data.add(node);
-				} else if (line.contains("<Livraison id")) { // if only
-																// "<Livraison",
-																// it takes the
-																// line with
-																// <Livraisons>
-																// as well
-					// **** ArrayList<String> node = new ArrayList<String>();
+				} else if (line.contains("<Livraison id")) {
 					int index = line.indexOf("id=") + 4;
-					t_idLivraison = Integer.parseInt(line.substring(index,
-							line.indexOf('"', index)));
-					// **** node.add(line.substring(index, line.indexOf("\"",
-					// index)));
+					t_idLivraison = Integer.parseInt(line.substring(index, line.indexOf('"', index)));
 					index = line.indexOf("client=", index) + 8;
-					t_idClient = Integer.parseInt(line.substring(index,
-							line.indexOf('"', index)));
-					// **** node.add(line.substring(index, line.indexOf("\"",
-					// index)));
+					t_idClient = Integer.parseInt(line.substring(index, line.indexOf('"', index)));
 					index = line.indexOf("adresse=", index) + 9;
-					t_adresseLivraison = Integer.parseInt(line.substring(index,
-							line.indexOf('"', index)));
+					t_adresseLivraison = Integer.parseInt(line.substring(index, line.indexOf('"', index)));
 
-					boolean success = intf.addLivraison(t_idClient,
-							t_idLivraison, t_heureDebut, t_heureFin,
-							t_adresseLivraison);
-					// System.out.println("Adding livraison (XmlBuilder) : \n--Client : "+t_idClient+"\n--Livraison : "+t_idLivraison+"\n--HeureDebut : "+t_heureDebut+"\n--HeureFin : "+t_heureFin+"\n--Address"+t_adresseLivraison);
+					boolean success = intf.addLivraison(t_idClient, t_idLivraison, t_heureDebut, t_heureFin, t_adresseLivraison);
 					if (!success) { // problem on interface side, stop parsing.
 						return false;
 					}
-					// **** node.add(line.substring(index, line.indexOf("\"",
-					// index)));
-					// **** data.add(node);
 				}
 				// get entrepot
 				else if (line.contains("<Entrepot")) {
-					// ArrayList<String> node = new ArrayList<String>();
 					int index = line.indexOf("adresse=") + 9;
-					// **** node.add(line.substring(index, line.indexOf("\"",
-					// index)));
-					// **** data.add(node);
-					// **** verifier que l'on substring bien l'adresse
 					// uniquement et pas les guillemets autours.
-					boolean success = intf.setEntrepot(Integer.parseInt(line
-							.substring(index, line.indexOf("\"", index))));
+					boolean success = intf.setEntrepot(Integer.parseInt(line.substring(index, line.indexOf("\"", index))));
 
 					if (!success) {
 						return false;

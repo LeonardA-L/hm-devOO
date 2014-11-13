@@ -15,12 +15,10 @@ import utils.ShippmentGraph;
 
 public class UtilsTest {
 
-	public static Tournee DummyTourneeCreate(Plan plan,
-			ArrayList<Livraison> livraisons, Noeud entrepot) {
+	public static Tournee DummyTourneeCreate(Plan plan, ArrayList<Livraison> livraisons, Noeud entrepot) {
 		// Instanciate pathfinder
 		PathFinder pf = new DijkstraFinder(plan.computeShippmentGraph());
-		ShippmentGraph shGraph = (ShippmentGraph) ((DijkstraFinder) pf)
-				.getGraph();
+		ShippmentGraph shGraph = (ShippmentGraph) ((DijkstraFinder) pf).getGraph();
 		// Compute cycle (sorted list of livraison)
 		ArrayList<Livraison> cycle = pf.findCycle(100000, livraisons, entrepot);
 
@@ -48,14 +46,10 @@ public class UtilsTest {
 
 	public static Livraison DummyDeliveryCreate(Plan plan) {
 		int nodesNumber = plan.getNoeuds().size();
-		return new Livraison(new PlageHoraire("12:00:00", "14:00:00"), plan
-				.getNoeuds().get((int) (Math.random() * nodesNumber)),
-				(int) (Math.random() * 1000),
-				(int) (Math.random() * nodesNumber));
+		return new Livraison(new PlageHoraire("12:00:00", "14:00:00"), plan.getNoeuds().get((int) (Math.random() * nodesNumber)), (int) (Math.random() * 1000), (int) (Math.random() * nodesNumber));
 	}
 
-	public static ArrayList<Livraison> DummyDeliveriesListCreate(Plan plan,
-			int number) {
+	public static ArrayList<Livraison> DummyDeliveriesListCreate(Plan plan, int number) {
 		ArrayList<Livraison> list = new ArrayList<Livraison>();
 		for (int i = 0; i < number; ++i) {
 			list.add(UtilsTest.DummyDeliveryCreate(plan));
@@ -65,8 +59,7 @@ public class UtilsTest {
 
 	public static Plan DummyPlanCreate(int nbNodes, int maxX, int maxY) {
 		// creating map
-		String[] rues = { "Avenue des titans", "Rue de L�onard", "Super rue",
-				"Anton Long Avenue", "GIGA AVENUE", "Persistence street" };
+		String[] rues = { "Avenue des titans", "Rue de L�onard", "Super rue", "Anton Long Avenue", "GIGA AVENUE", "Persistence street" };
 
 		// Noeud entrepot = new Noeud(20,30,-1, new ArrayList<Troncon>());
 		Plan plan = new Plan(new ArrayList<Noeud>());
@@ -111,13 +104,10 @@ public class UtilsTest {
 		return plan;
 	}
 
-	private static Itineraire findItineraire(Livraison l1, Livraison l2,
-			Plan plan, ShippmentGraph shGraph) {
-		Itineraire it = new Itineraire(l1.getAdresse(), l2.getAdresse(),
-				new ArrayList<Troncon>());
+	private static Itineraire findItineraire(Livraison l1, Livraison l2, Plan plan, ShippmentGraph shGraph) {
+		Itineraire it = new Itineraire(l1.getAdresse(), l2.getAdresse(), new ArrayList<Troncon>());
 		// Compute list of troncons
-		String pathHash = "" + l1.getAdresse().getId() + "-"
-				+ l2.getAdresse().getId();
+		String pathHash = "" + l1.getAdresse().getId() + "-" + l2.getAdresse().getId();
 		it.computeTronconsFromNodes(plan, shGraph.getPaths().get(pathHash));
 		return it;
 	}

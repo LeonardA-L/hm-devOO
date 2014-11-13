@@ -28,8 +28,7 @@ public class Itineraire {
 
 	@Override
 	public String toString() {
-		String texte = "\n\t\tD�part : " + depart.toString()
-				+ "\n\t\tArriv�e : " + arrivee.toString() + "\n";
+		String texte = "\n\t\tD�part : " + depart.toString() + "\n\t\tArriv�e : " + arrivee.toString() + "\n";
 		Iterator<Troncon> it = troncons.iterator();
 		while (it.hasNext()) {
 			texte += "\t\t\t" + it.next().toString() + "\n";

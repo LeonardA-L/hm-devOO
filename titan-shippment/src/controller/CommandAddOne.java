@@ -24,11 +24,9 @@ public class CommandAddOne implements ICommand {
 	 * @param adresse
 	 *            Address for delivery
 	 * @param prevAdresse
-	 *            Address of the delivery that must be take place before the new
-	 *            one
+	 *            Address of the delivery that must be take place before the new one
 	 */
-	public CommandAddOne(int idClient, String heureDebut, String heureFin,
-			int adresse, int adressePrecedente) {
+	public CommandAddOne(int idClient, String heureDebut, String heureFin, int adresse, int adressePrecedente) {
 		this.idClient = idClient;
 		this.heureDebut = heureDebut;
 		this.heureFin = heureFin;
@@ -38,10 +36,8 @@ public class CommandAddOne implements ICommand {
 	}
 
 	// See ICommand Interface
-	public boolean Execute(InterfacePlanning interfaceP,
-			InterfaceView interfaceV) {
-		idLivraison = interfaceP.addLivraisonAfter(idLivraison, idClient,
-				heureDebut, heureFin, adresse, adressePrecedente);
+	public boolean Execute(InterfacePlanning interfaceP, InterfaceView interfaceV) {
+		idLivraison = interfaceP.addLivraisonAfter(idLivraison, idClient, heureDebut, heureFin, adresse, adressePrecedente);
 		if (idLivraison == -1) {
 			// Problem occured when trying to add new delivery to model
 			return false;
@@ -50,12 +46,7 @@ public class CommandAddOne implements ICommand {
 		interfaceV.addAndUpdate(interfaceP.getLivraisonByAdr(adresse));
 		// Updating 'ViewTournee'
 		interfaceV.getVuePanel().resetTournee();
-		interfaceV
-				.getVuePanel()
-				.getVue_tournee()
-				.setTournee(
-						Controller.getInstance().getInterfacePlanning()
-								.getTournee());
+		interfaceV.getVuePanel().getVue_tournee().setTournee(Controller.getInstance().getInterfacePlanning().getTournee());
 		interfaceV.repaint();
 		// Updating 'ViewLivraisonList'
 		interfaceV.addShippment(interfaceP.getLivraisonByAdr(adresse));
@@ -63,8 +54,7 @@ public class CommandAddOne implements ICommand {
 	}
 
 	// See ICommand Interface
-	public boolean Unexecute(InterfacePlanning interfaceP,
-			InterfaceView interfaceV) {
+	public boolean Unexecute(InterfacePlanning interfaceP, InterfaceView interfaceV) {
 		// Updating 'ViewLivraisonList'
 		interfaceV.removeShippment(adresse);
 		// Updating 'ViewLivraison'
@@ -76,12 +66,7 @@ public class CommandAddOne implements ICommand {
 		}
 		// Updating 'ViewTournee'
 		interfaceV.getVuePanel().resetTournee();
-		interfaceV
-				.getVuePanel()
-				.getVue_tournee()
-				.setTournee(
-						Controller.getInstance().getInterfacePlanning()
-								.getTournee());
+		interfaceV.getVuePanel().getVue_tournee().setTournee(Controller.getInstance().getInterfacePlanning().getTournee());
 		interfaceV.repaint();
 		return true;
 	}

@@ -43,8 +43,7 @@ public class InterfaceView {
 	}
 
 	public boolean confirmUserInput(String titre, String message) {
-		int reply = JOptionPane.showConfirmDialog(null, message, titre,
-				JOptionPane.YES_NO_OPTION);
+		int reply = JOptionPane.showConfirmDialog(null, message, titre, JOptionPane.YES_NO_OPTION);
 		if (reply == JOptionPane.YES_OPTION) {
 			return true;
 		} else {
@@ -56,8 +55,7 @@ public class InterfaceView {
 		String format = "\\d{1,2}:\\d{1,2}:\\d{1,2}";
 		String[] retour = new String[3];
 
-		String heureDebut = JOptionPane.showInputDialog(null,
-				"Veuillez entrer une heure de d�but (Format : H:M:S) : ");
+		String heureDebut = JOptionPane.showInputDialog(null, "Veuillez entrer une heure de d�but (Format : H:M:S) : ");
 		if (heureDebut == null || !heureDebut.matches(format)) {
 			displayAlert("Erreur", "Mauvais format d'heures (H:M:S)", "error");
 			retour[0] = null;
@@ -66,8 +64,7 @@ public class InterfaceView {
 			return retour;
 		}
 
-		String heureFin = JOptionPane.showInputDialog(null,
-				"Veuillez entrer une heure de fin (Format : H:M:S) : ");
+		String heureFin = JOptionPane.showInputDialog(null, "Veuillez entrer une heure de fin (Format : H:M:S) : ");
 		if (heureFin == null || !heureFin.matches(format)) {
 			displayAlert("Erreur", "Mauvais format d'heures (H:M:S)", "error");
 			retour[0] = null;
@@ -76,8 +73,7 @@ public class InterfaceView {
 			return retour;
 		}
 
-		String idClient = JOptionPane.showInputDialog(null,
-				"Veuillez entrer l'identifiant du client :");
+		String idClient = JOptionPane.showInputDialog(null, "Veuillez entrer l'identifiant du client :");
 		if (idClient == null || !(idClient.matches("[0-9]+"))) {
 			displayAlert("Erreur", "L'identifiant doit �tre un nombre", "error");
 			retour[0] = null;
@@ -128,8 +124,7 @@ public class InterfaceView {
 	}
 
 	public void clearHighlightedNodes() {
-		Iterator<VueNoeud> it = this.getVuePanel().getNoeud_highlighted()
-				.iterator();
+		Iterator<VueNoeud> it = this.getVuePanel().getNoeud_highlighted().iterator();
 		while (it.hasNext()) {
 			it.next().unhighlight();
 		}
@@ -137,8 +132,7 @@ public class InterfaceView {
 		this.repaint();
 	}
 
-	public boolean genererVueLivraisons(ArrayList<Livraison> listeLivraisons,
-			Noeud entrepot) {
+	public boolean genererVueLivraisons(ArrayList<Livraison> listeLivraisons, Noeud entrepot) {
 
 		VueNoeud vue_entrepot = vuePanel.getVue_entrepot();
 		vue_entrepot.setNoeud(entrepot);
@@ -147,16 +141,14 @@ public class InterfaceView {
 		Iterator<Livraison> it = listeLivraisons.iterator();
 		while (it.hasNext()) {
 			Livraison livraison = it.next();
-			VueNoeud vue_noeud = vuePanel.getVue_plan().getVueNoeudById(
-					livraison.getAdresse().getId());
+			VueNoeud vue_noeud = vuePanel.getVue_plan().getVueNoeudById(livraison.getAdresse().getId());
 
 			if (vue_noeud == null) {
 				vuePanel.getVues_livraisons().clear();
 				return false;
 			}
 
-			vuePanel.getVues_livraisons().add(
-					new VueLivraison(livraison, vue_noeud));
+			vuePanel.getVues_livraisons().add(new VueLivraison(livraison, vue_noeud));
 			vueLivraisonList.addLivraison(livraison);
 		}
 		return true;
@@ -169,9 +161,7 @@ public class InterfaceView {
 		}
 		System.out.println();
 		// adding vue livraison
-		vuePanel.getVues_livraisons().add(
-				new VueLivraison(l, vuePanel.getVue_plan().getVueNoeudById(
-						l.getAdresse().getId())));
+		vuePanel.getVues_livraisons().add(new VueLivraison(l, vuePanel.getVue_plan().getVueNoeudById(l.getAdresse().getId())));
 		this.repaint();
 		System.out.println("AddAndUpdate : after add ----");
 		for (VueLivraison vl : vuePanel.getVues_livraisons()) {

@@ -113,23 +113,17 @@ public class VuePanel extends JPanel {
 
 			Color color = null;
 			try {
-				int heureDebut = Integer.parseInt(ph.getHeureDebut()
-						.replaceAll(":", ""));
-				int heureFin = Integer.parseInt(ph.getHeureFin().replaceAll(
-						":", ""));
+				int heureDebut = Integer.parseInt(ph.getHeureDebut().replaceAll(":", ""));
+				int heureFin = Integer.parseInt(ph.getHeureFin().replaceAll(":", ""));
 
 				final int LIMITE_MIN = 50 % 255;
 				final int LIMITE_MAX = 200 % 255;
 				final int MODULO = LIMITE_MAX - LIMITE_MIN + 1;
 
-				color = new Color(LIMITE_MIN + heureDebut % MODULO, LIMITE_MIN
-						+ heureFin % MODULO, LIMITE_MIN
-						+ (heureDebut + heureFin) % MODULO);
+				color = new Color(LIMITE_MIN + heureDebut % MODULO, LIMITE_MIN + heureFin % MODULO, LIMITE_MIN + (heureDebut + heureFin) % MODULO);
 			} catch (Exception e) {
 				// unparsable plage horaire
-				color = new Color((int) (Math.random() * 255),
-						(int) (Math.random() * 255),
-						(int) (Math.random() * 255));
+				color = new Color((int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255));
 			}
 
 			vueLivraison.dessine(g, color);

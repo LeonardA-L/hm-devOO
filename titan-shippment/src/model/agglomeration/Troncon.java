@@ -29,8 +29,7 @@ public class Troncon {
 	 * @param noeudDestination
 	 *            out node
 	 */
-	public Troncon(String nomRue, float vitesse, float longueur,
-			Noeud noeudDestination) {
+	public Troncon(String nomRue, float vitesse, float longueur, Noeud noeudDestination) {
 		this.nomRue = nomRue;
 		this.vitesse = vitesse;
 		this.longueur = longueur;
@@ -76,9 +75,7 @@ public class Troncon {
 
 	@Override
 	public String toString() {
-		return "Rue " + nomRue + " - Vitesse limite : " + vitesse
-				+ ", longueur : " + longueur + ", A destination du noeud : "
-				+ noeudDestination.getId() + ".";
+		return "Rue " + nomRue + " - Vitesse limite : " + vitesse + ", longueur : " + longueur + ", A destination du noeud : " + noeudDestination.getId() + ".";
 	}
 
 }

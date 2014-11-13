@@ -41,8 +41,7 @@ public class VueItineraire implements Vue {
 		final int LIMITE_MAX = 200 % 255;
 		final int MODULO = LIMITE_MAX - LIMITE_MIN + 1;
 
-		Color color = new Color(LIMITE_MIN + x % MODULO, LIMITE_MIN + y
-				% MODULO, LIMITE_MIN + (x + y) % MODULO);
+		Color color = new Color(LIMITE_MIN + x % MODULO, LIMITE_MIN + y % MODULO, LIMITE_MIN + (x + y) % MODULO);
 
 		Iterator<VueTroncon> it = troncons.iterator();
 		while (it.hasNext()) {

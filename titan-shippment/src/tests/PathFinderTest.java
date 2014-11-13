@@ -46,7 +46,7 @@ public class PathFinderTest {
 	}
 
 	// This test has been disabled due to a lack of test sets
-	//@Test
+	// @Test
 	public void noPathAvailable() {
 		ArrayList<Integer> actualPath = f.findShortestPath(3, 0);
 		assertNull(actualPath);
@@ -57,10 +57,8 @@ public class PathFinderTest {
 		// The list of nodes the cycle must go through
 		ArrayList<Livraison> list = new ArrayList<Livraison>();
 
-		list.add(new Livraison(new PlageHoraire("00:00:00", "00:00:50"), p
-				.getNoeudById(0), 10, 0));
-		list.add(new Livraison(new PlageHoraire("00:00:00", "00:00:50"), p
-				.getNoeudById(4), 10, 0));
+		list.add(new Livraison(new PlageHoraire("00:00:00", "00:00:50"), p.getNoeudById(0), 10, 0));
+		list.add(new Livraison(new PlageHoraire("00:00:00", "00:00:50"), p.getNoeudById(4), 10, 0));
 		Noeud storeHouse = p.getNoeudById(5);
 
 		ArrayList<Integer> e2 = new ArrayList<Integer>();
@@ -68,18 +66,16 @@ public class PathFinderTest {
 		e2.add(5);
 		e2.add(0);
 		e2.add(4);
-		
 
-		ArrayList<Livraison> cycle = f.findCycle(1000000, list,storeHouse);
-		//System.out.println(cycle);
+		ArrayList<Livraison> cycle = f.findCycle(1000000, list, storeHouse);
+		// System.out.println(cycle);
 
-		  
-	  boolean s2 = true; for (int i = 0; i < e2.size(); i++) { s2 &=
-	  e2.get(i) == cycle.get(i).getAdresse().getId(); }
-		  
-		 
+		boolean s2 = true;
+		for (int i = 0; i < e2.size(); i++) {
+			s2 &= e2.get(i) == cycle.get(i).getAdresse().getId();
+		}
 
-	  assertTrue(s2);
+		assertTrue(s2);
 
 	}
 

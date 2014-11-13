@@ -11,7 +11,6 @@ import model.planning.PlageHoraire;
 
 /**
  * @author Christine Solnon
- *
  */
 
 public class ShippmentGraph implements Graph {
@@ -27,10 +26,7 @@ public class ShippmentGraph implements Graph {
 	private PathFinder pathFinder;
 
 	/**
-	 * Creates a graph such that each vertex is connected to the next
-	 * <code>d</code> vertices (modulo <code>n</code>) and such that the cost of
-	 * each arc is a randomly chosen integer ranging between <code>min</code>
-	 * and <code>max</code>
+	 * Creates a graph such that each vertex is connected to the next <code>d</code> vertices (modulo <code>n</code>) and such that the cost of each arc is a randomly chosen integer ranging between <code>min</code> and <code>max</code>
 	 * 
 	 * @param n
 	 *            a number of vertices such that <code>n > 0</code>
@@ -63,61 +59,39 @@ public class ShippmentGraph implements Graph {
 	}
 
 	/**
-	 * Will create a subgraph with a sub cost matrix only containing the desired
-	 * nodes for a cycle
+	 * Will create a subgraph with a sub cost matrix only containing the desired nodes for a cycle
 	 */
-	public ShippmentGraph createTSPGraph(ArrayList<Integer> nodes,
-			Map<PlageHoraire, ArrayList<Livraison>> livraisonByTimeWindow,
-			ArrayList<PlageHoraire> sortedPlages, Livraison storeHousePoint) {
+	public ShippmentGraph createTSPGraph(ArrayList<Integer> nodes, Map<PlageHoraire, ArrayList<Livraison>> livraisonByTimeWindow, ArrayList<PlageHoraire> sortedPlages, Livraison storeHousePoint) {
 		int n = nodes.size();
 		ShippmentGraph shGraph = new ShippmentGraph(n);
 		int[][] totalCosts = this.getCost();
 		int[][] costs = new int[n][n];
 
 		for (int i = 0; i < sortedPlages.size() - 1; i++) {
-			ArrayList<Livraison> livraisonListPlage1 = livraisonByTimeWindow
-					.get(sortedPlages.get(i));
-			ArrayList<Livraison> livraisonListPlage2 = livraisonByTimeWindow
-					.get(sortedPlages.get(i + 1));
+			ArrayList<Livraison> livraisonListPlage1 = livraisonByTimeWindow.get(sortedPlages.get(i));
+			ArrayList<Livraison> livraisonListPlage2 = livraisonByTimeWindow.get(sortedPlages.get(i + 1));
 
 			for (Livraison l1 : livraisonListPlage1) {
 				for (Livraison l2 : livraisonListPlage1) {
-					costs[nodes.indexOf(l1.getAdresse().getId())][nodes
-							.indexOf(l2.getAdresse().getId())] = totalCosts[nodes
-							.indexOf(l1.getAdresse().getId())][nodes.indexOf(l2
-							.getAdresse().getId())];
+					costs[nodes.indexOf(l1.getAdresse().getId())][nodes.indexOf(l2.getAdresse().getId())] = totalCosts[nodes.indexOf(l1.getAdresse().getId())][nodes.indexOf(l2.getAdresse().getId())];
 				}
 				for (Livraison l2 : livraisonListPlage2) {
-					costs[nodes.indexOf(l1.getAdresse().getId())][nodes
-							.indexOf(l2.getAdresse().getId())] = totalCosts[nodes
-							.indexOf(l1.getAdresse().getId())][nodes.indexOf(l2
-							.getAdresse().getId())];
+					costs[nodes.indexOf(l1.getAdresse().getId())][nodes.indexOf(l2.getAdresse().getId())] = totalCosts[nodes.indexOf(l1.getAdresse().getId())][nodes.indexOf(l2.getAdresse().getId())];
 				}
 			}
 		}
-		ArrayList<Livraison> firstPlage = livraisonByTimeWindow
-				.get(sortedPlages.get(0));
+		ArrayList<Livraison> firstPlage = livraisonByTimeWindow.get(sortedPlages.get(0));
 		for (Livraison l2 : firstPlage) {
-			costs[nodes.indexOf(storeHousePoint.getAdresse().getId())][nodes
-					.indexOf(l2.getAdresse().getId())] = totalCosts[nodes
-					.indexOf(storeHousePoint.getAdresse().getId())][nodes
-					.indexOf(l2.getAdresse().getId())];
+			costs[nodes.indexOf(storeHousePoint.getAdresse().getId())][nodes.indexOf(l2.getAdresse().getId())] = totalCosts[nodes.indexOf(storeHousePoint.getAdresse().getId())][nodes.indexOf(l2.getAdresse().getId())];
 		}
 
-		ArrayList<Livraison> lastPlage = livraisonByTimeWindow.get(sortedPlages
-				.get(sortedPlages.size() - 1));
+		ArrayList<Livraison> lastPlage = livraisonByTimeWindow.get(sortedPlages.get(sortedPlages.size() - 1));
 		for (Livraison l1 : lastPlage) {
-			costs[nodes.indexOf(l1.getAdresse().getId())][nodes
-					.indexOf(storeHousePoint.getAdresse().getId())] = totalCosts[nodes
-					.indexOf(l1.getAdresse().getId())][nodes
-					.indexOf(storeHousePoint.getAdresse().getId())];
+			costs[nodes.indexOf(l1.getAdresse().getId())][nodes.indexOf(storeHousePoint.getAdresse().getId())] = totalCosts[nodes.indexOf(l1.getAdresse().getId())][nodes.indexOf(storeHousePoint.getAdresse().getId())];
 		}
 		for (Livraison l1 : lastPlage) {
 			for (Livraison l2 : lastPlage) {
-				costs[nodes.indexOf(l1.getAdresse().getId())][nodes.indexOf(l2
-						.getAdresse().getId())] = totalCosts[nodes.indexOf(l1
-						.getAdresse().getId())][nodes.indexOf(l2.getAdresse()
-						.getId())];
+				costs[nodes.indexOf(l1.getAdresse().getId())][nodes.indexOf(l2.getAdresse().getId())] = totalCosts[nodes.indexOf(l1.getAdresse().getId())][nodes.indexOf(l2.getAdresse().getId())];
 			}
 		}
 
@@ -137,13 +111,10 @@ public class ShippmentGraph implements Graph {
 		shGraph.setMinArcCost(min);
 		shGraph.setNbVertices(n);
 
-		ArrayList<ArrayList<Integer>> succs = new ArrayList<ArrayList<Integer>>(
-				n);
+		ArrayList<ArrayList<Integer>> succs = new ArrayList<ArrayList<Integer>>(n);
 		/*
-		 * ArrayList<Integer> indexList = new ArrayList<Integer>(); for (int
-		 * i=0; i< n;i++) { indexList.add(i); } for (int i=0; i< n;i++) {
-		 * ArrayList<Integer> copyNodes = new ArrayList<Integer>(indexList);
-		 * //copyNodes.remove(i); succs.add(copyNodes); }
+		 * ArrayList<Integer> indexList = new ArrayList<Integer>(); for (int i=0; i< n;i++) { indexList.add(i); } for (int i=0; i< n;i++) { ArrayList<Integer> copyNodes = new ArrayList<Integer>(indexList); //copyNodes.remove(i); succs.add(copyNodes);
+		 * }
 		 */
 		for (int i = 0; i < costs.length; i++) {
 			succs.add(new ArrayList<Integer>());
@@ -155,9 +126,7 @@ public class ShippmentGraph implements Graph {
 			}
 		}
 		/*
-		 * for (Iterator iterator = succs.iterator(); iterator.hasNext();) {
-		 * ArrayList<Integer> arrayList = (ArrayList<Integer>) iterator.next();
-		 * if (arrayList.isEmpty()) iterator.remove();
+		 * for (Iterator iterator = succs.iterator(); iterator.hasNext();) { ArrayList<Integer> arrayList = (ArrayList<Integer>) iterator.next(); if (arrayList.isEmpty()) iterator.remove();
 		 * 
 		 * }
 		 */
@@ -168,11 +137,9 @@ public class ShippmentGraph implements Graph {
 	}
 
 	/**
-	 * Will create a subgraph with a sub cost matrix only containing the desired
-	 * nodes for a cycle
+	 * Will create a subgraph with a sub cost matrix only containing the desired nodes for a cycle
 	 */
-	public ShippmentGraph createTSPGrapWithoutTimeWindows(
-			ArrayList<Integer> nodes) {
+	public ShippmentGraph createTSPGrapWithoutTimeWindows(ArrayList<Integer> nodes) {
 		int n = nodes.size();
 		ShippmentGraph shGraph = new ShippmentGraph(n);
 		int[][] totalCosts = this.getCost();
@@ -194,8 +161,7 @@ public class ShippmentGraph implements Graph {
 		shGraph.setMinArcCost(min);
 		shGraph.setNbVertices(n);
 		shGraph.setCost(costs);
-		ArrayList<ArrayList<Integer>> succs = new ArrayList<ArrayList<Integer>>(
-				n);
+		ArrayList<ArrayList<Integer>> succs = new ArrayList<ArrayList<Integer>>(n);
 		ArrayList<Integer> indexList = new ArrayList<Integer>();
 		for (int i = 0; i < n; i++) {
 			indexList.add(i);
@@ -244,9 +210,7 @@ public class ShippmentGraph implements Graph {
 	}
 
 	/**
-	 * In order to get the PF algorithm working, we have to make sure that
-	 * impossible routes won't be taken, by giving them a higher than all
-	 * weight, thus forcing Dijkstra to find for better solutions.
+	 * In order to get the PF algorithm working, we have to make sure that impossible routes won't be taken, by giving them a higher than all weight, thus forcing Dijkstra to find for better solutions.
 	 */
 	public void fillBlankCosts() {
 		for (int i = 0; i < cost.length; i++) {
@@ -266,9 +230,7 @@ public class ShippmentGraph implements Graph {
 	}
 
 	/**
-	 * Will complete the cost matrix, by calculating every paths from node to
-	 * node. This way the cost matrix will be more accurate. Also stores the
-	 * computed paths into a map, for further use
+	 * Will complete the cost matrix, by calculating every paths from node to node. This way the cost matrix will be more accurate. Also stores the computed paths into a map, for further use
 	 * <p>
 	 * Note : Not available paths will be set to null
 	 * </p>
@@ -277,12 +239,10 @@ public class ShippmentGraph implements Graph {
 		pathFinder = new DijkstraFinder(this);
 		for (int i = 0; i < cost.length; i++) {
 			for (int j = 0; j < cost.length; j++) {
-				ArrayList<Integer> pathFromIToJ = pathFinder.findShortestPath(
-						i, j);
+				ArrayList<Integer> pathFromIToJ = pathFinder.findShortestPath(i, j);
 				// popping the total distance of the path
 				if (pathFromIToJ != null) {
-					int totalCost = pathFromIToJ
-							.remove(pathFromIToJ.size() - 1);
+					int totalCost = pathFromIToJ.remove(pathFromIToJ.size() - 1);
 					// pathFromIToJ.add(totalCost);
 					cost[i][j] = totalCost;
 					updateMinMax(totalCost);

@@ -79,7 +79,6 @@ public class DijkstraFinder implements PathFinder {
 	}
 
 	/**
-	 * 
 	 * @param q
 	 * @return the index in Q of the node with the shortest distance
 	 */
@@ -97,11 +96,9 @@ public class DijkstraFinder implements PathFinder {
 	}
 
 	/**
-	 * It is really important not to mess up with the indexes in the following
-	 * lists, as the Object concept is blown up by choco in this method
+	 * It is really important not to mess up with the indexes in the following lists, as the Object concept is blown up by choco in this method
 	 */
-	public ArrayList<Livraison> findCycle(int upperCostBound,
-			ArrayList<Livraison> livraisons, Noeud storehouse) {
+	public ArrayList<Livraison> findCycle(int upperCostBound, ArrayList<Livraison> livraisons, Noeud storehouse) {
 
 		ArrayList<Integer> nodes = new ArrayList<Integer>();
 		ArrayList<PlageHoraire> plages = new ArrayList<PlageHoraire>();
@@ -130,8 +127,7 @@ public class DijkstraFinder implements PathFinder {
 			public int compare(PlageHoraire p1, PlageHoraire p2) {
 				int[] boundsp1 = p1.getBounds();
 				int[] boundsp2 = p2.getBounds();
-				return ((Integer) (boundsp1[1]))
-						.compareTo((Integer) boundsp2[0]);
+				return ((Integer) (boundsp1[1])).compareTo((Integer) boundsp2[0]);
 			}
 		});
 		// System.out.println(plages);
@@ -148,8 +144,7 @@ public class DijkstraFinder implements PathFinder {
 
 		ShippmentGraph subG;
 		if (plages.size() > 1) {
-			subG = graph.createTSPGraph(nodes, livraisonByTimeWindow, plages,
-					storeHousePoint);
+			subG = graph.createTSPGraph(nodes, livraisonByTimeWindow, plages, storeHousePoint);
 		} else {
 			subG = graph.createTSPGrapWithoutTimeWindows(nodes);
 		}
@@ -171,23 +166,17 @@ public class DijkstraFinder implements PathFinder {
 		// xNext[i] = vertex visited after i
 		IntVar[] xNext = new IntVar[n];
 		for (int i = 0; i < n; i++) {
-			xNext[i] = VariableFactory.enumerated("Next " + i, subG.getSucc(i),
-					solver);
+			xNext[i] = VariableFactory.enumerated("Next " + i, subG.getSucc(i), solver);
 		}
 		// xCost[i] = cost of arc (i,xNext[i])
-		IntVar[] xCost = VariableFactory.boundedArray("Cost ", n, minCost,
-				maxCost, solver);
+		IntVar[] xCost = VariableFactory.boundedArray("Cost ", n, minCost, maxCost, solver);
 		// xTotalCost = total cost of the solution
-		IntVar xTotalCost = VariableFactory.bounded("Total cost ", n * minCost,
-				upperCostBound - 1, solver);
+		IntVar xTotalCost = VariableFactory.bounded("Total cost ", n * minCost, upperCostBound - 1, solver);
 
 		// Add constraints
 		for (int i = 0; i < n; i++) {
-			System.err.println("node: "
-					+ livraisons.get(i).getAdresse().getId() + " i: " + i
-					+ " cost[i]: " + Arrays.toString(cost[i]));
-			solver.post(IntConstraintFactory.element(xCost[i], cost[i],
-					xNext[i], 0, "none"));
+			System.err.println("node: " + livraisons.get(i).getAdresse().getId() + " i: " + i + " cost[i]: " + Arrays.toString(cost[i]));
+			solver.post(IntConstraintFactory.element(xCost[i], cost[i], xNext[i], 0, "none"));
 		}
 		solver.post(IntConstraintFactory.circuit(xNext, 0));
 		solver.post(IntConstraintFactory.sum(xCost, xTotalCost));
@@ -236,11 +225,9 @@ public class DijkstraFinder implements PathFinder {
 	}
 
 	/**
-	 * It is really important not to mess up with the indexes in the following
-	 * lists, as the Object concept is blown up in this method
+	 * It is really important not to mess up with the indexes in the following lists, as the Object concept is blown up in this method
 	 */
-	public ArrayList<Livraison> findCycleWithoutTimeWindows(int upperCostBound,
-			ArrayList<Livraison> livraisons, Noeud storehouse) {
+	public ArrayList<Livraison> findCycleWithoutTimeWindows(int upperCostBound, ArrayList<Livraison> livraisons, Noeud storehouse) {
 		// TODO : what is that upperCostBound thing ?
 		ArrayList<Integer> nodes = new ArrayList<Integer>();
 		ArrayList<PlageHoraire> plages = new ArrayList<PlageHoraire>();
@@ -278,33 +265,23 @@ public class DijkstraFinder implements PathFinder {
 		IntVar[] xNext = new IntVar[n];
 		IntVar[] xTime = new IntVar[n];
 		for (int i = 0; i < n; i++) {
-			xNext[i] = VariableFactory.enumerated("Next " + i, subG.getSucc(i),
-					solver);
+			xNext[i] = VariableFactory.enumerated("Next " + i, subG.getSucc(i), solver);
 			if (livraisons.get(i).getPlageHoraire() != null) { // storehouse
-				int[] timeBounds = livraisons.get(i).getPlageHoraire()
-						.getBounds();
+				int[] timeBounds = livraisons.get(i).getPlageHoraire().getBounds();
 				// add time variables and their boundaries
-				xTime[i] = VariableFactory.bounded("Arriving time at " + i,
-						timeBounds[0], timeBounds[1], solver);
+				xTime[i] = VariableFactory.bounded("Arriving time at " + i, timeBounds[0], timeBounds[1], solver);
 			}
 		}
 		// xCost[i] = cost of arc (i,xNext[i])
-		IntVar[] xCost = VariableFactory.boundedArray("Cost ", n, minCost,
-				maxCost, solver);
+		IntVar[] xCost = VariableFactory.boundedArray("Cost ", n, minCost, maxCost, solver);
 		// xTotalCost = total cost of the solution
-		IntVar xTotalCost = VariableFactory.bounded("Total cost ", n * minCost,
-				upperCostBound - 1, solver);
+		IntVar xTotalCost = VariableFactory.bounded("Total cost ", n * minCost, upperCostBound - 1, solver);
 		// Add constraints
 		for (int i = 0; i < n; i++) {
-			System.out.println("node: "
-					+ livraisons.get(i).getAdresse().getId() + " i: " + i
-					+ " cost[i]: " + Arrays.toString(cost[i]));
-			solver.post(IntConstraintFactory.element(xCost[i], cost[i],
-					xNext[i], 0, "none"));
+			System.out.println("node: " + livraisons.get(i).getAdresse().getId() + " i: " + i + " cost[i]: " + Arrays.toString(cost[i]));
+			solver.post(IntConstraintFactory.element(xCost[i], cost[i], xNext[i], 0, "none"));
 			/*
-			 * if(i != n-1){
-			 * solver.post(IntConstraintFactory.distance(xTime[xNext
-			 * [i].getValue()], xTime[xNext[i+1].getValue()],"=",xCost[i])); }
+			 * if(i != n-1){ solver.post(IntConstraintFactory.distance(xTime[xNext [i].getValue()], xTime[xNext[i+1].getValue()],"=",xCost[i])); }
 			 */
 		}
 		solver.post(IntConstraintFactory.circuit(xNext, 0));

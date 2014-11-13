@@ -18,11 +18,6 @@ public class PlanTest {
 	/**
 	 * This Plan returns a dummy graph used for testing.
 	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
 	 * @return
 	 */
 	public static Plan DummyPlanCreate() {

@@ -8,7 +8,6 @@ import model.planning.PlageHoraire;
 
 /**
  * @author Christine Solnon
- *
  */
 public interface Graph {
 
@@ -28,10 +27,7 @@ public interface Graph {
 	public abstract int getNbVertices();
 
 	/**
-	 * @return the <code>cost</code> matrix of <code>this</code>: for all
-	 *         vertices <code>i</code> and <code>j</code>, if <code>(i,j)</code>
-	 *         is an arc of <code>this</code>, then <code>cost[i][j]</code> =
-	 *         cost of <code>(i,j)</code>, otherwise
+	 * @return the <code>cost</code> matrix of <code>this</code>: for all vertices <code>i</code> and <code>j</code>, if <code>(i,j)</code> is an arc of <code>this</code>, then <code>cost[i][j]</code> = cost of <code>(i,j)</code>, otherwise
 	 *         <code>cost[i][j] = this.getMaxArcCost()+1</code>
 	 */
 	public abstract int[][] getCost();
@@ -39,8 +35,7 @@ public interface Graph {
 	/**
 	 * @param i
 	 *            a vertex such that <code>0 <= i < this.getNbVertices()</code>
-	 * @return an array containing all successor vertices of <code>i</code> in
-	 *         <code>this</code>
+	 * @return an array containing all successor vertices of <code>i</code> in <code>this</code>
 	 * @throws ArrayIndexOutOfBoundsException
 	 *             If <code>i<0</code> or <code>i>=this.getNbVertices()</code>
 	 */
@@ -49,8 +44,7 @@ public interface Graph {
 	/**
 	 * @param i
 	 *            a vertex such that <code>0 <= i < this.getNbVertices()</code>
-	 * @return the number of successor vertices of <code>i</code> in
-	 *         <code>this</code>
+	 * @return the number of successor vertices of <code>i</code> in <code>this</code>
 	 * @throws ArrayIndexOutOfBoundsException
 	 *             If <code>i<0</code> or <code>i>=this.getNbVertices()</code>
 	 */
@@ -69,9 +63,7 @@ public interface Graph {
 	 *            the storehouse
 	 * @return a sub graph that can be piped into choco
 	 */
-	public ShippmentGraph createTSPGraph(ArrayList<Integer> nodes,
-			Map<PlageHoraire, ArrayList<Livraison>> livraisonByTimeWindow,
-			ArrayList<PlageHoraire> sortedPlages, Livraison storeHousePoint);
+	public ShippmentGraph createTSPGraph(ArrayList<Integer> nodes, Map<PlageHoraire, ArrayList<Livraison>> livraisonByTimeWindow, ArrayList<PlageHoraire> sortedPlages, Livraison storeHousePoint);
 
 	/**
 	 * Creates a sub graph meeting TSP's requirements
@@ -80,6 +72,5 @@ public interface Graph {
 	 *            A list of node ids for the desired cycle
 	 * @return a sub graph that can be piped into choco
 	 */
-	public ShippmentGraph createTSPGrapWithoutTimeWindows(
-			ArrayList<Integer> nodes);
+	public ShippmentGraph createTSPGrapWithoutTimeWindows(ArrayList<Integer> nodes);
 }

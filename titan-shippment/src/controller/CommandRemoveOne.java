@@ -23,15 +23,12 @@ public class CommandRemoveOne implements ICommand {
 	}
 
 	// See ICommand Interface
-	public boolean Execute(InterfacePlanning interfaceP,
-			InterfaceView interfaceV) {
+	public boolean Execute(InterfacePlanning interfaceP, InterfaceView interfaceV) {
 		// save informations about soon to be deleted delivery
 		idLivraison = interfaceP.getLivraisonByAdr(adresse).getIdLivraison();
 		idClient = interfaceP.getLivraisonByAdr(adresse).getIdClient();
-		heureDebut = interfaceP.getLivraisonByAdr(adresse).getPlageHoraire()
-				.getHeureDebut();
-		heureFin = interfaceP.getLivraisonByAdr(adresse).getPlageHoraire()
-				.getHeureFin();
+		heureDebut = interfaceP.getLivraisonByAdr(adresse).getPlageHoraire().getHeureDebut();
+		heureFin = interfaceP.getLivraisonByAdr(adresse).getPlageHoraire().getHeureFin();
 		// Updating 'ViewLivraionList'
 		interfaceV.removeShippment(adresse);
 		// Updating 'VueLivraison'
@@ -42,21 +39,14 @@ public class CommandRemoveOne implements ICommand {
 		}
 		// MUpdating 'ViewTournee'
 		interfaceV.getVuePanel().resetTournee();
-		interfaceV
-				.getVuePanel()
-				.getVue_tournee()
-				.setTournee(
-						Controller.getInstance().getInterfacePlanning()
-								.getTournee());
+		interfaceV.getVuePanel().getVue_tournee().setTournee(Controller.getInstance().getInterfacePlanning().getTournee());
 		interfaceV.repaint();
 		return true;
 	}
 
 	// See ICommand Interface
-	public boolean Unexecute(InterfacePlanning interfaceP,
-			InterfaceView interfaceV) {
-		idLivraison = interfaceP.addLivraisonAfter(idLivraison, idClient,
-				heureDebut, heureFin, adresse, adressePrecedente);
+	public boolean Unexecute(InterfacePlanning interfaceP, InterfaceView interfaceV) {
+		idLivraison = interfaceP.addLivraisonAfter(idLivraison, idClient, heureDebut, heureFin, adresse, adressePrecedente);
 		if (idLivraison == -1) {
 			return false;
 		}
@@ -64,12 +54,7 @@ public class CommandRemoveOne implements ICommand {
 		interfaceV.addAndUpdate(interfaceP.getLivraisonByAdr(adresse));
 		// MUpdating 'ViewTournee'
 		interfaceV.getVuePanel().resetTournee();
-		interfaceV
-				.getVuePanel()
-				.getVue_tournee()
-				.setTournee(
-						Controller.getInstance().getInterfacePlanning()
-								.getTournee());
+		interfaceV.getVuePanel().getVue_tournee().setTournee(Controller.getInstance().getInterfacePlanning().getTournee());
 		interfaceV.repaint();
 		// Updating 'ViewLivraionList'
 		interfaceV.addShippment(interfaceP.getLivraisonByAdr(adresse));

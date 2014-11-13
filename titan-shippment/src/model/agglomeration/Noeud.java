@@ -108,8 +108,7 @@ public class Noeud {
 
 	@Override
 	public String toString() {
-		String retour = "Noeud n�" + id + "(coord x : " + coordX + ", y : "
-				+ coordY + ")";
+		String retour = "Noeud n�" + id + "(coord x : " + coordX + ", y : " + coordY + ")";
 
 		// Iterator<Troncon> it = troncons.iterator();
 		// while (it.hasNext()) {
