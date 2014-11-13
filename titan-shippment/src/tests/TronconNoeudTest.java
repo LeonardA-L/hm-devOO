@@ -10,7 +10,7 @@ import model.agglomeration.Troncon;
 import org.junit.Before;
 import org.junit.Test;
 
-public class NoeudTest {
+public class TronconNoeudTest {
 
 	private Noeud noeudIn;
 	private Noeud noeudOut;
