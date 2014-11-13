@@ -9,18 +9,26 @@ public class CommandAddOne implements ICommand {
 	private int idClient;
 	private String heureDebut;
 	private String heureFin;
-	private int adresse;		
+	private int adresse;
 	private int adressePrecedente;
 
 	/**
-	 * Constructor w/param 
-	 * @param idClient					Client Id for new delivery
-	 * @param heureDebut				Time from which delivery can take place
-	 * @param heureFin					Time before which delivery must take place
-	 * @param adresse					Address for delivery
-	 * @param prevAdresse				Address of the delivery that must be take place before the new one
+	 * Constructor w/param
+	 * 
+	 * @param idClient
+	 *            Client Id for new delivery
+	 * @param heureDebut
+	 *            Time from which delivery can take place
+	 * @param heureFin
+	 *            Time before which delivery must take place
+	 * @param adresse
+	 *            Address for delivery
+	 * @param prevAdresse
+	 *            Address of the delivery that must be take place before the new
+	 *            one
 	 */
-	public CommandAddOne (int idClient, String heureDebut, String heureFin, int adresse, int adressePrecedente) {
+	public CommandAddOne(int idClient, String heureDebut, String heureFin,
+			int adresse, int adressePrecedente) {
 		this.idClient = idClient;
 		this.heureDebut = heureDebut;
 		this.heureFin = heureFin;
@@ -30,17 +38,24 @@ public class CommandAddOne implements ICommand {
 	}
 
 	// See ICommand Interface
-	public boolean Execute (InterfacePlanning interfaceP, InterfaceView interfaceV) {
-		idLivraison = interfaceP.addLivraisonAfter(idLivraison, idClient, heureDebut, heureFin, adresse, adressePrecedente);
-		if(idLivraison == -1) { 
+	public boolean Execute(InterfacePlanning interfaceP,
+			InterfaceView interfaceV) {
+		idLivraison = interfaceP.addLivraisonAfter(idLivraison, idClient,
+				heureDebut, heureFin, adresse, adressePrecedente);
+		if (idLivraison == -1) {
 			// Problem occured when trying to add new delivery to model
 			return false;
-		}	
+		}
 		// Updating 'ViewLivraison'
-		interfaceV.addAndUpdate(interfaceP.getLivraisonByAdr(adresse));	
+		interfaceV.addAndUpdate(interfaceP.getLivraisonByAdr(adresse));
 		// Updating 'ViewTournee'
 		interfaceV.getVuePanel().resetTournee();
-		interfaceV.getVuePanel().getVue_tournee().setTournee(Controller.getInstance().getInterfacePlanning().getTournee());
+		interfaceV
+				.getVuePanel()
+				.getVue_tournee()
+				.setTournee(
+						Controller.getInstance().getInterfacePlanning()
+								.getTournee());
 		interfaceV.repaint();
 		// Updating 'ViewLivraisonList'
 		interfaceV.addShippment(interfaceP.getLivraisonByAdr(adresse));
@@ -48,22 +63,27 @@ public class CommandAddOne implements ICommand {
 	}
 
 	// See ICommand Interface
-	public boolean Unexecute (InterfacePlanning interfaceP, InterfaceView interfaceV) {		
+	public boolean Unexecute(InterfacePlanning interfaceP,
+			InterfaceView interfaceV) {
 		// Updating 'ViewLivraisonList'
 		interfaceV.removeShippment(adresse);
 		// Updating 'ViewLivraison'
 		interfaceV.removeAndUpdate(adresse);
 		// Deleting delivery from model
 		int success = interfaceP.removeOneLivraison(adresse);
-		if (success == -1) {	
+		if (success == -1) {
 			return false;
-		}	
+		}
 		// Updating 'ViewTournee'
 		interfaceV.getVuePanel().resetTournee();
-		interfaceV.getVuePanel().getVue_tournee().setTournee(Controller.getInstance().getInterfacePlanning().getTournee());
+		interfaceV
+				.getVuePanel()
+				.getVue_tournee()
+				.setTournee(
+						Controller.getInstance().getInterfacePlanning()
+								.getTournee());
 		interfaceV.repaint();
 		return true;
 	}
-
 
 }

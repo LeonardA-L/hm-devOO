@@ -8,7 +8,7 @@ import model.agglomeration.Plan;
 import model.agglomeration.Troncon;
 
 public class Itineraire {
-	
+
 	private Noeud depart;
 	private Noeud arrivee;
 	private ArrayList<Troncon> troncons;
@@ -25,10 +25,11 @@ public class Itineraire {
 		this.arrivee = new Noeud();
 		this.troncons = new ArrayList<Troncon>();
 	}
-	
+
 	@Override
 	public String toString() {
-		String texte = "\n\t\tDépart : " + depart.toString() + "\n\t\tArrivée : " + arrivee.toString() + "\n";
+		String texte = "\n\t\tDï¿½part : " + depart.toString()
+				+ "\n\t\tArrivï¿½e : " + arrivee.toString() + "\n";
 		Iterator<Troncon> it = troncons.iterator();
 		while (it.hasNext()) {
 			texte += "\t\t\t" + it.next().toString() + "\n";
@@ -59,20 +60,20 @@ public class Itineraire {
 	public void setTroncons(ArrayList<Troncon> troncons) {
 		this.troncons = troncons;
 	}
-	
+
 	public int getDurationSecondes() {
 		return this.durationSecondes;
 	}
-	
-	public void computeTronconsFromNodes(Plan p, ArrayList<Integer> nodesIds){
+
+	public void computeTronconsFromNodes(Plan p, ArrayList<Integer> nodesIds) {
 		this.durationSecondes = 0;
-		for(int i=0;i<nodesIds.size()-1;i++){
+		for (int i = 0; i < nodesIds.size() - 1; i++) {
 			Noeud n1 = p.getNoeudById(nodesIds.get(i));
-			Noeud n2 = p.getNoeudById(nodesIds.get(i+1));
-			
-			for(Troncon t : n1.getTroncons()){
-				if(t.getNoeudDestination() == n2){
-					this.durationSecondes += t.getLongueur()/t.getVitesse();
+			Noeud n2 = p.getNoeudById(nodesIds.get(i + 1));
+
+			for (Troncon t : n1.getTroncons()) {
+				if (t.getNoeudDestination() == n2) {
+					this.durationSecondes += t.getLongueur() / t.getVitesse();
 					this.troncons.add(t);
 					break;
 				}

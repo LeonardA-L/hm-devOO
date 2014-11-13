@@ -12,11 +12,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class TourneeTest {
-	
+
 	private Plan plan;
 	private Tournee tournee;
 	private ArrayList<Livraison> livraisons;
-	
+
 	@Before
 	public void create() {
 		int nbNodes = 20;
@@ -26,10 +26,10 @@ public class TourneeTest {
 		livraisons = UtilsTest.DummyDeliveriesListCreate(plan, 5);
 		tournee = new Tournee();
 	}
-	
+
 	@Test
 	public void test() {
-		
+
 	}
 
 }

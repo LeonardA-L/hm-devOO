@@ -7,9 +7,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 
-
-
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -41,9 +38,9 @@ public class Fenetre extends JFrame {
 
 		// init window
 		this.setTitle("DevOO");
-		//this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		// this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		this.setSize(this.tailleX, this.tailleY);
-		this.setLocationRelativeTo(null);               
+		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
 
@@ -63,7 +60,8 @@ public class Fenetre extends JFrame {
 
 	private void initTop() {
 		this.top = new JPanel();
-		Dimension sizeTop = new Dimension(this.tailleX, (int)(this.tailleY*7/8));
+		Dimension sizeTop = new Dimension(this.tailleX,
+				(int) (this.tailleY * 7 / 8));
 		this.top.setSize(sizeTop);
 		this.top.setPreferredSize(sizeTop);
 		this.top.setLayout(new BorderLayout());
@@ -73,11 +71,11 @@ public class Fenetre extends JFrame {
 
 		// list livraisons & btn
 		this.top_right = new JPanel();
-		this.top_right.setLayout(new GridLayout(1,2));
+		this.top_right.setLayout(new GridLayout(1, 2));
 		this.top_right.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 		initLivraisonPanel();
-		initBtnPanel();		
+		initBtnPanel();
 
 		this.top.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		this.top.add(this.top_right, BorderLayout.EAST);
@@ -87,21 +85,22 @@ public class Fenetre extends JFrame {
 
 	private void initBottom() {
 		this.bottom = new JPanel();
-		Dimension sizeBottom = new Dimension(this.tailleX, (int)(this.tailleY/8));
+		Dimension sizeBottom = new Dimension(this.tailleX,
+				(int) (this.tailleY / 8));
 		this.bottom.setSize(sizeBottom);
 		this.bottom.setPreferredSize(sizeBottom);
-		this.bottom.setLayout( new BorderLayout() );
+		this.bottom.setLayout(new BorderLayout());
 
 		Console console = new Console(sizeBottom);
-	
 
-		//JScrollPane scrollPane = new JScrollPane (new ScrolledConsole(console));
+		// JScrollPane scrollPane = new JScrollPane (new
+		// ScrolledConsole(console));
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setViewportView( console );
-		this.bottom.add( scrollPane, BorderLayout.NORTH );
+		scrollPane.setViewportView(console);
+		this.bottom.add(scrollPane, BorderLayout.NORTH);
 
-		//this.bottom.add(scrollPane);
+		// this.bottom.add(scrollPane);
 
 		this.bottom.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
@@ -110,18 +109,18 @@ public class Fenetre extends JFrame {
 
 	private void initLivraisonPanel() {
 		JPanel livraisons_panel = new JPanel();
-		livraisons_panel.setLayout(new BoxLayout(livraisons_panel, BoxLayout.Y_AXIS));
+		livraisons_panel.setLayout(new BoxLayout(livraisons_panel,
+				BoxLayout.Y_AXIS));
 		livraisons_panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
 
 		livraisons_panel.add(new JLabel("Les livraisons"), BorderLayout.CENTER);
 
 		Bouton undo = new Bouton("undo", "", false);
 		Bouton redo = new Bouton("redo", "", false);
 		undo.setIcon(new ImageIcon("images/undo.png"));
-		//undo.setPreferredSize(new Dimension(80,40));
+		// undo.setPreferredSize(new Dimension(80,40));
 		redo.setIcon(new ImageIcon("images/redo.png"));
-		//redo.setPreferredSize(new Dimension(80,40));
+		// redo.setPreferredSize(new Dimension(80,40));
 
 		JPanel undoRedoPanel = new JPanel();
 		undoRedoPanel.setLayout(new BoxLayout(undoRedoPanel, BoxLayout.X_AXIS));
@@ -129,29 +128,30 @@ public class Fenetre extends JFrame {
 		undoRedoPanel.add(undo);
 		undoRedoPanel.add(redo);
 		undoRedoPanel.add(Box.createHorizontalGlue());
-		
+
 		livraisons_panel.add(undoRedoPanel);
-		
-		//Create shippment table
-		
-		String[] colHeadings = {"ID Client","Heure Debut","Heure Fin"," ", "ID Noeud"};
-		int numRows = 0 ;
-		DefaultTableModel model = new DefaultTableModel(numRows, colHeadings.length){
-		    @Override
-		    public boolean isCellEditable(int row, int column) {
-		    	if(column!=3){
-		    		return false;
-		    	}
-		    	else{
-		    		return true;
-		    	}
-		    }
+
+		// Create shippment table
+
+		String[] colHeadings = { "ID Client", "Heure Debut", "Heure Fin", " ",
+				"ID Noeud" };
+		int numRows = 0;
+		DefaultTableModel model = new DefaultTableModel(numRows,
+				colHeadings.length) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				if (column != 3) {
+					return false;
+				} else {
+					return true;
+				}
+			}
 		};
 		model.setColumnIdentifiers(colHeadings);
 		livraison_list = new VueLivraisonList(model);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setViewportView( livraison_list );
+		scrollPane.setViewportView(livraison_list);
 		livraisons_panel.add(scrollPane);
 
 		this.top_right.add(livraisons_panel, 0);
@@ -159,18 +159,19 @@ public class Fenetre extends JFrame {
 
 	private void initBtnPanel() {
 		JPanel btn_panel = new JPanel();
-		//btn_panel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+		// btn_panel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
 		btn_panel.setLayout(new BoxLayout(btn_panel, BoxLayout.Y_AXIS));
 
 		label_infoPoint = new JLabel();
-		label_infoPoint.setMaximumSize(new Dimension(tailleX/6, tailleX/5));
-		label_infoPoint.setPreferredSize(new Dimension(tailleX/6, tailleX/5));
+		label_infoPoint.setMaximumSize(new Dimension(tailleX / 6, tailleX / 5));
+		label_infoPoint
+				.setPreferredSize(new Dimension(tailleX / 6, tailleX / 5));
 		label_infoPoint.setVerticalAlignment(JLabel.TOP);
 		label_infoPoint.setVerticalTextPosition(JLabel.TOP);
 
 		JPanel right_panel = new JPanel();
 		right_panel.setLayout(new BorderLayout());
-		right_panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));		
+		right_panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 		JPanel hover_panel = new JPanel();
 		hover_panel.setLayout(new BoxLayout(hover_panel, BoxLayout.X_AXIS));
@@ -182,9 +183,12 @@ public class Fenetre extends JFrame {
 		this.top_right.add(right_panel, 0);
 
 		Bouton loadMap = new Bouton("loadMap", "Chargement de la carte", true);
-		Bouton loadLivraisons = new Bouton("loadLivraisons", "Chargement des livraisons", true);
-		Bouton calculTournee = new Bouton("calculTournee", "Calcul de la tournée", false);
-		Bouton generateInstruction = new Bouton("generateInstructions", "Générer instructions", false);
+		Bouton loadLivraisons = new Bouton("loadLivraisons",
+				"Chargement des livraisons", true);
+		Bouton calculTournee = new Bouton("calculTournee",
+				"Calcul de la tournï¿½e", false);
+		Bouton generateInstruction = new Bouton("generateInstructions",
+				"Gï¿½nï¿½rer instructions", false);
 
 		btn_panel.add(Box.createGlue());
 		btn_panel.add(loadMap);
@@ -217,15 +221,15 @@ public class Fenetre extends JFrame {
 	public VuePanel getVue() {
 		return vue;
 	}
-	
-	public VueLivraisonList getVueLivraisonList(){
+
+	public VueLivraisonList getVueLivraisonList() {
 		return livraison_list;
 	}
 
 	public void setVue(VuePanel vue) {
 		this.vue = vue;
 	}
-	
+
 	public JLabel getInfoPoint() {
 		return this.label_infoPoint;
 	}

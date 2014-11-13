@@ -4,17 +4,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Noeud {
-	
+
 	private int coordX;
 	private int coordY;
 	private int id;
 	private ArrayList<Troncon> troncons;
-	
-	
+
 	/**
-	 * 	Constructor wo/parameter
+	 * Constructor wo/parameter
 	 */
-	public Noeud () {
+	public Noeud() {
 		this.coordX = 0;
 		this.coordY = 0;
 		this.id = 0;
@@ -23,10 +22,15 @@ public class Noeud {
 
 	/**
 	 * Constructor w/params
-	 * @param coordX	x coordinate of node
-	 * @param coordY	y coordinate of node
-	 * @param id		id of node
-	 * @param troncons	list of troncons (empty at first in our case)
+	 * 
+	 * @param coordX
+	 *            x coordinate of node
+	 * @param coordY
+	 *            y coordinate of node
+	 * @param id
+	 *            id of node
+	 * @param troncons
+	 *            list of troncons (empty at first in our case)
 	 */
 	public Noeud(int coordX, int coordY, int id, ArrayList<Troncon> troncons) {
 		this.coordX = coordX;
@@ -34,9 +38,10 @@ public class Noeud {
 		this.id = id;
 		this.troncons = troncons;
 	}
-	
+
 	/**
 	 * Add a troncon to a node
+	 * 
 	 * @param troncon
 	 * @return index of troncon in 'troncons'
 	 */
@@ -44,29 +49,30 @@ public class Noeud {
 		this.troncons.add(troncon);
 		return this.troncons.size(); // return index of troncon
 	}
-	
+
 	/**
 	 * Remove troncon from node
-	 * @param indexTroncon  index of the troncon to be removed
+	 * 
+	 * @param indexTroncon
+	 *            index of the troncon to be removed
 	 */
 	public void removeTroncon(int indexTroncon) {
 		this.troncons.remove(indexTroncon);
 	}
-	
+
 	/**
 	 * Deprecated
 	 */
-	public float[] getCosts(int nbNoeuds){
+	public float[] getCosts(int nbNoeuds) {
 		float[] line = new float[nbNoeuds];
 		Iterator<Troncon> it = troncons.iterator();
-		while(it.hasNext()){
+		while (it.hasNext()) {
 			Troncon troncon = it.next();
 			line[troncon.getNoeudDestination().getId()] = troncon.getTime();
 		}
 		return line;
 	}
 
-	
 	// GETTERS - SETTERS
 	public int getCoordX() {
 		return coordX;
@@ -99,17 +105,17 @@ public class Noeud {
 	public void setTroncons(ArrayList<Troncon> troncons) {
 		this.troncons = troncons;
 	}
-	
-	
+
 	@Override
 	public String toString() {
-		String retour = "Noeud n�" + id + "(coord x : " + coordX + ", y : " + coordY + ")";
-		
-//		Iterator<Troncon> it = troncons.iterator();
-//		while (it.hasNext()) {
-//			retour += "" + it.next().toString() + "\n";
-//		}
-		
+		String retour = "Noeud n�" + id + "(coord x : " + coordX + ", y : "
+				+ coordY + ")";
+
+		// Iterator<Troncon> it = troncons.iterator();
+		// while (it.hasNext()) {
+		// retour += "" + it.next().toString() + "\n";
+		// }
+
 		return retour;
 	}
 

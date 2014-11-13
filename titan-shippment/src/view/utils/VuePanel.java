@@ -19,16 +19,15 @@ import view.agglomeration.VuePlan;
 import view.planning.VueLivraison;
 import view.planning.VueTournee;
 
-
 public class VuePanel extends JPanel {
-	
+
 	private VuePlan vue_plan;
 	private VueTournee vue_tournee;
 	private VueNoeud vue_entrepot;
 	private ArrayList<VueLivraison> vues_livraisons;
-	
+
 	private ArrayList<VueNoeud> noeud_highlighted;
-	
+
 	public VuePanel() {
 		// init views
 		vue_plan = new VuePlan();
@@ -36,28 +35,29 @@ public class VuePanel extends JPanel {
 		vues_livraisons = new ArrayList<VueLivraison>();
 		noeud_highlighted = new ArrayList<VueNoeud>();
 		vue_entrepot = new VueNoeud();
-		
+
 		// init panel
-		this.setSize(500,200);
-		this.setPreferredSize(new Dimension(500,200));
+		this.setSize(500, 200);
+		this.setPreferredSize(new Dimension(500, 200));
 		this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		
+
 		this.addMouseMotionListener(new MouseMotionListener() {
-			
+
 			@Override
 			public void mouseMoved(MouseEvent arg0) {
 				int x = arg0.getX();
 				int y = arg0.getY();
-				Controller.getInstance().trigger("mouse_moved_on_map", x, y);;				
+				Controller.getInstance().trigger("mouse_moved_on_map", x, y);
+				;
 			}
-			
+
 			@Override
 			public void mouseDragged(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		
+
 		this.addMouseListener(new MouseListener() {
 
 			@Override
@@ -71,78 +71,84 @@ public class VuePanel extends JPanel {
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseExited(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mousePressed(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 		});
-		
+
 	}
-	
+
 	@Override
 	protected void paintComponent(Graphics g) {
 		// reset
 		super.paintComponent(g);
-		
+
 		// on dessine le plan
 		if (vue_plan != null) {
 			vue_plan.dessine(g);
 		}
-		
+
 		Iterator<VueLivraison> it = vues_livraisons.iterator();
 		while (it.hasNext()) {
 			VueLivraison vueLivraison = it.next();
 			PlageHoraire ph = vueLivraison.getLivraison().getPlageHoraire();
-			
+
 			Color color = null;
 			try {
-				int heureDebut = Integer.parseInt(ph.getHeureDebut().replaceAll(":", ""));
-				int heureFin = Integer.parseInt(ph.getHeureFin().replaceAll(":", ""));
-				
-				final int LIMITE_MIN = 50 %255;
-				final int LIMITE_MAX = 200 %255;
-				final int MODULO = LIMITE_MAX-LIMITE_MIN+1;
-				
-				color = new Color(LIMITE_MIN + heureDebut%MODULO, LIMITE_MIN + heureFin%MODULO , LIMITE_MIN + (heureDebut+heureFin)%MODULO);
+				int heureDebut = Integer.parseInt(ph.getHeureDebut()
+						.replaceAll(":", ""));
+				int heureFin = Integer.parseInt(ph.getHeureFin().replaceAll(
+						":", ""));
+
+				final int LIMITE_MIN = 50 % 255;
+				final int LIMITE_MAX = 200 % 255;
+				final int MODULO = LIMITE_MAX - LIMITE_MIN + 1;
+
+				color = new Color(LIMITE_MIN + heureDebut % MODULO, LIMITE_MIN
+						+ heureFin % MODULO, LIMITE_MIN
+						+ (heureDebut + heureFin) % MODULO);
 			} catch (Exception e) {
 				// unparsable plage horaire
-				 color = new Color((int)(Math.random()*255), (int)(Math.random()*255), (int)(Math.random()*255));
+				color = new Color((int) (Math.random() * 255),
+						(int) (Math.random() * 255),
+						(int) (Math.random() * 255));
 			}
-			
+
 			vueLivraison.dessine(g, color);
 		}
-		
+
 		if (vue_entrepot != null) {
 			vue_entrepot.dessine(g);
 		}
-		
+
 		if (vue_tournee.getTournee() != null) {
 			vue_tournee.dessine(g, vue_entrepot);
 		}
-		
+
 	}
-	
+
 	public void resetLivraisons() {
 		vue_entrepot.unhighlight();
 		vue_entrepot.setNoeud(null);
-		
+
 		Iterator<VueLivraison> it = vues_livraisons.iterator();
 		while (it.hasNext()) {
 			it.next().reset();
@@ -153,11 +159,11 @@ public class VuePanel extends JPanel {
 	public void resetPlan() {
 		vue_plan.reset();
 	}
-	
+
 	public void resetTournee() {
 		vue_tournee.reset();
 	}
-	
+
 	public VuePlan getVue_plan() {
 		return vue_plan;
 	}
@@ -181,12 +187,12 @@ public class VuePanel extends JPanel {
 	public void setVue_tournee(VueTournee vue_tournee) {
 		this.vue_tournee = vue_tournee;
 	}
-	
-	public VueNoeud getVue_entrepot(){
+
+	public VueNoeud getVue_entrepot() {
 		return vue_entrepot;
 	}
-	
-	public void setVue_entrepot(VueNoeud vue_entrepot){
+
+	public void setVue_entrepot(VueNoeud vue_entrepot) {
 		this.vue_entrepot = vue_entrepot;
 	}
 

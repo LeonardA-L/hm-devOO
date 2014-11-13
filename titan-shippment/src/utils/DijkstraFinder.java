@@ -138,20 +138,19 @@ public class DijkstraFinder implements PathFinder {
 		nodes.clear();
 
 		nodes.add(storehouse.getId());
-		
+
 		for (PlageHoraire pl : plages) {
 			ArrayList<Livraison> liv = livraisonByTimeWindow.get(pl);
 			for (int i = 0; i < liv.size(); i++) {
 				nodes.add(liv.get(i).getAdresse().getId());
 			}
 		}
-		
-		
+
 		ShippmentGraph subG;
 		if (plages.size() > 1) {
-		subG= graph.createTSPGraph(nodes, livraisonByTimeWindow, plages, storeHousePoint);
-		}
-		else{
+			subG = graph.createTSPGraph(nodes, livraisonByTimeWindow, plages,
+					storeHousePoint);
+		} else {
 			subG = graph.createTSPGrapWithoutTimeWindows(nodes);
 		}
 		// creating a sub graph with only the wanted nodes
@@ -184,7 +183,9 @@ public class DijkstraFinder implements PathFinder {
 
 		// Add constraints
 		for (int i = 0; i < n; i++) {
-			System.err.println("node: " + livraisons.get(i).getAdresse().getId() +" i: "+i+" cost[i]: "+Arrays.toString(cost[i]));
+			System.err.println("node: "
+					+ livraisons.get(i).getAdresse().getId() + " i: " + i
+					+ " cost[i]: " + Arrays.toString(cost[i]));
 			solver.post(IntConstraintFactory.element(xCost[i], cost[i],
 					xNext[i], 0, "none"));
 		}
@@ -202,12 +203,13 @@ public class DijkstraFinder implements PathFinder {
 		// record solution and state
 
 		// ------------------------- Retrieve result
-		//System.out.println(solver);
+		// System.out.println(solver);
 		if (solver.getMeasures().getSolutionCount() > 0) {
 			int current = xNext[0].getValue();
 			for (int i = 0; i < n; i++) {
 				Livraison l = livraisons.get(xNext[current].getValue());
-				if (l.getPlageHoraire() != null)	System.out.println(l);
+				if (l.getPlageHoraire() != null)
+					System.out.println(l);
 				sortedList.add(l);
 				current = xNext[current].getValue();
 				// int totalCost = xTotalCost.getValue();
