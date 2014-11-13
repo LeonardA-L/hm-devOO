@@ -21,11 +21,6 @@ public class Tournee {
 		this.itineraires = itineraires;
 	}
 	
-	// no sure this is still useful ... ?
-	public Tournee calcul() {
-		// do math stuff
-		return this;
-	}
 	
 	public int addLivraisonAfter(Livraison newDelivery, int adresseBefore)
 	{

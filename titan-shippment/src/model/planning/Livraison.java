@@ -79,7 +79,7 @@ public class Livraison {
 	
 	public String toString(){
 		String msg = "";
-		msg += "Delivery to node n° "+adresse.getId()+"<br>";
+		msg += "Delivery to node no "+adresse.getId()+"<br>";
 		msg += "Time slot "+plageHoraire.toString()+"<br>";
 		msg += "At "+((!heureLivraison.isEmpty())?heureLivraison:"[Not calculed yet]")+"<br>";
 		return msg;
