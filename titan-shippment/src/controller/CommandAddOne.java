@@ -31,7 +31,7 @@ public class CommandAddOne implements ICommand {
 
 	// See ICommand Interface
 	public boolean Execute (InterfacePlanning interfaceP, InterfaceView interfaceV) {
-		idLivraison = interfaceP.AddLivraisonAfter(idLivraison, idClient, heureDebut, heureFin, adresse, adressePrecedente);
+		idLivraison = interfaceP.addLivraisonAfter(idLivraison, idClient, heureDebut, heureFin, adresse, adressePrecedente);
 		if(idLivraison == -1) { 
 			// Problem occured when trying to add new delivery to model
 			return false;

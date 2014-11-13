@@ -54,14 +54,14 @@ public class Noeud {
 	}
 	
 	/**
-	 * 
+	 * Deprecated
 	 */
-	public float[] GetCosts(int nbNoeuds){
+	public float[] getCosts(int nbNoeuds){
 		float[] line = new float[nbNoeuds];
 		Iterator<Troncon> it = troncons.iterator();
 		while(it.hasNext()){
 			Troncon troncon = it.next();
-			line[troncon.getNoeudDestination().getId()] = troncon.GetTime();
+			line[troncon.getNoeudDestination().getId()] = troncon.getTime();
 		}
 		return line;
 	}
@@ -103,7 +103,7 @@ public class Noeud {
 	
 	@Override
 	public String toString() {
-		String retour = "Noeud n°" + id + "(coord x : " + coordX + ", y : " + coordY + ")";
+		String retour = "Noeud nï¿½" + id + "(coord x : " + coordX + ", y : " + coordY + ")";
 		
 //		Iterator<Troncon> it = troncons.iterator();
 //		while (it.hasNext()) {

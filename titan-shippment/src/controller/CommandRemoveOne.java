@@ -45,7 +45,7 @@ public class CommandRemoveOne implements ICommand{
 
 	// See ICommand Interface
 	public boolean Unexecute(InterfacePlanning interfaceP, InterfaceView interfaceV) {
-		idLivraison = interfaceP.AddLivraisonAfter(idLivraison, idClient, heureDebut, heureFin, adresse, adressePrecedente);
+		idLivraison = interfaceP.addLivraisonAfter(idLivraison, idClient, heureDebut, heureFin, adresse, adressePrecedente);
 		if(idLivraison == -1) {
 			return false;
 		}	

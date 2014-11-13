@@ -99,12 +99,15 @@ public class Plan {
 		return null;
 	}
 	
-	public float[][] GetMatrix() {
+	/**
+	 * Deprecated
+	 */
+	public float[][] getMatrix() {
 		float[][] matriceAdj = new float[noeuds.size()][noeuds.size()];
 		Iterator<Noeud> it = noeuds.iterator();
 		while(it.hasNext()){
 			Noeud noeud = it.next();
-			matriceAdj[noeud.getId()] = noeud.GetCosts(noeuds.size());
+			matriceAdj[noeud.getId()] = noeud.getCosts(noeuds.size());
 		}
 		return matriceAdj;
 	}
@@ -160,8 +163,7 @@ public class Plan {
 	
 	
 	/**
-	 * To be commented later
-	 * @return
+	 * Computes a ShippmentGraph object from this one, meeting choco's requirements
 	 */
 	public ShippmentGraph computeShippmentGraph(){
 		ShippmentGraph shGraph = new ShippmentGraph(getNoeuds().size());
@@ -169,6 +171,7 @@ public class Plan {
 			shGraph.addNode(n);
 		}
 		//shGraph.fillBlankCosts();
+		// Computes every path between every node couple
 		shGraph.makeGraphComplete();
 		return shGraph;
 	}

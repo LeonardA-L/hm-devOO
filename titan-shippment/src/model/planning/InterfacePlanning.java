@@ -63,7 +63,7 @@ public class InterfacePlanning {
 	 * @param adresse			address where the the delivery takes place
 	 * @return
 	 */
-	public boolean AddLivraison(int idClient, int idLivraison, String heureDebut, String heureFin, int adresse) {
+	public boolean addLivraison(int idClient, int idLivraison, String heureDebut, String heureFin, int adresse) {
 		PlageHoraire ph = this.getPlageHoraire(heureDebut, heureFin);
 		Noeud nd = Controller.getInstance().getInterfaceAgglo().getPlan().getNoeudById(adresse);
 		if (nd == null || ph == null) {
@@ -83,14 +83,14 @@ public class InterfacePlanning {
 	 * @param prevAdresse
 	 * @return			ID of the delivery which was created
 	 */
-	public int AddLivraisonAfter(int idLivraison, int idClient, String heureDebut, String heureFin, int adresse, int prevAdresse) {
+	public int addLivraisonAfter(int idLivraison, int idClient, String heureDebut, String heureFin, int adresse, int prevAdresse) {
 		// If the delivery is added for the first time (and not through undo/redo, it doesn't have an id yet
 		if (idLivraison == -1) {
 			idLivraison = getNewDeliveryId();	// get an id
 			System.out.println("New delivery id chosen : "+s_idLivraison);
 		}
 		// add new delivery into model :
-		boolean deliveryCreation = AddLivraison(idClient, idLivraison, heureDebut, heureFin, adresse);
+		boolean deliveryCreation = addLivraison(idClient, idLivraison, heureDebut, heureFin, adresse);
 		System.out.println("New Delivery added to livraisons in InterfacePlanning");
 
 
@@ -276,7 +276,8 @@ public class InterfacePlanning {
 	/**
 	 * calculates the path for delivery
 	 */
-	public void CalculTournee() {
+	public void calculTournee() {
+		
 		InterfaceAgglo interfaceAgglo = Controller.getInstance().getInterfaceAgglo();
 		Plan plan = interfaceAgglo.getPlan();
 		ArrayList<Livraison> livraisons = getListeLivraisons();
@@ -285,24 +286,22 @@ public class InterfacePlanning {
 		PathFinder pf = new DijkstraFinder(plan.computeShippmentGraph());
 		pf.setTimeout(30000);
 		shGraph = (ShippmentGraph)((DijkstraFinder)pf).getGraph();
+		
 		// Compute cycle (sorted list of livraison)
-
 		ArrayList<Livraison> cycle = pf.findCycle(Integer.MAX_VALUE, livraisons,this.entrepot);
 		
+		// Print it out
+		/*
 		for (int i = 0; i < cycle.size(); ++i) {
 			try {
 				System.out.println(cycle.get(i).toString());
 			}
 			catch(Exception e) {
-				/*if (i == 0) {
-					System.out.println("Entrepot =>");
-				}
-				else {
-					System.out.println("Erreur pour la livraison " + i);
-				}*/
+				// Storehouse
 			}
 		}
-
+		*/
+		
 		// Finding itineraires
 		ArrayList<Itineraire> itineraires = new ArrayList<Itineraire>();
 		for(int i=0;i<cycle.size() - 1;i++){	// No for in !
@@ -343,10 +342,10 @@ public class InterfacePlanning {
 		return it;
 	}
 
-	public Itineraire findItineraire(Noeud adresseBefore, Noeud adresseAfter, Plan plan){
-		Itineraire it = new Itineraire(adresseBefore, adresseAfter,new ArrayList<Troncon>());
+	public Itineraire findItineraire(Noeud start, Noeud end, Plan plan){
+		Itineraire it = new Itineraire(start, end,new ArrayList<Troncon>());
 		// Compute list of troncons
-		String pathHash = ""+adresseBefore.getId()+"-"+adresseAfter.getId();
+		String pathHash = ""+start.getId()+"-"+end.getId();
 		it.computeTronconsFromNodes(plan, shGraph.getPaths().get(pathHash));
 		return it;
 	}

@@ -11,12 +11,12 @@ public class InterfaceAgglo {
 		plan = new Plan();
 	}
 	
-	/*	Asks the builder to construct a plan from file
+	/**	Asks the builder to construct a plan from file
 	 * 	absFilePath, using the instance of Plan in 
 	 * 	InterfaceAgglo.
-	 * 	
+	 * @param absFilePath xml absolute file path
 	 */
-	public boolean BuildPlanFromXml(String absFilePath) 
+	public boolean buildPlanFromXml(String absFilePath) 
 	{
 		Plan p = XMLBuilder.getPlan(absFilePath, this);  
 		if ( p == null ) {
@@ -30,7 +30,7 @@ public class InterfaceAgglo {
 	 * Deprecated
 	 */
 	public float[][] GetFormatedMap(){
-		float[][] matrice = plan.GetMatrix();
+		float[][] matrice = plan.getMatrix();
 		return matrice;
 	}
 	
