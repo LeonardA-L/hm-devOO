@@ -34,7 +34,7 @@ public class Tournee {
 		for (Livraison l : livraisons) {
 			if (l.getAdresse().getId() == adresseBefore) {
 				index = livraisons.indexOf(l);
-				System.out.println("FOUND = La livraisons précédent la nouvelle livraison est à l'index : "+index+" dans livraisons.");		
+				System.out.println("FOUND = La livraisons precedent la nouvelle livraison est a l'index : "+index+" dans livraisons.");		
 				break;
 			}
 		}
@@ -73,7 +73,7 @@ public class Tournee {
 		for(Itineraire it : itineraires) {
 			if(it.getArrivee().getId() == endPoint)
 			{
-				System.out.println("### Itinéraire à supprimer trouvé ###");
+				System.out.println("### Itineraire a supprimer trouve ###");
 				toBeRemoved = it;
 				break;
 			}
@@ -83,7 +83,7 @@ public class Tournee {
 		}
 		adresseBefore = toBeRemoved.getDepart().getId();
 		itineraires.remove(toBeRemoved);
-		System.out.println("Itinéraire supprimé de la liste des itinéraires.");
+		System.out.println("Itineraire supprime de la liste des itineraires.");
 		return adresseBefore;
 	}
 	
@@ -94,7 +94,7 @@ public class Tournee {
 		for(Itineraire it : itineraires) {
 			if(it.getDepart().getId()== startPoint)
 			{
-				System.out.println("### Itinéraire à supprimer trouvé ###");
+				System.out.println("### Itineraire a supprimer trouve ###");
 				toBeRemoved = it;
 				break;
 			}
@@ -105,11 +105,11 @@ public class Tournee {
 		adresseAfter = toBeRemoved.getArrivee().getId();
 		boolean deleteOk = itineraires.remove(toBeRemoved);
 		if (deleteOk) {
-			System.out.println("Itinéraire supprimé de la liste des itinéraires.");
+			System.out.println("Itineraire supprime de la liste des itineraires.");
 		}
 		else
 		{
-			System.out.println("Erreur à la suppression");
+			System.out.println("Erreur a la suppression");
 		}
 		return adresseAfter;
 	}
@@ -117,7 +117,7 @@ public class Tournee {
 		Livraison toBeRemoved = null;
 		for(Livraison l : livraisons) {
 			if(l.getAdresse().getId() == adresse) {
-				System.out.println("### Livraison à supprimer trouvée ###");
+				System.out.println("### Livraison a supprimer trouvee ###");
 				toBeRemoved = l;
 				break;
 			}
@@ -126,7 +126,7 @@ public class Tournee {
 			return false;
 		}
 		livraisons.remove(toBeRemoved);
-		System.out.println("Livraison supprimée de la liste des livraisons.");
+		System.out.println("Livraison supprimee de la liste des livraisons.");
 		return true;
 	}
 	
@@ -139,12 +139,12 @@ public class Tournee {
 			int adresseLivraison = itineraire.getArrivee().getId();
 			for(Livraison l : livraisons) {
 				if(l.getAdresse().getId()==adresseLivraison) {
-					texte+="Livraison n°"+l.getIdLivraison()+" pour le client : "+l.getIdClient()+"\n";
+					texte+="Livraison no"+l.getIdLivraison()+" pour le client : "+l.getIdClient()+"\n";
 					//texte+="Heure de livraison entre "+l.getPlageHoraire().getHeureDebut()+" et "+l.getPlageHoraire().getHeureFin()+".\n\n";
 					break;
 				}
 			}
-			texte += "Itinéraire à suivre : \n";
+			texte += "Itineraire a suivre : \n";
 			texte += itineraire.toString();
 			texte += "\n----------------------------------------------------------------------------------------------\n\n";
 		}
