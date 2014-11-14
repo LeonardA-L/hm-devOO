@@ -1,7 +1,4 @@
 package controller;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -12,7 +9,7 @@ import model.planning.Livraison;
 import view.agglomeration.VueNoeud;
 import view.utils.InterfaceView;
 
-public class Controller implements ActionListener {
+public class Controller {
 
 	private static Controller INSTANCE = null;
 
@@ -327,9 +324,6 @@ public class Controller implements ActionListener {
 			}
 		}
 	}
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {}
 
 	public InterfaceAgglo getReferenceToInterfaceAgglo() {
 		return interfaceAgglo;
