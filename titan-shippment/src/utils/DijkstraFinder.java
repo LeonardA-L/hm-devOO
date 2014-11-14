@@ -175,7 +175,7 @@ public class DijkstraFinder implements PathFinder {
 
 		// Add constraints
 		for (int i = 0; i < n; i++) {
-			System.err.println("node: " + livraisons.get(i).getAdresse().getId() + " i: " + i + " cost[i]: " + Arrays.toString(cost[i]));
+			//System.err.println("node: " + livraisons.get(i).getAdresse().getId() + " i: " + i + " cost[i]: " + Arrays.toString(cost[i]));
 			solver.post(IntConstraintFactory.element(xCost[i], cost[i], xNext[i], 0, "none"));
 		}
 		solver.post(IntConstraintFactory.circuit(xNext, 0));
@@ -197,8 +197,9 @@ public class DijkstraFinder implements PathFinder {
 			int current = xNext[0].getValue();
 			for (int i = 0; i < n; i++) {
 				Livraison l = livraisons.get(xNext[current].getValue());
-				if (l.getPlageHoraire() != null)
-					System.out.println(l);
+				if (l.getPlageHoraire() != null) {
+					//System.out.println(l);
+				}
 				sortedList.add(l);
 				current = xNext[current].getValue();
 				// int totalCost = xTotalCost.getValue();
@@ -278,7 +279,7 @@ public class DijkstraFinder implements PathFinder {
 		IntVar xTotalCost = VariableFactory.bounded("Total cost ", n * minCost, upperCostBound - 1, solver);
 		// Add constraints
 		for (int i = 0; i < n; i++) {
-			System.out.println("node: " + livraisons.get(i).getAdresse().getId() + " i: " + i + " cost[i]: " + Arrays.toString(cost[i]));
+			//System.out.println("node: " + livraisons.get(i).getAdresse().getId() + " i: " + i + " cost[i]: " + Arrays.toString(cost[i]));
 			solver.post(IntConstraintFactory.element(xCost[i], cost[i], xNext[i], 0, "none"));
 			/*
 			 * if(i != n-1){ solver.post(IntConstraintFactory.distance(xTime[xNext [i].getValue()], xTime[xNext[i+1].getValue()],"=",xCost[i])); }

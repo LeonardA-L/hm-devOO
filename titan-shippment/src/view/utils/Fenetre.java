@@ -31,10 +31,8 @@ public class Fenetre extends JFrame {
 	private JLabel label_infoPoint;
 
 	public Fenetre() {
-
-		// init window
 		this.setTitle("DevOO");
-		// this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		// this.setExtendedState(JFrame.MAXIMIZED_BOTH); // full screen
 		this.setSize(this.tailleX, this.tailleY);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -87,14 +85,9 @@ public class Fenetre extends JFrame {
 
 		Console console = new Console(sizeBottom);
 
-		// JScrollPane scrollPane = new JScrollPane (new
-		// ScrolledConsole(console));
-
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportView(console);
 		this.bottom.add(scrollPane, BorderLayout.NORTH);
-
-		// this.bottom.add(scrollPane);
 
 		this.bottom.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
@@ -111,9 +104,7 @@ public class Fenetre extends JFrame {
 		Bouton undo = new Bouton("undo", "", false);
 		Bouton redo = new Bouton("redo", "", false);
 		undo.setIcon(new ImageIcon("images/undo.png"));
-		// undo.setPreferredSize(new Dimension(80,40));
 		redo.setIcon(new ImageIcon("images/redo.png"));
-		// redo.setPreferredSize(new Dimension(80,40));
 
 		JPanel undoRedoPanel = new JPanel();
 		undoRedoPanel.setLayout(new BoxLayout(undoRedoPanel, BoxLayout.X_AXIS));
@@ -125,7 +116,6 @@ public class Fenetre extends JFrame {
 		livraisons_panel.add(undoRedoPanel);
 
 		// Create shippment table
-
 		String[] colHeadings = { "ID Client", "Heure Debut", "Heure Fin", " ", "ID Noeud" };
 		int numRows = 0;
 		DefaultTableModel model = new DefaultTableModel(numRows, colHeadings.length) {
@@ -150,7 +140,6 @@ public class Fenetre extends JFrame {
 
 	private void initBtnPanel() {
 		JPanel btn_panel = new JPanel();
-		// btn_panel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
 		btn_panel.setLayout(new BoxLayout(btn_panel, BoxLayout.Y_AXIS));
 
 		label_infoPoint = new JLabel();
@@ -174,8 +163,8 @@ public class Fenetre extends JFrame {
 
 		Bouton loadMap = new Bouton("loadMap", "Chargement de la carte", true);
 		Bouton loadLivraisons = new Bouton("loadLivraisons", "Chargement des livraisons", true);
-		Bouton calculTournee = new Bouton("calculTournee", "Calcul de la tournï¿½e", false);
-		Bouton generateInstruction = new Bouton("generateInstructions", "Gï¿½nï¿½rer instructions", false);
+		Bouton calculTournee = new Bouton("calculTournee", "Calcul de la tournée", false);
+		Bouton generateInstruction = new Bouton("generateInstructions", "Générer instructions", false);
 
 		btn_panel.add(Box.createGlue());
 		btn_panel.add(loadMap);

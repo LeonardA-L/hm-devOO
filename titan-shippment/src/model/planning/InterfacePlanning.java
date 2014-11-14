@@ -179,7 +179,7 @@ public class InterfacePlanning {
 			// remove former delivery from tournee
 			boolean removed = tournee.removeLivraison(toBeRemoved.getAdresse().getId()); // delete delivery from Tournee
 			if (!removed) {
-				System.out.println("Problem when removing livraison from tournee");
+				//System.out.println("Problem when removing livraison from tournee");
 			}
 			// Find new itineraire
 			Noeud nodeBefore = null;

@@ -27,13 +27,11 @@ public class VueLivraisonList extends JTable {
 	public void addLivraison(Livraison livraison) {
 		DefaultTableModel model = (DefaultTableModel) this.getModel();
 		model.addRow(new Object[] { String.valueOf(livraison.getIdClient()), livraison.getPlageHoraire().getHeureDebut(), livraison.getPlageHoraire().getHeureFin(), "x", livraison.getAdresse().getId() });
-		System.out.println("######" + model.getRowCount());
 	}
 
 	public boolean removeLivraison(int idNoeud) {
 		DefaultTableModel model = (DefaultTableModel) this.getModel();
 		int rc = model.getRowCount();
-		System.out.println("####--------Nb Avant:" + model.getRowCount());
 		int rowToDelete = -1;
 		int i = 0;
 		while (i < rc) {
@@ -47,7 +45,6 @@ public class VueLivraisonList extends JTable {
 			return false;
 		}
 		model.removeRow(i);
-		System.out.println("####--------Nb Apres:" + model.getRowCount());
 		return true;
 	}
 
