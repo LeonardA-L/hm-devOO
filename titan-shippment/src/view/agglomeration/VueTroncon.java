@@ -37,6 +37,11 @@ public class VueTroncon implements Vue {
 		// cannot draw without node in
 	}
 
+	/**
+	 * Draw the Troncon
+	 * @param g			Graphics from Vue
+	 * @param noeud		Node
+	 */
 	public void dessine(Graphics g, Noeud noeud) {
 
 		Graphics2D g2 = (Graphics2D) g;

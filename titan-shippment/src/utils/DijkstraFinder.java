@@ -130,7 +130,6 @@ public class DijkstraFinder implements PathFinder {
 				return ((Integer) (boundsp1[1])).compareTo((Integer) boundsp2[0]);
 			}
 		});
-		// System.out.println(plages);
 		nodes.clear();
 
 		nodes.add(storehouse.getId());
