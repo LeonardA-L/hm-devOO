@@ -24,7 +24,7 @@ public class VuePlanTest {
 	
 	@Before
 	public void create() {
-		Plan plan = UtilsTest.planCreate();
+		Plan plan = TestUtils.planCreate();
 		vuePlan = new VuePlan();
 		vuePlan.setPlan(plan);
 		

@@ -13,7 +13,7 @@ public class PlanTest {
 
 	@Before
 	public void setUp() {
-		dummy = UtilsTest.planCreate();
+		dummy = TestUtils.planCreate();
 	}
 
 	@Test

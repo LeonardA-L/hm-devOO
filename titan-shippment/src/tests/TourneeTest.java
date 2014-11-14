@@ -21,8 +21,8 @@ public class TourneeTest {
 
 	@Before
 	public void create() {
-		plan = UtilsTest.planCreate();
-		livraisons = UtilsTest.deliveriesListCreate(plan);
+		plan = TestUtils.planCreate();
+		livraisons = TestUtils.deliveriesListCreate(plan);
 		tournee = new Tournee();
 		tournee.setLivraisons(livraisons);
 		tournee.addLivraison(new Livraison(new PlageHoraire("18:00:00", "19:00:00"), plan.getNoeuds().get(0), 4, 20));

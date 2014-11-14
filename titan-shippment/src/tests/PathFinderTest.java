@@ -24,7 +24,7 @@ public class PathFinderTest {
 	public void createPF() {
 		// f = new
 		// BreadthFirstFinder(PlanTest.DummyPlanCreate().computeShippmentGraph());
-		p = UtilsTest.planCreate();
+		p = TestUtils.planCreate();
 		f = new DijkstraFinder(p.computeShippmentGraph());
 	}
 
